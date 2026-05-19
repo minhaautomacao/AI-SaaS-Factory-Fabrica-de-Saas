@@ -1,0 +1,6 @@
+{
+  "name": "AI SaaS Factory",
+  "description": "Visual orquestrador e gerador de planejamento arquitetural para Micro-SaaS e aplicações web personalizadas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
