@@ -67,16 +67,18 @@ export default function App() {
     setLogs((prev) => [...prev, { timestamp, text, type }]);
   };
 
-  const handleCreateSaaS = async (idea: string) => {
+  const handleCreateSaaS = async (idea: string, dbType: string, retention: string, analytics: string, themeStyle: string, accentColor: string) => {
     setIsLoading(true);
     addLog(`Enviando requisitos de SaaS: "${idea}"`, "command");
+    addLog(`Gerenciamento de Dados: Banco -> ${dbType} | Retenção -> ${retention} | Observabilidade -> ${analytics}`, "info");
+    addLog(`Personalização UI: Tema -> ${themeStyle} | Cor Principal -> ${accentColor}`, "info");
     addLog("Consultando o orquestrador do Google AI Studio para planejar arquitetura...", "info");
 
     try {
       const response = await fetch("/api/generate-saas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idea })
+        body: JSON.stringify({ idea, dbType, retention, analytics, themeStyle, accentColor })
       });
 
       const data = await response.json();
