@@ -31,6 +31,41 @@ function getGeminiClient() {
 // Fallback high-quality template database for immediate use/demo if API key is not yet set
 const SYSTEM_TEMPLATES = [
   {
+    name: "Floricultura & E-commerce Multicanal",
+    tagline: "Gestão Unificada de Redes, Leads, Agendamento & Frete Ativo por IA",
+    description: "SaaS avançado multilocatário para floriculturas e e-commerce de alto volume. Integra chat do WhatsApp, Instagram, Facebook, CRM de Leads com classificação, ERP e cotação de fretes dinâmica via assistente interativo.",
+    techStack: {
+      frontend: ["React 19", "Vite", "Tailwind CSS", "Motion (Animações UI)", "Lucide Icons"],
+      backend: ["Express.js", "Node.js (TypeScript)", "Webhooks (Meta API)"],
+      database: ["PostgreSQL (Esquema por Tenant)", "SQLite (Desenvolvimento)"],
+      aiTools: ["Gemini 3.5 Flash", "@google/genai SDK (Conversação Integrada)"]
+    },
+    modules: [
+      {
+        name: "Módulo 1: Central Multicanal (WhatsApp, FB, IG & Leads)",
+        description: "Central de capturas de Webhooks de mídias Meta que conecta conversas, recebe leads de anúncios instantâneos e os classifica automaticamente com base no nível de intenção do contato.",
+        files: ["src/components/SocialLeadInbox.tsx", "src/services/leadClassifier.ts", "src/types/social.ts"]
+      },
+      {
+        name: "Módulo 2: Copiloto IA (Cotação Automática de Frete & Pedidos)",
+        description: "Agente autônomo que interage amigavelmente com o cliente final, questiona e coleta os dados de entrega que faltam, consulta APIs de logística (Melhor Envio/Correios) e calcula a estimativa de custos de frete em tempo real.",
+        files: ["src/components/AIChatQuote.tsx", "src/services/freightCalculator.ts"]
+      },
+      {
+        name: "Módulo 3: Agendador de Entregas & Despacho Dinâmico (Corte ERP)",
+        description: "Agenda interativa detalhada para o e-commerce de flores (Ex: buquê de rosas azul na data X, ao meio-dia para cliente Y). Permite realizar cortes e gerar etiquetas integradas com ERP.",
+        files: ["src/components/DeliveryScheduler.tsx", "src/components/ErpIntegrator.tsx"]
+      }
+    ],
+    structuralPrompts: {
+      systemInstruction: "Você é o Agente IA especialista em logística da Floricultura Pro. Quando o cliente interagir via chat, sua missão é identificar o item desejado (ex: buquê de rosas) e solicitar os dados restantes de endereço (CEP ou Rua). Utilize a ferramenta interna de cálculo de frete para retornar os valores e fechar o pedido, gerando o link de pagamento do WhatsApp.",
+      uiPrompt: "Desenhe uma tela com visual premium voltada a e-commerce gourmet/floricultura. Tons de verde esmeralda (#065f46) e lilás suave (#faf5ff), grande uso de espaço de respiro, painel central estilo bento-grid com cards de agendamento cronológico destacando buquês, status dos webhooks por canal e terminal interativo.",
+      databaseSchema: "{\n  \"tenants\": {\n    \"id\": \"string (UUID)\",\n    \"storeName\": \"string\",\n    \"apiKeyMeta\": \"string (masked)\"\n  },\n  \"deliveries\": {\n    \"id\": \"string\",\n    \"productDetails\": \"string (Ex: Buquê de Rosas Vermelhas)\",\n    \"scheduledTime\": \"ISO String\",\n    \"targetAddress\": \"string\",\n    \"customerName\": \"string\",\n    \"leadOrigin\": \"WHATSAPP | INSTAGRAM | FACEBOOK\",\n    \"freightCost\": \"float\"\n  },\n  \"logistic_configurations\": {\n    \"tenantId\": \"string\",\n    \"carrierEnabled\": \"array\",\n    \"shippingZipCode\": \"string\"\n  }\n}",
+      testsPrompt: "Valide pelo Vitest se a IA retém o CEP coletado no fluxo de conversa do WhatsApp sem misturar dados de outros tenants, e se o cálculo de frete lida de forma resiliente com instabilidades ou timeouts na API dos Correios."
+    },
+    githubActions: "name: Deploy Multitenant SaaS\non:\n  push:\n    branches: [ main ]\njobs:\n  compile-and-test:\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v4\n    - name: Setup Node\n      uses: actions/setup-node@v4\n      with:\n        node-version: '20'\n    - run: npm install\n    - run: npm run lint\n    - run: npm run build"
+  },
+  {
     name: "Agendamento Inteligente Pro",
     tagline: "SaaS de agendamento de consultas com triagem automática por IA",
     description: "Uma plataforma focada em clínicas de saúde e serviços recorrentes, fornecendo agendamento interativo com análise de sintomas inicial por IA para direcionamento de especialistas.",
@@ -105,7 +140,7 @@ const SYSTEM_TEMPLATES = [
 // POST /api/generate-saas -> Real implementation calling GoogleGenAI
 app.post("/api/generate-saas", async (req, res) => {
   try {
-    const { idea } = req.body;
+    const { idea, dbType, retention, analytics, themeStyle, accentColor } = req.body;
     if (!idea || typeof idea !== "string" || idea.trim() === "") {
       return res.status(400).json({ error: "Sua ideia ou conceito de SaaS não pode estar vazia." });
     }
@@ -123,21 +158,30 @@ app.post("/api/generate-saas", async (req, res) => {
     }
 
     const systemPrompt = `Você é um Arquiteto de Software e Engenheiro de IA Sênior na 'AI SaaS Factory'.
-O usuário fornecerá um conceito de Micro-SaaS ou aplicação web corporativa.
+O usuário fornecerá um conceito de Micro-SaaS ou aplicação web corporativa com algumas preferências de gerenciamento de dados e interface (UI).
 Sua missão é gerar um plano arquitetural completo estruturado em JSON estrito contendo:
 - Nome ideal para o SaaS (curto, amigável)
 - Um slogan impactante (tagline)
 - Uma descrição detalhada e realista
-- Uma pilha de tecnologia moderna ('techStack' com frontend, backend, database, aiTools)
+- Uma pilha de tecnologia moderna ('techStack' com frontend, backend, database baseado em suas escolhas ou adaptado, e aiTools)
 - Módulos ou divisões de componentes de código principais com seus respectivos arquivos de desenvolvimento planejados
-- Prompts de engenharia estrutural prontos para alimentar geradores automáticos de código (incluindo diretiva de sistema para backend, prompt de layout-UI p/ frontend, modelo de esquema de banco de dados, e requisitos de teste contínuo)
+- Prompts de engenharia estrutural prontos para alimentar geradores automáticos de código (incluindo diretiva de sistema para backend, prompt de layout-UI p/ frontend respeitando a preferência de Tema [claro/escuro/cyberpunk etc.] e a cor de destaque, modelo de esquema de banco de dados detalhando coleções/tabelas compatíveis com as escolhas de retenção/arquitetura, e requisitos de teste contínuo)
 - Um arquivo sugestivo editado de pipeline GitHub Actions (.github/workflows/deploy.yml)
 
 Retorne EXCLUSIVAMENTE o objeto JSON correspondente, sem explicações em markdown antes ou depois. Use o idioma Português do Brasil para todas as descrições.`;
 
+    const userPromptContent = `Conceito do SaaS fornecido pelo usuário:\n"${idea}"\n\n` +
+      `Arquitetura de Gerenciamento de Dados Preferida:\n` +
+      `- Tipo de Banco: ${dbType || "Selecionar arquitetura ideal automaticamente"}\n` +
+      `- Retenção & Privacidade: ${retention || "Configuração e conformidade padrão de mercado"}\n` +
+      `- Observabilidade & Analytics: ${analytics || "Logs leves e monitoramento básico"}\n\n` +
+      `Preferências Visuais de Interface (Frontend):\n` +
+      `- Tema Visual: ${themeStyle || "Light Mode (Limpo e profissional)"}\n` +
+      `- Cor de Destaque (Accent): ${accentColor || "Padrão de harmonia visual"}`;
+
     const response = await ai.models.generateContent({
       model: "gemini-3.5-flash",
-      contents: `Conceito do SaaS fornecido pelo usuário:\n"${idea}"`,
+      contents: userPromptContent,
       config: {
         systemInstruction: systemPrompt,
         responseMimeType: "application/json",
