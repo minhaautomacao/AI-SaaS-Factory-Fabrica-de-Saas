@@ -257,6 +257,24 @@ app.get("/api/config-status", (req, res) => {
   res.json({ hasAPIKey: hasKey });
 });
 
+// POST /api/login -> Authenticate with password
+app.post("/api/login", (req, res) => {
+  const { password } = req.body;
+  const correctPassword = process.env.APP_PASSWORD || "admin";
+  if (password === correctPassword) {
+    return res.json({ success: true, token: "factory-auth-token-9988" });
+  }
+  return res.status(401).json({ error: "Senha de acesso incorreta. Tente novamente." });
+});
+
+// GET /api/auth-status -> Tells the client if a password is configured
+app.get("/api/auth-status", (req, res) => {
+  const isProtected = true; // Always protect the factory URL to ensure unauthorized access is blocked
+  const hasCustomPassword = !!(process.env.APP_PASSWORD && process.env.APP_PASSWORD.trim() !== "");
+  res.json({ isProtected, hasCustomPassword });
+});
+
+
 // Serve static assets or mount Vite Developer server
 async function configureServer() {
   if (process.env.NODE_ENV !== "production") {

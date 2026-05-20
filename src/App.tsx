@@ -4,15 +4,19 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { Terminal, Lightbulb, Settings, Compass, Layers, Github, ExternalLink, HelpCircle, Code2, Play, CheckCircle2, Cloud } from "lucide-react";
+import { Terminal, Lightbulb, Settings, Compass, Layers, Github, ExternalLink, HelpCircle, Code2, Play, CheckCircle2, Cloud, LogOut } from "lucide-react";
 import Sidebar from "./components/Sidebar";
 import SaaSPlannerForm from "./components/SaaSPlannerForm";
 import SystemOverviewDiagram from "./components/SystemOverviewDiagram";
 import SaaSDetailsViewer from "./components/SaaSDetailsViewer";
 import TerminalSimulator from "./components/TerminalSimulator";
+import LoginScreen from "./components/LoginScreen";
 import { SaaSProject, SimulationLog } from "./types";
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return localStorage.getItem("saas_factory_authenticated") === "true";
+  });
   const [projects, setProjects] = useState<SaaSProject[]>([]);
   const [selectedProject, setSelectedProject] = useState<SaaSProject | null>(null);
   const [activatedStep, setActivatedStep] = useState<number>(1);
@@ -22,8 +26,11 @@ export default function App() {
   const [isSimulating, setIsSimulating] = useState(false);
   const [simIntervalId, setSimIntervalId] = useState<NodeJS.Timeout | null>(null);
 
+
   // Fetch initial config and templates
   useEffect(() => {
+    if (!isAuthenticated) return;
+
     // Check if API key is configured
     fetch("/api/config-status")
       .then((res) => res.json())
@@ -60,7 +67,7 @@ export default function App() {
         console.error("Error loading templates:", err);
         addLog("Não foi possível conectar ao servidor backend. O applet continuará em modo isolado local.", "warning");
       });
-  }, []);
+  }, [isAuthenticated]);
 
   const addLog = (text: string, type: "info" | "success" | "warning" | "error" | "command") => {
     const timestamp = new Date().toLocaleTimeString();
@@ -266,6 +273,10 @@ export default function App() {
     setLogs([]);
   };
 
+  if (!isAuthenticated) {
+    return <LoginScreen onSuccess={() => setIsAuthenticated(true)} />;
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col antialiased text-gray-950 font-sans selection:bg-indigo-500 selection:text-white pb-12">
       {/* Visual Workspace Hero Header */}
@@ -298,6 +309,20 @@ export default function App() {
               <span>AI Studio Workspace</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
+
+            <span className="h-4 w-[1px] bg-gray-200"></span>
+
+            <button
+              onClick={() => {
+                localStorage.removeItem("saas_factory_authenticated");
+                localStorage.removeItem("saas_factory_token");
+                setIsAuthenticated(false);
+              }}
+              className="flex items-center gap-1.5 text-xs text-rose-500 hover:text-rose-700 bg-rose-50 hover:bg-rose-100/80 px-3 py-1.5 rounded-lg border border-rose-100 transition-colors cursor-pointer font-sans font-medium"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Sair da Estação</span>
+            </button>
           </div>
         </div>
       </header>
