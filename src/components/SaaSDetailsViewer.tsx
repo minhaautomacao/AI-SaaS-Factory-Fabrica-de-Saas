@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { SaaSProject } from "../types";
-import { Cpu, Terminal, Database, Code, Copy, Check, CheckCircle2, ChevronRight, FileCode, Clipboard, ShieldCheck } from "lucide-react";
+import { Cpu, Terminal, Database, Code, Copy, Check, CheckCircle2, ChevronRight, FileCode, Clipboard, ShieldCheck, Cloud } from "lucide-react";
+import CloudArchitectureReport from "./CloudArchitectureReport";
 
 interface SaaSDetailsViewerProps {
   project: SaaSProject;
@@ -9,6 +10,7 @@ interface SaaSDetailsViewerProps {
 
 export default function SaaSDetailsViewer({ project, activatedStep }: SaaSDetailsViewerProps) {
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"specs" | "cloud">("specs");
 
   const copyToClipboard = (text: string, section: string) => {
     navigator.clipboard.writeText(text);
@@ -43,8 +45,35 @@ export default function SaaSDetailsViewer({ project, activatedStep }: SaaSDetail
         </p>
       </div>
 
-      {/* Focus based on Activated Step */}
-      <div className="space-y-8">
+      {/* Tab Selector */}
+      <div className="flex border-b border-gray-100 mb-6 gap-6">
+        <button
+          onClick={() => setActiveTab("specs")}
+          className={`pb-3 text-xs font-bold tracking-wider uppercase border-b-2 font-mono transition-all px-1 cursor-pointer ${
+            activeTab === "specs"
+              ? "border-indigo-600 text-indigo-900"
+              : "border-transparent text-gray-400 hover:text-gray-600"
+          }`}
+        >
+          Estrutura Lógica (Etapas 1-5)
+        </button>
+        <button
+          onClick={() => setActiveTab("cloud")}
+          className={`pb-3 text-xs font-bold tracking-wider uppercase border-b-2 font-mono transition-all px-1 flex items-center gap-1.5 cursor-pointer ${
+            activeTab === "cloud"
+              ? "border-indigo-600 text-indigo-900"
+              : "border-transparent text-gray-400 hover:text-gray-600"
+          }`}
+        >
+          <Cloud className="w-3.5 h-3.5 text-indigo-500" />
+          <span>Diretivas de Cloud & Relatório</span>
+        </button>
+      </div>
+
+      {activeTab === "cloud" ? (
+        <CloudArchitectureReport project={project} />
+      ) : (
+        <div className="space-y-8">
         {/* Step 1 & 2 Focus: Stack & Modules */}
         {(activatedStep === 1 || activatedStep === 2) && (
           <div className="space-y-6">
@@ -275,7 +304,8 @@ export default function SaaSDetailsViewer({ project, activatedStep }: SaaSDetail
             </div>
           </div>
         )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
