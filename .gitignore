@@ -6,3 +6,18 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Credenciais reais — nunca commitar
+.credentials/**/*.env
+.credentials/**/*.json
+.credentials/**/*.key
+.credentials/**/*.pem
+!.credentials/**/README.md
+
+# Claude Code
+.claude/memory/*.md
+!.claude/memory/MEMORY.md
+
+# OS
+Thumbs.db
+desktop.ini
