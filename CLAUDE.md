@@ -134,6 +134,21 @@ supabase db diff     # ver mudanças pendentes
 supabase db push     # aplicar migrations
 ```
 
+## Regras de Eficiência de Tokens
+
+Estas regras são obrigatórias em todas as sessões, sem exceção.
+
+1. **Nunca repita informações já confirmadas** — se algo foi dito ou feito nesta sessão, não repita
+2. **Nunca refaça tarefas já concluídas** — sempre verifique o que existe antes de criar qualquer coisa
+3. **Sempre leia os arquivos existentes antes de qualquer ação** — nunca assuma o conteúdo
+4. **Sempre execute em ordem lógica sem voltar atrás** — planeje antes, execute uma vez
+5. **Respostas curtas e diretas** — sem introduções longas, sem resumos do que acabou de fazer
+6. **Antes de criar qualquer arquivo verifique se já existe** — use Glob ou Read antes de Write
+7. **Agrupe ações relacionadas num único comando** — um `git add` + `commit` juntos, não separados
+8. **Nunca peça confirmação para ações já aprovadas como padrão** — commits, leitura de arquivos e criação de agentes são ações padrão aprovadas
+9. **Use `/compact` quando o contexto estiver acima de 50%** — não espere o contexto encher
+10. **Ao iniciar sessão nova leia `estado-atual.md` e continue de onde parou** — sem perguntar o que fazer, sem pedir contexto
+
 ## Contato e repositório
 
 - **GitHub**: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas
