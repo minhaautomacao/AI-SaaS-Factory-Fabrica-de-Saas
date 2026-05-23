@@ -17,6 +17,7 @@ coverage/
 # Claude Code
 .claude/memory/*.md
 !.claude/memory/MEMORY.md
+!.claude/memory/estado-atual.md
 
 # OS
 Thumbs.db
