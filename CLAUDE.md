@@ -180,10 +180,17 @@ Estas regras são obrigatórias em todas as sessões, sem exceção.
 - [x] `configurar-whatsapp.md`, `pipeline-novo-saas.md`, `setup-pagamentos.md`
 - [x] `/novo-saas`, `/setup-auth`, `/criar-pagina`, `/checklist-deploy`
 
-### Fase 6 — Schema do banco e infraestrutura real (próxima)
-- [ ] Migration Supabase para tabelas `leads` e `orchestrator_logs`
-- [ ] Configuração BullMQ com Upstash Redis
-- [ ] Teste do fluxo completo: lead → SDR → financeiro → conciliação → operacional
+### Fase 6 — Schema do banco e infraestrutura real (concluída)
+- [x] Migration Supabase para tabelas `leads` e `orchestrator_logs`
+- [x] Configuração BullMQ com Upstash Redis (`orchestrator/`)
+- [x] Documento de teste do fluxo completo (`testes/fluxo-completo.md`)
+
+### Fase 7 — Execução real (próxima)
+- [ ] Preencher `orchestrator/.env` com credenciais reais (Supabase + Upstash)
+- [ ] `cd orchestrator && npm install && npm run dev`
+- [ ] Aplicar migrations: `supabase db push`
+- [ ] Executar scripts de teste do `testes/fluxo-completo.md`
+- [ ] Validar logs em `v_orchestrator_monitor` no Supabase
 
 ## Contato e repositório
 

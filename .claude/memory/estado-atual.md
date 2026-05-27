@@ -81,7 +81,7 @@ Estrutura de pastas com READMEs criados (sem valores reais): financeiro, marketi
 
 ## O que está em andamento
 
-**Fase 4 e 5 concluídas.** `agente-dev.md` criado e os 4 comandos slash estão funcionais. Próxima fase: migrations Supabase + configuração BullMQ.
+**Fase 6 concluída.** Migrations Supabase criadas, serviço `orchestrator/` implementado com BullMQ + Upstash Redis, documento de teste do fluxo completo criado. Próximo passo: instalar dependências e executar o teste real.
 
 ---
 
