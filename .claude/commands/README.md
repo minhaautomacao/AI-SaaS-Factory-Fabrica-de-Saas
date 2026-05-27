@@ -4,36 +4,19 @@ Comandos `/slash` para acelerar tarefas frequentes no Claude Code.
 
 ## Comandos disponíveis
 
-Nenhum comando customizado ainda. Adicione arquivos `.md` nesta pasta para criar novos comandos.
-
-## Comandos planejados
+## Comandos disponíveis
 
 ### `/novo-saas`
-Inicia o processo de criação de um novo SaaS:
-1. Pergunta nome, nicho e público-alvo
-2. Sugere funcionalidades do MVP
-3. Cria estrutura de pastas baseada no template adequado
-4. Configura Supabase e Vercel
+Guia completo para criar um SaaS do zero: coleta nome/nicho/público, seleciona template, cria estrutura de pastas, define schema do banco e gera checklist de infraestrutura.
 
 ### `/setup-auth`
-Configura autenticação completa no projeto atual:
-1. Cria tabela `profiles` no Supabase
-2. Adiciona políticas RLS
-3. Gera componentes de login/signup
-4. Configura rotas protegidas
+Configura autenticação completa com Supabase: migration com tabela `profiles` + RLS + trigger, hook `useAuth`, componentes de login/signup e rotas protegidas.
 
 ### `/criar-pagina`
-Cria uma nova página com padrão do projeto:
-1. Pergunta nome e tipo da página
-2. Cria arquivo de página com layout padrão
-3. Adiciona rota no sistema de navegação
+Cria uma nova página seguindo o padrão já existente no projeto: detecta o framework, pergunta nome e tipo (listagem/formulário/dashboard/detalhe), gera o arquivo e adiciona à navegação.
 
 ### `/checklist-deploy`
-Verifica se o projeto está pronto para produção:
-1. Checa variáveis de ambiente
-2. Verifica se há `console.log` de debug
-3. Testa build de produção
-4. Verifica configurações de segurança
+Verifica ativamente se o projeto está pronto para produção: TypeScript, build, variáveis de ambiente, RLS, segurança de código, migrations e monitoramento. Gera relatório com bloqueadores.
 
 ## Como criar um comando
 

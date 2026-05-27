@@ -174,14 +174,14 @@ Estas regras são obrigatórias em todas as sessões, sem exceção.
 > Atualizar a cada sessão com o que está em andamento.
 
 ### Fase atual: Skills e comandos slash
-- [x] `configurar-agentes.md`
-- [x] `configurar-auth.md`
-- [x] `configurar-infraestrutura.md`
-- [x] `configurar-whatsapp.md`
-- [x] `pipeline-novo-saas.md`
-- [x] `setup-pagamentos.md`
-- [ ] `agente-dev.md` — agente que escreve código React/Supabase
-- [ ] Migration Supabase para tabela `leads` e `orchestrator_logs`
+### Fase 4-5 — Agente Dev + Comandos slash (concluída)
+- [x] `agente-dev.md` — agente que escreve código React/Supabase
+- [x] `configurar-agentes.md`, `configurar-auth.md`, `configurar-infraestrutura.md`
+- [x] `configurar-whatsapp.md`, `pipeline-novo-saas.md`, `setup-pagamentos.md`
+- [x] `/novo-saas`, `/setup-auth`, `/criar-pagina`, `/checklist-deploy`
+
+### Fase 6 — Schema do banco e infraestrutura real (próxima)
+- [ ] Migration Supabase para tabelas `leads` e `orchestrator_logs`
 - [ ] Configuração BullMQ com Upstash Redis
 - [ ] Teste do fluxo completo: lead → SDR → financeiro → conciliação → operacional
 
