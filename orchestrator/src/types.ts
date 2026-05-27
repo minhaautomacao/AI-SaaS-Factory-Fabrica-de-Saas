@@ -7,7 +7,7 @@ export type TipoEvento =
   | 'concluido'
   | 'falhou'
   | 'timeout'
-  | 'reacaoado'
+  | 'acionado'
   | 'escalado'
 
 export type NomeAgente =
@@ -23,6 +23,7 @@ export type NomeAgente =
   | 'marketing'
   | 'inteligencia'
   | 'agente-dev'
+  | 'estoque'
 
 // Evento que chega na fila do orquestrador
 export interface OrchestratorJob {
@@ -52,11 +53,20 @@ export interface AgentJob {
 export interface AgentResult {
   task_id: string
   agente: NomeAgente
+  escopo: Escopo
+  urgencia: Urgencia
   status: 'concluido' | 'bloqueado' | 'parcial'
   resultado?: Record<string, unknown>
   erro?: string
   duracao_ms: number
+  lead_id?: string
+  pedido_id?: string
   proximo_passo?: string
+  // Se status === 'bloqueado', informa o que falta para continuar
+  bloqueio?: {
+    motivo: string
+    informacao_necessaria: string
+  }
 }
 
 // Mapa de timeouts por urgência (em ms)
@@ -88,6 +98,7 @@ export const QUEUES = {
   AGENT_MARKETING:   'queue:agent:marketing',
   AGENT_INTELIGENCIA:'queue:agent:inteligencia',
   AGENT_DEV:         'queue:agent:agente-dev',
+  AGENT_ESTOQUE:     'queue:agent:estoque',
 
   // Fila de resultados (agentes respondem aqui)
   RESULTS: 'queue:results',
