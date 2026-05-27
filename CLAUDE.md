@@ -148,6 +148,42 @@ Estas regras são obrigatórias em todas as sessões, sem exceção.
 8. **Nunca peça confirmação para ações já aprovadas como padrão** — commits, leitura de arquivos e criação de agentes são ações padrão aprovadas
 9. **Use `/compact` quando o contexto estiver acima de 50%** — não espere o contexto encher
 10. **Ao iniciar sessão nova leia `estado-atual.md` e continue de onde parou** — sem perguntar o que fazer, sem pedir contexto
+11. **Para investigações amplas use subagentes** — `"Use subagents to investigate [tópico] and report back a summary"` — não explore a codebase inteira sozinho
+12. **Edite apenas o trecho relevante** — nunca reescreva um arquivo inteiro quando só um bloco muda
+
+## Fluxo de Sessão Recomendado
+
+1. Ler `estado-atual.md` e identificar o próximo passo sem perguntar
+2. Definir escopo claro antes de qualquer ação (arquivo + objetivo)
+3. Trabalhar em uma tarefa focada por vez
+4. Commitar no Git ao fim de cada tarefa concluída
+5. Usar `/compact` após cada fase de trabalho
+6. Usar `/clear` ao trocar para contexto completamente diferente
+7. Atualizar `estado-atual.md` quando concluir uma fase significativa
+
+## Checkpoints Git
+
+- Commitar antes de iniciar qualquer refatoração grande
+- Mensagens de commit em português, descritivas e no imperativo
+- Commitar ao fim da sessão antes de usar `/clear`
+- Não commitar `.claude/settings.local.json` (configurações locais)
+- Nunca commitar arquivos `.env` ou credenciais reais
+
+## Foco do Sprint Atual
+
+> Atualizar a cada sessão com o que está em andamento.
+
+### Fase atual: Skills e comandos slash
+- [x] `configurar-agentes.md`
+- [x] `configurar-auth.md`
+- [x] `configurar-infraestrutura.md`
+- [x] `configurar-whatsapp.md`
+- [x] `pipeline-novo-saas.md`
+- [x] `setup-pagamentos.md`
+- [ ] `agente-dev.md` — agente que escreve código React/Supabase
+- [ ] Migration Supabase para tabela `leads` e `orchestrator_logs`
+- [ ] Configuração BullMQ com Upstash Redis
+- [ ] Teste do fluxo completo: lead → SDR → financeiro → conciliação → operacional
 
 ## Contato e repositório
 
