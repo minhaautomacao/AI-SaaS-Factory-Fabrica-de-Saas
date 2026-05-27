@@ -17,7 +17,7 @@ create table orchestrator_logs (
     'concluido',      -- agente retornou sucesso
     'falhou',         -- agente retornou erro
     'timeout',        -- agente não respondeu dentro do prazo
-    'reacaoado',      -- orquestrador acionou agente alternativo (fallback)
+    'acionado',       -- orquestrador acionou agente alternativo (fallback)
     'escalado'        -- encaminhado para humano (Carlos)
   )),
   -- Urgência da tarefa no momento do evento

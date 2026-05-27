@@ -1,22 +1,30 @@
 import type { Job } from 'bullmq'
 import { criarWorker, despacharParaAgente, filas } from '../lib/queue.js'
 import { log } from '../lib/supabase.js'
-import type { OrchestratorJob, AgentJob, Urgencia } from '../types.js'
+import type { OrchestratorJob, AgentJob, AgentResult, Urgencia } from '../types.js'
 import { TIMEOUTS, QUEUES } from '../types.js'
 
 // Mapa de roteamento: tipo de evento → agente responsável
 // Segue a lógica do .claude/agents/orquestrador.md
 const ROTEAMENTO: Record<string, string[]> = {
-  // Escopo Produção
+  // Escopo Produção — ciclo de captação e venda
   'novo-lead':               ['captacao-leads'],
   'lead-qualificado':        ['whatsapp-sdr'],
+  'solicitacao-frete':       ['logistica'],           // SDR solicita cotação via orquestrador
   'pagamento-gerado':        ['conciliacao'],
+  'pagamento-expirado':      ['whatsapp-sdr'],        // PIX expirou — SDR reaborda cliente
   'pagamento-confirmado':    ['operacional', 'financeiro'],
+  'pedido-confirmado':       ['estoque'],             // baixa no estoque após confirmação
   'pedido-liberado':         ['logistica'],
   'pedido-despachado':       ['rastreamento'],
-  'entrega-concluida':       ['pos-venda'],
+  'tentativa-entrega-falha': ['rastreamento'],        // rastreamento reativa monitoramento
+  'entrega-concluida':       ['pos-venda', 'estoque'],// pós-venda + confirmar baixa estoque
   'reclamacao-recebida':     ['pos-venda'],
+  'devolucao-solicitada':    ['logistica', 'financeiro'], // logística reversa + estorno
+  'cliente-inativo-detectado': ['marketing'],         // marketing reativa clientes inativos
   'analise-periodica':       ['inteligencia'],
+  'ruptura-estoque':         ['estoque'],             // estoque detecta e gera OC
+  'mercadoria-recebida':     ['estoque'],             // entrada de mercadoria — atualiza saldo
 
   // Escopo Fábrica
   'criar-saas':              ['inteligencia', 'agente-dev'],
@@ -115,6 +123,55 @@ async function processarJob(job: Job<OrchestratorJob>): Promise<void> {
   )
 }
 
+// Processa respostas dos agentes — escuta queue:results
+async function processarResultado(job: Job<AgentResult>): Promise<void> {
+  const resultado = job.data
+
+  await log({
+    task_id: resultado.task_id,
+    escopo: resultado.escopo,
+    agente: resultado.agente,
+    tipo_evento: resultado.status === 'concluido' ? 'concluido' : 'falhou',
+    urgencia: resultado.urgencia,
+    resultado: resultado.resultado,
+    erro: resultado.erro,
+    duracao_ms: resultado.duracao_ms,
+    lead_id: resultado.lead_id,
+    pedido_id: resultado.pedido_id,
+  })
+
+  // Agente bloqueado → escalar para Carlos
+  if (resultado.status === 'bloqueado') {
+    await log({
+      task_id: resultado.task_id,
+      escopo: resultado.escopo,
+      agente: 'orquestrador',
+      tipo_evento: 'escalado',
+      urgencia: resultado.urgencia,
+      payload: {
+        agente_bloqueado: resultado.agente,
+        motivo: resultado.bloqueio?.motivo ?? resultado.erro ?? 'motivo desconhecido',
+        informacao_necessaria: resultado.bloqueio?.informacao_necessaria,
+      },
+      lead_id: resultado.lead_id,
+      pedido_id: resultado.pedido_id,
+    })
+    console.warn(
+      `[Orquestrador] BLOQUEADO — agente: ${resultado.agente} task: ${resultado.task_id}`,
+      resultado.bloqueio?.motivo
+    )
+    return
+  }
+
+  // Resultado parcial → apenas registrar (agente tratará internamente)
+  if (resultado.status === 'parcial') {
+    console.log(
+      `[Orquestrador] PARCIAL — agente: ${resultado.agente} task: ${resultado.task_id}`,
+      resultado.proximo_passo
+    )
+  }
+}
+
 async function escalar(evento: OrchestratorJob): Promise<void> {
   await log({
     task_id: evento.task_id,
@@ -158,4 +215,17 @@ export function iniciarWorkers(): void {
 
     console.log(`[Orquestrador] Worker iniciado: ${nomeFila}`)
   }
+
+  // Worker de resultados — processa respostas de todos os agentes
+  const resultWorker = criarWorker<AgentResult>(QUEUES.RESULTS, processarResultado)
+
+  resultWorker.on('completed', (job) => {
+    console.log(`[Orquestrador] Resultado processado: ${job.data.task_id} — ${job.data.agente} → ${job.data.status}`)
+  })
+
+  resultWorker.on('failed', (job, err) => {
+    console.error(`[Orquestrador] Falha ao processar resultado: ${job?.data.task_id} — ${err.message}`)
+  })
+
+  console.log(`[Orquestrador] Worker de resultados iniciado: ${QUEUES.RESULTS}`)
 }

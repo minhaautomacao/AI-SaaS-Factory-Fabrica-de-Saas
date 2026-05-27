@@ -41,6 +41,7 @@ export const filasAgentes: Record<string, Queue<AgentJob>> = {
   'marketing':      criarFila<AgentJob>(QUEUES.AGENT_MARKETING),
   'inteligencia':   criarFila<AgentJob>(QUEUES.AGENT_INTELIGENCIA),
   'agente-dev':     criarFila<AgentJob>(QUEUES.AGENT_DEV),
+  'estoque':        criarFila<AgentJob>(QUEUES.AGENT_ESTOQUE),
 }
 
 // Despacha uma tarefa para a fila de um agente específico
