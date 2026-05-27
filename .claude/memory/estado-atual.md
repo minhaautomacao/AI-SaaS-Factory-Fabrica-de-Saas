@@ -34,7 +34,11 @@ Commits até agora: 11
 | `.claude/skills/configurar-whatsapp.md` | Criado | skill de WhatsApp/Evolution API |
 | `.claude/skills/pipeline-novo-saas.md` | Criado | skill do pipeline completo de novo SaaS |
 | `.claude/skills/setup-pagamentos.md` | Criado | skill de integração de pagamentos |
-| `.claude/commands/README.md` | Placeholder | 4 comandos slash planejados, nenhum criado |
+| `.claude/commands/README.md` | Atualizado | Descreve os 4 comandos disponíveis |
+| `.claude/commands/novo-saas.md` | Criado | Slash command `/novo-saas` |
+| `.claude/commands/setup-auth.md` | Criado | Slash command `/setup-auth` |
+| `.claude/commands/criar-pagina.md` | Criado | Slash command `/criar-pagina` |
+| `.claude/commands/checklist-deploy.md` | Criado | Slash command `/checklist-deploy` |
 | `.claude/agents/README.md` | Placeholder | Lista de agentes planejados |
 
 ### Guias de infraestrutura (`infraestrutura/`)
@@ -77,7 +81,7 @@ Estrutura de pastas com READMEs criados (sem valores reais): financeiro, marketi
 
 ## O que está em andamento
 
-**Skills criados mas não commitados.** 6 arquivos em `.claude/skills/` estão untracked. Próximo passo: commit dos skills + criação de `agente-dev.md`.
+**Fase 4 e 5 concluídas.** `agente-dev.md` criado e os 4 comandos slash estão funcionais. Próxima fase: migrations Supabase + configuração BullMQ.
 
 ---
 
@@ -132,10 +136,15 @@ Decisão de negócio: preços fixos. Todos os agentes de atendimento devem respo
 | Marketing | `marketing.md` | Completo — 10 canais + funis + datas + retargeting + UGC |
 | Inteligência | `inteligencia.md` | Completo — 8 módulos + anomalias + competitiva + dashboard |
 
-### Pendente (1 de 12)
+### Criados (12 de 12 — todos os agentes concluídos)
+| Agente | Arquivo | Status |
+|---|---|---|
+| Agente Dev | `agente-dev.md` | Completo — escopo Fábrica, cria código React/Supabase, corrige bugs |
+
+### Pulado por decisão
 | Agente | Arquivo | Observação |
 |---|---|---|
-| Estoque | `estoque.md` | Pulado por decisão — pode ser criado depois |
+| Estoque | `estoque.md` | Baixa prioridade — criar conforme necessidade |
 
 ### Faltam criar (9 de 12)
 | Agente | Prioridade sugerida | Função principal |
