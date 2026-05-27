@@ -1,6 +1,6 @@
 ---
 name: estado-atual
-description: Estado completo do projeto em 2026-05-23 — o que foi criado, o que falta, próximos passos e como retomar
+description: Estado completo do projeto em 2026-05-27 — o que foi criado, o que falta, próximos passos e como retomar
 metadata:
   type: project
 ---
@@ -10,7 +10,7 @@ metadata:
 Projeto: **Fábrica de SaaS** — infraestrutura automatizada para criar, configurar e lançar SaaS completos com IA, voltada para empreendedores brasileiros com baixo custo inicial.
 
 Repositório: `minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas` (branch `main`)  
-Data deste snapshot: 2026-05-23  
+Data deste snapshot: 2026-05-27  
 Commits até agora: 11
 
 ---
@@ -27,7 +27,13 @@ Commits até agora: 11
 | `.claude/agents/orquestrador.md` | Completo | Orquestrador central: 2 escopos, 12 agentes mapeados, BullMQ, fallbacks, retry, exemplos reais |
 | `.claude/agents/captacao-leads.md` | Completo | Captação multicanal (WhatsApp/Instagram/Facebook/Site), CRM, classificação de intenção, exemplos por canal |
 | `.claude/agents/whatsapp-sdr.md` | Completo | Fluxo de venda em 18 etapas, upsell, follow-up, PIX, rastreio, exemplos por perfil de cliente |
-| `.claude/skills/README.md` | Placeholder | 4 skills planejados, nenhum criado |
+| `.claude/skills/README.md` | Placeholder | índice dos skills |
+| `.claude/skills/configurar-agentes.md` | Criado | skill de configuração de agentes |
+| `.claude/skills/configurar-auth.md` | Criado | skill de auth Supabase |
+| `.claude/skills/configurar-infraestrutura.md` | Criado | skill de infra gratuita |
+| `.claude/skills/configurar-whatsapp.md` | Criado | skill de WhatsApp/Evolution API |
+| `.claude/skills/pipeline-novo-saas.md` | Criado | skill do pipeline completo de novo SaaS |
+| `.claude/skills/setup-pagamentos.md` | Criado | skill de integração de pagamentos |
 | `.claude/commands/README.md` | Placeholder | 4 comandos slash planejados, nenhum criado |
 | `.claude/agents/README.md` | Placeholder | Lista de agentes planejados |
 
@@ -71,7 +77,7 @@ Estrutura de pastas com READMEs criados (sem valores reais): financeiro, marketi
 
 ## O que está em andamento
 
-**Nada em andamento no momento.** Os últimos dois commits entregaram `captacao-leads.md` e `whatsapp-sdr.md` e foram encerrados limpos.
+**Skills criados mas não commitados.** 6 arquivos em `.claude/skills/` estão untracked. Próximo passo: commit dos skills + criação de `agente-dev.md`.
 
 ---
 
@@ -111,12 +117,25 @@ Decisão de negócio: preços fixos. Todos os agentes de atendimento devem respo
 
 ## Agentes: status detalhado
 
-### Criados (3 de 12)
+### Criados (11 de 12)
 | Agente | Arquivo | Status |
 |---|---|---|
 | Orquestrador | `orquestrador.md` | Completo |
 | Captação de Leads | `captacao-leads.md` | Completo |
 | WhatsApp SDR | `whatsapp-sdr.md` | Completo |
+| Financeiro | `financeiro.md` | Completo |
+| Logística | `logistica.md` | Completo — inclui spec da Tela de Despachos |
+| Conciliação | `conciliacao.md` | Completo — Open Banking + maquininhas + caixa manual |
+| Operacional | `operacional.md` | Completo — máquina de estados + confirmação manual |
+| Rastreamento | `rastreamento.md` | Completo — polling 20min + extravio 2h + resolução automática |
+| Pós-Venda | `pos-venda.md` | Completo — NPS + histórico + badges #XXXXX + retenção |
+| Marketing | `marketing.md` | Completo — 10 canais + funis + datas + retargeting + UGC |
+| Inteligência | `inteligencia.md` | Completo — 8 módulos + anomalias + competitiva + dashboard |
+
+### Pendente (1 de 12)
+| Agente | Arquivo | Observação |
+|---|---|---|
+| Estoque | `estoque.md` | Pulado por decisão — pode ser criado depois |
 
 ### Faltam criar (9 de 12)
 | Agente | Prioridade sugerida | Função principal |
