@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-import { createServer as createViteServer } from 'vite';
 import dotenv from 'dotenv';
 import { getSupabaseAdmin } from './src/lib/supabase-server.js';
 import { encrypt } from './src/lib/crypto.js';
@@ -215,16 +214,23 @@ app.get('/api/templates', (_req, res) => {
 
 // ── Servidor ──────────────────────────────────────────────────────────────────
 
-async function configureServer() {
-  if (process.env.NODE_ENV !== 'production') {
-    const vite = await createViteServer({ server: { middlewareMode: true }, appType: 'spa' });
-    app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (_req, res) => res.sendFile(path.join(distPath, 'index.html')));
-  }
+async function startDev() {
+  const { createServer: createViteServer } = await import('vite');
+  const vite = await createViteServer({ server: { middlewareMode: true }, appType: 'spa' });
+  app.use(vite.middlewares);
   app.listen(PORT, '0.0.0.0', () => console.log(`Fábrica de SaaS rodando em http://localhost:${PORT}`));
 }
 
-configureServer();
+function startProd() {
+  const distPath = path.join(process.cwd(), 'dist');
+  app.use(express.static(distPath));
+  app.get('*', (_req, res) => res.sendFile(path.join(distPath, 'index.html')));
+  app.listen(PORT, '0.0.0.0', () => console.log(`Fábrica de SaaS rodando em http://localhost:${PORT}`));
+}
+
+export default app;
+
+if (!process.env.VERCEL) {
+  if (process.env.NODE_ENV === 'production') startProd();
+  else startDev();
+}
