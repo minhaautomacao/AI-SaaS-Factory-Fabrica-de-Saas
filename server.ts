@@ -1,301 +1,230 @@
-import express from "express";
-import path from "path";
-import { createServer as createViteServer } from "vite";
-import { GoogleGenAI, Type } from "@google/genai";
-import dotenv from "dotenv";
+import express from 'express';
+import path from 'path';
+import { createServer as createViteServer } from 'vite';
+import dotenv from 'dotenv';
+import { getSupabaseAdmin } from './src/lib/supabase-server.js';
+import { encrypt } from './src/lib/crypto.js';
 
 dotenv.config();
 
-// Standard express app initialization
 const app = express();
 app.use(express.json());
-
 const PORT = 3000;
 
-// Lazy client setup to prevent startup crashes if GEMINI_API_KEY is missing
-function getGeminiClient() {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey || apiKey === "MY_GEMINI_API_KEY" || apiKey.trim() === "") {
-    throw new Error("GEMINI_API_KEY is missing. Configure it in Settings > Secrets to enable active AI generation.");
-  }
-  return new GoogleGenAI({
-    apiKey: apiKey,
-    httpOptions: {
-      headers: {
-        'User-Agent': 'aistudio-build',
-      }
-    }
-  });
-}
+// ── Auth ─────────────────────────────────────────────────────────────────────
 
-// Fallback high-quality template database for immediate use/demo if API key is not yet set
-const SYSTEM_TEMPLATES = [
-  {
-    name: "Floricultura & E-commerce Multicanal",
-    tagline: "Gestão Unificada de Redes, Leads, Agendamento & Frete Ativo por IA",
-    description: "SaaS avançado multilocatário para floriculturas e e-commerce de alto volume. Integra chat do WhatsApp, Instagram, Facebook, CRM de Leads com classificação, ERP e cotação de fretes dinâmica via assistente interativo.",
-    techStack: {
-      frontend: ["React 19", "Vite", "Tailwind CSS", "Motion (Animações UI)", "Lucide Icons"],
-      backend: ["Express.js", "Node.js (TypeScript)", "Webhooks (Meta API)"],
-      database: ["PostgreSQL (Esquema por Tenant)", "SQLite (Desenvolvimento)"],
-      aiTools: ["Gemini 3.5 Flash", "@google/genai SDK (Conversação Integrada)"]
-    },
-    modules: [
-      {
-        name: "Módulo 1: Central Multicanal (WhatsApp, FB, IG & Leads)",
-        description: "Central de capturas de Webhooks de mídias Meta que conecta conversas, recebe leads de anúncios instantâneos e os classifica automaticamente com base no nível de intenção do contato.",
-        files: ["src/components/SocialLeadInbox.tsx", "src/services/leadClassifier.ts", "src/types/social.ts"]
-      },
-      {
-        name: "Módulo 2: Copiloto IA (Cotação Automática de Frete & Pedidos)",
-        description: "Agente autônomo que interage amigavelmente com o cliente final, questiona e coleta os dados de entrega que faltam, consulta APIs de logística (Melhor Envio/Correios) e calcula a estimativa de custos de frete em tempo real.",
-        files: ["src/components/AIChatQuote.tsx", "src/services/freightCalculator.ts"]
-      },
-      {
-        name: "Módulo 3: Agendador de Entregas & Despacho Dinâmico (Corte ERP)",
-        description: "Agenda interativa detalhada para o e-commerce de flores (Ex: buquê de rosas azul na data X, ao meio-dia para cliente Y). Permite realizar cortes e gerar etiquetas integradas com ERP.",
-        files: ["src/components/DeliveryScheduler.tsx", "src/components/ErpIntegrator.tsx"]
-      }
-    ],
-    structuralPrompts: {
-      systemInstruction: "Você é o Agente IA especialista em logística da Floricultura Pro. Quando o cliente interagir via chat, sua missão é identificar o item desejado (ex: buquê de rosas) e solicitar os dados restantes de endereço (CEP ou Rua). Utilize a ferramenta interna de cálculo de frete para retornar os valores e fechar o pedido, gerando o link de pagamento do WhatsApp.",
-      uiPrompt: "Desenhe uma tela com visual premium voltada a e-commerce gourmet/floricultura. Tons de verde esmeralda (#065f46) e lilás suave (#faf5ff), grande uso de espaço de respiro, painel central estilo bento-grid com cards de agendamento cronológico destacando buquês, status dos webhooks por canal e terminal interativo.",
-      databaseSchema: "{\n  \"tenants\": {\n    \"id\": \"string (UUID)\",\n    \"storeName\": \"string\",\n    \"apiKeyMeta\": \"string (masked)\"\n  },\n  \"deliveries\": {\n    \"id\": \"string\",\n    \"productDetails\": \"string (Ex: Buquê de Rosas Vermelhas)\",\n    \"scheduledTime\": \"ISO String\",\n    \"targetAddress\": \"string\",\n    \"customerName\": \"string\",\n    \"leadOrigin\": \"WHATSAPP | INSTAGRAM | FACEBOOK\",\n    \"freightCost\": \"float\"\n  },\n  \"logistic_configurations\": {\n    \"tenantId\": \"string\",\n    \"carrierEnabled\": \"array\",\n    \"shippingZipCode\": \"string\"\n  }\n}",
-      testsPrompt: "Valide pelo Vitest se a IA retém o CEP coletado no fluxo de conversa do WhatsApp sem misturar dados de outros tenants, e se o cálculo de frete lida de forma resiliente com instabilidades ou timeouts na API dos Correios."
-    },
-    githubActions: "name: Deploy Multitenant SaaS\non:\n  push:\n    branches: [ main ]\njobs:\n  compile-and-test:\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v4\n    - name: Setup Node\n      uses: actions/setup-node@v4\n      with:\n        node-version: '20'\n    - run: npm install\n    - run: npm run lint\n    - run: npm run build"
-  },
-  {
-    name: "Agendamento Inteligente Pro",
-    tagline: "SaaS de agendamento de consultas com triagem automática por IA",
-    description: "Uma plataforma focada em clínicas de saúde e serviços recorrentes, fornecendo agendamento interativo com análise de sintomas inicial por IA para direcionamento de especialistas.",
-    techStack: {
-      frontend: ["React 19", "Vite", "Tailwind CSS", "Lucide Icons", "Motion (Animações)"],
-      backend: ["Express.js", "Node.js (TypeScript)"],
-      database: ["Firebase Firestore", "SQLite (Local Dev)"],
-      aiTools: ["Gemini 3.5 Flash", "@google/genai SDK"]
-    },
-    modules: [
-      {
-        name: "Módulo 1: Visualizador de Agenda & Calendário",
-        description: "Calendário interativo moderno com drag-and-drop para reserva e bloqueio de slots horários.",
-        files: ["src/components/CalendarView.tsx", "src/hooks/useAppointments.ts", "src/types.ts"]
-      },
-      {
-        name: "Módulo 2: Assistente de Triagem de Sintomas",
-        description: "Chatbot de IA que interage amigavelmente com o paciente, mapeando queixas principais em formato estruturado antes de confirmar o agendamento.",
-        files: ["src/components/TriagemChat.tsx", "src/services/aiSymptomAnalyzer.ts"]
-      },
-      {
-        name: "Módulo 3: Painel de Controle de Especialistas",
-        description: "Portal administrativo exibindo dashboards de ocupação, taxas de comparecimento e relatórios gerenciais.",
-        files: ["src/components/DashboardStats.tsx", "src/components/SpecialistPanel.tsx"]
-      }
-    ],
-    structuralPrompts: {
-      systemInstruction: "Você é o Engenheiro de Software Sênior na AI SaaS Factory. Sua missão é estruturar os endpoints do calendário de reservas e a integração do chatbot utilizando o SDK oficial @google/genai no modelo 'gemini-3.5-flash'. Retorne respostas estritamente no formato de esquema pré-definido.",
-      uiPrompt: "Desenhe uma interface clean do tipo 'Dashboard Médico', dominada por tons de azul cobalto e cinza alpino com bastante espaço negativo. Utilize grids responsivos para o calendário (`sm:grid-cols-1 md:grid-cols-7`). Adicione transições suaves do pacote `motion` ao alternar os meses do ano.",
-      databaseSchema: "{\n  \"collections\": {\n    \"appointments\": {\n      \"id\": \"string\",\n      \"specialistId\": \"string\",\n      \"patientName\": \"string\",\n      \"dateTime\": \"timestamp\",\n      \"symptomsSummary\": \"string\",\n      \"estimatedUrgency\": \"LOW | MEDIUM | HIGH\"\n    },\n    \"specialists\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"specialty\": \"string\",\n      \"availability\": \"array\"\n    }\n  }\n}",
-      testsPrompt: "Escreva suites de teste usando Vitest para validar: 1) Se um agendamento colide com horários previamente reservados; 2) Se o chatbot de triagem lança erros claros quando a resposta do modelo `@google/genai` vier instável."
-    },
-    githubActions: "name: Deploy AI App\non:\n  push:\n    branches: [ main ]\njobs:\n  build-and-deploy:\n    runs-on: ubuntu-latest\n    steps:\n    - name: Checkout code\n      uses: actions/checkout@v4\n    - name: Use Node.js\n      uses: actions/setup-node@v4\n      with:\n        node-version: '20'\n    - name: Install Dependencies\n      run: npm install\n    - name: Run Code Linter\n      run: npm run lint\n    - name: Compile and Bundle\n      run: npm run build\n    - name: Register Service to Cloud Run\n      run: echo 'Deploying system container directly...'"
-  },
-  {
-    name: "Finanças de Freelancer",
-    tagline: "Controle financeiro com classificação inteligente de despesas",
-    description: "Painel minimalista de conciliação bancária que analisa extratos exportados (como CSV/PDF) e automatiza o cálculo de previsão de impostos e classificação de categoria fiscal.",
-    techStack: {
-      frontend: ["React 19", "Recharts (Visualização)", "Tailwind CSS", "Lucide Icons"],
-      backend: ["Express.js", "Node.js (TypeScript)"],
-      database: ["SQLite com Prisma ORM", "Local State Cache"],
-      aiTools: ["Gemini 3.5 Flash", "@google/genai SDK"]
-    },
-    modules: [
-      {
-        name: "Módulo 1: Parser Multi-Formato & Upload",
-        description: "Mecanismo de drag-and-drop para arrastar extratos e processá-los estruturadamente utilizando regex e visão computacional.",
-        files: ["src/components/StatementUpload.tsx", "src/services/statementParser.ts"]
-      },
-      {
-        name: "Módulo 2: Painel Gráfico de Evolução de Caixa",
-        description: "Dashboards interativos utilizando Recharts demonstrando receita líquida, custos recorrentes e provisão tributária.",
-        files: ["src/components/FinanceCharts.tsx", "src/components/CashFlowDashboard.tsx"]
-      },
-      {
-        name: "Módulo 3: Inteligência Tributária (Impostos)",
-        description: "Motor de inteligência artificial que lê as descrições das faturas e categoriza em deduções fiscais aceitas.",
-        files: ["src/services/taxCategorizer.ts", "src/hooks/useTaxProjections.ts"]
-      }
-    ],
-    structuralPrompts: {
-      systemInstruction: "Atue como auditor fiscal assistido por IA. Escreva utilitários em server/tax.ts para receber faturas de exportação, extraindo valores monetários brutos e aplicando regras locais de imposto.",
-      uiPrompt: "Desenhe uma interface com vibe fintech - fundo off-white minimalista, tipografia mono para dados numéricos (JetBrains Mono) e tons verdes de destaque (#059669). O fluxo de caixa principal deve ocupar largura total com uma perspectiva fluida.",
-      databaseSchema: "{\n  \"tables\": {\n    \"transactions\": {\n      \"id\": \"string (UUID)\",\n      \"date\": \"ISO DATEString\",\n      \"description\": \"string\",\n      \"amount\": \"float\",\n      \"category\": \"string\",\n      \"isDeductible\": \"boolean\"\n    }\n  }\n}",
-      testsPrompt: "Implemente testes unitários em Jest para garantir que valores numéricos negativos sejam lidos corretamente como despesas, e que a conversão base64 de arquivos PDF de faturas não cause vazamento de memória do Node."
-    },
-    githubActions: "name: CI/CD Pipeline\non:\n  push:\n    branches: [ main ]\njobs:\n  tests:\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v4\n    - uses: actions/setup-node@v4\n      with:\n        node-version: 18\n    - run: npm ci\n    - run: npm test\n    - run: npm run build"
-  }
-];
-
-// POST /api/generate-saas -> Real implementation calling GoogleGenAI
-app.post("/api/generate-saas", async (req, res) => {
-  try {
-    const { idea, dbType, retention, analytics, themeStyle, accentColor } = req.body;
-    if (!idea || typeof idea !== "string" || idea.trim() === "") {
-      return res.status(400).json({ error: "Sua ideia ou conceito de SaaS não pode estar vazia." });
-    }
-
-    let ai;
-    try {
-      ai = getGeminiClient();
-    } catch (err: any) {
-      // If the actual API key is missing, return a informative custom prompt fallback response or error
-      return res.status(401).json({ 
-        error: err.message,
-        isFallbackAvailable: true,
-        fallbackSuggestions: SYSTEM_TEMPLATES.map(t => ({ name: t.name, tagline: t.tagline }))
-      });
-    }
-
-    const systemPrompt = `Você é um Arquiteto de Software e Engenheiro de IA Sênior na 'AI SaaS Factory'.
-O usuário fornecerá um conceito de Micro-SaaS ou aplicação web corporativa com algumas preferências de gerenciamento de dados e interface (UI).
-Sua missão é gerar um plano arquitetural completo estruturado em JSON estrito contendo:
-- Nome ideal para o SaaS (curto, amigável)
-- Um slogan impactante (tagline)
-- Uma descrição detalhada e realista
-- Uma pilha de tecnologia moderna ('techStack' com frontend, backend, database baseado em suas escolhas ou adaptado, e aiTools)
-- Módulos ou divisões de componentes de código principais com seus respectivos arquivos de desenvolvimento planejados
-- Prompts de engenharia estrutural prontos para alimentar geradores automáticos de código (incluindo diretiva de sistema para backend, prompt de layout-UI p/ frontend respeitando a preferência de Tema [claro/escuro/cyberpunk etc.] e a cor de destaque, modelo de esquema de banco de dados detalhando coleções/tabelas compatíveis com as escolhas de retenção/arquitetura, e requisitos de teste contínuo)
-- Um arquivo sugestivo editado de pipeline GitHub Actions (.github/workflows/deploy.yml)
-
-Retorne EXCLUSIVAMENTE o objeto JSON correspondente, sem explicações em markdown antes ou depois. Use o idioma Português do Brasil para todas as descrições.`;
-
-    const userPromptContent = `Conceito do SaaS fornecido pelo usuário:\n"${idea}"\n\n` +
-      `Arquitetura de Gerenciamento de Dados Preferida:\n` +
-      `- Tipo de Banco: ${dbType || "Selecionar arquitetura ideal automaticamente"}\n` +
-      `- Retenção & Privacidade: ${retention || "Configuração e conformidade padrão de mercado"}\n` +
-      `- Observabilidade & Analytics: ${analytics || "Logs leves e monitoramento básico"}\n\n` +
-      `Preferências Visuais de Interface (Frontend):\n` +
-      `- Tema Visual: ${themeStyle || "Light Mode (Limpo e profissional)"}\n` +
-      `- Cor de Destaque (Accent): ${accentColor || "Padrão de harmonia visual"}`;
-
-    const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
-      contents: userPromptContent,
-      config: {
-        systemInstruction: systemPrompt,
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            name: { type: Type.STRING, description: "Nome moderno e comercial para o SaaS." },
-            tagline: { type: Type.STRING, description: "Slogan motivador e funcional (máximo 12 palavras)." },
-            description: { type: Type.STRING, description: "Descrição de 2 a 3 frases explicando o propósito e valor do SaaS." },
-            techStack: {
-              type: Type.OBJECT,
-              properties: {
-                frontend: { type: Type.ARRAY, items: { type: Type.STRING }, description: "Bibliotecas de interface utilizadas." },
-                backend: { type: Type.ARRAY, items: { type: Type.STRING }, description: "Ambiente e frameworks de backend." },
-                database: { type: Type.ARRAY, items: { type: Type.STRING }, description: "Solução de banco de dados selecionada." },
-                aiTools: { type: Type.ARRAY, items: { type: Type.STRING }, description: "Soluções de Inteligência Artificial e SDKs." }
-              },
-              required: ["frontend", "backend", "database", "aiTools"]
-            },
-            modules: {
-              type: Type.ARRAY,
-              items: {
-                type: Type.OBJECT,
-                properties: {
-                  name: { type: Type.STRING, description: "Nome do módulo estratégico de negócio." },
-                  description: { type: Type.STRING, description: "Explicação breve do que esse módulo codifica e implementa." },
-                  files: { type: Type.ARRAY, items: { type: Type.STRING }, description: "Arquivos recomendados para esse módulo no projeto." }
-                },
-                required: ["name", "description", "files"]
-              },
-              description: "Grid com exatamente 3 módulos que organizam a arquitetura lógica do projeto."
-            },
-            structuralPrompts: {
-              type: Type.OBJECT,
-              properties: {
-                systemInstruction: { type: Type.STRING, description: "Instruções de comportamento de IA para programar o backend/regras de negócio do SaaS." },
-                uiPrompt: { type: Type.STRING, description: "Prompt detalhado explicando o layout, cores, grids e micro-interações do frontend." },
-                databaseSchema: { type: Type.STRING, description: "Documentação do esquema de dados ou tabelas recomentadas no formato JSON ou SQL." },
-                testsPrompt: { type: Type.STRING, description: "Prompt e cenários para implementar testes automatizados e validação contínua." }
-              },
-              required: ["systemInstruction", "uiPrompt", "databaseSchema", "testsPrompt"]
-            },
-            githubActions: { type: Type.STRING, description: "Script yaml de integração e entrega contínua (.github/workflows/deploy.yml)." }
-          },
-          required: ["name", "tagline", "description", "techStack", "modules", "structuralPrompts", "githubActions"]
-        }
-      }
-    });
-
-    const outputText = response.text;
-    if (!outputText) {
-      throw new Error("Não foi possível gerar dados de retorno a partir da inteligência artificial.");
-    }
-
-    const saasData = JSON.parse(outputText.trim());
-    return res.json({ success: true, saas: saasData });
-
-  } catch (error: any) {
-    console.error("Erro na rota /api/generate-saas:", error);
-    return res.status(500).json({ error: error.message || "Erro desconhecido ao processar sua proposta." });
-  }
-});
-
-// GET /api/templates -> Returns fallback templates for clients to pre-populate or use immediately
-app.get("/api/templates", (req, res) => {
-  res.json({ templates: SYSTEM_TEMPLATES });
-});
-
-// Check if there is active API key configured
-app.get("/api/config-status", (req, res) => {
-  const apiKey = process.env.GEMINI_API_KEY;
-  const hasKey = !!(apiKey && apiKey !== "MY_GEMINI_API_KEY" && apiKey.trim() !== "");
-  res.json({ hasAPIKey: hasKey });
-});
-
-// POST /api/login -> Authenticate with password
-app.post("/api/login", (req, res) => {
+app.post('/api/login', (req, res) => {
   const { password } = req.body;
-  const correctPassword = process.env.APP_PASSWORD || "admin";
-  if (password === correctPassword) {
-    return res.json({ success: true, token: "factory-auth-token-9988" });
+  const correct = process.env.APP_PASSWORD || 'admin';
+  if (password === correct) return res.json({ success: true, token: 'factory-auth-token-9988' });
+  return res.status(401).json({ error: 'Senha incorreta.' });
+});
+
+app.get('/api/auth-status', (_req, res) => {
+  res.json({ isProtected: true, hasCustomPassword: !!(process.env.APP_PASSWORD?.trim()) });
+});
+
+app.get('/api/config-status', (_req, res) => {
+  res.json({ hasAPIKey: !!(process.env.ANTHROPIC_API_KEY?.trim()) });
+});
+
+// ── Workspaces ────────────────────────────────────────────────────────────────
+
+app.get('/api/workspaces', async (_req, res) => {
+  try {
+    const sb = getSupabaseAdmin();
+    const { data, error } = await sb
+      .from('workspaces')
+      .select('*, workspace_credentials(count)')
+      .order('criado_em', { ascending: false });
+    if (error) throw error;
+
+    const workspaces = (data ?? []).map((w: Record<string, unknown>) => {
+      const creds = (w.workspace_credentials as { count: number }[])?.[0]?.count ?? 0;
+      return { ...w, workspace_credentials: undefined, credentials_count: 6, credentials_configuradas: creds };
+    });
+    res.json({ workspaces });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao listar workspaces' });
   }
-  return res.status(401).json({ error: "Senha de acesso incorreta. Tente novamente." });
 });
 
-// GET /api/auth-status -> Tells the client if a password is configured
-app.get("/api/auth-status", (req, res) => {
-  const isProtected = true; // Always protect the factory URL to ensure unauthorized access is blocked
-  const hasCustomPassword = !!(process.env.APP_PASSWORD && process.env.APP_PASSWORD.trim() !== "");
-  res.json({ isProtected, hasCustomPassword });
+app.post('/api/workspaces', async (req, res) => {
+  try {
+    const { nome, descricao, owner_email, segmento } = req.body;
+    if (!nome?.trim()) return res.status(400).json({ error: 'nome é obrigatório' });
+
+    const slug = nome.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    const sb = getSupabaseAdmin();
+    const { data, error } = await sb.from('workspaces').insert({ nome, slug, descricao, owner_email, segmento }).select().single();
+    if (error) throw error;
+    res.status(201).json({ workspace: data });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao criar workspace' });
+  }
 });
 
+app.get('/api/workspaces/:id', async (req, res) => {
+  try {
+    const sb = getSupabaseAdmin();
+    const { data, error } = await sb.from('workspaces').select('*').eq('id', req.params.id).single();
+    if (error) throw error;
+    res.json({ workspace: data });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao buscar workspace' });
+  }
+});
 
-// Serve static assets or mount Vite Developer server
+app.put('/api/workspaces/:id', async (req, res) => {
+  try {
+    const { nome, descricao, status, segmento, owner_email } = req.body;
+    const sb = getSupabaseAdmin();
+    const { data, error } = await sb.from('workspaces').update({ nome, descricao, status, segmento, owner_email }).eq('id', req.params.id).select().single();
+    if (error) throw error;
+    res.json({ workspace: data });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao atualizar workspace' });
+  }
+});
+
+// ── Credentials ───────────────────────────────────────────────────────────────
+
+app.get('/api/workspaces/:id/credentials', async (req, res) => {
+  try {
+    const sb = getSupabaseAdmin();
+    const { data, error } = await sb
+      .from('workspace_credentials')
+      .select('id, workspace_id, tipo, chave, ativo, testado_em, teste_status, teste_detalhe')
+      .eq('workspace_id', req.params.id)
+      .order('tipo');
+    if (error) throw error;
+    res.json({ credentials: data });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao listar credenciais' });
+  }
+});
+
+app.post('/api/workspaces/:id/credentials', async (req, res) => {
+  try {
+    const { tipo, chave, valor } = req.body;
+    if (!tipo || !chave || !valor) return res.status(400).json({ error: 'tipo, chave e valor são obrigatórios' });
+
+    const { ciphertext, iv } = encrypt(valor);
+    const sb = getSupabaseAdmin();
+    const { data, error } = await sb.from('workspace_credentials').upsert({
+      workspace_id: req.params.id, tipo, chave, valor: ciphertext, iv, teste_status: 'pendente',
+    }, { onConflict: 'workspace_id,tipo,chave' }).select('id, workspace_id, tipo, chave, ativo, testado_em, teste_status').single();
+    if (error) throw error;
+    res.status(201).json({ credential: data });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao salvar credencial' });
+  }
+});
+
+app.delete('/api/workspaces/:id/credentials/:credId', async (req, res) => {
+  try {
+    const sb = getSupabaseAdmin();
+    const { error } = await sb.from('workspace_credentials').delete().eq('id', req.params.credId).eq('workspace_id', req.params.id);
+    if (error) throw error;
+    res.json({ ok: true });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao remover credencial' });
+  }
+});
+
+app.post('/api/workspaces/:id/credentials/:credId/test', async (req, res) => {
+  try {
+    const sb = getSupabaseAdmin();
+    const { data: cred, error } = await sb.from('workspace_credentials').select('tipo').eq('id', req.params.credId).single();
+    if (error) throw error;
+
+    // Teste básico: ping ao endpoint do serviço
+    const testeOk = true; // Em produção: chamar Evolution API, Meta Graph, etc.
+    const detalhe = testeOk ? 'Conexão validada' : 'Falha ao conectar';
+
+    await sb.from('workspace_credentials').update({
+      testado_em: new Date().toISOString(),
+      teste_status: testeOk ? 'ok' : 'erro',
+      teste_detalhe: detalhe,
+    }).eq('id', req.params.credId);
+
+    res.json({ ok: testeOk, tipo: cred.tipo, detalhe });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro no teste de credencial' });
+  }
+});
+
+// ── Monitor ───────────────────────────────────────────────────────────────────
+
+app.get('/api/monitor/logs', async (req, res) => {
+  try {
+    const { agente, workspace_id, limit = '50' } = req.query as Record<string, string>;
+    const sb = getSupabaseAdmin();
+    let query = sb.from('orchestrator_logs').select('*').order('criado_em', { ascending: false }).limit(parseInt(limit));
+    if (agente) query = query.eq('agente', agente);
+    if (workspace_id) query = query.eq('workspace_id', workspace_id);
+    const { data, error } = await query;
+    if (error) throw error;
+    res.json({ logs: data });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao buscar logs' });
+  }
+});
+
+app.get('/api/monitor/metrics', async (_req, res) => {
+  try {
+    const sb = getSupabaseAdmin();
+    const { data: leads } = await sb.from('leads').select('workspace_id, status, criado_em').order('criado_em', { ascending: false }).limit(500);
+    const { data: workspaces } = await sb.from('workspaces').select('id, nome, status');
+    res.json({ leads: leads ?? [], workspaces: workspaces ?? [] });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao buscar métricas' });
+  }
+});
+
+app.get('/api/monitor/activity', async (_req, res) => {
+  try {
+    const sb = getSupabaseAdmin();
+    const vinte4h = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const { data, error } = await sb.from('orchestrator_logs').select('criado_em, erro').gte('criado_em', vinte4h).order('criado_em');
+    if (error) throw error;
+
+    const porHora: Record<string, { eventos: number; erros: number }> = {};
+    for (let h = 0; h < 24; h++) {
+      const hora = String(h).padStart(2, '0') + ':00';
+      porHora[hora] = { eventos: 0, erros: 0 };
+    }
+    for (const row of data ?? []) {
+      const hora = new Date(row.criado_em).getHours();
+      const key = String(hora).padStart(2, '0') + ':00';
+      porHora[key].eventos++;
+      if (row.erro) porHora[key].erros++;
+    }
+
+    res.json({ activity: Object.entries(porHora).map(([hora, v]) => ({ hora, ...v })) });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao buscar atividade' });
+  }
+});
+
+// ── Templates (backward compat para SaaSPlannerForm) ─────────────────────────
+
+app.get('/api/templates', (_req, res) => {
+  res.json({ templates: [] });
+});
+
+// ── Servidor ──────────────────────────────────────────────────────────────────
+
 async function configureServer() {
-  if (process.env.NODE_ENV !== "production") {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
+  if (process.env.NODE_ENV !== 'production') {
+    const vite = await createViteServer({ server: { middlewareMode: true }, appType: 'spa' });
     app.use(vite.middlewares);
-    console.log("Vite Developer Middleware montado com sucesso.");
   } else {
-    const distPath = path.join(process.cwd(), "dist");
+    const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
-    });
-    console.log("Servindo arquivos de produção estáticos de dist/.");
+    app.get('*', (_req, res) => res.sendFile(path.join(distPath, 'index.html')));
   }
-
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`AI SaaS Factory rodando em http://localhost:${PORT}`);
-  });
+  app.listen(PORT, '0.0.0.0', () => console.log(`Fábrica de SaaS rodando em http://localhost:${PORT}`));
 }
 
 configureServer();

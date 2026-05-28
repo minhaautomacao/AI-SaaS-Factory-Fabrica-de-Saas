@@ -1,7 +1,46 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+export interface Workspace {
+  id: string;
+  nome: string;
+  slug: string;
+  descricao?: string;
+  status: 'configurando' | 'ativo' | 'pausado' | 'encerrado';
+  segmento?: string;
+  logo_url?: string;
+  owner_email?: string;
+  criado_em: string;
+  credentials_count: number;
+  credentials_configuradas: number;
+}
+
+export interface WorkspaceCredential {
+  id: string;
+  workspace_id: string;
+  tipo: string;
+  chave: string;
+  ativo: boolean;
+  testado_em?: string;
+  teste_status?: 'ok' | 'erro' | 'pendente';
+  teste_detalhe?: string;
+}
+
+export interface OrchestratorLog {
+  id: string;
+  task_id: string;
+  escopo: string;
+  agente: string;
+  tipo_evento: string;
+  urgencia?: string;
+  erro?: string;
+  duracao_ms?: number;
+  criado_em: string;
+  workspace_id?: string;
+}
+
+export interface ActivityMetric {
+  hora: string;
+  eventos: number;
+  erros: number;
+}
 
 export interface SaaSProject {
   id: string;
