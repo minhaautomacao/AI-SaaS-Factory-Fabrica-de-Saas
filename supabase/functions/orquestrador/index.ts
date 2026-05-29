@@ -29,6 +29,7 @@ const ROTEAMENTO: Record<string, NomeAgente[]> = {
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL') ?? '';
 const SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+const FACTORY_SECRET = Deno.env.get('FACTORY_SECRET') ?? '';
 
 async function chamarAgente(agente: NomeAgente, payload: OrquestradorPayload): Promise<void> {
   await fetch(`${SUPABASE_URL}/functions/v1/${agente}`, {
@@ -47,7 +48,9 @@ Deno.serve(async (req: Request) => {
   }
 
   const authHeader = req.headers.get('Authorization') ?? '';
-  if (!authHeader.includes(SERVICE_KEY) && SERVICE_KEY !== '') {
+  const validFactory = FACTORY_SECRET && authHeader.includes(FACTORY_SECRET);
+  const validService = SERVICE_KEY && authHeader.includes(SERVICE_KEY);
+  if (!validFactory && !validService) {
     return new Response(JSON.stringify({ error: 'Não autorizado' }), { status: 401 });
   }
 
