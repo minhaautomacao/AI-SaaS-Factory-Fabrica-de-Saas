@@ -1,17 +1,37 @@
+/**
+ * whatsapp-sdr — SDR via WhatsApp
+ *
+ * Fluxo:
+ *   1. Busca dados do lead no banco (se lead_id presente)
+ *   2. Claude gera mensagem personalizada
+ *   3. Envia a mensagem via WhatsApp (Evolution API ou Z-API)
+ *   4. Atualiza status do lead no banco
+ *
+ * Credenciais necessárias (workspace_credentials):
+ *   tipo='evolution': api_url, api_key, instance
+ *   tipo='whatsapp':  instance_id, token, client_token (Z-API)
+ *
+ * Payload esperado:
+ *   telefone    — número do destinatário (obrigatório para envio real)
+ *   lead_id     — UUID do lead (opcional, enriquece contexto)
+ *   tipo_evento — contexto do acionamento
+ */
+
 import { callClaude } from '../_shared/anthropic.ts';
 import { getSupabaseAdmin } from '../_shared/supabase.ts';
 import { logEvento } from '../_shared/logger.ts';
+import { enviarWhatsApp } from '../_shared/whatsapp.ts';
 import type { OrquestradorPayload } from '../_shared/types.ts';
 
 const SYSTEM_PROMPT = `Você é o SDR via WhatsApp da Fábrica de SaaS.
 Seu papel: redigir mensagens de WhatsApp personalizadas para leads e clientes.
 Retorne JSON:
 {
-  "mensagem": "texto da mensagem (sem emojis excessivos, tom profissional e caloroso)",
+  "mensagem": "texto da mensagem (tom profissional e caloroso, sem emojis excessivos)",
   "tipo": "abordagem_inicial"|"follow_up"|"confirmacao_pedido"|"notificacao_entrega"|"reativacao",
-  "acoes": ["string com ações executadas"]
+  "acoes": ["ações executadas"]
 }
-Máximo 300 caracteres na mensagem. Português brasileiro.`;
+Máximo 300 caracteres. Português brasileiro.`;
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204 });
@@ -22,21 +42,56 @@ Deno.serve(async (req: Request) => {
 
   const { task_id, escopo, urgencia, payload, workspace_id } = body;
   const sb = getSupabaseAdmin();
+  const acoes: string[] = [];
 
   try {
-    let contextoLead = JSON.stringify(payload, null, 2);
+    // 1. Enriquecer contexto com dados do lead
+    let contexto = JSON.stringify(payload, null, 2);
+    let telefone = payload.telefone as string | undefined;
 
     if (payload.lead_id) {
-      const { data } = await sb.from('leads').select('nome, canal, intencao, status').eq('id', payload.lead_id).single();
-      if (data) contextoLead = JSON.stringify({ ...payload, lead: data }, null, 2);
+      const { data: lead } = await sb
+        .from('leads')
+        .select('nome, telefone, canal, intencao, status')
+        .eq('id', payload.lead_id)
+        .single();
+      if (lead) {
+        contexto = JSON.stringify({ ...payload, lead }, null, 2);
+        telefone = telefone ?? (lead.telefone as string | undefined);
+      }
     }
 
-    const resposta = await callClaude(SYSTEM_PROMPT, `Contexto:\n${contextoLead}`);
+    // 2. Claude gera mensagem
+    const resposta = await callClaude(SYSTEM_PROMPT, `Contexto:\n${contexto}`);
     const resultado = JSON.parse(resposta);
+    const mensagem: string = resultado.mensagem ?? '';
 
-    // Aqui chamaria a Evolution API ou Z-API — registra a intenção no log
+    acoes.push(`Mensagem gerada (tipo: ${resultado.tipo})`);
+
+    // 3. Envia via WhatsApp
+    if (mensagem && telefone) {
+      const envio = await enviarWhatsApp(workspace_id, telefone, mensagem);
+      if (envio.enviado) {
+        acoes.push(`WhatsApp enviado para ${telefone} via ${envio.provedor}`);
+        // Atualiza status do lead
+        if (payload.lead_id) {
+          await sb.from('leads')
+            .update({ status: 'em_atendimento' })
+            .eq('id', payload.lead_id);
+          acoes.push('Lead atualizado: status → em_atendimento');
+        }
+      } else {
+        acoes.push(`WhatsApp não enviado: ${envio.erro}`);
+      }
+    } else if (!telefone) {
+      acoes.push('Telefone não disponível — mensagem gerada mas não enviada');
+    }
+
     await logEvento({ task_id, escopo, agente: 'whatsapp-sdr', tipo_evento: 'concluido', urgencia, duracao_ms: Date.now() - inicio, workspace_id });
-    return new Response(JSON.stringify({ sucesso: true, mensagem: resultado.mensagem, acoes_executadas: resultado.acoes ?? [] }), { headers: { 'Content-Type': 'application/json' } });
+    return new Response(
+      JSON.stringify({ sucesso: true, mensagem, acoes_executadas: acoes }),
+      { headers: { 'Content-Type': 'application/json' } },
+    );
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     await logEvento({ task_id, escopo, agente: 'whatsapp-sdr', tipo_evento: 'erro', urgencia, duracao_ms: Date.now() - inicio, erro: msg, workspace_id });
