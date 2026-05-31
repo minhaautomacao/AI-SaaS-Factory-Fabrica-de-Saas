@@ -235,25 +235,41 @@ Na primeira vez vai pedir para fazer login na conta Anthropic. Use `minhaautomac
 
 ## PARTE 9 — FLUXO DE TRABALHO NO DIA A DIA
 
-### Ao começar o trabalho no notebook:
-```bash
-cd "Projetos Minha Automacao/enemeop-flores"
-git pull origin main   # sempre puxar as atualizações primeiro
-npm run dev            # rodar local se necessário
-claude                 # abrir o Claude Code
+### Conceito fundamental
+
+Este projeto não tem "versão do desktop" nem "versão do notebook". Existe **uma única versão no GitHub**. Desktop e notebook são dois ambientes que apontam para o mesmo lugar. O trabalho feito em um complementa o outro — nunca duplica, nunca conflita, desde que a regra abaixo seja seguida.
+
+```
+Desktop  ──push──▶  GitHub  ◀──pull──  Notebook
+Notebook ──push──▶  GitHub  ◀──pull──  Desktop
 ```
 
-### Ao terminar o trabalho:
+### Regra de ouro — Pull → Trabalha → Push
+
+**Ao COMEÇAR (em qualquer máquina):**
+```bash
+cd "Projetos Minha Automacao/enemeop-flores"
+git pull origin main   # pega tudo que foi feito no outro PC
+npm run dev            # rodar local se necessário
+claude                 # Claude Code já lê o estado mais recente automaticamente
+```
+
+**Ao TERMINAR (em qualquer máquina):**
 ```bash
 git add .
 git commit -m "Descrição do que foi feito"
-git push origin main
+git push origin main   # disponibiliza para o outro PC
 ```
 
 O Vercel faz o deploy automático após o push — em 1-2 minutos o site em produção já está atualizado.
 
-### Regra importante:
-**Nunca trabalhe nos dois computadores ao mesmo tempo sem sincronizar.** Sempre `git pull` antes de começar e `git push` ao terminar. Assim desktop e notebook ficam sempre sincronizados.
+### Nunca:
+- Começar a trabalhar sem dar `git pull` primeiro
+- Terminar o trabalho sem dar `git push`
+- Trabalhar nos dois PCs ao mesmo tempo nos mesmos arquivos
+
+### O Claude Code também segue essa lógica
+As memórias do projeto (`.claude/memory/estado-atual.md`) estão dentro do repositório. Ao iniciar o Claude Code em qualquer máquina, ele lê o estado mais recente do projeto e continua exatamente de onde parou — independente de qual computador trabalhou por último.
 
 ---
 
