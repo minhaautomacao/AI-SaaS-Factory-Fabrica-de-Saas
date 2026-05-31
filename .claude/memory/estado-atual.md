@@ -1,194 +1,110 @@
 ---
 name: estado-atual
-description: Estado completo do projeto em 2026-05-27 — dashboard implementado, Edge Functions criadas, zero erros TypeScript
+description: Estado completo do projeto em 2026-05-29 — SaaS Enemeop Flores criado, deployado, com bug de login pendente
 metadata:
   type: project
 ---
 
 ## Contexto geral
 
-Projeto: **Fábrica de SaaS** — infraestrutura automatizada para criar, configurar e lançar SaaS completos com IA, voltada para empreendedores brasileiros com baixo custo inicial.
+Projeto: **Fábrica de SaaS** — infraestrutura automatizada para criar, configurar e lançar SaaS completos com IA.
 
-Repositório: `minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas` (branch `main`)  
-Data deste snapshot: 2026-05-27
-
----
-
-## Estado atual: IMPLEMENTAÇÃO COMPLETA
-
-### Arquitetura decisiva: 24/7 a custo zero
-- **Sem BullMQ/Redis** — migrado para Supabase Edge Functions (Deno serverless)
-- **Sem Gemini** — removido; Anthropic Claude Sonnet 4.6 é o único modelo usado
-- **Custo** = somente API Anthropic (~R$20-50/mês por SaaS) + planos gratuitos de Supabase/Vercel
+Repositório fábrica: `minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas` (branch `main`)
+Data deste snapshot: 2026-05-29
 
 ---
 
-## O que está criado e funcional
+## NOVO PROJETO CRIADO HOJE: SaaS Enemeop Flores
 
-### Migrations Supabase (`supabase/migrations/`)
-| Arquivo | Conteúdo |
+### Repositório
+- GitHub: `https://github.com/minhaautomacao/enemeop-flores` (público)
+- Local: `C:\Users\carlo\Projetos Minha Automacao\enemeop-flores`
+
+### Infraestrutura
+| Item | Valor |
 |---|---|
-| `20260527000001_leads.sql` | Tabela leads com CRM completo, UTMs, RLS |
-| `20260527000002_orchestrator_logs.sql` | Logs do orquestrador + view de monitoramento |
-| `20260527000003_workspaces.sql` | Multi-tenant: tabela workspaces |
-| `20260527000004_workspace_credentials.sql` | Credenciais encriptadas (AES-256-GCM) |
-| `20260527000005_add_workspace_fk.sql` | FK workspace_id em leads e orchestrator_logs |
-| `20260527000006_pg_cron_jobs.sql` | Jobs periódicos (inteligencia 2h, estoque 6h, relatorio 23h) |
+| Supabase projeto | `gftnjvdvzgjkhwxnxnwl` — São Paulo (sa-east-1) |
+| Supabase URL | `https://gftnjvdvzgjkhwxnxnwl.supabase.co` |
+| Supabase anon key | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmdG5qdmR2emdqa2h3eG54bndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwMjExNTMsImV4cCI6MjA5NTU5NzE1M30.zgX7BLR5u8f3MNA5kwUVk3P6bjSWEjf9AZP0ksLjvY4` |
+| Vercel projeto | `prj_ktppQMG8fL7H1sdrg53Ah5NfF7sB` |
+| Vercel team | `team_hAVMrwjX5WZBXsOEcFGzbU8F` |
+| URL produção | `https://enemeop-flores.vercel.app` |
 
-### Edge Functions Supabase (`supabase/functions/`)
-| Arquivo | Função |
-|---|---|
-| `_shared/types.ts` | Tipos compartilhados (OrquestradorPayload, AgentResult, NomeAgente) |
-| `_shared/anthropic.ts` | Cliente Claude API via fetch direto |
-| `_shared/supabase.ts` | Cliente Supabase admin (singleton) |
-| `_shared/logger.ts` | `logEvento()` → insere em orchestrator_logs |
-| `orquestrador/index.ts` | Roteador principal: 23 tipos de evento → 12 agentes |
-| `captacao-leads/index.ts` | Classifica leads por intenção |
-| `whatsapp-sdr/index.ts` | Redige mensagens WhatsApp personalizadas |
-| `financeiro/index.ts` | Processa pagamentos e cobranças |
-| `logistica/index.ts` | Calcula frete e agenda coleta |
-| `conciliacao/index.ts` | Concilia extratos bancários |
-| `operacional/index.ts` | Gerencia status de pedidos |
-| `rastreamento/index.ts` | Monitora entregas |
-| `pos-venda/index.ts` | Follow-up pós-compra, NPS |
-| `marketing/index.ts` | Campanhas e copy de marketing |
-| `inteligencia/index.ts` | Análise de métricas e insights |
-| `estoque/index.ts` | Controle de estoque (sem saldo negativo) |
-| `agente-dev/index.ts` | Planejamento de tarefas de dev |
+### Identidade visual
+- Fundo escuro `#1A1208` + dourado `#C9A84C` (extraído do cartão físico da empresa)
+- Tipografia Inter, cards com borda dourada sutil
 
-### Backend dashboard (`server.ts` + `src/lib/`)
-| Arquivo | Função |
-|---|---|
-| `server.ts` | Express com rotas: workspaces, credentials (AES-256-GCM), monitor |
-| `src/lib/supabase-server.ts` | `getSupabaseAdmin()` singleton |
-| `src/lib/crypto.ts` | `encrypt()` / `decrypt()` AES-256-GCM via Node crypto |
+### Telas implementadas (todas em produção)
+- `/login` — tela de acesso
+- `/dashboard` — visão geral com métricas e gráfico
+- `/dashboard/pedidos` — gestão de pedidos com filtros e status
+- `/dashboard/leads` — CRM de clientes com classificação por IA
+- `/dashboard/entregas` — acompanhamento de entregas por entregador
+- `/dashboard/financeiro` — receitas, despesas, meta mensal, por canal
+- `/dashboard/configuracoes` — integrações, horários, agente IA, mensagens
 
-### Rotas disponíveis
-- `GET/POST /api/workspaces` + `GET/PUT /api/workspaces/:id`
-- `GET/POST /api/workspaces/:id/credentials` + `DELETE` + `POST .../test`
-- `GET /api/monitor/logs` + `/metrics` + `/activity`
-- `POST /api/login` + `GET /api/auth-status` + `/config-status`
+### Banco de dados (migration aplicada)
+- `public.profiles` — perfis de usuários com trigger auto-create
+- `public.pedidos` — pedidos com status workflow
+- `public.leads` — CRM de clientes com intenção IA
 
-### Frontend dashboard (`src/`)
-| Arquivo | Função |
-|---|---|
-| `src/types.ts` | +Workspace, WorkspaceCredential, OrchestratorLog, ActivityMetric |
-| `src/App.tsx` | Navegação por view state (workspaces/detail/credentials/monitor/logs/planner) |
-| `src/components/layout/FactorySidebar.tsx` | Sidebar com Fábrica nav + lista de SaaS ativos |
-| `src/components/factory/WorkspacesView.tsx` | Grid de cards de workspaces + modal de criação |
-| `src/components/factory/WorkspaceDetailView.tsx` | Detalhe: credenciais + métricas |
-| `src/components/factory/CreateWorkspaceModal.tsx` | Modal de criação de workspace |
-| `src/components/credentials/CredentialCard.tsx` | Card de status de uma credencial |
-| `src/components/credentials/CredentialSetup.tsx` | Wizard 6 abas (WhatsApp/Meta/MP/Stripe/Banco/Email) |
-| `src/components/monitor/ActivityMonitor.tsx` | Gráfico de barras de atividade 24h (polling 10s) |
-| `src/components/monitor/LogsViewer.tsx` | Tabela de logs com filtros (polling 10s) |
-
-### Agentes `.claude/agents/` (todos os 12 completos)
-orquestrador, captacao-leads, whatsapp-sdr, financeiro, logistica, conciliacao, operacional, rastreamento, pos-venda, marketing, inteligencia, estoque, agente-dev
+### Usuário criado no Supabase
+- Email: `contato@enemeopflores.com.br`
+- Senha: `12345678`
+- ID: `52d4c8ed-eb44-46ee-b50f-895bac435b69`
 
 ---
 
-## Verificações finais
-- `npm run lint` → zero erros TypeScript ✅
-- `npm run dev` → servidor inicia em :3000 ✅
-- Supabase/functions excluídos do tsconfig (Deno não precisa de verificação Node) ✅
+## ⚠️ BUG PENDENTE: Login não funciona
+
+### Sintoma
+O login retorna "E-mail ou senha incorretos" mesmo com credenciais corretas.
+
+### Diagnóstico feito
+1. GoTrue autentica corretamente via API REST direta (testado via PowerShell — retornou access_token)
+2. O erro era `TypeError: Failed to execute 'fetch': String contains non ISO-8859-1 code point`
+3. A anon key estava corrompida no Vercel (caractere extra do PowerShell pipe)
+4. A chave foi recriada com `[System.IO.File]::WriteAllText()` + `Get-Content | vercel env add`
+5. Após redeploy, o erro sumiu da console MAS o login ainda não redireciona para /dashboard
+
+### Estado atual do código de login
+- `app/(auth)/login/login-form.tsx` — componente client-side com `supabase.auth.signInWithPassword()`
+- `app/(auth)/login/page.tsx` — página que importa o LoginForm
+- Middleware protege `/dashboard/*` e redireciona para `/login` sem sessão
+
+### Próximo passo para resolver
+Suspeita: o clique no botão "Entrar" não está disparando o `onSubmit` do React corretamente via browser automation. O console não mostra erros após o hard refresh, o que sugere que o auth pode estar funcionando mas o redirect não ocorre.
+
+**Ação recomendada na próxima sessão:**
+1. Abrir aba auxiliar em `enemeop-flores.vercel.app/login`
+2. Fazer login MANUALMENTE (sem automação browser) e verificar se funciona
+3. Se funcionar manualmente → problema era só na automação do browser
+4. Se não funcionar → adicionar `console.log` no `login-form.tsx` para debug
 
 ---
 
-## Status de deploy (2026-05-27)
+## Regras ativas (salvas em memória)
 
-### Supabase Migrations — APLICADAS ✅
-Todas as 6 migrations aplicadas via MCP no projeto `ebeapnydeiwuewxatuuw`.
-
-### Edge Functions — TODAS DEPLOYADAS ✅
-orquestrador, captacao-leads, whatsapp-sdr, financeiro, logistica, conciliacao, operacional, rastreamento, pos-venda, marketing, inteligencia, estoque, agente-dev — todas ACTIVE v1.
+1. **Testar antes de avisar** — nunca reportar tarefa concluída sem validar no ambiente real
+2. **Aba auxiliar** — sempre abrir aba auxiliar ao usar Chrome MCP para testes
 
 ---
 
-## Status de produção (2026-05-29) — SISTEMA ONLINE ✅
+## Fábrica de SaaS — estado geral (sistema original)
 
-### Dashboard Vercel — LIVE
-- URL: https://fabrica-saas.vercel.app
-- `isProtected: true` ✅ | `hasAPIKey: true` ✅
-- Env vars configuradas: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, ANTHROPIC_API_KEY, CREDENTIAL_ENCRYPTION_KEY, APP_PASSWORD
+### Supabase (projeto fábrica)
+- Projeto: `ebeapnydeiwuewxatuuw` — minhaautomacao-Saas
+- 6 migrations aplicadas, 13 Edge Functions deployadas (ACTIVE)
+- Dashboard fábrica: `https://fabrica-saas.vercel.app`
 
-### Edge Function Secrets — CONFIGURADOS
-- `ANTHROPIC_API_KEY` → salvo em Edge Function Secrets ✅
-- `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` → injetados automaticamente pelo Supabase ✅
+### Stack Fábrica
+- Edge Functions: orquestrador + 12 agentes (captacao-leads, whatsapp-sdr, financeiro, logistica, conciliacao, operacional, rastreamento, pos-venda, marketing, inteligencia, estoque, agente-dev)
+- Shared: `_shared/credentials.ts`, `_shared/whatsapp.ts`, `_shared/email.ts`
+- Secret `CREDENTIAL_ENCRYPTION_KEY` configurado nas Edge Functions
 
-### Cofre local — COMPLETO
-- `.credentials/infraestrutura/fabrica.env` → todos os campos preenchidos ✅
+### Pendências da fábrica
+1. WhatsApp proxy (`webhook-whatsapp-proxy`) aguarda `WHATSAPP_OLD_SYSTEM_WEBHOOK`
+2. Credenciais reais da Enemeop precisam ser inseridas em `enemeop-flores.vercel.app/dashboard/configuracoes`
 
-## Status de produção (2026-05-29) — SISTEMA ONLINE ✅
-
-### Edge Functions adicionais
-| Função | Status |
-|---|---|
-| `webhook-whatsapp-proxy` | ACTIVE v1 — proxy para coexistência de sistemas WhatsApp |
-
-### Template saas-base — CÓDIGO REAL IMPLEMENTADO ✅
-`templates/saas-base/` agora contém código deployável completo:
-- `package.json`, `tsconfig.json`, `next.config.mjs`, `tailwind.config.ts`, `postcss.config.mjs`
-- `middleware.ts` — proteção de rotas (auth Supabase SSR)
-- `app/layout.tsx`, `app/globals.css`, `app/page.tsx` — landing page com hero + features + pricing
-- `app/(auth)/login/page.tsx`, `signup/page.tsx` — autenticação completa
-- `app/api/auth/callback/route.ts` — callback OAuth
-- `app/api/webhooks/stripe/route.ts` — atualização de plano via webhook
-- `app/(dashboard)/layout.tsx` — sidebar com auth server-side
-- `app/(dashboard)/dashboard/page.tsx` — stats cards personalizáveis
-- `app/(dashboard)/settings/page.tsx` — perfil + plano + logout
-- `lib/supabase/client.ts`, `server.ts` — clientes SSR/browser tipados
-- `lib/stripe.ts` — checkout, portal, criação de customer
-- `lib/utils.ts` — cn, formatarMoeda, formatarData, iniciais
-- `types/index.ts` — Database type + Profile + PLANOS config
-- `.env.example` — todas as variáveis documentadas com links
-
-### Script de scaffolding — CRIADO ✅
-`scripts/criar-saas.ts` — cria novo projeto a partir do template com 5 prompts interativos
-
-## Status de produção (2026-05-29) — SISTEMA 100% PRONTO ✅
-
-### Edge Function Secrets — TODOS CONFIGURADOS
-- `ANTHROPIC_API_KEY` ✅
-- `FACTORY_SECRET` ✅  
-- `CREDENTIAL_ENCRYPTION_KEY` ✅ (adicionado — descriptografia AES-256-GCM funcional)
-
-### Agentes — camada de execução real deployada
-- `_shared/credentials.ts` — busca + decrypt AES-256-GCM via Web Crypto (Deno) ✅
-- `_shared/whatsapp.ts` — envio via Evolution API / Z-API ✅
-- `_shared/email.ts` — envio via Resend ✅
-- `whatsapp-sdr` v4 — envia WhatsApp real ✅
-- `financeiro` v4 — notifica cliente via WhatsApp ✅
-- `logistica` v4 — Melhor Envio real + WhatsApp ✅
-- `marketing` v4 — WhatsApp + Email por canal ✅
-- `rastreamento` v4 — notifica via WhatsApp ✅
-- `pos-venda` v4 — follow-up WhatsApp + Email ✅
-
-### O que falta para rodar 100%: SOMENTE AS CREDENCIAIS
-Configurar no dashboard https://fabrica-saas.vercel.app → Workspace → Credenciais
-
-## Pendências
-
-### 1. WhatsApp proxy — aguardando URL do sistema antigo
-`webhook-whatsapp-proxy` deployado, mas precisa de:
-- `WHATSAPP_OLD_SYSTEM_WEBHOOK` (URL do webhook atual da floricultura)
-- Configurar `SAAS_WHATSAPP_ACTIVE=false`, `SAAS_WORKSPACE_ID=b30e0fa6-3369-44bf-b766-dd3adf90501b`
-
-### 2. Criar o SaaS da floricultura usando o template
-Executar: `npx tsx scripts/criar-saas.ts`
-Escolher: saas-base → customizar para floricultura → deploy Vercel + Supabase
-
----
-
-## Decisões estratégicas fixas
-
-1. **Modelo**: Claude Sonnet 4.6 — único modelo, todos os agentes
-2. **Infraestrutura**: Supabase + Vercel (gratuitos); Anthropic API é o único custo
-3. **Criptografia**: AES-256-GCM para valores de credenciais; valor nunca retorna ao frontend
-4. **Multi-tenant**: `workspace_id` em todas as tabelas isola dados de cada SaaS
-5. **Orquestrador**: Event-driven, 23 tipos de evento → 12 agentes; paralelo por padrão
-6. **Sem desconto**: agentes nunca concedem desconto sem aprovação explícita do operador
-7. **Escalonamento humano**: Carlos é o fallback final para situações críticas
-
-**Why:** Este arquivo foi criado para que qualquer sessão nova possa retomar o trabalho exatamente de onde parou.  
-**How to apply:** Sempre ler este arquivo no início de uma sessão. Atualizar quando houver mudanças significativas.
+**Why:** Salvo para retomar contexto na próxima sessão sem perda de informação.
+**How to apply:** Leia este arquivo no início de cada sessão e continue de onde parou.
