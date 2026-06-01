@@ -55,31 +55,11 @@ Data deste snapshot: 2026-05-29
 
 ---
 
-## ⚠️ BUG PENDENTE: Login não funciona
+## ✅ Login funcionando
 
-### Sintoma
-O login retorna "E-mail ou senha incorretos" mesmo com credenciais corretas.
-
-### Diagnóstico feito
-1. GoTrue autentica corretamente via API REST direta (testado via PowerShell — retornou access_token)
-2. O erro era `TypeError: Failed to execute 'fetch': String contains non ISO-8859-1 code point`
-3. A anon key estava corrompida no Vercel (caractere extra do PowerShell pipe)
-4. A chave foi recriada com `[System.IO.File]::WriteAllText()` + `Get-Content | vercel env add`
-5. Após redeploy, o erro sumiu da console MAS o login ainda não redireciona para /dashboard
-
-### Estado atual do código de login
-- `app/(auth)/login/login-form.tsx` — componente client-side com `supabase.auth.signInWithPassword()`
-- `app/(auth)/login/page.tsx` — página que importa o LoginForm
-- Middleware protege `/dashboard/*` e redireciona para `/login` sem sessão
-
-### Próximo passo para resolver
-Suspeita: o clique no botão "Entrar" não está disparando o `onSubmit` do React corretamente via browser automation. O console não mostra erros após o hard refresh, o que sugere que o auth pode estar funcionando mas o redirect não ocorre.
-
-**Ação recomendada na próxima sessão:**
-1. Abrir aba auxiliar em `enemeop-flores.vercel.app/login`
-2. Fazer login MANUALMENTE (sem automação browser) e verificar se funciona
-3. Se funcionar manualmente → problema era só na automação do browser
-4. Se não funcionar → adicionar `console.log` no `login-form.tsx` para debug
+Confirmado em 2026-06-01: login manual em `https://enemeop-flores.vercel.app/login` funciona corretamente.
+- Email: `contato@enemeopflores.com.br` / Senha: `12345678`
+- O problema anterior era causado pela automação do browser (Chrome MCP), não pelo código.
 
 ---
 
