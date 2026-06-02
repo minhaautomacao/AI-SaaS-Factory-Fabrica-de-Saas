@@ -86,5 +86,51 @@ Confirmado em 2026-06-01: login manual em `https://enemeop-flores.vercel.app/log
 1. WhatsApp proxy (`webhook-whatsapp-proxy`) aguarda `WHATSAPP_OLD_SYSTEM_WEBHOOK`
 2. Credenciais reais da Enemeop precisam ser inseridas em `enemeop-flores.vercel.app/dashboard/configuracoes`
 
+---
+
+## Sessão 2026-06-01 — O que foi feito e onde paramos
+
+### 1. Sincronização Desktop ↔ Notebook
+- Criado script `scripts/setup-novo-ambiente.ps1` — instala Git, GitHub CLI, Vercel CLI, Claude Code CLI, clona os dois repos, configura `~/.claude/`
+- Criado script `scripts/verificar-ambiente.ps1` — verifica se repos do notebook estão iguais ao desktop
+- Notebook (usuário: NOTEBOOK / ANTONIOCARLOS) executou os scripts e ficou 100% sincronizado
+- Ambos os repos confirmados sincronizados: `fabrica-saas` (commit 67008d7) e `enemeop-flores` (commit a81bb7e)
+- Login funcionando em `https://enemeop-flores.vercel.app/login` — bug anterior era falso positivo da automação browser
+
+### 2. Integração Meta (Facebook/Instagram/WhatsApp) — EM ANDAMENTO
+**App criado:** `enemeopflores` — App ID: `512230540723061`
+
+**Estado atual:**
+- Logamos no Instagram como `@enemeopflores` (senha: Cloe2026) via Chrome MCP
+- Navegamos até `developers.facebook.com/apps/512230540723061/roles/`
+- Estamos na seção **Funções do app** — clicamos em "Funções" (não "Usuários de teste")
+- **PRÓXIMO PASSO IMEDIATO:** Na tela de Funções, localizar a seção "Testadores do Instagram", verificar se `@enemeopflores` está como Pendente e reenviar o convite
+
+### 3. Roteiro completo de credenciais Meta (ordem de execução)
+
+| # | O que | Onde | Status |
+|---|---|---|---|
+| 1 | Aceitar convite Testador Instagram @enemeopflores | Funções do app → Testadores do Instagram | ⚠️ PENDENTE |
+| 2 | Token de Página do Facebook + Page ID | Graph API Explorer | ⏳ aguarda etapa 1 |
+| 3 | Instagram Business Account ID + Token | Graph API Explorer | ⏳ aguarda etapa 2 |
+| 4 | WhatsApp Phone Number ID + Token | Casos de uso → WhatsApp | ⏳ aguarda etapa 1 |
+| 5 | Webhooks (criar rotas no Next.js) | Código + painel Meta | ⏳ eu faço no código |
+| 6 | Ad Account ID | business.facebook.com | ⏳ |
+| 7 | Publicar app (sair do modo dev) | Publicar → Análise | ⏳ último passo |
+
+### 4. Credenciais já obtidas
+- App ID: `512230540723061`
+- App Secret: `f0c1df8038b53a709bccec7ddd023012`
+- Instagram App ID: `1403719804436572`
+- Instagram App Secret: `acdabdba549c851fcae862f3c56ed877`
+
+### 5. Próximos passos ao retomar no notebook
+1. Abrir `developers.facebook.com/apps/512230540723061/roles/` → Funções
+2. Em "Testadores do Instagram" — remover convite pendente de @enemeopflores e reenviar
+3. Aceitar convite no app do Instagram (celular da Enemeop)
+4. Voltar ao painel e gerar tokens (etapas 2 e 3 do roteiro acima)
+5. Configurar WhatsApp Business API com número (11) 982829083
+6. Eu crio as rotas de webhook no Next.js
+
 **Why:** Salvo para retomar contexto na próxima sessão sem perda de informação.
 **How to apply:** Leia este arquivo no início de cada sessão e continue de onde parou.
