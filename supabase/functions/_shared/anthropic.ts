@@ -1,33 +1,68 @@
+import { getSupabaseAdmin } from './supabase.ts';
+
+const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages';
 
-export async function callClaude(
-  systemPrompt: string,
-  userMessage: string,
-  maxTokens = 2048,
-): Promise<string> {
-  const apiKey = Deno.env.get('ANTHROPIC_API_KEY');
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY não configurada');
+// Lê secret do Vault Supabase via RPC
+async function getVaultSecret(name: string): Promise<string | null> {
+  try {
+    const sb = getSupabaseAdmin();
+    const { data } = await sb.rpc('get_vault_secret', { secret_name: name });
+    return data as string | null;
+  } catch {
+    return null;
+  }
+}
 
-  const response = await fetch(ANTHROPIC_API_URL, {
+// Chama Groq (OpenAI-compatible) — gratuito, 14.400 req/dia
+async function callGroq(apiKey: string, systemPrompt: string, userMessage: string, maxTokens: number): Promise<string> {
+  const response = await fetch(GROQ_API_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-    },
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-6',
+      model: 'llama-3.3-70b-versatile',
       max_tokens: maxTokens,
-      system: systemPrompt,
-      messages: [{ role: 'user', content: userMessage }],
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userMessage },
+      ],
     }),
   });
+  if (!response.ok) { const err = await response.text(); throw new Error(`Groq API ${response.status}: ${err}`); }
+  const data = await response.json();
+  return data.choices[0].message.content as string;
+}
 
-  if (!response.ok) {
-    const err = await response.text();
-    throw new Error(`Anthropic API ${response.status}: ${err}`);
-  }
-
+// Chama Anthropic — fallback quando Groq não disponível
+async function callAnthropic(apiKey: string, systemPrompt: string, userMessage: string, maxTokens: number): Promise<string> {
+  const response = await fetch(ANTHROPIC_API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: maxTokens, system: systemPrompt, messages: [{ role: 'user', content: userMessage }] }),
+  });
+  if (!response.ok) { const err = await response.text(); throw new Error(`Anthropic API ${response.status}: ${err}`); }
   const data = await response.json();
   return data.content[0].text as string;
+}
+
+/**
+ * callClaude — chama Groq (gratuito) com fallback para Anthropic
+ * Ordem de prioridade:
+ *   1. GROQ_API_KEY (env var ou Vault)
+ *   2. ANTHROPIC_API_KEY (env var ou Vault)
+ */
+export async function callClaude(systemPrompt: string, userMessage: string, maxTokens = 2048): Promise<string> {
+  // Tenta Groq primeiro
+  const groqKey = Deno.env.get('GROQ_API_KEY') || await getVaultSecret('GROQ_API_KEY');
+  if (groqKey) {
+    return callGroq(groqKey, systemPrompt, userMessage, maxTokens);
+  }
+
+  // Fallback: Anthropic
+  const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY') || await getVaultSecret('ANTHROPIC_API_KEY');
+  if (anthropicKey) {
+    return callAnthropic(anthropicKey, systemPrompt, userMessage, maxTokens);
+  }
+
+  throw new Error('Nenhuma API key configurada (GROQ_API_KEY ou ANTHROPIC_API_KEY)');
 }

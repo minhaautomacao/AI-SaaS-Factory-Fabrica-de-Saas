@@ -23,3 +23,9 @@ coverage/
 Thumbs.db
 desktop.ini
 .vercel
+node_modules
+dist
+.temp
+logs
+backups
+.cloudcode/cache

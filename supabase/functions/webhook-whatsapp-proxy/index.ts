@@ -62,6 +62,31 @@ function extrairTexto(body: Record<string, unknown>): string {
   return '[mensagem não-textual]';
 }
 
+// Extrai número/ID do remetente para identificar o lead
+function extrairRemetente(body: Record<string, unknown>): string {
+  try {
+    // Evolution API
+    const data = body['data'] as Record<string, unknown> | undefined;
+    if (data?.['key']) {
+      const key = data['key'] as Record<string, unknown>;
+      return String(key['remoteJid'] ?? '').replace('@s.whatsapp.net', '');
+    }
+    // Z-API
+    if (body['phone']) return String(body['phone']);
+    // WhatsApp Cloud API
+    const entry = body['entry'] as Array<Record<string, unknown>> | undefined;
+    if (Array.isArray(entry) && entry[0]) {
+      const changes = entry[0]['changes'] as Array<Record<string, unknown>> | undefined;
+      if (Array.isArray(changes) && changes[0]) {
+        const val = changes[0]['value'] as Record<string, unknown> | undefined;
+        const msgs = val?.['messages'] as Array<Record<string, unknown>> | undefined;
+        if (Array.isArray(msgs) && msgs[0]) return String(msgs[0]['from'] ?? '');
+      }
+    }
+  } catch { /* ignora */ }
+  return '';
+}
+
 Deno.serve(async (req: Request) => {
   // CORS preflight
   if (req.method === 'OPTIONS') {
@@ -115,10 +140,17 @@ Deno.serve(async (req: Request) => {
             'Authorization': `Bearer ${FACTORY_SECRET}`,
           },
           body: JSON.stringify({
-            tipo: 'mensagem-recebida',
+            tipo: 'novo-lead',
             task_id: crypto.randomUUID(),
+            escopo: 'producao',
+            urgencia: 'normal',
             workspace_id: WORKSPACE_ID,
-            dados: body,
+            payload: {
+              canal: 'whatsapp',
+              mensagem: extrairTexto(body),
+              canal_id: extrairRemetente(body),
+              raw: body,
+            },
           }),
         }),
         8000, // 8s timeout — falha silenciosa, sistema antigo já foi servido

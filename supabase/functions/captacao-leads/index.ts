@@ -1,17 +1,33 @@
+/**
+ * captacao-leads
+ *
+ * Recebe leads de qualquer canal (WhatsApp, Instagram, Facebook, Site)
+ * via orquestrador, classifica com IA e persiste no banco.
+ *
+ * Comportamento:
+ *   - Sem lead_id no payload → INSERE novo lead e classifica
+ *   - Com lead_id no payload → ATUALIZA classificação do lead existente
+ */
+
 import { callClaude } from '../_shared/anthropic.ts';
 import { getSupabaseAdmin } from '../_shared/supabase.ts';
 import { logEvento } from '../_shared/logger.ts';
 import type { OrquestradorPayload } from '../_shared/types.ts';
 
-const SYSTEM_PROMPT = `Você é o agente de Captação de Leads da Fábrica de SaaS.
-Seu papel: classificar leads recém-chegados e decidir a ação imediata.
-Analise os dados do lead e retorne JSON com:
+const SYSTEM_PROMPT = `Você é o agente de Captação de Leads da Fábrica de SaaS especializado em floricultura.
+Analise os dados do lead e retorne APENAS JSON válido (sem markdown) com:
 {
-  "intencao": "alta"|"media"|"baixa",
-  "status_sugerido": "novo"|"em_atendimento"|"qualificado",
-  "notas": "string com observações relevantes",
-  "acoes": ["string com ações a executar"]
-}`;
+  "intencao": "urgente" | "alta" | "media" | "baixa",
+  "status": "novo" | "em_atendimento",
+  "notas": "observações relevantes sobre o lead em até 200 caracteres",
+  "acoes": ["lista de ações recomendadas"]
+}
+
+Critérios de intenção:
+- urgente: compra para hoje, precisa agora, entrega urgente
+- alta: evento especial, casamento, formatura, corporativo
+- media: dúvida de preço, cotação, frete
+- baixa: curiosidade, comentário, sem intenção imediata`;
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204 });
@@ -26,21 +42,75 @@ Deno.serve(async (req: Request) => {
   try {
     const contexto = JSON.stringify(payload, null, 2);
     const resposta = await callClaude(SYSTEM_PROMPT, `Dados do lead:\n${contexto}`);
-    const resultado = JSON.parse(resposta);
 
-    if (payload.lead_id) {
+    // Limpa possível markdown do retorno
+    const jsonStr = resposta.replace(/```json\n?|\n?```/g, '').trim();
+    const resultado = JSON.parse(jsonStr);
+
+    // Garante valor válido de intencao
+    const intencoesValidas = ['urgente', 'alta', 'media', 'baixa', 'desconhecida'];
+    const intencao = intencoesValidas.includes(resultado.intencao) ? resultado.intencao : 'desconhecida';
+
+    const statusValidos = ['novo', 'em_atendimento', 'proposta_enviada', 'aguardando_pagamento', 'convertido', 'perdido', 'inativo'];
+    const status = statusValidos.includes(resultado.status) ? resultado.status : 'novo';
+
+    let leadId = payload?.lead_id as string | undefined;
+
+    if (leadId) {
+      // Atualiza lead existente
       await sb.from('leads').update({
-        intencao: resultado.intencao,
-        status: resultado.status_sugerido,
-        notas: resultado.notas,
-      }).eq('id', payload.lead_id);
+        intencao,
+        status,
+        notas: resultado.notas ?? null,
+        atualizado_em: new Date().toISOString(),
+      }).eq('id', leadId);
+    } else {
+      // Insere novo lead
+      const canal = (payload?.canal as string) ?? 'outro';
+      const { data: novoLead } = await sb.from('leads').insert({
+        canal,
+        nome: (payload?.nome as string) ?? null,
+        telefone: (payload?.telefone as string) ?? null,
+        email: (payload?.email as string) ?? null,
+        mensagem_inicial: (payload?.mensagem as string) ?? null,
+        canal_id: (payload?.canal_id as string) ?? null,
+        utm_source: (payload?.utm_source as string) ?? canal,
+        historico_canal: (payload?.historico_canal as string) ?? null,
+        notas: resultado.notas ?? null,
+        intencao,
+        status,
+        metadata: { task_id, workspace_id, payload_original: payload },
+      }).select('id').single();
+
+      leadId = novoLead?.id;
     }
 
-    await logEvento({ task_id, escopo, agente: 'captacao-leads', tipo_evento: 'concluido', urgencia, duracao_ms: Date.now() - inicio, workspace_id });
-    return new Response(JSON.stringify({ sucesso: true, acoes_executadas: resultado.acoes ?? [] }), { headers: { 'Content-Type': 'application/json' } });
+    await logEvento({
+      task_id,
+      escopo,
+      agente: 'captacao-leads',
+      tipo_evento: 'concluido',
+      urgencia,
+      duracao_ms: Date.now() - inicio,
+      workspace_id,
+    });
+
+    return new Response(
+      JSON.stringify({ sucesso: true, lead_id: leadId, intencao, acoes_executadas: resultado.acoes ?? [] }),
+      { headers: { 'Content-Type': 'application/json' } },
+    );
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
-    await logEvento({ task_id, escopo, agente: 'captacao-leads', tipo_evento: 'erro', urgencia, duracao_ms: Date.now() - inicio, erro: msg, workspace_id });
+    await logEvento({
+      task_id,
+      escopo,
+      agente: 'captacao-leads',
+      tipo_evento: 'erro',
+      urgencia,
+      duracao_ms: Date.now() - inicio,
+      erro: msg,
+      workspace_id,
+    });
     return new Response(JSON.stringify({ sucesso: false, erro: msg }), { status: 500 });
   }
 });

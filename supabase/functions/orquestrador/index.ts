@@ -2,8 +2,8 @@ import { logEvento } from '../_shared/logger.ts';
 import type { NomeAgente, OrquestradorPayload } from '../_shared/types.ts';
 
 const ROTEAMENTO: Record<string, NomeAgente[]> = {
-  'novo-lead':                   ['captacao-leads', 'whatsapp-sdr'],
-  'mensagem-recebida':           ['whatsapp-sdr'],
+  'novo-lead':                   ['captacao-leads'],   // captacao-leads cria/classifica; SDR acionado separadamente se urgente
+  'mensagem-recebida':           ['captacao-leads'],   // toda mensagem nova vira lead classificado primeiro
   'lead-qualificado':            ['whatsapp-sdr'],
   'pagamento-recebido':          ['financeiro', 'logistica'],
   'pedido-criado':               ['operacional', 'logistica'],

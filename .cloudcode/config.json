@@ -1,0 +1,7 @@
+{
+  "terminal": "powershell",
+  "autoRun": true,
+  "workspaceTrust": true,
+  "node": "v24",
+  "gitEnabled": true
+}

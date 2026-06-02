@@ -185,12 +185,19 @@ Estas regras são obrigatórias em todas as sessões, sem exceção.
 - [x] Configuração BullMQ com Upstash Redis (`orchestrator/`)
 - [x] Documento de teste do fluxo completo (`testes/fluxo-completo.md`)
 
-### Fase 7 — Execução real (próxima)
-- [ ] Preencher `orchestrator/.env` com credenciais reais (Supabase + Upstash)
-- [ ] `cd orchestrator && npm install && npm run dev`
-- [ ] Aplicar migrations: `supabase db push`
-- [ ] Executar scripts de teste do `testes/fluxo-completo.md`
-- [ ] Validar logs em `v_orchestrator_monitor` no Supabase
+### Fase 7 — Execução real (CONCLUÍDA em 2026-06-02)
+- [x] App Meta publicado em modo Live
+- [x] Webhook Instagram/Facebook verificado e ativo
+- [x] Token Instagram gerado (@enemeopflores, ID 17841402064363907)
+- [x] Pipeline completo em produção: DM → webhook-meta → orquestrador → captacao-leads → Supabase
+- [x] IA Groq (llama-3.3-70b) classificando intenção dos leads em tempo real
+- [x] Primeiro lead real capturado (canal_id: 9530087693699545)
+
+### Fase 8 — Próximos passos
+- [ ] Corrigir bug de login em enemeop-flores.vercel.app
+- [ ] Implementar resposta automática via WhatsApp (agente whatsapp-sdr)
+- [ ] Dashboard de leads no painel admin
+- [ ] Renovação do token Instagram (~60 dias)
 
 ## Contato e repositório
 
