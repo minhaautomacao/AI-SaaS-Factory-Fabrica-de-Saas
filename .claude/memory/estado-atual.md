@@ -1,6 +1,6 @@
 ---
 name: estado-atual
-description: Estado completo do projeto em 2026-05-29 — SaaS Enemeop Flores criado, deployado, com bug de login pendente
+description: Estado completo do projeto em 2026-06-02 — pipeline Instagram ativo, dashboard de leads em produção, Vercel unificada em minhaautomacao
 metadata:
   type: project
 ---
@@ -9,128 +9,113 @@ metadata:
 
 Projeto: **Fábrica de SaaS** — infraestrutura automatizada para criar, configurar e lançar SaaS completos com IA.
 
-Repositório fábrica: `minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas` (branch `main`)
-Data deste snapshot: 2026-05-29
+Repositório fábrica: `minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas`
+Repositório floricultura: `minhaautomacao/enemeop-flores`
+Local notebook: `C:\Users\NOTEBOOK\Documents\GitHub\enemeop-flores`
+Data deste snapshot: 2026-06-02
 
 ---
 
-## NOVO PROJETO CRIADO HOJE: SaaS Enemeop Flores
+## SaaS Enemeop Flores — Estado atual
 
-### Repositório
-- GitHub: `https://github.com/minhaautomacao/enemeop-flores` (público)
-- Local: `C:\Users\carlo\Projetos Minha Automacao\enemeop-flores`
+### URLs de produção
+
+| URL | Status |
+|---|---|
+| `https://enemeop-flores-three.vercel.app` | ✅ ONLINE — URL estável minhaautomacao |
+| `https://enemeop-flores.vercel.app` | ⚠️ conta errada (essencial-auto-pecas) — ignorar |
+| `https://app.enemeopflores.com.br` | ⏳ CNAME pendente no Cloudflare |
+| `https://enemeopflores.com.br` | ✅ site público da floricultura (hospedagem separada) |
+
+### Vercel — conta minhaautomacao
+
+- Team ID: `team_gZMrVpE7q1aYd7VXOAUcCN0E`
+- Projeto enemeop-flores ID: `prj_rGXjRZzqsE8riGFyvY6koAchZC0Q`
+- Projeto fabrica-saas ID: `prj_Iy5tnY1aXRkxYYtyLZn2tLJVt2g1`
+- Token API: `vcp_7vhOv4P6PZraSVrJuTlMTq1r5GYiFc6HlazaOltXlTovgKGc2j1UHaRO`
+- GitHub auto-deploy: ✅ conectado (push no `master` → deploy automático)
+- SSO protection: ✅ desativado (acesso público sem conta Vercel)
+
+### Domínio customizado pendente
+
+Para ativar `app.enemeopflores.com.br` o usuário precisa adicionar no Cloudflare:
+- Tipo: `CNAME`
+- Nome: `app`
+- Destino: `cname.vercel-dns.com`
+- Proxy: **OFF** (só DNS)
+
+O registro foi adicionado no Vercel (`verified: true`) — só falta o DNS.
 
 ### Infraestrutura
+
 | Item | Valor |
 |---|---|
-| Supabase projeto | `gftnjvdvzgjkhwxnxnwl` — São Paulo (sa-east-1) |
+| Supabase enemeop | `gftnjvdvzgjkhwxnxnwl` — São Paulo |
 | Supabase URL | `https://gftnjvdvzgjkhwxnxnwl.supabase.co` |
-| Supabase anon key | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmdG5qdmR2emdqa2h3eG54bndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwMjExNTMsImV4cCI6MjA5NTU5NzE1M30.zgX7BLR5u8f3MNA5kwUVk3P6bjSWEjf9AZP0ksLjvY4` |
-| Vercel projeto | `prj_ktppQMG8fL7H1sdrg53Ah5NfF7sB` |
-| Vercel team | `team_hAVMrwjX5WZBXsOEcFGzbU8F` |
-| URL produção | `https://enemeop-flores.vercel.app` |
-
-### Identidade visual
-- Fundo escuro `#1A1208` + dourado `#C9A84C` (extraído do cartão físico da empresa)
-- Tipografia Inter, cards com borda dourada sutil
+| Supabase fábrica | `ebeapnydeiwuewxatuuw` — minhaautomacao-Saas |
+| Vercel MCP config | `~/.claude/.mcp.json` → `vercel-minhaautomacao` |
 
 ### Telas implementadas (todas em produção)
+
 - `/login` — tela de acesso
 - `/dashboard` — visão geral com métricas e gráfico
-- `/dashboard/pedidos` — gestão de pedidos com filtros e status
-- `/dashboard/leads` — CRM de clientes com classificação por IA
-- `/dashboard/entregas` — acompanhamento de entregas por entregador
-- `/dashboard/financeiro` — receitas, despesas, meta mensal, por canal
-- `/dashboard/configuracoes` — integrações, horários, agente IA, mensagens
+- `/dashboard/pedidos` — gestão de pedidos
+- `/dashboard/leads` — CRM com dados reais do Instagram via Edge Function
+- `/dashboard/entregas` — acompanhamento de entregas
+- `/dashboard/financeiro` — receitas, despesas, meta mensal
+- `/dashboard/configuracoes` — integrações, horários, agente IA
 
-### Banco de dados (migration aplicada)
-- `public.profiles` — perfis de usuários com trigger auto-create
-- `public.pedidos` — pedidos com status workflow
-- `public.leads` — CRM de clientes com intenção IA
+### Usuário admin
 
-### Usuário criado no Supabase
 - Email: `contato@enemeopflores.com.br`
 - Senha: `12345678`
-- ID: `52d4c8ed-eb44-46ee-b50f-895bac435b69`
 
 ---
 
-## ✅ Login funcionando
+## Pipeline Instagram — EM PRODUÇÃO
 
-Confirmado em 2026-06-01: login manual em `https://enemeop-flores.vercel.app/login` funciona corretamente.
-- Email: `contato@enemeopflores.com.br` / Senha: `12345678`
-- O problema anterior era causado pela automação do browser (Chrome MCP), não pelo código.
+- App Meta: `enemeopflores` — App ID: `512230540723061`
+- Instagram: `@enemeopflores` (ID: `17841402064363907`)
+- Webhook: ativo e verificado
+- Fluxo: DM Instagram → webhook-meta → orquestrador → captacao-leads → Supabase
+- IA: Groq llama-3.3-70b classificando intenção em tempo real
+- Primeiro lead real capturado: `canal_id: 9530087693699545`
+
+### Edge Function de leads
+
+- Função: `leads-enemeop` no Supabase fábrica (`ebeapnydeiwuewxatuuw`)
+- URL: `https://ebeapnydeiwuewxatuuw.supabase.co/functions/v1/leads-enemeop`
+- Sem JWT verification, lê leads do Instagram, retorna `{ leads, total }`
+
+### Token Instagram
+
+- Gerado em 2026-06-02
+- Renovar em ~2026-08-01 (60 dias)
 
 ---
 
-## Regras ativas (salvas em memória)
+## Fábrica de SaaS — estado geral
 
-1. **Testar antes de avisar** — nunca reportar tarefa concluída sem validar no ambiente real
-2. **Aba auxiliar** — sempre abrir aba auxiliar ao usar Chrome MCP para testes
-
----
-
-## Fábrica de SaaS — estado geral (sistema original)
-
-### Supabase (projeto fábrica)
-- Projeto: `ebeapnydeiwuewxatuuw` — minhaautomacao-Saas
 - 6 migrations aplicadas, 13 Edge Functions deployadas (ACTIVE)
-- Dashboard fábrica: `https://fabrica-saas.vercel.app`
-
-### Stack Fábrica
-- Edge Functions: orquestrador + 12 agentes (captacao-leads, whatsapp-sdr, financeiro, logistica, conciliacao, operacional, rastreamento, pos-venda, marketing, inteligencia, estoque, agente-dev)
-- Shared: `_shared/credentials.ts`, `_shared/whatsapp.ts`, `_shared/email.ts`
-- Secret `CREDENTIAL_ENCRYPTION_KEY` configurado nas Edge Functions
-
-### Pendências da fábrica
-1. WhatsApp proxy (`webhook-whatsapp-proxy`) aguarda `WHATSAPP_OLD_SYSTEM_WEBHOOK`
-2. Credenciais reais da Enemeop precisam ser inseridas em `enemeop-flores.vercel.app/dashboard/configuracoes`
+- Stack: orquestrador + agentes (captacao-leads, whatsapp-sdr, financeiro, etc.)
+- URL fábrica: `https://fabrica-saas-ebon.vercel.app`
 
 ---
 
-## Sessão 2026-06-01 — O que foi feito e onde paramos
+## Próximas tarefas (por prioridade)
 
-### 1. Sincronização Desktop ↔ Notebook
-- Criado script `scripts/setup-novo-ambiente.ps1` — instala Git, GitHub CLI, Vercel CLI, Claude Code CLI, clona os dois repos, configura `~/.claude/`
-- Criado script `scripts/verificar-ambiente.ps1` — verifica se repos do notebook estão iguais ao desktop
-- Notebook (usuário: NOTEBOOK / ANTONIOCARLOS) executou os scripts e ficou 100% sincronizado
-- Ambos os repos confirmados sincronizados: `fabrica-saas` (commit 67008d7) e `enemeop-flores` (commit a81bb7e)
-- Login funcionando em `https://enemeop-flores.vercel.app/login` — bug anterior era falso positivo da automação browser
+| # | Tarefa | Detalhe |
+|---|---|---|
+| 1 | CNAME Cloudflare | `app CNAME cname.vercel-dns.com` (usuário faz no painel) |
+| 2 | Agente WhatsApp SDR | Resposta automática para leads do Instagram |
+| 3 | Renovação token Instagram | ~60 dias a partir de 2026-06-02 |
 
-### 2. Integração Meta (Facebook/Instagram/WhatsApp) — EM ANDAMENTO
-**App criado:** `enemeopflores` — App ID: `512230540723061`
+### Agente WhatsApp SDR — o que precisa
 
-**Estado atual:**
-- Logamos no Instagram como `@enemeopflores` (senha: Cloe2026) via Chrome MCP
-- Navegamos até `developers.facebook.com/apps/512230540723061/roles/`
-- Estamos na seção **Funções do app** — clicamos em "Funções" (não "Usuários de teste")
-- **PRÓXIMO PASSO IMEDIATO:** Na tela de Funções, localizar a seção "Testadores do Instagram", verificar se `@enemeopflores` está como Pendente e reenviar o convite
-
-### 3. Roteiro completo de credenciais Meta (ordem de execução)
-
-| # | O que | Onde | Status |
-|---|---|---|---|
-| 1 | Aceitar convite Testador Instagram @enemeopflores | Funções do app → Testadores do Instagram | ⚠️ PENDENTE |
-| 2 | Token de Página do Facebook + Page ID | Graph API Explorer | ⏳ aguarda etapa 1 |
-| 3 | Instagram Business Account ID + Token | Graph API Explorer | ⏳ aguarda etapa 2 |
-| 4 | WhatsApp Phone Number ID + Token | Casos de uso → WhatsApp | ⏳ aguarda etapa 1 |
-| 5 | Webhooks (criar rotas no Next.js) | Código + painel Meta | ⏳ eu faço no código |
-| 6 | Ad Account ID | business.facebook.com | ⏳ |
-| 7 | Publicar app (sair do modo dev) | Publicar → Análise | ⏳ último passo |
-
-### 4. Credenciais já obtidas
-- App ID: `512230540723061`
-- App Secret: `f0c1df8038b53a709bccec7ddd023012`
-- Instagram App ID: `1403719804436572`
-- Instagram App Secret: `acdabdba549c851fcae862f3c56ed877`
-
-### 5. Próximos passos ao retomar no notebook
-1. Abrir `developers.facebook.com/apps/512230540723061/roles/` → Funções
-2. Em "Testadores do Instagram" — remover convite pendente de @enemeopflores e reenviar
-3. Aceitar convite no app do Instagram (celular da Enemeop)
-4. Voltar ao painel e gerar tokens (etapas 2 e 3 do roteiro acima)
-5. Configurar WhatsApp Business API com número (11) 982829083
-6. Eu crio as rotas de webhook no Next.js
+- Quando um lead é capturado, enviar mensagem de boas-vindas via WhatsApp
+- Usar a Edge Function `whatsapp-sdr` já existente na fábrica
+- Conectar ao número (11) 982829083
+- Credenciais faltantes: `WHATSAPP_ACCESS_TOKEN` e `WHATSAPP_BUSINESS_ACCOUNT_ID` (variáveis criadas no Vercel mas sem valor)
 
 **Why:** Salvo para retomar contexto na próxima sessão sem perda de informação.
-**How to apply:** Leia este arquivo no início de cada sessão e continue de onde parou.
+**How to apply:** Leia este arquivo no início de cada sessão e continue de onde parou. Próximo passo: CNAME Cloudflare + WhatsApp SDR.
