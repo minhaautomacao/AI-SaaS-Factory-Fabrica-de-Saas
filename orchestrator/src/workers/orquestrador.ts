@@ -1,6 +1,7 @@
 import type { Job } from 'bullmq'
 import { criarWorker, despacharParaAgente, filas } from '../lib/queue.js'
 import { log } from '../lib/supabase.js'
+import { notificarEscalada } from '../lib/whatsapp.js'
 import type { OrchestratorJob, AgentJob, AgentResult, Urgencia } from '../types.js'
 import { TIMEOUTS, QUEUES } from '../types.js'
 
@@ -36,11 +37,13 @@ const ROTEAMENTO: Record<string, string[]> = {
 }
 
 // Situações de escalada para humano (Carlos)
-const REQUER_ESCALADA = [
+// IMPORTANTE: estes tipos devem estar ausentes do ROTEAMENTO — o orquestrador
+// intercepta antes de tentar rotear, garantindo que escaladas críticas nunca passem despercebidas.
+const REQUER_ESCALADA = new Set([
   'divergencia-financeira-alta',
   'acao-irreversivel',
   'reclamacao-grave',
-]
+])
 
 async function processarJob(job: Job<OrchestratorJob>): Promise<void> {
   const evento = job.data
@@ -59,7 +62,7 @@ async function processarJob(job: Job<OrchestratorJob>): Promise<void> {
   })
 
   // Verificar se precisa de escalada humana
-  if (REQUER_ESCALADA.includes(evento.tipo)) {
+  if (REQUER_ESCALADA.has(evento.tipo)) {
     await escalar(evento)
     return
   }
@@ -187,7 +190,7 @@ async function escalar(evento: OrchestratorJob): Promise<void> {
     pedido_id: evento.pedido_id,
   })
 
-  // TODO: integrar com agente WhatsApp SDR para notificar Carlos
+  await notificarEscalada(evento.task_id, evento.tipo, `Evento ${evento.tipo} requer aprovação humana`)
   console.warn(`[Orquestrador] ESCALADO para humano — task_id: ${evento.task_id} tipo: ${evento.tipo}`)
 }
 
