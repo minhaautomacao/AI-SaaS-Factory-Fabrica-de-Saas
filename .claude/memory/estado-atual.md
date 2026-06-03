@@ -1,6 +1,6 @@
 ---
 name: estado-atual
-description: Estado completo do projeto em 2026-05-29 — SaaS Enemeop Flores criado, deployado, com bug de login pendente
+description: Estado completo do projeto em 2026-06-03 — pipeline Meta em produção, primeiro lead real capturado, próximo passo integração WhatsApp + pagamentos
 metadata:
   type: project
 ---
@@ -124,13 +124,39 @@ Confirmado em 2026-06-01: login manual em `https://enemeop-flores.vercel.app/log
 - Instagram App ID: `1403719804436572`
 - Instagram App Secret: `acdabdba549c851fcae862f3c56ed877`
 
-### 5. Próximos passos ao retomar no notebook
-1. Abrir `developers.facebook.com/apps/512230540723061/roles/` → Funções
-2. Em "Testadores do Instagram" — remover convite pendente de @enemeopflores e reenviar
-3. Aceitar convite no app do Instagram (celular da Enemeop)
-4. Voltar ao painel e gerar tokens (etapas 2 e 3 do roteiro acima)
-5. Configurar WhatsApp Business API com número (11) 982829083
-6. Eu crio as rotas de webhook no Next.js
+---
+
+## Sessão 2026-06-02 — O que o notebook fez (commit a25e247 + 6d860f7)
+
+### Conquistas do notebook
+- **webhook-meta deployado** (`supabase/functions/webhook-meta/index.ts`) — recebe DMs e comentários Instagram/Facebook com validação HMAC-SHA256. URL: `https://ebeapnydeiwuewxatuuw.supabase.co/functions/v1/webhook-meta` (verify_jwt=false)
+- **App Meta publicado em modo Live** — App ID `512230540723061` saiu do modo dev
+- **Primeiro lead real capturado** em 2026-06-02 via Instagram DM
+- **captacao-leads v9** — parsing JSON robusto, mais resiliente a payloads variados
+- **leads-enemeop** edge function — API interna que retorna leads do Instagram para o dashboard (`/functions/v1/leads-enemeop`)
+- **Migration `20260602000008_leads_fix.sql`** — correção/ajuste nas tabelas de leads
+
+### Estado atual de cada integração (pós-notebook)
+
+| Integração | Status | Detalhe |
+|---|---|---|
+| Instagram DM → lead | ✅ **EM PRODUÇÃO** | webhook-meta recebendo, 1 lead real capturado |
+| WhatsApp (resposta) | ❌ 0% | `lib/whatsapp.ts` não existe no orquestrador |
+| Mercado Pago PIX | ❌ 0% | nenhum gateway integrado |
+| Logística | ❌ 0% | sem cálculo de frete |
+| Dashboard com dados reais | ⚠️ parcial | leads reais via leads-enemeop, resto mockado |
+| Bug REQUER_ESCALADA | ❌ pendente | orquestrador.ts linhas 38–43 |
+
+### Próximos passos (por prioridade)
+
+1. **Evolution API no orquestrador** — criar `orchestrator/src/lib/whatsapp.ts` para responder via WhatsApp. Fecha o loop lead→resposta
+2. **Mercado Pago PIX** — integrar no enemeop-flores, webhook `api/webhooks/mercadopago.ts`
+3. **Tela entregas com dados reais** — tabela `despachos` no Supabase + Realtime
+4. **Bug REQUER_ESCALADA** — corrigir `orchestrator/src/workers/orquestrador.ts` linhas 38–43
+
+### Credenciais Meta já obtidas
+- App ID: `512230540723061` | App Secret: `f0c1df8038b53a709bccec7ddd023012`
+- Instagram App ID: `1403719804436572` | Instagram App Secret: `acdabdba549c851fcae862f3c56ed877`
 
 **Why:** Salvo para retomar contexto na próxima sessão sem perda de informação.
 **How to apply:** Leia este arquivo no início de cada sessão e continue de onde parou.
