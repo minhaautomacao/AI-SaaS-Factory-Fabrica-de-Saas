@@ -577,57 +577,102 @@ SUGESTÕES
 
 ---
 
-## Ferramenta de Scraping
+## Sistema de Varredura Automática de Leads
 
-**Edge Function**: `https://ebeapnydeiwuewxatuuw.supabase.co/functions/v1/marketing-scraping`  
-**Módulo local**: `src/lib/scraping.ts`  
-**Tabela de histórico**: `scraping_resultados` (Supabase fábrica)
+### Infraestrutura
 
-### Tipos de coleta disponíveis
+| Componente | Detalhe |
+|---|---|
+| Edge Function principal | `varredura-leads` — varre todas as fontes e cria leads |
+| Edge Function de scraping | `marketing-scraping` — scraper pontual por demanda |
+| Módulo local | `src/lib/scraping.ts` |
+| Tabelas | `varredura_log`, `varredura_hashes`, `scraping_resultados` |
+| Cron | 3x por dia: **07h, 12h, 18h** (tarefa agendada no Claude Code) |
 
-| Tipo | Parâmetros | Para que serve |
+### Fontes monitoradas
+
+| Fonte | O que coleta | Frequência |
 |---|---|---|
-| `concorrente` | `url`, `seletores` (opcional) | Raspa produtos e preços de concorrentes |
-| `google_local` | `query`, `cidade` | Monitora posição e concorrentes nas buscas locais |
-| `hashtag_instagram` | `hashtag` | Varre hashtags buscando intenção de compra |
+| Instagram | Posts com hashtags de casamento, flores, noiva, eventos | 3x/dia |
+| Twitter/X | Menções públicas sobre flores e eventos | 3x/dia |
+| Google | Posição de concorrentes, snippets de busca local | 3x/dia |
+| Pinterest | Pins de decoração floral e casamento | 3x/dia |
+| Fóruns/portais | casamentos.com.br, noivas.com.br — tópicos com intenção de compra | 3x/dia |
 
-### Exemplo de uso — varredura de concorrente
+### Hashtags monitoradas no Instagram
+
+`#casamento` `#noiva` `#noivas` `#casamentoreal` `#decoracaofloral` `#floricultura` `#arranjofloral` `#buque` `#flores` `#rosas` `#eventocorporativo` `#batizado` `#festadeaniversario` `#decoracaodeeventos`
+
+### Palavras-chave rastreadas em todas as fontes
+
+flores, rosas, buquê, arranjo floral, floricultura, decoração floral, decoração de casamento, flores para batizado, entrega de flores, comprar flores, quanto custa buquê, orçamento flores, floricultura perto de mim, flores SP, flores para evento corporativo, coroa fúnebre, flores para formatura
+
+### Fluxo completo de varredura
+
+```
+[07h / 12h / 18h] Cron dispara varredura-leads
+        │
+        ▼
+[1] Coleta em paralelo de todas as fontes
+    ├── Instagram: 5 hashtags por rodada
+    ├── Twitter: 3 hashtags via Nitter público
+    ├── Google: 3 queries locais
+    ├── Pinterest: decoração floral
+    └── Fóruns: casamentos.com.br, noivas.com.br
+        │
+        ▼
+[2] Deduplicação por hash SHA-256 (ignora textos já vistos em 48h)
+        │
+        ▼
+[3] Classificação em lotes com Groq (llama-3.3-70b):
+    → intencao: urgente | alta | media | baixa | nenhuma
+    → segmento: casamento | corporativo | batizado | aniversario | funebres | presente | decoracao
+    → canal_resposta: instagram_dm | instagram_comentario | whatsapp | nenhum
+    → mensagem_abordagem: texto personalizado gerado pela IA
+        │
+        ▼
+[4] Filtra intenção média, alta ou urgente
+    ├── Cria lead no Supabase (tabela leads)
+    └── intenção urgente/alta → dispara orquestrador → whatsapp-sdr
+        │
+        ▼
+[5] Relatório salvo em varredura_log
+    → resumo exibido ao operador se leads novos criados
+```
+
+### Classificação de intenção pela IA
+
+| Intenção | Critério | Ação |
+|---|---|---|
+| **urgente** | "preciso hoje", "entrega urgente", evento em ≤3 dias | SDR responde em minutos |
+| **alta** | evento confirmado, pedido de orçamento, intenção clara | SDR responde em até 1h |
+| **média** | pesquisando preços, comparando, dúvida sobre produto | Registra como lead, nutre por email |
+| **baixa** | curiosidade, inspiração, sem intenção imediata | Registra, sem ação imediata |
+| **nenhuma** | post de marca, concorrente, notícia | Descarta |
+
+### Acionamento manual por demanda
 
 ```json
-POST /functions/v1/marketing-scraping
+POST https://ebeapnydeiwuewxatuuw.supabase.co/functions/v1/varredura-leads
+{
+  "fontes": ["instagram", "twitter", "google", "pinterest", "forums"],
+  "workspace_id": "enemeop"
+}
+```
+
+Para varredura específica (ex: só Instagram antes do Dia dos Namorados):
+```json
+{ "fontes": ["instagram"], "workspace_id": "enemeop" }
+```
+
+### Scraping pontual de concorrente
+
+```json
+POST https://ebeapnydeiwuewxatuuw.supabase.co/functions/v1/marketing-scraping
 {
   "tipo": "concorrente",
-  "url": "https://floricultura-concorrente.com.br/arranjos",
-  "seletores": {
-    "produto": ".product-item",
-    "nome": ".product-title",
-    "preco": ".product-price"
-  }
+  "url": "https://floricultura-concorrente.com.br/arranjos"
 }
-```
-
-### Exemplo de uso — hashtag com intenção de compra
-
-```json
-POST /functions/v1/marketing-scraping
-{
-  "tipo": "hashtag_instagram",
-  "hashtag": "casamento"
-}
-```
-
-> Posts com `tem_intencao_compra: true` devem ser encaminhados imediatamente ao Agente SDR.
-
-### Fluxo: monitoramento diário automático
-
-```
-[07h] Agente inicia varredura diária:
-  ├── rasparHashtagInstagram("casamento", "noiva", "floricultura", "buque")
-  │     → posts com intenção → SDR
-  ├── rasparConcorrente(urls_concorrentes_cadastradas)
-  │     → variação de preço > 10% → notifica operador
-  └── rasparGoogleLocal("floricultura", cidade_da_loja)
-        → posição ranking → registra tendência semanal
 ```
 
 ---
