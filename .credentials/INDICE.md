@@ -7,12 +7,30 @@
 
 | Arquivo | Conteúdo | Status |
 |---|---|---|
-| `infraestrutura/fabrica.env` | Supabase, Anthropic, Vercel, Encriptação, Senha | ⚙️ Principal |
+| `infraestrutura/fabrica.env` | Supabase, Anthropic, Vercel, Encriptação | ⚙️ Principal |
+| `meta/README.md` | Instagram & Facebook — App Secret, Page Token, IDs | 🌐 Enemeop Flores |
+| `whatsapp/whatsapp.env` | Evolution API, Z-API, WhatsApp Business API | 🔒 Por workspace |
+| `marketing/marketing.env` | Meta Ads, Google Ads, Analytics | 🔒 Por workspace |
 | `financeiro/pagamentos.env` | Stripe, Mercado Pago | 🔒 Por workspace |
-| `whatsapp/whatsapp.env` | Evolution API, Z-API | 🔒 Por workspace |
-| `marketing/marketing.env` | Meta Ads, Google Ads | 🔒 Por workspace |
 | `logistica/logistica.env` | Correios, Melhor Envio | 🔒 Por workspace |
 | `comunicacao/email.env` | Resend, SendGrid | 🔒 Por workspace |
+
+---
+
+## Status das credenciais críticas — Enemeop Flores
+
+| Credencial | Onde está | Status |
+|---|---|---|
+| `META_VERIFY_TOKEN` | Supabase secrets | ✅ OK |
+| `META_APP_SECRET` | Supabase secrets | ✅ OK |
+| `GROQ_API_KEY` | Supabase secrets | ✅ OK |
+| `FACTORY_SECRET` | Supabase secrets | ✅ OK |
+| `META_PAGE_ACCESS_TOKEN` | Supabase secrets | ❌ **FALTANDO** |
+| `META_PAGE_ID` | Supabase secrets | ❌ **FALTANDO** |
+| `WHATSAPP_ACCESS_TOKEN` | Supabase secrets | ❌ **FALTANDO** |
+| `WHATSAPP_BUSINESS_ACCOUNT_ID` | Supabase secrets | ❌ **FALTANDO** |
+
+> Ver instruções completas em [`meta/README.md`](meta/README.md)
 
 ## Como usar
 
