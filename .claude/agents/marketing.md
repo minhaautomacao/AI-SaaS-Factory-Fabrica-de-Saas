@@ -577,6 +577,61 @@ SUGESTÕES
 
 ---
 
+## Ferramenta de Scraping
+
+**Edge Function**: `https://ebeapnydeiwuewxatuuw.supabase.co/functions/v1/marketing-scraping`  
+**Módulo local**: `src/lib/scraping.ts`  
+**Tabela de histórico**: `scraping_resultados` (Supabase fábrica)
+
+### Tipos de coleta disponíveis
+
+| Tipo | Parâmetros | Para que serve |
+|---|---|---|
+| `concorrente` | `url`, `seletores` (opcional) | Raspa produtos e preços de concorrentes |
+| `google_local` | `query`, `cidade` | Monitora posição e concorrentes nas buscas locais |
+| `hashtag_instagram` | `hashtag` | Varre hashtags buscando intenção de compra |
+
+### Exemplo de uso — varredura de concorrente
+
+```json
+POST /functions/v1/marketing-scraping
+{
+  "tipo": "concorrente",
+  "url": "https://floricultura-concorrente.com.br/arranjos",
+  "seletores": {
+    "produto": ".product-item",
+    "nome": ".product-title",
+    "preco": ".product-price"
+  }
+}
+```
+
+### Exemplo de uso — hashtag com intenção de compra
+
+```json
+POST /functions/v1/marketing-scraping
+{
+  "tipo": "hashtag_instagram",
+  "hashtag": "casamento"
+}
+```
+
+> Posts com `tem_intencao_compra: true` devem ser encaminhados imediatamente ao Agente SDR.
+
+### Fluxo: monitoramento diário automático
+
+```
+[07h] Agente inicia varredura diária:
+  ├── rasparHashtagInstagram("casamento", "noiva", "floricultura", "buque")
+  │     → posts com intenção → SDR
+  ├── rasparConcorrente(urls_concorrentes_cadastradas)
+  │     → variação de preço > 10% → notifica operador
+  └── rasparGoogleLocal("floricultura", cidade_da_loja)
+        → posição ranking → registra tendência semanal
+```
+
+---
+
 ## Integrações
 
 | Agente / Sistema | Quando acionar | O que recebe de volta |
