@@ -291,10 +291,11 @@ function buildFasePrompt(historico: Mensagem[], ultimaMensagem: string, faseAtua
 Com base no histórico e última mensagem, determine:
 1. A nova fase da conversa
 2. Se há pedido definido, extraia os detalhes
+3. Se o cliente mencionou o próprio nome (ex: "me chamo Ana", "sou a Maria", "aqui é o João"), extraia
 
 Fases possíveis: descoberta | interesse | proposta | aguardando_pagamento | concluido | perdido
 
-Histórico resumido: ${historico.slice(-4).map(m => `${m.role}: ${m.content}`).join(' | ')}
+Histórico: ${historico.slice(-4).map(m => `${m.role}: ${m.content}`).join(' | ')}
 Última mensagem do cliente: "${ultimaMensagem}"
 Fase atual: ${faseAtual}
 
@@ -302,7 +303,8 @@ Retorne APENAS JSON válido:
 {
   "nova_fase": "string",
   "pedido_info": { "produto": "", "quantidade": 1, "data_entrega": "", "endereco": "", "valor": 0 } | null,
-  "pronto_para_pagamento": false
+  "pronto_para_pagamento": false,
+  "nome_cliente": null
 }`;
 }
 
@@ -426,6 +428,18 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
       novaFase = analise.nova_fase ?? conversa.fase;
       if (analise.pedido_info?.produto) pedidoInfo = analise.pedido_info;
       prontoParaPagamento = analise.pronto_para_pagamento ?? false;
+
+      // Captura nome do cliente detectado na conversa
+      const nomeDetectado = (analise.nome_cliente as string | null)?.trim() || null;
+      if (nomeDetectado && !nomeCliente) {
+        nomeCliente = nomeDetectado;
+        const db = getDb();
+        // Salva em conversas e em leads (por canal_id)
+        await Promise.allSettled([
+          salvarConversa(conversa.id, { nome_cliente: nomeDetectado }),
+          db.from('leads').update({ nome: nomeDetectado }).eq('canal_id', canalId).is('nome', null),
+        ]);
+      }
     } catch { /* mantém fase atual */ }
   }
 
@@ -504,8 +518,12 @@ function extrairEventos(body: Record<string, unknown>): MetaEvento[] {
         if (!sender || !message) continue;
         const texto = (message['text'] as string) ?? '';
         if (!texto) continue;
-        const canal: 'instagram' | 'facebook' = String(entry['id'] ?? '').startsWith('17') ? 'instagram' : 'facebook';
-        eventos.push({ canal, tipo: 'dm', canal_id: String(sender['id'] ?? ''), nome: null, mensagem: texto, timestamp: new Date().toISOString() });
+        const senderId = String(sender['id'] ?? '');
+        const pageId   = String(entry['id'] ?? '');
+        // Ignora mensagens enviadas pela própria página (echo)
+        if (senderId === pageId) continue;
+        const canal: 'instagram' | 'facebook' = pageId.startsWith('17') ? 'instagram' : 'facebook';
+        eventos.push({ canal, tipo: 'dm', canal_id: senderId, nome: null, mensagem: texto, timestamp: new Date().toISOString() });
       }
     }
 
