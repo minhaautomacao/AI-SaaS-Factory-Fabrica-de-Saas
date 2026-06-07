@@ -150,6 +150,24 @@ KITS E PRESENTES:
 
 FORMAS DE PAGAMENTO: Cartão de crédito, PIX, online seguro.
 PERSONALIZAÇÃO: arranjos sob encomenda disponíveis — cliente descreve e a equipe cria.
+
+CATÁLOGO ESPECIAL — DIA DOS NAMORADOS (12 de junho):
+Dois catálogos exclusivos com rosas vermelhas nacionais, embalagem kraft+celofane, cartão Enemeop incluído.
+
+Catálogo 1 — com alstroemárias (mais volumoso e elaborado):
+- Ramalhete 3 rosas vermelhas + alstroemárias e folhagens: R$ 105
+- Buquê 6 rosas + alstroemárias e folhagens: R$ 185
+- Buquê 12 rosas nacionais premium: R$ 280
+- Buquê 24 rosas nacionais: R$ 560
+- Buquê 24 rosas + alstroemárias e folhagens (grandioso): R$ 740
+
+Catálogo 2 — versão clássica e elegante:
+- Ramalhete 3 rosas vermelhas: R$ 70
+- Buquê 6 rosas vermelhas: R$ 140
+- Buquê 12 rosas nacionais: R$ 280
+- Buquê 24 rosas nacionais: R$ 560
+
+INSTRUÇÃO DIA DOS NAMORADOS: Se o cliente mencionar namorado(a), presente romântico ou a data 12 de junho, apresente esses produtos como linha especial. Em momento natural da conversa, ofereça enviar o catálogo visual pelo WhatsApp.
 `.trim();
 
 // ── Supabase client ──────────────────────────────────────────────────────────
@@ -273,10 +291,11 @@ function buildFasePrompt(historico: Mensagem[], ultimaMensagem: string, faseAtua
 Com base no histórico e última mensagem, determine:
 1. A nova fase da conversa
 2. Se há pedido definido, extraia os detalhes
+3. Se o cliente mencionou o próprio nome (ex: "me chamo Ana", "sou a Maria", "aqui é o João"), extraia
 
 Fases possíveis: descoberta | interesse | proposta | aguardando_pagamento | concluido | perdido
 
-Histórico resumido: ${historico.slice(-4).map(m => `${m.role}: ${m.content}`).join(' | ')}
+Histórico: ${historico.slice(-4).map(m => `${m.role}: ${m.content}`).join(' | ')}
 Última mensagem do cliente: "${ultimaMensagem}"
 Fase atual: ${faseAtual}
 
@@ -284,7 +303,8 @@ Retorne APENAS JSON válido:
 {
   "nova_fase": "string",
   "pedido_info": { "produto": "", "quantidade": 1, "data_entrega": "", "endereco": "", "valor": 0 } | null,
-  "pronto_para_pagamento": false
+  "pronto_para_pagamento": false,
+  "nome_cliente": null
 }`;
 }
 
@@ -408,6 +428,18 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
       novaFase = analise.nova_fase ?? conversa.fase;
       if (analise.pedido_info?.produto) pedidoInfo = analise.pedido_info;
       prontoParaPagamento = analise.pronto_para_pagamento ?? false;
+
+      // Captura nome do cliente detectado na conversa
+      const nomeDetectado = (analise.nome_cliente as string | null)?.trim() || null;
+      if (nomeDetectado && !nomeCliente) {
+        nomeCliente = nomeDetectado;
+        const db = getDb();
+        // Salva em conversas e em leads (por canal_id)
+        await Promise.allSettled([
+          salvarConversa(conversa.id, { nome_cliente: nomeDetectado }),
+          db.from('leads').update({ nome: nomeDetectado }).eq('canal_id', canalId).is('nome', null),
+        ]);
+      }
     } catch { /* mantém fase atual */ }
   }
 
@@ -486,8 +518,12 @@ function extrairEventos(body: Record<string, unknown>): MetaEvento[] {
         if (!sender || !message) continue;
         const texto = (message['text'] as string) ?? '';
         if (!texto) continue;
-        const canal: 'instagram' | 'facebook' = String(entry['id'] ?? '').startsWith('17') ? 'instagram' : 'facebook';
-        eventos.push({ canal, tipo: 'dm', canal_id: String(sender['id'] ?? ''), nome: null, mensagem: texto, timestamp: new Date().toISOString() });
+        const senderId = String(sender['id'] ?? '');
+        const pageId   = String(entry['id'] ?? '');
+        // Ignora mensagens enviadas pela própria página (echo)
+        if (senderId === pageId) continue;
+        const canal: 'instagram' | 'facebook' = pageId.startsWith('17') ? 'instagram' : 'facebook';
+        eventos.push({ canal, tipo: 'dm', canal_id: senderId, nome: null, mensagem: texto, timestamp: new Date().toISOString() });
       }
     }
 
