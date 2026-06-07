@@ -14,6 +14,51 @@ import { getSupabaseAdmin } from '../_shared/supabase.ts';
 import { logEvento } from '../_shared/logger.ts';
 import type { OrquestradorPayload } from '../_shared/types.ts';
 
+const SUPABASE_URL   = Deno.env.get('SUPABASE_URL') ?? '';
+const SERVICE_KEY    = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+const FACTORY_SECRET = Deno.env.get('FACTORY_SECRET') ?? '';
+
+async function dispararLeadQualificado(params: {
+  task_id: string;
+  escopo: string;
+  workspace_id: string;
+  lead_id: string;
+  intencao: string;
+  canal_id: string | null;
+  canal: string;
+  payload: unknown;
+}): Promise<void> {
+  const authKey = FACTORY_SECRET || SERVICE_KEY;
+  if (!authKey || !SUPABASE_URL) return;
+  try {
+    await fetch(`${SUPABASE_URL}/functions/v1/orquestrador`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authKey}`,
+      },
+      body: JSON.stringify({
+        tipo: 'lead-qualificado',
+        task_id: crypto.randomUUID(),
+        escopo: params.escopo,
+        urgencia: params.intencao === 'urgente' ? 'critica' : params.intencao === 'alta' ? 'alta' : 'normal',
+        workspace_id: params.workspace_id,
+        lead_id: params.lead_id,
+        payload: {
+          lead_id: params.lead_id,
+          intencao: params.intencao,
+          canal: params.canal,
+          canal_id: params.canal_id,
+          tipo_evento: 'abordagem_inicial',
+          payload_original: params.payload,
+        },
+      }),
+    });
+  } catch (e) {
+    console.error(`[captacao-leads] erro ao disparar lead-qualificado: ${e}`);
+  }
+}
+
 const SYSTEM_PROMPT = `Você é o agente de Captação de Leads da Fábrica de SaaS especializado em floricultura.
 Analise os dados do lead e retorne APENAS JSON válido (sem markdown) com:
 {
@@ -83,6 +128,20 @@ Deno.serve(async (req: Request) => {
       }).select('id').single();
 
       leadId = novoLead?.id;
+    }
+
+    // Dispara lead-qualificado → orquestrador → whatsapp-sdr
+    if (leadId) {
+      await dispararLeadQualificado({
+        task_id,
+        escopo,
+        workspace_id: workspace_id ?? '',
+        lead_id: leadId,
+        intencao,
+        canal_id: (payload?.canal_id as string) ?? null,
+        canal: (payload?.canal as string) ?? 'outro',
+        payload,
+      });
     }
 
     await logEvento({

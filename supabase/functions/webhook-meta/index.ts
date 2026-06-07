@@ -23,6 +23,8 @@ const FACTORY_SECRET = Deno.env.get('FACTORY_SECRET') ?? '';
 const SERVICE_KEY    = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
 const WORKSPACE_ID   = Deno.env.get('SAAS_WORKSPACE_ID') ?? '';
 const SUPABASE_URL   = Deno.env.get('SUPABASE_URL') ?? '';
+const IG_TOKEN       = Deno.env.get('META_IG_ACCESS_TOKEN') ?? '';
+const WHATSAPP_NUM   = '5511912808282'; // número de teste — substituir pelo oficial quando validado
 
 // ── Validação de assinatura HMAC-SHA256 ──────────────────────────────────────
 
@@ -120,6 +122,36 @@ function extrairEventos(body: Record<string, unknown>): MetaEvento[] {
   return eventos;
 }
 
+// ── Resposta automática no Instagram DM ─────────────────────────────────────
+
+async function responderInstagramDM(recipientId: string, mensagem: string): Promise<void> {
+  if (!IG_TOKEN) {
+    console.warn('[webhook-meta] META_IG_ACCESS_TOKEN não configurado — resposta ignorada');
+    return;
+  }
+  try {
+    const res = await fetch(`https://graph.facebook.com/v19.0/me/messages?access_token=${IG_TOKEN}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        recipient: { id: recipientId },
+        message: { text: mensagem },
+        messaging_type: 'RESPONSE',
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.text();
+      console.error(`[webhook-meta] erro ao responder DM: ${err}`);
+    } else {
+      console.log(`[webhook-meta] DM respondido para ${recipientId}`);
+    }
+  } catch (e) {
+    console.error(`[webhook-meta] falha ao responder DM: ${e}`);
+  }
+}
+
+const MSG_BOAS_VINDAS = `Olá! 🌸 Obrigada pelo contato com a Enemeop Flores!\n\nPara um atendimento mais rápido e personalizado, nos chame no WhatsApp:\n👉 wa.me/${WHATSAPP_NUM}\n\nEm breve nossa equipe também responde por aqui. 💐`;
+
 // ── Envia lead ao orquestrador ───────────────────────────────────────────────
 
 async function enviarAoOrquestrador(evento: MetaEvento): Promise<void> {
@@ -206,10 +238,14 @@ Deno.serve(async (req: Request) => {
   await Promise.allSettled(
     eventos.map(async (ev) => {
       try {
+        // Resposta automática imediata no Instagram DM
+        if (ev.canal === 'instagram' && ev.tipo === 'dm') {
+          await responderInstagramDM(ev.canal_id, MSG_BOAS_VINDAS);
+        }
         await enviarAoOrquestrador(ev);
         console.log(`[webhook-meta] lead enviado | canal=${ev.canal} tipo=${ev.tipo} canal_id=${ev.canal_id}`);
       } catch (e) {
-        console.error(`[webhook-meta] erro ao enviar ao orquestrador: ${e}`);
+        console.error(`[webhook-meta] erro ao processar evento: ${e}`);
       }
     }),
   );
