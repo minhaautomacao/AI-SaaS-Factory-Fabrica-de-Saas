@@ -29,34 +29,127 @@ const WHATSAPP_NUM   = '5511912808282';
 // ── Catálogo de produtos (extraído de enemeopflores.com.br) ──────────────────
 
 const CATALOGO = `
-CATEGORIAS DISPONÍVEIS:
-- Buquês e Ramalhetes
-- Arranjos Florais
-- Buquês de Noiva
-- Flores no Vaso
-- Orquídeas
-- Flores para Maternidade
-- Condolências (coroas, arranjos)
-- Kits Presentes
-- Presentes e Decoração
+SOBRE A ENEMEOP FLORES:
+Fundada em 1997 por Clean Espindula e Luis Evangelista. "ENEMEOP" vem do Tupi-Guarani e significa "perfume das flores".
+Missão: "Prover produtos e serviços com alta qualidade e estilo próprio, garantindo a excelência no atendimento."
+Localização: Rua Costa Aguiar, 1184 — Ipiranga, São Paulo, SP.
+Telefone: (11) 98282-9083 / (11) 2272-3158.
+Funcionamento: Seg–Sáb 9h–19h | Dom e Feriados 9h30–14h.
+Entrega: até 3h após confirmação de pagamento. Área: São Paulo e Grande SP.
+Entrega disponível: Seg–Sex 9h–18h | Sáb, Dom e Feriados 9h–14h.
 
-PRODUTOS COM PREÇO:
-- Ramalhete 3 Rosas + Chocolates: R$ 95
-- Ramalhete Girassol e Alstroemêrias: R$ 70
-- Buquê Rosas no Vaso de Vidro: R$ 295
-- Buquê 12 Rosas Rosa Nacionais: R$ 370
-- Buquê com Lírios Rosa: R$ 395
-- Buquê 24 Rosas Vermelhas: R$ 560
-- Buquê Tulipas: R$ 790
-- Buquê Tulipas Brancas Noiva: R$ 720
+CATÁLOGO COMPLETO DE PRODUTOS:
 
-INFORMAÇÕES OPERACIONAIS:
-- Endereço: Rua Costa Aguiar 1184, Ipiranga, São Paulo
-- Funcionamento: Seg–Sex 9h–19h | Sáb 9h–19h | Dom e Feriados 9h30–14h
-- Entrega: até 3h após confirmação de pagamento
-- Área: São Paulo e Grande SP
-- Atuando desde 1997
-- Personalização de arranjos sob encomenda disponível
+RAMALHETES (opções compactas, presentes rápidos):
+- Mini Ramalhete (Mod.28): R$ 55
+- Ramalhete Girassol e Alstroemêrias (051): R$ 70
+- Ramalhete de Rosas (030): R$ 70
+- Mini Ramalhete + Ferrero Rocher (Mod.29): R$ 100
+- Ramalhete 3 Rosas + Chocolates (094): R$ 95
+- Ramalhete Rosas Brancas (057): R$ 105
+- Ramalhete 3 Rosas Nacionais Rosa (Mod.31): R$ 105
+- Ramalhete Mix Rosas + Ferrero Rocher (081): R$ 150
+
+ARRANJOS FLORAIS (em vaso, para decoração e presentes):
+- Modelo 01 – Arranjo no Vaso de Vidro: R$ 70
+- Arranjo Girassol Solitário (Mod.09): R$ 75
+- Arranjo Flores Luto Hortênsias (Mod.17): R$ 155
+- Arranjo com Alstroemêrias no Vaso de Vidro (027): R$ 155
+- Arranjo de Rosas (Mod.07): R$ 160
+- Arranjo Girassol em Vaso + Ferrero Rocher (010): R$ 120
+- Arranjo Mix Flores do Campo (Mod.08): R$ 145
+- Arranjo Girassol no Vaso (011): R$ 135
+- Arranjo 2 Rosas Nacionais e Junco (002): R$ 105
+- Arranjo Coração 2 Rosas + Ferrero Rocher (003): R$ 140
+- Arranjo 4 Rosas Brancas e Alstroemêrias (006): R$ 225
+- Arranjo Orquídeas Brancas Frente Única (012): R$ 225
+- Arranjo Orquídeas Pink Vaso de Vidro (013): R$ 225
+- Arranjo Orquídeas Brancas e Ruscus (014): R$ 225
+- Arranjo Rosas Rosa no Vaso (Mod.05): R$ 225
+- Arranjo de Alstroemêrias (Mod.24): R$ 265
+- Arranjo Girassóis (Mod.26): R$ 255
+- Mini Arranjo Branco (Mod.16): R$ 220
+- Arranjo Branco (Mod.19): R$ 255
+- Arranjo Laranja (Mod.20): R$ 145
+- Arranjo Girassol e Flores do Campo (Mod.25): R$ 295
+- Arranjo Rosas Vermelhas Nacionais no Vidro (Mod.18): R$ 425
+- Buquê de Rosas no Vaso de Vidro (004): R$ 295
+- Buquê 12 Rosas Rosa no Vaso de Vidro (Mod.58): R$ 425
+- Arranjo Exclusivo Orquídeas Cymbidium (Mod.22): R$ 225
+- Arranjo Orquídeas Cymbidium Amarelas (Mod.23): R$ 225
+- Arranjo Permanente (Mod.15): R$ 1.280
+- Arranjo Permanente Grande (Mod.14): R$ 2.550
+
+BUQUÊS DE FLORES (os mais pedidos):
+- Buquê de Rosas Vermelhas (032): R$ 140
+- Buquê 6 Rosas Vermelhas Nacionais (Mod.35): R$ 185
+- Buquê 6 Rosas Nacionais (Mod.44): R$ 185
+- Buquê de Rosas Vermelhas + Coração (Mod.59): R$ 205
+- Buquê Rosas Nacionais Vermelhas (Mod.43): R$ 245
+- Buquê de Rosas Brancas (Mod.55): R$ 280
+- Buquê 12 Rosas Vermelhas (033): R$ 280
+- Buquê Rosas Nacionais + Ferrero Rocher (Mod.36): R$ 290
+- Buquê Mix Alstroemêrias (Mod.40): R$ 295
+- Buquê Mix Flores com Girassóis e Campo (054): R$ 295
+- Buquê Luto Rosas Brancas (Mod.50): R$ 390
+- Buquê com Lírios Rosa (093): R$ 395
+- Buquê Luxuoso Alstroemêrias Coloridas (061): R$ 395
+- Buquê 12 Rosas Rosa Nacionais e Alstroemêrias (045/046): R$ 370
+- Buquê 12 Rosas Pink Nacionais (Mod.38): R$ 370
+- Buquê 12 Rosas Nacionais Rosa (Mod.41): R$ 370
+- Buquê Mix Flores Nacionais + Ferrero (Mod.37): R$ 150
+- Buquê Especial Rosas e Juncos (Mod.48): R$ 420
+- Buquê Mix Flores Nobre + Vinho Importado (Mod.60): R$ 425
+- Buquê Mix de Flores (Mod.42): R$ 495
+- Buquê 24 Rosas Vermelhas (034): R$ 560
+- Buquê de Noiva Rosas Pink (062): R$ 565
+- Buquê Mix Flores Nobre (039): R$ 590
+- Buquê Mix de Flores (047): R$ 745
+- Buquê 12 Girassóis Premium (052): R$ 435
+- Buquê 100 Rosas Vermelhas (056): R$ 1.490
+
+BUQUÊS DE NOIVA (para casamentos e formaturas):
+- Buquê Noiva Natural Branco (Mod.74): R$ 445
+- Buquê Noiva Mix Flores Brancas (Mod.78): R$ 490
+- Buquê Noiva (Mod.73/065): R$ 590
+- Buquê Noiva Noiva Rosas Lilás (Mod.75): R$ 720
+- Buquê Noiva Orquídeas Brancas M (066): R$ 740
+- Buquê Noiva Orquídeas e Juncos (068): R$ 740
+- Buquê Tulipas Brancas Noiva (094): R$ 720
+- Buquê Tulipas (067): R$ 790
+- Buquê Noiva Natural Rosas Brancas e Spray (Mod.76): R$ 570
+- Buquê Noiva Mix Nobre (Mod.70): R$ 730
+- Buquê Noiva com Callas Branco (Mod.71): R$ 880
+- Buquê Noiva Mix (069): R$ 640
+- Buquê Noiva com Ervas e Flores (077): R$ 645
+- Buquê Noiva Flores Desidratadas (080): R$ 770
+- Buquê Noiva Mix Flores Nobres (079): R$ 980
+- Buquê Noiva Cascata de Orquídeas (063): R$ 1.180
+- Buquê Noiva Flores Brancas e Folhagens (064): R$ 670
+
+ORQUÍDEAS (ótimas para decoração duradoura):
+- Mini Orquídea no Vaso de Vidro (Mod.87): R$ 215
+- Orquídea Phalaenópsis Mescla pequena 2 hastes (Mod.90): R$ 145
+- Orquídea Phalaenópsis Mescla em Vaso (Mod.89): R$ 195
+- Orquídea Branca Phalaenópsis 1 haste (083): R$ 170
+- Orquídea Phalaenópsis Pink 1 haste (Mod.91): R$ 225
+- Orquídea Phalaenópsis Branca 1 haste (Mod.92): R$ 290
+- Orquídea Phalaenópsis Branca 2 hastes (084): R$ 290
+- Orquídea Phalaenópsis Pink (Mod.85): R$ 300
+- Orquídea Phalaenópsis Pink no Vaso de Vidro (Mod.88): R$ 315
+- Orquídea Phalaenópsis Cascata Branca 2 hastes (Mod.86): R$ 390
+- Arranjo Orquídeas Brancas Frente Única (012): R$ 225
+
+MATERNIDADE E BEBÊ:
+- Kit Maternidade Flores e Pelúcia (Mod.21): R$ 410
+- Buquê Mix Flores Nobres Maternidade (Mod.49): R$ 980
+
+KITS E PRESENTES:
+- Ferrero Rocher 100g: R$ 45
+- Cesta de Queijos e Vinho Especial (082): R$ 890
+
+FORMAS DE PAGAMENTO: Cartão de crédito, PIX, online seguro.
+PERSONALIZAÇÃO: arranjos sob encomenda disponíveis — cliente descreve e a equipe cria.
 `.trim();
 
 // ── Supabase client ──────────────────────────────────────────────────────────
@@ -109,31 +202,32 @@ async function salvarConversa(id: string, updates: Partial<Conversa>): Promise<v
 // ── Prompt do agente de vendas ───────────────────────────────────────────────
 
 function buildSystemPrompt(fase: string, pedidoInfo: Record<string, unknown> | null): string {
-  return `Você é a Flor, consultora de vendas da Enemeop Flores (São Paulo, desde 1997).
-Você responde DMs no Instagram como uma florista experiente, calorosa e focada em fechar vendas.
+  return `Você é a Flor, consultora de vendas da Enemeop Flores — floricultura fundada em 1997 por Clean Espindula e Luis Evangelista no Ipiranga, São Paulo. "ENEMEOP" vem do Tupi-Guarani e significa "perfume das flores". Você conhece cada produto do catálogo de cor e é apaixonada pelo que faz.
 
-CATÁLOGO ATUAL:
 ${CATALOGO}
 
 FASE ATUAL DA CONVERSA: ${fase}
 ${pedidoInfo ? `PEDIDO EM ANDAMENTO: ${JSON.stringify(pedidoInfo)}` : ''}
 
-REGRAS DE COMPORTAMENTO:
-- Responda em até 3 frases curtas (máximo 280 caracteres)
-- Tom: amigável, feminino, entusiasmado com flores — como quem realmente ama o que faz
-- Não direcione ao WhatsApp antes de entender o que o cliente quer
-- Explore as necessidades: ocasião, flores preferidas, orçamento, data de entrega
-- Use perguntas abertas para descobrir mais (uma pergunta por vez)
-- Quando souber o que o cliente quer: apresente opções com preços do catálogo
-- Quando o cliente aceitar uma proposta: informe que vai gerar o link de pagamento PIX
-- Use no máximo 1 emoji por mensagem
-- Português brasileiro natural
+COMO SE COMPORTAR:
+- Responda em no máximo 3 frases curtas (até 280 caracteres totais)
+- Tom: caloroso, feminino, entusiasmado — como uma florista que realmente ama flores
+- NUNCA direcione ao WhatsApp antes de entender completamente o que o cliente quer
+- Conduza a conversa: descubra a ocasião, flores preferidas, orçamento e data
+- Faça UMA pergunta por vez — não sobrecarregue o cliente
+- Use o catálogo real para sugerir produtos com preços exatos
+- Se o cliente mencionar evento (casamento, aniversário, maternidade, luto): sugira a categoria certa
+- Se perguntar sobre personalização: diga que fazem sob encomenda
+- Quando cliente escolher: confirme produto, valor, endereço de entrega e data
+- Quando tudo confirmado: informe que vai gerar o PIX para finalizar
+- Máximo 1 emoji por mensagem, de forma natural
+- Português brasileiro casual, sem formalidade excessiva
 
-COMPORTAMENTO POR FASE:
-- descoberta: faça perguntas para entender a ocasião e preferências
-- interesse: explore detalhes do produto escolhido (tamanho, cor, data)
-- proposta: apresente o valor, confirme endereço e data de entrega
-- aguardando_pagamento: aguarde confirmação, não repita proposta
+FASES:
+- descoberta: entender ocasião e gosto (não pule esta fase)
+- interesse: produto identificado, explore detalhes (tamanho, cor, quantidade)
+- proposta: produto + preço confirmados, colete endereço e data
+- aguardando_pagamento: não repita proposta, aguarde o cliente
 
 RETORNE APENAS O TEXTO DA RESPOSTA — sem prefixo, sem aspas, sem JSON.`;
 }
