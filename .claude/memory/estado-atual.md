@@ -1,6 +1,6 @@
 ---
 name: estado-atual
-description: Estado completo do projeto em 2026-06-02 — pipeline Instagram ativo, dashboard de leads em produção, Vercel unificada em minhaautomacao
+description: Estado completo do projeto em 2026-06-03 — pipeline Meta em produção, primeiro lead real capturado, próximo passo integração WhatsApp + pagamentos
 metadata:
   type: project
 ---
@@ -112,10 +112,62 @@ O registro foi adicionado no Vercel (`verified: true`) — só falta o DNS.
 
 ### Agente WhatsApp SDR — o que precisa
 
-- Quando um lead é capturado, enviar mensagem de boas-vindas via WhatsApp
-- Usar a Edge Function `whatsapp-sdr` já existente na fábrica
-- Conectar ao número (11) 982829083
-- Credenciais faltantes: `WHATSAPP_ACCESS_TOKEN` e `WHATSAPP_BUSINESS_ACCOUNT_ID` (variáveis criadas no Vercel mas sem valor)
+**Estado atual:**
+- Logamos no Instagram como `@enemeopflores` (senha: Cloe2026) via Chrome MCP
+- Navegamos até `developers.facebook.com/apps/512230540723061/roles/`
+- **PRÓXIMO PASSO IMEDIATO:** Localizar seção "Testadores do Instagram", verificar se `@enemeopflores` está como Pendente e reenviar o convite
+
+### 3. Roteiro completo de credenciais Meta (ordem de execução)
+
+| # | O que | Onde | Status |
+|---|---|---|---|
+| 1 | Aceitar convite Testador Instagram @enemeopflores | Funções do app → Testadores do Instagram | ⚠️ PENDENTE |
+| 2 | Token de Página do Facebook + Page ID | Graph API Explorer | ⏳ aguarda etapa 1 |
+| 3 | Instagram Business Account ID + Token | Graph API Explorer | ⏳ aguarda etapa 2 |
+| 4 | WhatsApp Phone Number ID + Token | Casos de uso → WhatsApp | ⏳ aguarda etapa 1 |
+| 5 | Webhooks (criar rotas no Next.js) | Código + painel Meta | ⏳ eu faço no código |
+| 6 | Ad Account ID | business.facebook.com | ⏳ |
+| 7 | Publicar app (sair do modo dev) | Publicar → Análise | ⏳ último passo |
+
+### 4. Credenciais já obtidas
+- App ID: `512230540723061`
+- App Secret: `f0c1df8038b53a709bccec7ddd023012`
+- Instagram App ID: `1403719804436572`
+- Instagram App Secret: `acdabdba549c851fcae862f3c56ed877`
+
+---
+
+## Sessão 2026-06-02 — O que o notebook fez (commit a25e247 + 6d860f7)
+
+### Conquistas do notebook
+- **webhook-meta deployado** (`supabase/functions/webhook-meta/index.ts`) — recebe DMs e comentários Instagram/Facebook com validação HMAC-SHA256. URL: `https://ebeapnydeiwuewxatuuw.supabase.co/functions/v1/webhook-meta` (verify_jwt=false)
+- **App Meta publicado em modo Live** — App ID `512230540723061` saiu do modo dev
+- **Primeiro lead real capturado** em 2026-06-02 via Instagram DM
+- **captacao-leads v9** — parsing JSON robusto, mais resiliente a payloads variados
+- **leads-enemeop** edge function — API interna que retorna leads do Instagram para o dashboard (`/functions/v1/leads-enemeop`)
+- **Migration `20260602000008_leads_fix.sql`** — correção/ajuste nas tabelas de leads
+
+### Estado atual de cada integração (pós-notebook)
+
+| Integração | Status | Detalhe |
+|---|---|---|
+| Instagram DM → lead | ✅ **EM PRODUÇÃO** | webhook-meta recebendo, 1 lead real capturado |
+| WhatsApp (resposta) | ❌ 0% | `lib/whatsapp.ts` não existe no orquestrador |
+| Mercado Pago PIX | ❌ 0% | nenhum gateway integrado |
+| Logística | ❌ 0% | sem cálculo de frete |
+| Dashboard com dados reais | ⚠️ parcial | leads reais via leads-enemeop, resto mockado |
+| Bug REQUER_ESCALADA | ❌ pendente | orquestrador.ts linhas 38–43 |
+
+### Próximos passos (por prioridade)
+
+1. **Evolution API no orquestrador** — criar `orchestrator/src/lib/whatsapp.ts` para responder via WhatsApp
+2. **Mercado Pago PIX** — integrar no enemeop-flores, webhook `api/webhooks/mercadopago.ts`
+3. **Tela entregas com dados reais** — tabela `despachos` no Supabase + Realtime
+4. **Bug REQUER_ESCALADA** — corrigir `orchestrator/src/workers/orquestrador.ts` linhas 38–43
+
+### Credenciais Meta já obtidas
+- App ID: `512230540723061` | App Secret: `f0c1df8038b53a709bccec7ddd023012`
+- Instagram App ID: `1403719804436572` | Instagram App Secret: `acdabdba549c851fcae862f3c56ed877`
 
 **Why:** Salvo para retomar contexto na próxima sessão sem perda de informação.
 **How to apply:** Leia este arquivo no início de cada sessão e continue de onde parou. Próximo passo: CNAME Cloudflare + WhatsApp SDR.
