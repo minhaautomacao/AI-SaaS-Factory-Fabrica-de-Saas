@@ -150,6 +150,24 @@ KITS E PRESENTES:
 
 FORMAS DE PAGAMENTO: Cartão de crédito, PIX, online seguro.
 PERSONALIZAÇÃO: arranjos sob encomenda disponíveis — cliente descreve e a equipe cria.
+
+CATÁLOGO ESPECIAL — DIA DOS NAMORADOS (12 de junho):
+Dois catálogos exclusivos com rosas vermelhas nacionais, embalagem kraft+celofane, cartão Enemeop incluído.
+
+Catálogo 1 — com alstroemárias (mais volumoso e elaborado):
+- Ramalhete 3 rosas vermelhas + alstroemárias e folhagens: R$ 105
+- Buquê 6 rosas + alstroemárias e folhagens: R$ 185
+- Buquê 12 rosas nacionais premium: R$ 280
+- Buquê 24 rosas nacionais: R$ 560
+- Buquê 24 rosas + alstroemárias e folhagens (grandioso): R$ 740
+
+Catálogo 2 — versão clássica e elegante:
+- Ramalhete 3 rosas vermelhas: R$ 70
+- Buquê 6 rosas vermelhas: R$ 140
+- Buquê 12 rosas nacionais: R$ 280
+- Buquê 24 rosas nacionais: R$ 560
+
+INSTRUÇÃO DIA DOS NAMORADOS: Se o cliente mencionar namorado(a), presente romântico ou a data 12 de junho, apresente esses produtos como linha especial. Em momento natural da conversa, ofereça enviar o catálogo visual pelo WhatsApp.
 `.trim();
 
 // ── Supabase client ──────────────────────────────────────────────────────────
