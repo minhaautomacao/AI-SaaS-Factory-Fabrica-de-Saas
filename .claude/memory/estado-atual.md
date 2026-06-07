@@ -32,7 +32,7 @@ Data deste snapshot: 2026-06-02
 - Team ID: `team_gZMrVpE7q1aYd7VXOAUcCN0E`
 - Projeto enemeop-flores ID: `prj_rGXjRZzqsE8riGFyvY6koAchZC0Q`
 - Projeto fabrica-saas ID: `prj_Iy5tnY1aXRkxYYtyLZn2tLJVt2g1`
-- Token API: `vcp_7vhOv4P6PZraSVrJuTlMTq1r5GYiFc6HlazaOltXlTovgKGc2j1UHaRO`
+- Token API: [ver em ~/.claude/.env ou painel Vercel — não commitar]
 - GitHub auto-deploy: ✅ conectado (push no `master` → deploy automático)
 - SSO protection: ✅ desativado (acesso público sem conta Vercel)
 
