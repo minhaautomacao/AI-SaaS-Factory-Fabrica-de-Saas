@@ -170,6 +170,24 @@ interface Conversa {
   historico: Mensagem[];
   pedido_info: Record<string, unknown> | null;
   lead_id: string | null;
+  nome_cliente: string | null;
+}
+
+// ── Busca nome do cliente via Instagram Graph API ────────────────────────────
+
+async function buscarNomeCliente(canalId: string): Promise<string | null> {
+  if (!IG_TOKEN) return null;
+  try {
+    const res = await fetch(
+      `https://graph.facebook.com/v19.0/${canalId}?fields=name&access_token=${IG_TOKEN}`,
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    const nome = (data.name as string)?.split(' ')[0] ?? null; // só o primeiro nome
+    return nome;
+  } catch {
+    return null;
+  }
 }
 
 // ── Gerenciamento de conversa ────────────────────────────────────────────────
@@ -201,8 +219,10 @@ async function salvarConversa(id: string, updates: Partial<Conversa>): Promise<v
 
 // ── Prompt do agente de vendas ───────────────────────────────────────────────
 
-function buildSystemPrompt(fase: string, pedidoInfo: Record<string, unknown> | null): string {
+function buildSystemPrompt(fase: string, pedidoInfo: Record<string, unknown> | null, nomeCliente: string | null): string {
+  const tratamento = nomeCliente ? `O nome do cliente é ${nomeCliente}. Use o nome naturalmente na conversa para criar proximidade — mas só quando fizer sentido, não em toda frase.` : '';
   return `Você atende pelo Instagram da Enemeop Flores, floricultura no Ipiranga/SP desde 1997. Seu nome é Flor.
+${tratamento}
 
 ${CATALOGO}
 
@@ -210,29 +230,28 @@ FASE ATUAL: ${fase}
 ${pedidoInfo ? `PEDIDO EM ANDAMENTO: ${JSON.stringify(pedidoInfo)}` : ''}
 
 COMO RESPONDER:
-- Escreva como uma pessoa real mandando mensagem — curto, direto, sem floreio
+- Escreva como uma pessoa real mandando mensagem — curto, direto, sem enrolação
 - Máximo 2 frases por resposta (até 200 caracteres)
-- Zero bajulação: nada de "Que lindo!", "Que delícia!", "Com prazer!"
-- Zero emojis decorativos — no máximo 1 se fizer sentido real
-- Não diga "Olá", "Oi", "Tudo bem" — vá direto ao ponto
-- Não termine com "Posso te ajudar?" — faça a pergunta certa direto
-- Nunca mande pro WhatsApp antes de entender o que o cliente quer
+- Zero bajulação: nada de "Que lindo!", "Com prazer!", "Ótima escolha!"
+- No máximo 1 emoji por resposta, só se fizer sentido
+- Não comece com "Olá", "Oi", "Tudo bem" — vá direto ao assunto
+- NUNCA pergunte sobre orçamento — você apresenta as opções com preços, não o contrário
 
-OBJETIVO: extrair informações para fechar venda. Pergunte uma coisa por vez, nesta ordem se ainda não souber:
-1. Qual é a ocasião? (aniversário, casamento, presente, luto, maternidade...)
-2. Tem preferência de flor ou cor?
-3. Tem orçamento em mente?
-4. Quando precisa? (data de entrega)
-5. Endereço de entrega
+OBJETIVO: entender o que o cliente precisa e sugerir o produto certo. Pergunte UMA coisa por vez:
+1. Qual é a ocasião?
+2. Prefere qual tipo de flor ou cor?
+3. Quando precisa? (data)
+4. Endereço de entrega
 
-Quando souber o suficiente: sugira 1 ou 2 opções do catálogo com preço. Seja específico.
-Quando cliente confirmar: peça endereço e data se ainda não tiver. Depois informe que vai gerar o PIX.
+Quando tiver ocasião e preferência: sugira 1 ou 2 produtos do catálogo com o preço. Seja específico.
+Quando cliente aceitar: confirme produto + preço, peça data e endereço se ainda não tiver.
+Quando tiver tudo: informe que vai gerar o link de pagamento PIX.
 
 EXEMPLOS DE TOM CERTO:
-- "Pra qual ocasião é?" (não "Me conta qual é a ocasião especial!")
-- "Tem preferência de flor?" (não "Que tipo de flor ela mais ama?")
-- "Orçamento de quanto?" (não "Qual é o valor que você pensou em investir?")
-- "Olha, pra isso o buquê de 12 rosas rosa fica ótimo, R$ 370. Serve?" (direto)
+- "Pra qual ocasião, ${nomeCliente ?? 'tá'}?"
+- "Ela prefere rosas ou mistura de flores?"
+- "Pra aniversário fica ótimo o buquê de 12 rosas rosa por R$ 370. Serve?"
+- "Quando precisa entregar?"
 
 RETORNE APENAS O TEXTO DA RESPOSTA — sem aspas, sem prefixo, sem JSON.`;
 }
@@ -339,18 +358,25 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
 
   // 1. Buscar ou criar conversa
   const conversa = await buscarOuCriarConversa(canalId, canal);
-
-  // Não responder se já está em fase terminal
   if (conversa.fase === 'concluido') return;
 
-  // 2. Adicionar mensagem do cliente ao histórico
-  const novaMsg: Mensagem = { role: 'user', content: mensagemCliente, ts: new Date().toISOString() };
-  const historico = [...(conversa.historico ?? []), novaMsg].slice(-20); // máx 20 mensagens
+  // 2. Buscar nome do cliente (só na primeira mensagem da conversa)
+  let nomeCliente = conversa.nome_cliente ?? null;
+  if (!nomeCliente && conversa.historico.length === 0) {
+    nomeCliente = await buscarNomeCliente(canalId);
+    if (nomeCliente) {
+      await salvarConversa(conversa.id, { nome_cliente: nomeCliente } as Partial<Conversa>);
+    }
+  }
 
-  // 3. Analisar fase (em paralelo com geração de resposta)
+  // 3. Adicionar mensagem do cliente ao histórico
+  const novaMsg: Mensagem = { role: 'user', content: mensagemCliente, ts: new Date().toISOString() };
+  const historico = [...(conversa.historico ?? []), novaMsg].slice(-20);
+
+  // 4. Gerar resposta e analisar fase em paralelo
   const [respostaIA, analiseRaw] = await Promise.all([
     chamarIA(
-      buildSystemPrompt(conversa.fase, conversa.pedido_info),
+      buildSystemPrompt(conversa.fase, conversa.pedido_info, nomeCliente),
       historico.map(m => ({ role: m.role, content: m.content })),
       150,
     ),
@@ -361,7 +387,7 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
     ),
   ]);
 
-  // 4. Processar análise de fase
+  // 5. Processar análise de fase
   let novaFase = conversa.fase;
   let pedidoInfo = conversa.pedido_info ?? null;
   let prontoParaPagamento = false;
