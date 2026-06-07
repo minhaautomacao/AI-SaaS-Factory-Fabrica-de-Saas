@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -ExecutionPolicy Bypass -NonInteractive -File scripts/sincronizar-repos.ps1 2>&1"
+          }
+        ]
+      }
+    ]
+  }
+}
