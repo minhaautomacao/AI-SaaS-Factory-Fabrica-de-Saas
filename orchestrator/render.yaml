@@ -20,7 +20,7 @@ services:
       - key: DATABASE_PROVIDER
         value: postgresql
       - key: DATABASE_CONNECTION_URI
-        value: postgresql://postgres.gftnjvdvzgjkhwxnxnwl:Enemeop@Flores2026!@aws-0-sa-east-1.pooler.supabase.com:5432/postgres
+        value: postgresql://postgres.gftnjvdvzgjkhwxnxnwl:Enemeop%40Flores2026%21@aws-0-sa-east-1.pooler.supabase.com:5432/postgres
       - key: DATABASE_SAVE_DATA_INSTANCE
         value: "true"
       - key: DATABASE_SAVE_DATA_NEW_MESSAGE
