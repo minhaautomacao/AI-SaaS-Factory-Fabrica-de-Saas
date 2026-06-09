@@ -2,6 +2,7 @@
 
 Memórias persistentes do projeto Fábrica de SaaS.
 
-- [Estado atual do projeto](estado-atual.md) — O que foi criado, próximos passos e como retomar (snapshot 2026-05-23)
-- [Stack padrão](stack.md) — Stack técnica preferida para novos projetos SaaS
-- [Infraestrutura gratuita](infraestrutura.md) — Serviços e limites dos planos gratuitos usados
+- [Estado atual do projeto](estado-atual.md) — Snapshot completo 2026-06-02: pipeline Meta em produção, próximos passos WhatsApp + pagamentos
+- [Enemeop Flores](enemeop-flores.md) — URLs, Supabase, Vercel, pipeline Instagram, admin, pendências críticas
+- [Credenciais Meta](credenciais-meta.md) — App ID, secrets, tokens e status das integrações Meta/Instagram
+- [IDs de infraestrutura](infraestrutura-ids.md) — Refs Supabase, IDs Vercel, Evolution API, contagem de migrations/funções
