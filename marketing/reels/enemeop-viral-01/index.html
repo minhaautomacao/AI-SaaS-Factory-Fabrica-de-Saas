@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Enemeop Flores — Viral Reel 01</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background: #0F0A02;
+    }
+
+    .scene {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1080px;
+      height: 1920px;
+      background-color: #0F0A02;
+      overflow: hidden;
+    }
+
+    /* Scenes start invisible — GSAP fromTo handles entrance */
+    #s2, #s3, #s4 { opacity: 0; }
+
+    /* z-stacking so later scenes render above earlier ones */
+    #s1 { z-index: 1; }
+    #s2 { z-index: 2; }
+    #s3 { z-index: 3; }
+    #s4 { z-index: 4; }
+    #particles-layer { z-index: 50; pointer-events: none; }
+
+    /* ── SCENE 1 — Hook ── */
+    .s1-glow {
+      position: absolute;
+      top: 40%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 900px; height: 900px;
+      background: radial-gradient(ellipse at center,
+        rgba(201,168,76,0.20) 0%,
+        rgba(201,168,76,0.08) 35%,
+        rgba(15,10,2,0) 70%);
+      border-radius: 50%;
+    }
+    .s1-corner-tl {
+      position: absolute; top: 80px; left: 80px;
+      width: 64px; height: 64px;
+      border-top: 2px solid #C9A84C;
+      border-left: 2px solid #C9A84C;
+      opacity: 0;
+    }
+    .s1-corner-br {
+      position: absolute; bottom: 240px; right: 80px;
+      width: 64px; height: 64px;
+      border-bottom: 2px solid #C9A84C;
+      border-right: 2px solid #C9A84C;
+      opacity: 0;
+    }
+    #s1-rule {
+      position: absolute;
+      top: 400px; left: 80px;
+      width: 0; height: 2px;
+      background-color: #C9A84C;
+    }
+    .s1-label {
+      position: absolute;
+      top: 418px; left: 80px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 26px; font-weight: 300;
+      letter-spacing: 0.22em;
+      color: #7A6530;
+      text-transform: uppercase;
+      opacity: 0;
+    }
+    .s1-content {
+      position: absolute;
+      top: 490px; left: 80px; right: 80px;
+    }
+    .s1-line1 {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 164px; line-height: 0.88;
+      letter-spacing: -0.02em;
+      color: #F0E6C8;
+      opacity: 0;
+    }
+    .s1-line2 {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 164px; line-height: 0.88;
+      letter-spacing: -0.02em;
+      color: #C9A84C;
+      opacity: 0;
+    }
+    .s1-line3 {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 48px; font-weight: 300;
+      letter-spacing: 0.04em;
+      color: #9C8160;
+      margin-top: 32px;
+      opacity: 0;
+    }
+    .s1-divider {
+      position: absolute;
+      top: 950px; left: 80px;
+      width: 0; height: 1px;
+      background-color: rgba(201,168,76,0.30);
+    }
+    .s1-meta {
+      position: absolute;
+      top: 970px; left: 80px;
+      font-family: 'DM Sans', monospace;
+      font-size: 22px; font-weight: 300;
+      letter-spacing: 0.2em;
+      color: #5E4A2C;
+      text-transform: uppercase;
+      opacity: 0;
+    }
+    .s1-ghost {
+      position: absolute;
+      bottom: 80px; right: -40px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 320px;
+      color: rgba(201,168,76,0.04);
+      letter-spacing: -0.05em;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* ── SCENE 2 — Brand Reveal ── */
+    .s2-glow-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 780px 1000px at 50% 48%,
+        rgba(201,168,76,0.14) 0%,
+        rgba(15,10,2,0) 68%);
+    }
+    .s2-reg {
+      position: absolute;
+      width: 44px; height: 44px;
+      opacity: 0;
+    }
+    .s2-reg-tl { top: 70px; left: 70px; border-top: 1px solid rgba(201,168,76,0.35); border-left: 1px solid rgba(201,168,76,0.35); }
+    .s2-reg-tr { top: 70px; right: 70px; border-top: 1px solid rgba(201,168,76,0.35); border-right: 1px solid rgba(201,168,76,0.35); }
+    .s2-reg-bl { bottom: 70px; left: 70px; border-bottom: 1px solid rgba(201,168,76,0.35); border-left: 1px solid rgba(201,168,76,0.35); }
+    .s2-reg-br { bottom: 70px; right: 70px; border-bottom: 1px solid rgba(201,168,76,0.35); border-right: 1px solid rgba(201,168,76,0.35); }
+    .s2-flex {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%; height: 100%;
+      gap: 56px;
+      padding: 160px 80px;
+    }
+    #s2-aura {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -56%);
+      width: 520px; height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center,
+        rgba(201,168,76,0.22) 0%,
+        rgba(201,168,76,0) 65%);
+      opacity: 0;
+    }
+    #s2-logo-wrap {
+      flex-shrink: 0;
+      opacity: 0;
+    }
+    .s2-text-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    #s2-rule-center {
+      width: 0; height: 1.5px;
+      background-color: rgba(201,168,76,0.50);
+      margin-bottom: 8px;
+    }
+    .s2-name {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 168px; line-height: 0.88;
+      letter-spacing: 0.10em;
+      color: #F0E6C8;
+      opacity: 0;
+    }
+    .s2-tagline {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 38px; font-weight: 300;
+      letter-spacing: 0.28em;
+      color: #C9A84C;
+      text-transform: uppercase;
+      opacity: 0;
+    }
+    .s2-ghost-flores {
+      position: absolute;
+      bottom: 40px;
+      left: 50%; transform: translateX(-50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 280px;
+      color: rgba(201,168,76,0.04);
+      letter-spacing: 0.05em;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    /* ── SCENE 3 — Benefits ── */
+    .s3-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 1000px 700px at 50% 22%,
+        rgba(201,168,76,0.10) 0%,
+        rgba(15,10,2,0) 70%);
+    }
+    .s3-content {
+      display: flex;
+      flex-direction: column;
+      width: 100%; height: 100%;
+      padding: 240px 80px 160px;
+      gap: 0;
+      box-sizing: border-box;
+    }
+    .s3-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 26px; font-weight: 300;
+      letter-spacing: 0.25em;
+      color: #7A6530;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      opacity: 0;
+    }
+    .s3-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 116px;
+      line-height: 0.90;
+      letter-spacing: 0.01em;
+      color: #F0E6C8;
+      margin-bottom: 16px;
+      opacity: 0;
+    }
+    .s3-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 32px; font-weight: 300;
+      color: #9C8160;
+      letter-spacing: 0.06em;
+      margin-bottom: 64px;
+      opacity: 0;
+    }
+    .s3-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .s3-card {
+      background-color: #181005;
+      border: 1.5px solid #332614;
+      border-radius: 20px;
+      padding: 40px 44px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      opacity: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .s3-card-accent {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 5px;
+      background-color: #C9A84C;
+      border-radius: 20px 0 0 20px;
+    }
+    .s3-card-icon {
+      font-size: 60px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .s3-card-title {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 64px;
+      letter-spacing: 0.03em;
+      color: #F0E6C8;
+      line-height: 1;
+    }
+    .s3-card-desc {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 28px; font-weight: 300;
+      color: #7A6530;
+      margin-top: 4px;
+    }
+    .s3-bottom-handle {
+      margin-top: auto;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 26px; font-weight: 300;
+      letter-spacing: 0.18em;
+      color: #5E4A2C;
+      text-transform: uppercase;
+      opacity: 0;
+    }
+    #s3-rule {
+      width: 0; height: 1px;
+      background-color: rgba(201,168,76,0.20);
+      margin-top: 32px; margin-bottom: 20px;
+    }
+
+    /* ── SCENE 4 — CTA ── */
+    .s4-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 860px 1100px at 50% 58%,
+        rgba(201,168,76,0.18) 0%,
+        rgba(15,10,2,0) 62%);
+    }
+    #s4-border {
+      position: absolute;
+      inset: 60px;
+      border: 1.5px solid rgba(201,168,76,0);
+      border-radius: 36px;
+    }
+    .s4-reg {
+      position: absolute;
+      width: 52px; height: 52px;
+      opacity: 0;
+    }
+    .s4-reg-tl { top: 88px; left: 88px; border-top: 2px solid rgba(201,168,76,0.45); border-left: 2px solid rgba(201,168,76,0.45); }
+    .s4-reg-tr { top: 88px; right: 88px; border-top: 2px solid rgba(201,168,76,0.45); border-right: 2px solid rgba(201,168,76,0.45); }
+    .s4-reg-bl { bottom: 88px; left: 88px; border-bottom: 2px solid rgba(201,168,76,0.45); border-left: 2px solid rgba(201,168,76,0.45); }
+    .s4-reg-br { bottom: 88px; right: 88px; border-bottom: 2px solid rgba(201,168,76,0.45); border-right: 2px solid rgba(201,168,76,0.45); }
+    #s4-handle-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, 20%);
+      width: 760px; height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center,
+        rgba(201,168,76,0.22) 0%,
+        rgba(201,168,76,0) 68%);
+      opacity: 0;
+    }
+    .s4-flex {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%; height: 100%;
+      text-align: center;
+      padding: 160px 80px;
+      gap: 0;
+      box-sizing: border-box;
+    }
+    .s4-pre {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 34px; font-weight: 300;
+      letter-spacing: 0.22em;
+      color: #7A6530;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0;
+    }
+    .s4-main {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 148px; line-height: 0.86;
+      letter-spacing: -0.01em;
+      color: #F0E6C8;
+      margin-bottom: 32px;
+      opacity: 0;
+    }
+    .s4-handle {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 100px;
+      letter-spacing: 0.05em;
+      color: #C9A84C;
+      opacity: 0;
+    }
+    .s4-cta-sub {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 30px; font-weight: 300;
+      letter-spacing: 0.14em;
+      color: #5E4A2C;
+      text-transform: uppercase;
+      margin-top: 28px;
+      opacity: 0;
+    }
+    #s4-logo-small {
+      position: absolute;
+      bottom: 160px; left: 88px;
+      opacity: 0;
+    }
+    .s4-ghost {
+      position: absolute;
+      top: 60px; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 260px;
+      color: rgba(201,168,76,0.04);
+      letter-spacing: 0.10em;
+      user-select: none;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div data-composition-id="enemeop-viral" data-width="1080" data-height="1920">
+
+    <!-- ── Particle layer ── -->
+    <div id="particles-layer" class="clip"
+         data-start="0" data-duration="15" data-track-index="10"
+         style="position:absolute;top:0;left:0;width:1080px;height:1920px;">
+    </div>
+
+    <!-- ── SCENE 1 — Hook (0–4.2s) ── -->
+    <div id="s1" class="clip scene" data-start="0" data-duration="4.2" data-track-index="1">
+      <div class="s1-glow"></div>
+      <div class="s1-ghost">EF</div>
+      <div class="s1-corner-tl"></div>
+      <div class="s1-corner-br"></div>
+      <div id="s1-rule"></div>
+      <div class="s1-label">Entrega de flores</div>
+      <div class="s1-content">
+        <span class="s1-line1">FLORES</span>
+        <span class="s1-line2">QUE CHEGAM</span>
+        <span class="s1-line3">antes que você lembre</span>
+      </div>
+      <div class="s1-divider" id="s1-divider"></div>
+      <div class="s1-meta">enemeop.com.br</div>
+    </div>
+
+    <!-- ── SCENE 2 — Brand Reveal (3.6–8.0s) ── -->
+    <div id="s2" class="clip scene" data-start="3.6" data-duration="4.4" data-track-index="2">
+      <div class="s2-glow-bg"></div>
+      <div class="s2-ghost-flores">FLORES</div>
+      <div id="s2-aura"></div>
+      <div class="s2-reg s2-reg-tl"></div>
+      <div class="s2-reg s2-reg-tr"></div>
+      <div class="s2-reg s2-reg-bl"></div>
+      <div class="s2-reg s2-reg-br"></div>
+      <div class="s2-flex">
+        <!-- 4-petal mark — Enemeop brand symbol -->
+        <div id="s2-logo-wrap">
+          <svg viewBox="-60 -60 120 120" width="340" height="340" fill="none"
+               xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer atmospheric ring -->
+            <circle cx="0" cy="0" r="55"
+              stroke="rgba(201,168,76,0.12)" stroke-width="10"/>
+            <circle cx="0" cy="0" r="50"
+              stroke="rgba(201,168,76,0.06)" stroke-width="18"/>
+            <!-- Large 4-petal fill (scale 4) -->
+            <g transform="scale(4)"
+               fill="rgba(201,168,76,0.10)" stroke="#C9A84C" stroke-width="0.5">
+              <path d="M-1,-1 Q-1,-12 -12,-12 Q-12,-1 -1,-1 Z"/>
+              <path d="M1,-1 Q1,-12 12,-12 Q12,-1 1,-1 Z"/>
+              <path d="M-1,1 Q-1,12 -12,12 Q-12,1 -1,1 Z"/>
+              <path d="M1,1 Q1,12 12,12 Q12,1 1,1 Z"/>
+            </g>
+            <!-- Inner 4-petal crisp (scale 2.2) -->
+            <g transform="scale(2.2)"
+               fill="rgba(201,168,76,0.28)" stroke="#E2C06E" stroke-width="0.9">
+              <path d="M-1,-1 Q-1,-12 -12,-12 Q-12,-1 -1,-1 Z"/>
+              <path d="M1,-1 Q1,-12 12,-12 Q12,-1 1,-1 Z"/>
+              <path d="M-1,1 Q-1,12 -12,12 Q-12,1 -1,1 Z"/>
+              <path d="M1,1 Q1,12 12,12 Q12,1 1,1 Z"/>
+            </g>
+            <!-- Center dot -->
+            <circle cx="0" cy="0" r="5" fill="#C9A84C"/>
+            <circle cx="0" cy="0" r="2.5" fill="#F0E6C8"/>
+          </svg>
+        </div>
+        <div class="s2-text-block">
+          <div id="s2-rule-center"></div>
+          <span class="s2-name">ENEMEOP</span>
+          <span class="s2-tagline">flores com amor</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SCENE 3 — Benefits (7.4–11.8s) ── -->
+    <div id="s3" class="clip scene" data-start="7.4" data-duration="4.4" data-track-index="3">
+      <div class="s3-bg"></div>
+      <div class="s3-content">
+        <span class="s3-eyebrow">por que a enemeop?</span>
+        <div class="s3-headline">SIMPLES<br>E ESPECIAL</div>
+        <div class="s3-sub">Do pedido à sua porta</div>
+        <div class="s3-cards">
+          <div class="s3-card" id="s3-card1">
+            <div class="s3-card-accent"></div>
+            <div class="s3-card-icon">🌹</div>
+            <div>
+              <span class="s3-card-title">WhatsApp</span>
+              <span class="s3-card-desc">Pedido em menos de 1 minuto</span>
+            </div>
+          </div>
+          <div class="s3-card" id="s3-card2">
+            <div class="s3-card-accent"></div>
+            <div class="s3-card-icon">🚚</div>
+            <div>
+              <span class="s3-card-title">Mesmo Dia</span>
+              <span class="s3-card-desc">Entrega rápida na sua cidade</span>
+            </div>
+          </div>
+          <div class="s3-card" id="s3-card3">
+            <div class="s3-card-accent"></div>
+            <div class="s3-card-icon">💛</div>
+            <div>
+              <span class="s3-card-title">Toda Ocasião</span>
+              <span class="s3-card-desc">Namoro, aniversário, surpresa</span>
+            </div>
+          </div>
+        </div>
+        <div id="s3-rule"></div>
+        <div class="s3-bottom-handle">@enemeopflores</div>
+      </div>
+    </div>
+
+    <!-- ── SCENE 4 — CTA (11.2–15.0s) ── -->
+    <div id="s4" class="clip scene" data-start="11.2" data-duration="3.8" data-track-index="4">
+      <div class="s4-bg"></div>
+      <div class="s4-ghost">DF</div>
+      <div id="s4-border"></div>
+      <div id="s4-handle-glow"></div>
+      <div class="s4-reg s4-reg-tl"></div>
+      <div class="s4-reg s4-reg-tr"></div>
+      <div class="s4-reg s4-reg-bl"></div>
+      <div class="s4-reg s4-reg-br"></div>
+      <div class="s4-flex">
+        <span class="s4-pre">Siga agora</span>
+        <span class="s4-main">CHAMA NO DIRECT</span>
+        <span class="s4-handle">@enemeopflores</span>
+        <span class="s4-cta-sub">flores que falam por você</span>
+      </div>
+      <!-- Small brand mark bottom-left -->
+      <div id="s4-logo-small">
+        <svg viewBox="-18 -18 36 36" width="72" height="72" fill="none"
+             xmlns="http://www.w3.org/2000/svg">
+          <g fill="rgba(201,168,76,0.22)" stroke="#C9A84C" stroke-width="0.8">
+            <path d="M-1,-1 Q-1,-12 -12,-12 Q-12,-1 -1,-1 Z"/>
+            <path d="M1,-1 Q1,-12 12,-12 Q12,-1 1,-1 Z"/>
+            <path d="M-1,1 Q-1,12 -12,12 Q-12,1 -1,1 Z"/>
+            <path d="M1,1 Q1,12 12,12 Q12,1 1,1 Z"/>
+          </g>
+          <circle cx="0" cy="0" r="2.2" fill="#C9A84C"/>
+        </svg>
+      </div>
+    </div>
+
+  </div><!-- /composition -->
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+  // ── Seeded PRNG (mulberry32) — no Math.random() ──
+  function mulberry32(seed) {
+    return function() {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  const rand = mulberry32(42);
+
+  // ── Generate falling petal particles ──
+  const particlesLayer = document.getElementById('particles-layer');
+  const PARTICLE_COUNT = 20;
+  const COMP_DURATION  = 15;
+  const particleEls    = [];
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const x       = 40 + rand() * 1000;
+    const startY  = -(50 + rand() * 220);
+    const size    = 12 + rand() * 20;
+    const ptype   = i % 3; // 0=teardrop, 1=4petal, 2=circle
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width',  String(size * 2 + 4));
+    svg.setAttribute('height', String(size * 2 + 4));
+    svg.setAttribute('viewBox', '-15 -15 30 30');
+    svg.style.cssText = 'position:absolute;opacity:0;';
+    svg.style.left    = x + 'px';
+    svg.style.top     = startY + 'px';
+
+    if (ptype === 0) {
+      const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('d', 'M0,-11 C6,-11 10,-5 10,2 C10,8 5,12 0,12 C-5,12 -10,8 -10,2 C-10,-5 -6,-11 0,-11 Z');
+      p.setAttribute('fill', 'rgba(201,168,76,0.14)');
+      p.setAttribute('stroke', '#C9A84C');
+      p.setAttribute('stroke-width', '1.1');
+      svg.appendChild(p);
+    } else if (ptype === 1) {
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      g.setAttribute('fill', 'rgba(201,168,76,0.12)');
+      g.setAttribute('stroke', '#C9A84C');
+      g.setAttribute('stroke-width', '1.1');
+      ['M-1,-1 Q-1,-10 -10,-10 Q-10,-1 -1,-1 Z',
+       'M1,-1 Q1,-10 10,-10 Q10,-1 1,-1 Z',
+       'M-1,1 Q-1,10 -10,10 Q-10,1 -1,1 Z',
+       'M1,1 Q1,10 10,10 Q10,1 1,1 Z'].forEach(function(d) {
+        const pp = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        pp.setAttribute('d', d); g.appendChild(pp);
+      });
+      svg.appendChild(g);
+    } else {
+      const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      c.setAttribute('cx', '0'); c.setAttribute('cy', '0'); c.setAttribute('r', '8');
+      c.setAttribute('fill', 'rgba(201,168,76,0.10)');
+      c.setAttribute('stroke', '#C9A84C'); c.setAttribute('stroke-width', '1.1');
+      svg.appendChild(c);
+    }
+
+    particlesLayer.appendChild(svg);
+    particleEls.push({ el: svg, startY: startY, x: x });
+  }
+
+  // ── Build main timeline ──
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+
+  // ── PARTICLES (deterministic fall, each seeded separately) ──
+  particleEls.forEach(function(item, i) {
+    const pr       = mulberry32(i * 97 + 13);
+    const delay    = pr() * 9;
+    const fallDur  = 3.8 + pr() * 4;
+    const xDrift   = (pr() - 0.5) * 180;
+    const rotate   = (pr() - 0.5) * 600;
+    const opacity  = 0.25 + pr() * 0.55;
+    const repeatN  = Math.max(0, Math.floor((COMP_DURATION - delay) / fallDur));
+
+    tl.fromTo(item.el,
+      { opacity: 0, y: 0, x: 0, rotation: 0 },
+      { opacity: opacity, y: 2100 + pr() * 300, x: xDrift, rotation: rotate,
+        duration: fallDur, ease: 'none', repeat: repeatN },
+      delay
+    );
+  });
+
+  // ── SCENE 1 — Hook (0–4.2s) ──
+  // Corner marks
+  tl.fromTo('.s1-corner-tl', { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power2.out' }, 0.10);
+  tl.fromTo('.s1-corner-br', { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power2.out' }, 0.22);
+  // Rule draws left→right
+  tl.fromTo('#s1-rule', { width: 0 }, { width: 280, duration: 0.65, ease: 'expo.out' }, 0.18);
+  // Label slides from left
+  tl.fromTo('.s1-label', { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.50, ease: 'power3.out' }, 0.35);
+  // "FLORES" SLAMS from left + skew
+  tl.fromTo('.s1-line1', { opacity: 0, x: -130, skewX: -10 }, { opacity: 1, x: 0, skewX: 0, duration: 0.48, ease: 'expo.out' }, 0.44);
+  // "QUE CHEGAM" SLAMS from right + skew
+  tl.fromTo('.s1-line2', { opacity: 0, x: 110, skewX: 8 }, { opacity: 1, x: 0, skewX: 0, duration: 0.48, ease: 'expo.out' }, 0.70);
+  // Tagline FLOATS up
+  tl.fromTo('.s1-line3', { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 0.98);
+  // Divider draws
+  tl.fromTo('#s1-divider', { width: 0 }, { width: 400, duration: 0.50, ease: 'power3.out' }, 1.30);
+  // Meta text fades
+  tl.fromTo('.s1-meta', { opacity: 0 }, { opacity: 1, duration: 0.40, ease: 'sine.inOut' }, 1.50);
+  // Ambient: glow breathe (duration 1.5s yoyo ×1 = 3.0s, fits within scene 0.5–3.5s)
+  tl.to('.s1-glow', { scale: 1.18, duration: 1.5, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 0.50);
+
+  // ── TRANSITION 1→2: blur crossfade (Scene 2 fades+blurs in over outgoing Scene 1) ──
+  tl.fromTo('#s2',
+    { opacity: 0, filter: 'blur(22px)' },
+    { opacity: 1, filter: 'blur(0px)', duration: 0.72, ease: 'power2.out' }, 3.60);
+
+  // ── SCENE 2 — Brand Reveal (3.6–8.0s) ──
+  // Reg marks flicker in
+  tl.fromTo(['.s2-reg-tl', '.s2-reg-tr', '.s2-reg-bl', '.s2-reg-br'],
+    { opacity: 0 }, { opacity: 1, duration: 0.28, ease: 'power2.out', stagger: 0.06 }, 3.80);
+  // Aura blooms
+  tl.fromTo('#s2-aura', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.75, ease: 'power3.out' }, 3.85);
+  // Logo STAMPS with rotation spring
+  tl.fromTo('#s2-logo-wrap',
+    { opacity: 0, scale: 0.05, rotation: -120 },
+    { opacity: 1, scale: 1,    rotation: 0,    duration: 0.80, ease: 'back.out(1.5)' }, 4.05);
+  // Logo slow sway (ambient, 1.4s yoyo×1 = 2.8s, starts 4.85 ends 7.65)
+  tl.to('#s2-logo-wrap', { rotation: 7, duration: 1.4, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 4.85);
+  // Aura gentle pulse (0.85s yoyo×1 = 1.7s, starts 4.9 ends 6.6)
+  tl.to('#s2-aura', { scale: 1.14, opacity: 0.65, duration: 0.85, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 4.90);
+  // Rule center draws from center outward
+  tl.fromTo('#s2-rule-center', { width: 0 }, { width: 340, duration: 0.55, ease: 'expo.out' }, 4.85);
+  // "ENEMEOP" SLAMS from below with scaleY squash
+  tl.fromTo('.s2-name',
+    { opacity: 0, y: 70, scaleY: 1.25 },
+    { opacity: 1, y: 0,  scaleY: 1,    duration: 0.55, ease: 'expo.out' }, 5.05);
+  // Tagline DRIFTS in with expanding letterSpacing
+  tl.fromTo('.s2-tagline',
+    { opacity: 0, y: 22, letterSpacing: '0.6em' },
+    { opacity: 1, y: 0,  letterSpacing: '0.28em', duration: 0.65, ease: 'power2.out' }, 5.52);
+
+  // ── TRANSITION 2→3: vertical push up ──
+  tl.fromTo('#s3',
+    { opacity: 0, y: 130, filter: 'blur(9px)' },
+    { opacity: 1, y: 0,   filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' }, 7.40);
+
+  // ── SCENE 3 — Benefits (7.4–11.8s) ──
+  tl.fromTo('.s3-eyebrow', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.45, ease: 'power3.out' }, 7.62);
+  tl.fromTo('.s3-headline', { opacity: 0, x: -55 }, { opacity: 1, x: 0, duration: 0.55, ease: 'expo.out'  }, 7.80);
+  tl.fromTo('.s3-sub',      { opacity: 0, x: -35 }, { opacity: 1, x: 0, duration: 0.45, ease: 'power2.out' }, 8.08);
+  // Cards CASCADE from right with stagger
+  tl.fromTo('#s3-card1', { opacity: 0, x: 240 }, { opacity: 1, x: 0, duration: 0.52, ease: 'expo.out' }, 8.24);
+  tl.fromTo('#s3-card2', { opacity: 0, x: 240 }, { opacity: 1, x: 0, duration: 0.52, ease: 'expo.out' }, 8.54);
+  tl.fromTo('#s3-card3', { opacity: 0, x: 240 }, { opacity: 1, x: 0, duration: 0.52, ease: 'expo.out' }, 8.84);
+  // Rule divider draws
+  tl.fromTo('#s3-rule', { width: 0 }, { width: 920, duration: 0.45, ease: 'power2.out' }, 9.20);
+  // Handle fades
+  tl.fromTo('.s3-bottom-handle', { opacity: 0 }, { opacity: 1, duration: 0.40, ease: 'sine.inOut' }, 9.40);
+  // Ambient: card 1 border shimmer (0.7s yoyo×1 = 1.4s, starts 9.5 ends 10.9)
+  tl.to('#s3-card1', { borderColor: '#50391A', duration: 0.7, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 9.50);
+
+  // ── TRANSITION 3→4: zoom punch in ──
+  tl.fromTo('#s4',
+    { opacity: 0, scale: 1.10, filter: 'blur(11px)' },
+    { opacity: 1, scale: 1,    filter: 'blur(0px)', duration: 0.58, ease: 'power2.out' }, 11.20);
+
+  // ── SCENE 4 — CTA (11.2–15.0s) ──
+  tl.fromTo('#s4-border',
+    { borderColor: 'rgba(201,168,76,0)' },
+    { borderColor: 'rgba(201,168,76,0.28)', duration: 0.70, ease: 'power2.out' }, 11.40);
+  tl.fromTo(['.s4-reg-tl','.s4-reg-tr','.s4-reg-bl','.s4-reg-br'],
+    { opacity: 0 }, { opacity: 1, duration: 0.32, ease: 'power2.out', stagger: 0.07 }, 11.42);
+  tl.fromTo('.s4-pre',
+    { opacity: 0, y: -28 }, { opacity: 1, y: 0, duration: 0.44, ease: 'power3.out' }, 11.55);
+  // "CHAMA NO DIRECT" STAMPS with scale punch
+  tl.fromTo('.s4-main',
+    { opacity: 0, scale: 0.82, y: 40 },
+    { opacity: 1, scale: 1,    y: 0,  duration: 0.58, ease: 'back.out(1.2)' }, 11.72);
+  // Handle DROPS from above
+  tl.fromTo('.s4-handle',
+    { opacity: 0, y: -52, scale: 1.12 },
+    { opacity: 1, y: 0,   scale: 1,    duration: 0.55, ease: 'expo.out' }, 12.12);
+  // Handle glow blooms
+  tl.fromTo('#s4-handle-glow',
+    { opacity: 0, scale: 0.6 },
+    { opacity: 1, scale: 1,   duration: 0.45, ease: 'power2.out' }, 12.12);
+  // Handle glow pulse (0.75s yoyo×1 = 1.5s, starts 12.4 ends 13.9)
+  tl.to('#s4-handle-glow', { scale: 1.22, opacity: 0.60, duration: 0.75, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 12.40);
+  // CTA sub line
+  tl.fromTo('.s4-cta-sub', { opacity: 0 }, { opacity: 1, duration: 0.38, ease: 'sine.inOut' }, 12.42);
+  // Small logo POPS in
+  tl.fromTo('#s4-logo-small',
+    { opacity: 0, scale: 0, rotation: -60 },
+    { opacity: 1, scale: 1, rotation: 0,  duration: 0.44, ease: 'back.out(1.6)' }, 12.62);
+  // Border pulse (0.55s yoyo×1 = 1.1s, starts 12.8 ends 13.9)
+  tl.to('#s4-border', { borderColor: 'rgba(201,168,76,0.55)', duration: 0.55, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 12.80);
+
+  // FINAL EXIT — fade to black (final scene only)
+  tl.to('#s4', { opacity: 0, duration: 0.65, ease: 'power2.inOut' }, 14.35);
+
+  // Register timeline
+  window.__timelines['enemeop-viral'] = tl;
+  </script>
+</body>
+</html>
