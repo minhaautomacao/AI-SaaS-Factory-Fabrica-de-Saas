@@ -75,7 +75,40 @@ EVOLUTION_INSTANCE=floricultura
 
 ---
 
-## Manter acordado (obrigatório no free tier)
+## ⚠️ Limitação conhecida: bloqueio de IP do Render Oregon
+
+O Render Oregon tem IPs bloqueados pelo WhatsApp para novas conexões Baileys. A solução em produção usa um **bridge local** (`orchestrator/whatsapp-bridge.js`) rodando na máquina do usuário, exposto via túnel.
+
+## WhatsApp Bridge local (solução atual)
+
+### Iniciar o bridge
+
+```bash
+cd orchestrator
+node whatsapp-bridge.js
+```
+
+### Expor via túnel (localhost.run — gratuito, sem cadastro)
+
+```bash
+ssh -o StrictHostKeyChecking=no -R 80:localhost:3333 nokey@localhost.run
+```
+
+A URL gerada (ex: `https://xxxx.lhr.life`) deve ser atualizada em:
+- `orchestrator/.env` → `EVOLUTION_API_URL`
+- Variável `EVOLUTION_API_URL` no Render (orquestrador)
+
+### Para URL permanente
+Crie conta em https://localhost.run/docs/forever-free/ e adicione sua chave SSH.
+Ou use Cloudflare Tunnel (já configurado no projeto) para URL fixa sem reinicialização.
+
+### Dependências (instalar na primeira vez)
+```bash
+cd C:\Users\NOTEBOOK\Desktop  # ou onde estiver o baileys-auth/
+npm install @whiskeysockets/baileys express pino @hapi/boom
+```
+
+## Manter acordado (obrigatório no free tier do Render)
 
 Configure o UptimeRobot (uptimerobot.com — gratuito):
 - Monitor HTTP(s): `https://enemeop-evolution.onrender.com/`
