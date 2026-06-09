@@ -76,30 +76,30 @@ export const TIMEOUTS: Record<Urgencia, number> = {
   low: 1_800_000,      // 30min
 }
 
-// Nomes das filas BullMQ
+// Nomes das filas BullMQ (sem ":" — BullMQ não permite)
 export const QUEUES = {
   // Filas de entrada do orquestrador (por escopo e urgência)
-  FABRICA_CRITICAL: 'queue:fabrica:critical',
-  FABRICA_NORMAL:   'queue:fabrica:normal',
-  FABRICA_LOW:      'queue:fabrica:low',
-  PRODUCAO_CRITICAL: 'queue:producao:critical',
-  PRODUCAO_NORMAL:   'queue:producao:normal',
-  PRODUCAO_LOW:      'queue:producao:low',
+  FABRICA_CRITICAL: 'fabrica-critical',
+  FABRICA_NORMAL:   'fabrica-normal',
+  FABRICA_LOW:      'fabrica-low',
+  PRODUCAO_CRITICAL: 'producao-critical',
+  PRODUCAO_NORMAL:   'producao-normal',
+  PRODUCAO_LOW:      'producao-low',
 
   // Filas de saída (por agente)
-  AGENT_CAPTACAO:    'queue:agent:captacao-leads',
-  AGENT_SDR:         'queue:agent:whatsapp-sdr',
-  AGENT_FINANCEIRO:  'queue:agent:financeiro',
-  AGENT_LOGISTICA:   'queue:agent:logistica',
-  AGENT_CONCILIACAO: 'queue:agent:conciliacao',
-  AGENT_OPERACIONAL: 'queue:agent:operacional',
-  AGENT_RASTREAMENTO:'queue:agent:rastreamento',
-  AGENT_POS_VENDA:   'queue:agent:pos-venda',
-  AGENT_MARKETING:   'queue:agent:marketing',
-  AGENT_INTELIGENCIA:'queue:agent:inteligencia',
-  AGENT_DEV:         'queue:agent:agente-dev',
-  AGENT_ESTOQUE:     'queue:agent:estoque',
+  AGENT_CAPTACAO:    'agent-captacao-leads',
+  AGENT_SDR:         'agent-whatsapp-sdr',
+  AGENT_FINANCEIRO:  'agent-financeiro',
+  AGENT_LOGISTICA:   'agent-logistica',
+  AGENT_CONCILIACAO: 'agent-conciliacao',
+  AGENT_OPERACIONAL: 'agent-operacional',
+  AGENT_RASTREAMENTO:'agent-rastreamento',
+  AGENT_POS_VENDA:   'agent-pos-venda',
+  AGENT_MARKETING:   'agent-marketing',
+  AGENT_INTELIGENCIA:'agent-inteligencia',
+  AGENT_DEV:         'agent-agente-dev',
+  AGENT_ESTOQUE:     'agent-estoque',
 
   // Fila de resultados (agentes respondem aqui)
-  RESULTS: 'queue:results',
+  RESULTS: 'results',
 } as const
