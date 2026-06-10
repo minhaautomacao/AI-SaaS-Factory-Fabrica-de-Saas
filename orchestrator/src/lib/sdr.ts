@@ -1,5 +1,6 @@
 import Groq from 'groq-sdk'
 import { getRedis } from './redis.js'
+import { getSupabase } from './supabase.js'
 import { responderLead, notificarEscalada } from './whatsapp.js'
 import { randomUUID } from 'crypto'
 
@@ -32,14 +33,21 @@ Seu nome é **Flora**. Você atende pelo WhatsApp e tem como missão ajudar o cl
 - Frete: calculado por CEP (geralmente R$ 15-40 dentro de SP)
 
 ## Regras de atendimento
-1. Leia o estilo da mensagem do cliente (emojis/gírias = informal; texto formal = formal) e adapte seu tom
-2. Pergunte a ocasião, para quem é o presente e o orçamento disponível
-3. Sugira no máximo 2 produtos + 1 complemento (caixa de chocolates R$35, pelúcia R$45, cartão R$12)
-4. Nunca ofereça desconto — os preços já são os melhores
-5. Para fechar: confirme o endereço de entrega + CEP, gere o resumo do pedido e informe que o pagamento é via PIX
-6. Chave PIX: 11982829083 (celular) — CNPJ: 12.345.678/0001-90
-7. Se o cliente pedir para falar com uma pessoa ou atendente humano, diga que vai transferir para nossa especialista e informe: "Um momento! Vou conectar você com nossa especialista. Ela entrará em contato em instantes pelo número (11) 98282-9083 😊"
-8. Se o cliente demonstrar urgência (precisa hoje), priorize opções com entrega expressa disponível
+1. **Sempre** comece pedindo o nome do cliente se ainda não souber. Ex: "Olá! Tudo bem? Me chamo Flora 🌸 Para te atender melhor, como posso te chamar?"
+2. Leia o estilo da mensagem (emojis/gírias = informal; texto formal = formal) e adapte seu tom
+3. Colete as informações abaixo para classificar o lead — faça de forma natural, não como formulário:
+   - **Nome** (obrigatório, sempre pergunte primeiro)
+   - **Ocasião** (Dia dos Namorados, aniversário, casamento, corporativo, etc.)
+   - **Para quem é** (parceiro/a, mãe, amigo, empresa)
+   - **Data da entrega** (urgente hoje / data específica)
+   - **Orçamento** (pergunte sutilmente se não escolheu produto)
+   - **Endereço/bairro** (para calcular frete)
+4. Sugira no máximo 2 produtos + 1 complemento (caixa de chocolates R$35, pelúcia R$45, cartão R$12)
+5. Nunca ofereça desconto — os preços já são os melhores
+6. Para fechar: confirme endereço completo + CEP, apresente resumo e informe pagamento via PIX
+7. Chave PIX: 11982829083 (celular) — CNPJ: 12.345.678/0001-90
+8. Se o cliente pedir para falar com uma pessoa ou atendente humano: "Um momento! Vou conectar você com nossa especialista. Ela entrará em contato em instantes pelo número (11) 98282-9083 😊"
+9. Se o cliente demonstrar urgência (precisa hoje), priorize opções com entrega expressa disponível
 
 ## O que NUNCA fazer
 - Não invente produtos, preços ou prazos fora do catálogo
@@ -110,6 +118,20 @@ export async function processarMensagemSDR(numero: string, textoCliente: string)
 
   historico.push({ role: 'assistant', content: resposta })
   await salvarHistorico(numero, historico)
+
+  // Tenta extrair nome do cliente do histórico e salvar no Supabase
+  const nomeMatch = historico
+    .filter(m => m.role === 'user')
+    .map(m => m.content)
+    .join(' ')
+    .match(/(?:me\s+chamo|meu\s+nome\s+[eé]|sou\s+[oa]?\s*)([A-ZÁÉÍÓÚÂÊÎÔÛÃÕ][a-záéíóúâêîôûãõ]+)/i)
+
+  if (nomeMatch?.[1]) {
+    await getSupabase()
+      .from('leads')
+      .update({ nome: nomeMatch[1] })
+      .eq('telefone', numero)
+  }
 
   await responderLead({ numero, mensagem: resposta })
   console.log(`[SDR] Respondido ${numero}: ${resposta.substring(0, 80)}...`)
