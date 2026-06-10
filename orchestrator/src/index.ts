@@ -3,7 +3,7 @@ import { createServer, IncomingMessage, ServerResponse } from 'http'
 import { randomUUID } from 'crypto'
 import { iniciarWorkers } from './workers/orquestrador.js'
 import { getSupabase } from './lib/supabase.js'
-import { responderLead } from './lib/whatsapp.js'
+import { processarMensagemSDR } from './lib/sdr.js'
 
 console.log('=== Fábrica de SaaS — Orquestrador Central ===')
 console.log(`Ambiente: ${process.env.NODE_ENV ?? 'development'}`)
@@ -34,35 +34,17 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
       if (texto && numero) {
         console.log(`[Webhook] Mensagem recebida de ${numero}: ${texto.substring(0, 80)}`)
 
-        // Salva lead no Supabase (upsert por telefone)
-        const { data: lead, error } = await getSupabase()
+        // Salva/atualiza lead no Supabase
+        const { error } = await getSupabase()
           .from('leads')
           .upsert(
             { telefone: numero, canal: 'whatsapp', ultimo_contato: new Date().toISOString(), intencao: 'pesquisando' },
             { onConflict: 'telefone' }
           )
-          .select('id')
-          .single()
+        if (error) console.error('[Webhook] Erro ao salvar lead:', error.message)
 
-        if (error) {
-          console.error('[Webhook] Erro ao salvar lead:', error.message)
-        } else {
-          console.log(`[Webhook] Lead salvo: ${lead?.id}`)
-        }
-
-        // Responde automaticamente via Z-API
-        const resposta = [
-          '🌸 Olá! Obrigada pelo contato com a *Enemeop Flores*!',
-          '',
-          'Recebemos sua mensagem e em breve nossa equipe entrará em contato. 💐',
-          '',
-          'Para agilizar, nos diga:',
-          '• Qual arranjo ou produto você tem interesse?',
-          '• Para qual data é a entrega?',
-          '• Qual é o bairro/cidade de entrega?',
-        ].join('\n')
-
-        await responderLead({ numero, mensagem: resposta })
+        // SDR com IA responde naturalmente
+        await processarMensagemSDR(numero, texto)
       }
 
       res.writeHead(200, { 'Content-Type': 'application/json' })
