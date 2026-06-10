@@ -108,12 +108,17 @@ export async function processarMensagemSDR(numero: string, textoCliente: string)
   }
 
   const historico = await carregarHistorico(numero)
+  const primeiraMensagem = historico.length === 0
   historico.push({ role: 'user', content: textoCliente })
+
+  const systemFinal = primeiraMensagem
+    ? SYSTEM_PROMPT + '\n\n## INSTRUÇÃO OBRIGATÓRIA PARA ESTA RESPOSTA\nEsta é a PRIMEIRA mensagem do cliente. Independente do que ele escreveu, sua resposta DEVE começar pedindo o nome dele. Exemplo: "Oi, pode me dizer seu nome pra eu te atender melhor?" — depois disso pode responder o conteúdo da mensagem se necessário.'
+    : SYSTEM_PROMPT
 
   const response = await groq.chat.completions.create({
     model: 'llama-3.3-70b-versatile',
     messages: [
-      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'system', content: systemFinal },
       ...historico,
     ],
     temperature: 0.7,
