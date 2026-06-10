@@ -2,8 +2,8 @@ import 'dotenv/config'
 import { createServer, IncomingMessage, ServerResponse } from 'http'
 import { randomUUID } from 'crypto'
 import { iniciarWorkers } from './workers/orquestrador.js'
-import { filas } from './lib/queue.js'
-import type { OrchestratorJob } from './types.js'
+import { getSupabase } from './lib/supabase.js'
+import { responderLead } from './lib/whatsapp.js'
 
 console.log('=== Fábrica de SaaS — Orquestrador Central ===')
 console.log(`Ambiente: ${process.env.NODE_ENV ?? 'development'}`)
@@ -32,17 +32,37 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
       const numero = payload.phone ?? payload.from ?? ''
 
       if (texto && numero) {
-        const job: OrchestratorJob = {
-          task_id: randomUUID(),
-          escopo: 'producao',
-          urgencia: 'normal',
-          tipo: 'novo-lead',
-          payload: { numero, mensagem: texto, raw: payload },
-          timestamp: new Date().toISOString(),
-          origem: 'zapi-webhook',
+        console.log(`[Webhook] Mensagem recebida de ${numero}: ${texto.substring(0, 80)}`)
+
+        // Salva lead no Supabase (upsert por telefone)
+        const { data: lead, error } = await getSupabase()
+          .from('leads')
+          .upsert(
+            { telefone: numero, canal: 'whatsapp', ultimo_contato: new Date().toISOString(), intencao: texto.substring(0, 500) },
+            { onConflict: 'telefone' }
+          )
+          .select('id')
+          .single()
+
+        if (error) {
+          console.error('[Webhook] Erro ao salvar lead:', error.message)
+        } else {
+          console.log(`[Webhook] Lead salvo: ${lead?.id}`)
         }
-        await filas.producaoNormal.add(job.task_id, job)
-        console.log(`[Webhook] Mensagem recebida de ${numero}: ${texto.substring(0, 50)}`)
+
+        // Responde automaticamente via Z-API
+        const resposta = [
+          '🌸 Olá! Obrigada pelo contato com a *Enemeop Flores*!',
+          '',
+          'Recebemos sua mensagem e em breve nossa equipe entrará em contato. 💐',
+          '',
+          'Para agilizar, nos diga:',
+          '• Qual arranjo ou produto você tem interesse?',
+          '• Para qual data é a entrega?',
+          '• Qual é o bairro/cidade de entrega?',
+        ].join('\n')
+
+        await responderLead({ numero, mensagem: resposta })
       }
 
       res.writeHead(200, { 'Content-Type': 'application/json' })
