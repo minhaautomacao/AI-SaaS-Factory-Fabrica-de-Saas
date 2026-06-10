@@ -7,9 +7,10 @@
  *   CARLOS_WHATSAPP    número do operador para escaladas (ex: 5511999999999)
  */
 
-const ZAPI_INSTANCE = process.env.ZAPI_INSTANCE_ID ?? ''
-const ZAPI_TOKEN    = process.env.ZAPI_TOKEN ?? ''
-const CARLOS        = process.env.CARLOS_WHATSAPP ?? ''
+const ZAPI_INSTANCE     = process.env.ZAPI_INSTANCE_ID ?? ''
+const ZAPI_TOKEN        = process.env.ZAPI_TOKEN ?? ''
+const ZAPI_CLIENT_TOKEN = process.env.ZAPI_CLIENT_TOKEN ?? ''
+const CARLOS            = process.env.CARLOS_WHATSAPP ?? ''
 
 interface EnviarMensagemOpts {
   numero: string      // formato: 5511999999999 (sem +, sem espaços)
@@ -35,7 +36,7 @@ export async function enviarMensagem(opts: EnviarMensagemOpts): Promise<boolean>
   try {
     const res = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Client-Token': ZAPI_CLIENT_TOKEN },
       body: JSON.stringify({
         phone: opts.numero,
         message: opts.mensagem,
