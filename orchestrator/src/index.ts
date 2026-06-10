@@ -38,7 +38,7 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
         const { data: lead, error } = await getSupabase()
           .from('leads')
           .upsert(
-            { telefone: numero, canal: 'whatsapp', ultimo_contato: new Date().toISOString(), intencao: texto.substring(0, 500) },
+            { telefone: numero, canal: 'whatsapp', ultimo_contato: new Date().toISOString(), intencao: 'pesquisando' },
             { onConflict: 'telefone' }
           )
           .select('id')
