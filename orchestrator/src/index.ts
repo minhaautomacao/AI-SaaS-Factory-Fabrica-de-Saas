@@ -1,6 +1,5 @@
 import 'dotenv/config'
 import { createServer, IncomingMessage, ServerResponse } from 'http'
-import { randomUUID } from 'crypto'
 import { iniciarWorkers } from './workers/orquestrador.js'
 import { getSupabase } from './lib/supabase.js'
 import { processarMensagemSDR } from './lib/sdr.js'

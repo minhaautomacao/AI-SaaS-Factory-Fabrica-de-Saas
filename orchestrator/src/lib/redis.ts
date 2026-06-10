@@ -8,31 +8,22 @@ function criarConexaoRedis() {
     throw new Error('UPSTASH_REDIS_URL e UPSTASH_REDIS_TOKEN são obrigatórios')
   }
 
-  // Upstash Redis usa TLS — configuração padrão para REST+TLS
   const client = new Redis(url, {
     password: token,
     tls: { rejectUnauthorized: false },
-    maxRetriesPerRequest: null,   // obrigatório para BullMQ
+    maxRetriesPerRequest: null,
     enableReadyCheck: false,
   })
 
-  client.on('error', (err) => {
-    console.error('[Redis] Erro de conexão:', err.message)
-  })
-
-  client.on('connect', () => {
-    console.log('[Redis] Conectado ao Upstash')
-  })
+  client.on('error', (err) => console.error('[Redis] Erro:', err.message))
+  client.on('connect', () => console.log('[Redis] Conectado'))
 
   return client
 }
 
-// Singleton — reutiliza a mesma conexão
 let _redis: Redis | null = null
 
 export function getRedis(): Redis {
-  if (!_redis) {
-    _redis = criarConexaoRedis()
-  }
+  if (!_redis) _redis = criarConexaoRedis()
   return _redis
 }

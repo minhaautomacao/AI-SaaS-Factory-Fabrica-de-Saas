@@ -77,18 +77,25 @@ interface Mensagem {
   content: string
 }
 
+const HISTORICO_MAX_MSGS = 20
+const HISTORICO_TTL_S    = 86400 * 3  // 3 dias
+
 async function carregarHistorico(numero: string): Promise<Mensagem[]> {
   const redis = getRedis()
   const raw = await redis.get(`sdr:hist:${numero}`)
   if (!raw) return []
-  try { return JSON.parse(raw) } catch { return [] }
+  try {
+    return JSON.parse(raw)
+  } catch (err) {
+    console.error(`[SDR] Histórico corrompido para ${numero}:`, err)
+    return []
+  }
 }
 
 async function salvarHistorico(numero: string, historico: Mensagem[]): Promise<void> {
   const redis = getRedis()
-  // Mantém no máximo 20 mensagens (10 turnos) para controlar tokens
-  const recente = historico.slice(-20)
-  await redis.setex(`sdr:hist:${numero}`, 86400 * 3, JSON.stringify(recente)) // 3 dias
+  const recente = historico.slice(-HISTORICO_MAX_MSGS)
+  await redis.setex(`sdr:hist:${numero}`, HISTORICO_TTL_S, JSON.stringify(recente))
 }
 
 export async function processarMensagemSDR(numero: string, textoCliente: string): Promise<void> {
@@ -96,7 +103,7 @@ export async function processarMensagemSDR(numero: string, textoCliente: string)
   if (deveEscalar(textoCliente)) {
     await responderLead({
       numero,
-      mensagem: 'Um momento! Vou conectar você com nossa especialista. Ela entrará em contato em instantes pelo número (11) 98282-9083 😊',
+      mensagem: 'Um momento! Vou conectar você com nossa especialista. Ela entrará em contato em instantes pelo número (11) 98282-9083.',
     })
     await notificarEscalada(
       randomUUID(),
