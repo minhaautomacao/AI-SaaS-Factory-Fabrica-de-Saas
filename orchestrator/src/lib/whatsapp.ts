@@ -1,49 +1,44 @@
 /**
- * Cliente Evolution API — envio de mensagens WhatsApp
+ * Cliente Z-API — envio de mensagens WhatsApp
  *
  * Variáveis necessárias no .env:
- *   EVOLUTION_API_URL      ex: https://evolution.seu-dominio.com
- *   EVOLUTION_API_KEY      chave de autenticação
- *   EVOLUTION_INSTANCE     nome da instância (ex: floricultura)
- *   CARLOS_WHATSAPP        número do operador para escaladas (ex: 5511999999999)
+ *   ZAPI_INSTANCE_ID   ID da instância Z-API
+ *   ZAPI_TOKEN         Token da instância Z-API
+ *   CARLOS_WHATSAPP    número do operador para escaladas (ex: 5511999999999)
  */
 
-const API_URL  = process.env.EVOLUTION_API_URL ?? ''
-const API_KEY  = process.env.EVOLUTION_API_KEY ?? ''
-const INSTANCE = process.env.EVOLUTION_INSTANCE ?? 'floricultura'
-const CARLOS   = process.env.CARLOS_WHATSAPP ?? ''
+const ZAPI_INSTANCE = process.env.ZAPI_INSTANCE_ID ?? ''
+const ZAPI_TOKEN    = process.env.ZAPI_TOKEN ?? ''
+const CARLOS        = process.env.CARLOS_WHATSAPP ?? ''
 
 interface EnviarMensagemOpts {
   numero: string      // formato: 5511999999999 (sem +, sem espaços)
   mensagem: string
-  instance?: string   // sobrescreve EVOLUTION_INSTANCE se necessário
+  instance?: string
 }
 
-interface EvolutionResponse {
-  key?: { id: string }
-  status?: string
+interface ZApiResponse {
+  zaapId?: string
+  messageId?: string
+  id?: string
   error?: string
 }
 
 export async function enviarMensagem(opts: EnviarMensagemOpts): Promise<boolean> {
-  if (!API_URL || !API_KEY) {
-    console.warn('[WhatsApp] EVOLUTION_API_URL ou EVOLUTION_API_KEY não configurados — mensagem ignorada')
+  if (!ZAPI_INSTANCE || !ZAPI_TOKEN) {
+    console.warn('[WhatsApp] ZAPI_INSTANCE_ID ou ZAPI_TOKEN não configurados — mensagem ignorada')
     return false
   }
 
-  const instance = opts.instance ?? INSTANCE
-  const url = `${API_URL}/message/sendText/${instance}`
+  const url = `https://api.z-api.io/instances/${ZAPI_INSTANCE}/token/${ZAPI_TOKEN}/send-text`
 
   try {
     const res = await fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': API_KEY,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        number: opts.numero,
-        text: opts.mensagem,
+        phone: opts.numero,
+        message: opts.mensagem,
       }),
     })
 
@@ -53,13 +48,14 @@ export async function enviarMensagem(opts: EnviarMensagemOpts): Promise<boolean>
       return false
     }
 
-    const data = await res.json() as EvolutionResponse
+    const data = await res.json() as ZApiResponse
     if (data.error) {
       console.error('[WhatsApp] Erro na API:', data.error)
       return false
     }
 
-    console.log(`[WhatsApp] Mensagem enviada para ${opts.numero} — id: ${data.key?.id ?? 'N/A'}`)
+    const msgId = data.zaapId ?? data.messageId ?? data.id ?? 'N/A'
+    console.log(`[WhatsApp] Mensagem enviada para ${opts.numero} — id: ${msgId}`)
     return true
   } catch (err) {
     console.error('[WhatsApp] Falha na requisição:', err)
