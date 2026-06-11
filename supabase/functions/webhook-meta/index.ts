@@ -176,6 +176,14 @@ function getDb() {
   return createClient(SUPABASE_URL, SERVICE_KEY, { auth: { persistSession: false } });
 }
 
+async function buscarConfigDB(chave: string): Promise<string> {
+  try {
+    const db = getDb();
+    const { data } = await db.from('funcao_configs').select('valor').eq('chave', chave).single();
+    return (data?.valor as string) ?? '';
+  } catch { return ''; }
+}
+
 // ── Tipos ────────────────────────────────────────────────────────────────────
 
 interface Mensagem { role: 'user' | 'assistant'; content: string; ts: string; }
@@ -194,10 +202,11 @@ interface Conversa {
 // ── Busca nome do cliente via Instagram Graph API ────────────────────────────
 
 async function buscarNomeCliente(canalId: string): Promise<string | null> {
-  if (!IG_TOKEN) return null;
+  const token = IG_TOKEN || await buscarConfigDB('META_IG_ACCESS_TOKEN');
+  if (!token) return null;
   try {
     const res = await fetch(
-      `https://graph.facebook.com/v19.0/${canalId}?fields=name&access_token=${IG_TOKEN}`,
+      `https://graph.facebook.com/v19.0/${canalId}?fields=name&access_token=${token}`,
     );
     if (!res.ok) return null;
     const data = await res.json();
@@ -311,7 +320,7 @@ Retorne APENAS JSON válido:
 // ── Chamada IA ───────────────────────────────────────────────────────────────
 
 async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; content: string}>, maxTokens = 120): Promise<string | null> {
-  const groqKey = Deno.env.get('GROQ_API_KEY');
+  const groqKey = Deno.env.get('GROQ_API_KEY') || await buscarConfigDB('GROQ_API_KEY');
   if (groqKey) {
     try {
       const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -330,7 +339,7 @@ async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; co
     } catch (e) { console.error('[ia] Groq falhou:', e); }
   }
 
-  const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
+  const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY') || await buscarConfigDB('ANTHROPIC_API_KEY');
   if (anthropicKey) {
     try {
       const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -384,7 +393,8 @@ async function gerarLinkPagamento(pedidoInfo: Record<string, unknown>): Promise<
 const MSG_FALLBACK = `Oi! Pra qual ocasião é?`;
 
 async function processarDM(canalId: string, canal: string, mensagemCliente: string): Promise<void> {
-  if (!IG_TOKEN) return;
+  const igToken = IG_TOKEN || await buscarConfigDB('META_IG_ACCESS_TOKEN');
+  if (!igToken) return;
 
   // 1. Buscar ou criar conversa
   const conversa = await buscarOuCriarConversa(canalId, canal);
@@ -474,7 +484,7 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
   console.log(`[webhook-meta] ${canalId} | fase: ${conversa.fase}→${novaFase} | resposta: ${respostaFinal.slice(0, 60)}`);
 
   try {
-    const res = await fetch(`https://graph.facebook.com/v19.0/me/messages?access_token=${IG_TOKEN}`, {
+    const res = await fetch(`https://graph.facebook.com/v19.0/me/messages?access_token=${igToken}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

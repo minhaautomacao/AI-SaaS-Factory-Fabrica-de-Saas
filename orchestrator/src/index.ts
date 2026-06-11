@@ -26,9 +26,13 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
       const raw = await lerBody(req)
       const payload = JSON.parse(raw)
 
-      // Z-API envia mensagens recebidas com payload.text ou payload.message
-      const texto = payload.text?.message ?? payload.message ?? ''
-      const numero = payload.phone ?? payload.from ?? ''
+      // Evolution API: { event, data: { key: { remoteJid, fromMe }, message: { conversation } } }
+      const fromMe = payload.data?.key?.fromMe === true
+      const texto = !fromMe
+        ? (payload.data?.message?.conversation ?? payload.data?.message?.extendedTextMessage?.text ?? '')
+        : ''
+      const remoteJid = String(payload.data?.key?.remoteJid ?? '')
+      const numero = remoteJid.replace('@s.whatsapp.net', '').replace('@g.us', '')
 
       if (texto && numero) {
         console.log(`[Webhook] Mensagem recebida de ${numero}: ${texto.substring(0, 80)}`)

@@ -1,16 +1,17 @@
 /**
- * Cliente Z-API — envio de mensagens WhatsApp
+ * Cliente Evolution API — envio de mensagens WhatsApp
  *
  * Variáveis necessárias no .env:
- *   ZAPI_INSTANCE_ID   ID da instância Z-API
- *   ZAPI_TOKEN         Token da instância Z-API
- *   CARLOS_WHATSAPP    número do operador para escaladas (ex: 5511999999999)
+ *   EVOLUTION_API_URL      URL base da Evolution API (ex: https://enemeop-evolution.onrender.com)
+ *   EVOLUTION_API_KEY      apikey da instância Evolution
+ *   EVOLUTION_INSTANCE     nome da instância (ex: floricultura)
+ *   CARLOS_WHATSAPP        número do operador para escaladas (ex: 5511999999999)
  */
 
-const ZAPI_INSTANCE     = process.env.ZAPI_INSTANCE_ID ?? ''
-const ZAPI_TOKEN        = process.env.ZAPI_TOKEN ?? ''
-const ZAPI_CLIENT_TOKEN = process.env.ZAPI_CLIENT_TOKEN ?? ''
-const CARLOS            = process.env.CARLOS_WHATSAPP ?? ''
+const EVOLUTION_URL      = process.env.EVOLUTION_API_URL ?? 'https://enemeop-evolution.onrender.com'
+const EVOLUTION_API_KEY  = process.env.EVOLUTION_API_KEY ?? 'enemeop_evo_key_2026'
+const EVOLUTION_INSTANCE = process.env.EVOLUTION_INSTANCE ?? 'floricultura'
+const CARLOS             = process.env.CARLOS_WHATSAPP ?? ''
 
 interface EnviarMensagemOpts {
   numero: string      // formato: 5511999999999 (sem +, sem espaços)
@@ -26,20 +27,21 @@ interface ZApiResponse {
 }
 
 export async function enviarMensagem(opts: EnviarMensagemOpts): Promise<boolean> {
-  if (!ZAPI_INSTANCE || !ZAPI_TOKEN) {
-    console.warn('[WhatsApp] ZAPI_INSTANCE_ID ou ZAPI_TOKEN não configurados — mensagem ignorada')
+  if (!EVOLUTION_URL || !EVOLUTION_API_KEY) {
+    console.warn('[WhatsApp] EVOLUTION_API_URL ou EVOLUTION_API_KEY não configurados — mensagem ignorada')
     return false
   }
 
-  const url = `https://api.z-api.io/instances/${ZAPI_INSTANCE}/token/${ZAPI_TOKEN}/send-text`
+  const instance = opts.instance ?? EVOLUTION_INSTANCE
+  const url = `${EVOLUTION_URL}/message/sendText/${instance}`
 
   try {
     const res = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Client-Token': ZAPI_CLIENT_TOKEN },
+      headers: { 'Content-Type': 'application/json', 'apikey': EVOLUTION_API_KEY },
       body: JSON.stringify({
-        phone: opts.numero,
-        message: opts.mensagem,
+        number: opts.numero,
+        textMessage: { text: opts.mensagem },
       }),
     })
 
