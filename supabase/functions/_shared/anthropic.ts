@@ -3,12 +3,12 @@ import { getSupabaseAdmin } from './supabase.ts';
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages';
 
-// Lê secret do Vault Supabase via RPC
-async function getVaultSecret(name: string): Promise<string | null> {
+// Lê credencial da tabela funcao_configs (fallback quando env var não disponível)
+async function getConfigDB(name: string): Promise<string | null> {
   try {
     const sb = getSupabaseAdmin();
-    const { data } = await sb.rpc('get_vault_secret', { secret_name: name });
-    return data as string | null;
+    const { data } = await sb.from('funcao_configs').select('valor').eq('chave', name).single();
+    return (data?.valor as string) ?? null;
   } catch {
     return null;
   }
@@ -53,13 +53,13 @@ async function callAnthropic(apiKey: string, systemPrompt: string, userMessage: 
  */
 export async function callClaude(systemPrompt: string, userMessage: string, maxTokens = 2048): Promise<string> {
   // Tenta Groq primeiro
-  const groqKey = Deno.env.get('GROQ_API_KEY') || await getVaultSecret('GROQ_API_KEY');
+  const groqKey = Deno.env.get('GROQ_API_KEY') || await getConfigDB('GROQ_API_KEY');
   if (groqKey) {
     return callGroq(groqKey, systemPrompt, userMessage, maxTokens);
   }
 
   // Fallback: Anthropic
-  const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY') || await getVaultSecret('ANTHROPIC_API_KEY');
+  const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY') || await getConfigDB('ANTHROPIC_API_KEY');
   if (anthropicKey) {
     return callAnthropic(anthropicKey, systemPrompt, userMessage, maxTokens);
   }

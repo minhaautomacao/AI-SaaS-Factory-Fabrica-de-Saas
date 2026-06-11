@@ -63,7 +63,8 @@ Deno.serve(async (req: Request) => {
 
     // 2. Claude gera mensagem
     const resposta = await callClaude(SYSTEM_PROMPT, `Contexto:\n${contexto}`);
-    const resultado = JSON.parse(resposta);
+    const jsonStr = resposta.replace(/```json\n?|\n?```/g, '').trim();
+    const resultado = JSON.parse(jsonStr);
     const mensagem: string = resultado.mensagem ?? '';
 
     acoes.push(`Mensagem gerada (tipo: ${resultado.tipo})`);
