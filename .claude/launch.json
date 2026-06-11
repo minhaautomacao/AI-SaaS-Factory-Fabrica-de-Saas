@@ -6,6 +6,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["serve", "marketing/reels/enemeop-viral-01", "-p", "4321", "--no-clipboard"],
       "port": 4321
+    },
+    {
+      "name": "enemeop-flores",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "C:\\Users\\NOTEBOOK\\Documents\\GitHub\\enemeop-flores"],
+      "port": 3000
     }
   ]
 }
