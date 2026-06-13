@@ -4,15 +4,22 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Check Instance Status
+      - name: Fix webhook + check status
         run: |
-          STATUS=$(curl -s -H "apikey: enemeop_evo_key_2026" https://enemeop-evolution.onrender.com/instance/fetchInstances)
-          echo "Instances: $STATUS"
-      - name: Check Webhook Config
-        run: |
-          WH=$(curl -s -H "apikey: enemeop_evo_key_2026" https://enemeop-evolution.onrender.com/webhook/find/floricultura)
-          echo "Webhook: $WH"
-      - name: Check Connection State
-        run: |
-          CONN=$(curl -s -H "apikey: enemeop_evo_key_2026" https://enemeop-evolution.onrender.com/instance/connectionState/floricultura)
+          echo "=== Registrando webhook correto ==="
+          WH=$(curl -s -X POST \
+            -H "apikey: enemeop_evo_key_2026" \
+            -H "Content-Type: application/json" \
+            -d '{"url":"https://enemeop-orchestrator.onrender.com/webhook/whatsapp","webhook_by_events":false,"events":["MESSAGES_UPSERT","CONNECTION_UPDATE"]}' \
+            https://enemeop-evolution.onrender.com/webhook/set/floricultura)
+          echo "Webhook set: $WH"
+
+          echo "=== Estado da conexao ==="
+          CONN=$(curl -s -H "apikey: enemeop_evo_key_2026" \
+            https://enemeop-evolution.onrender.com/instance/connectionState/floricultura)
           echo "Connection: $CONN"
+
+          echo "=== Webhook atual ==="
+          WH_CHECK=$(curl -s -H "apikey: enemeop_evo_key_2026" \
+            https://enemeop-evolution.onrender.com/webhook/find/floricultura)
+          echo "Webhook: $WH_CHECK"
