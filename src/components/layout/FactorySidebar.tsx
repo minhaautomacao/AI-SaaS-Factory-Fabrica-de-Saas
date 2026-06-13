@@ -1,8 +1,8 @@
 import React from 'react';
-import { LayoutGrid, Activity, ScrollText, Sparkles, ChevronRight, Circle } from 'lucide-react';
+import { LayoutGrid, Activity, ScrollText, Sparkles, ChevronRight, Circle, ShoppingBag, Monitor } from 'lucide-react';
 import type { Workspace } from '../../types';
 
-type View = 'workspaces' | 'workspace-detail' | 'credentials' | 'monitor' | 'logs' | 'planner';
+type View = 'workspaces' | 'workspace-detail' | 'credentials' | 'monitor' | 'logs' | 'planner' | 'pedidos';
 
 interface Props {
   view: View;
@@ -47,6 +47,32 @@ export default function FactorySidebar({ view, onNavigate, workspaces, selectedW
             </button>
           ))}
         </nav>
+      </div>
+
+      {/* ── Floricultura ─────────────────────────────────── */}
+      <div>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-rose-400 mb-2 px-1">Floricultura</p>
+        <div className="space-y-2">
+          <button
+            onClick={() => onNavigate('pedidos')}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all shadow-sm ${
+              view === 'pedidos'
+                ? 'bg-rose-500 text-white shadow-rose-200'
+                : 'bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200'
+            }`}
+          >
+            <ShoppingBag className="w-5 h-5 shrink-0" />
+            Pedidos
+          </button>
+
+          <button
+            onClick={() => window.open('/producao', '_blank')}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold bg-gray-900 text-white hover:bg-gray-800 transition-all shadow-sm"
+          >
+            <Monitor className="w-5 h-5 shrink-0" />
+            Tela de Produção ↗
+          </button>
+        </div>
       </div>
 
       {workspaces.length > 0 && (

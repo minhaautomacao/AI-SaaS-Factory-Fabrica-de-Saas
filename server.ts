@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
+import { createClient } from '@supabase/supabase-js';
 import { getSupabaseAdmin } from './src/lib/supabase-server.js';
 import { encrypt } from './src/lib/crypto.js';
 
@@ -28,6 +29,49 @@ app.get('/api/auth-status', (_req, res) => {
 
 app.get('/api/config-status', (_req, res) => {
   res.json({ hasAPIKey: !!(process.env.ANTHROPIC_API_KEY?.trim()) });
+});
+
+// ── Floricultura — Pedidos ────────────────────────────────────────────────────
+
+app.get('/api/floricultura/pedidos', async (req, res) => {
+  try {
+    // Supabase do projeto Enemeop Flores (pode ser o mesmo projeto ou outro)
+    const flor = createClient(
+      process.env.SUPABASE_ENEMEOP_URL || process.env.SUPABASE_URL || '',
+      process.env.SUPABASE_ENEMEOP_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || '',
+      { auth: { persistSession: false } }
+    );
+    const statusFiltro = req.query.status === 'ativo'
+      ? ['novo', 'confirmado', 'preparando', 'pronto']
+      : null;
+
+    let query = flor.from('pedidos')
+      .select('*')
+      .order('numero', { ascending: false });
+
+    if (statusFiltro) query = query.in('status', statusFiltro);
+
+    const { data, error } = await query;
+    if (error) throw error;
+    res.json({ pedidos: data ?? [] });
+  } catch (err: unknown) {
+    // Se tabela não existir ainda, retorna mock para desenvolvimento
+    const mock = [
+      {
+        id: 'mock-1', numero: 1, cliente_nome: 'Maria Silva', cliente_telefone: '11999990001',
+        produto: 'Buquê 12 Rosas Vermelhas', valor: 280, endereco: 'Rua das Flores, 100',
+        bairro: 'Moema', data_entrega: new Date(Date.now() + 3 * 3600000).toISOString(),
+        status: 'preparando', foto_url: '', canal: 'whatsapp', criado_em: new Date().toISOString(),
+      },
+      {
+        id: 'mock-2', numero: 2, cliente_nome: 'João Pereira', cliente_telefone: '11999990002',
+        produto: 'Arranjo Girassóis R$255', valor: 255, endereco: 'Av. Paulista, 500',
+        bairro: 'Bela Vista', data_entrega: new Date(Date.now() + 5 * 3600000).toISOString(),
+        status: 'confirmado', foto_url: '', canal: 'instagram', criado_em: new Date().toISOString(),
+      },
+    ];
+    res.json({ pedidos: mock, aviso: 'Tabela pedidos não encontrada — exibindo dados de exemplo' });
+  }
 });
 
 // ── Workspaces ────────────────────────────────────────────────────────────────

@@ -8,11 +8,17 @@ import CredentialSetup from './components/credentials/CredentialSetup';
 import ActivityMonitor from './components/monitor/ActivityMonitor';
 import LogsViewer from './components/monitor/LogsViewer';
 import SaaSPlannerForm from './components/SaaSPlannerForm';
+import PedidosView from './components/floricultura/PedidosView';
+import ProducaoScreen from './components/floricultura/ProducaoScreen';
 import { Workspace, SimulationLog } from './types';
 
-type View = 'workspaces' | 'workspace-detail' | 'credentials' | 'monitor' | 'logs' | 'planner';
+type View = 'workspaces' | 'workspace-detail' | 'credentials' | 'monitor' | 'logs' | 'planner' | 'pedidos';
 
 export default function App() {
+  // Tela de produção — sem login, abre em nova aba para monitor na floricultura
+  if (window.location.pathname === '/producao') {
+    return <ProducaoScreen />;
+  }
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     const auth = localStorage.getItem('saas_factory_authenticated');
     const expiry = localStorage.getItem('saas_factory_expiry');
@@ -100,6 +106,9 @@ export default function App() {
             onSelectTemplate={() => {}}
           />
         );
+
+      case 'pedidos':
+        return <PedidosView />;
 
       default:
         return null;
