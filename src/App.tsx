@@ -14,7 +14,16 @@ type View = 'workspaces' | 'workspace-detail' | 'credentials' | 'monitor' | 'log
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return localStorage.getItem('saas_factory_authenticated') === 'true';
+    const auth = localStorage.getItem('saas_factory_authenticated');
+    const expiry = localStorage.getItem('saas_factory_expiry');
+    if (auth !== 'true' || !expiry) return false;
+    if (Date.now() > Number(expiry)) {
+      localStorage.removeItem('saas_factory_authenticated');
+      localStorage.removeItem('saas_factory_expiry');
+      localStorage.removeItem('saas_factory_token');
+      return false;
+    }
+    return true;
   });
   const [view, setView] = useState<View>('workspaces');
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);

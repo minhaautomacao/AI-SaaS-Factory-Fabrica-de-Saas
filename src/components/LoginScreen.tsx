@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Lock, ShieldAlert, KeyRound, Eye, EyeOff, Sparkles, Server } from "lucide-react";
+import { Lock, ShieldAlert, KeyRound, Eye, EyeOff, Server, Mail } from "lucide-react";
 
 interface LoginScreenProps {
   onSuccess: () => void;
 }
 
 export default function LoginScreen({ onSuccess }: LoginScreenProps) {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
@@ -13,8 +14,8 @@ export default function LoginScreen({ onSuccess }: LoginScreenProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!password.trim()) {
-      setError("Por favor, digite a senha de acesso.");
+    if (!email.trim() || !password.trim()) {
+      setError("Por favor, preencha o email e a senha.");
       return;
     }
 
@@ -25,13 +26,15 @@ export default function LoginScreen({ onSuccess }: LoginScreenProps) {
       const response = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password })
+        body: JSON.stringify({ email, password })
       });
 
       const data = await response.json();
 
       if (response.ok && data.success) {
+        const expiry = Date.now() + 8 * 60 * 60 * 1000; // 8h
         localStorage.setItem("saas_factory_authenticated", "true");
+        localStorage.setItem("saas_factory_expiry", String(expiry));
         localStorage.setItem("saas_factory_token", data.token);
         onSuccess();
       } else {
@@ -80,16 +83,30 @@ export default function LoginScreen({ onSuccess }: LoginScreenProps) {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
             <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest font-mono block">
-              Senha da Fábrica (Workspace Secret)
+              Email de acesso
+            </label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                disabled={isLoading}
+                placeholder="seu@email.com"
+                className="w-full text-sm bg-slate-50 border border-gray-200 focus:bg-white focus:border-indigo-500 rounded-xl pl-10 pr-4 py-3 focus:outline-none transition-all text-gray-900 font-sans"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest font-mono block">
+              Senha de acesso
             </label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setError("");
-                }}
+                onChange={(e) => { setPassword(e.target.value); setError(""); }}
                 disabled={isLoading}
                 placeholder="Digite a senha..."
                 className="w-full text-sm bg-slate-50 border border-gray-200 focus:bg-white focus:border-indigo-500 rounded-xl pl-4 pr-11 py-3 focus:outline-none transition-all text-gray-900 font-sans"
@@ -133,10 +150,10 @@ export default function LoginScreen({ onSuccess }: LoginScreenProps) {
         <div className="border-t border-gray-100 pt-6 text-center space-y-2">
           <div className="flex justify-center items-center gap-1.5 text-[11px] text-gray-400">
             <Server className="w-3.5 h-3.5" />
-            <span>Senha padrão de Sandbox: <strong className="font-mono text-gray-600">admin</strong></span>
+            <span>Sessão expira em <strong className="font-mono text-gray-600">8 horas</strong></span>
           </div>
           <p className="text-[10px] text-gray-400 leading-normal">
-            Você pode alterar essa senha configurando a variável de ambiente <code className="bg-slate-50 px-1 py-0.5 border border-slate-100 rounded text-slate-600 font-mono">APP_PASSWORD</code> no seu painel de Cloud Code ou arquivo .env.
+            Configure <code className="bg-slate-50 px-1 py-0.5 border border-slate-100 rounded text-slate-600 font-mono">APP_EMAIL</code> e <code className="bg-slate-50 px-1 py-0.5 border border-slate-100 rounded text-slate-600 font-mono">APP_PASSWORD</code> nas variáveis de ambiente do Vercel para alterar as credenciais.
           </p>
         </div>
 

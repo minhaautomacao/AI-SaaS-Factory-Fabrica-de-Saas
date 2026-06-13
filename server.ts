@@ -13,10 +13,13 @@ const PORT = 3000;
 // ── Auth ─────────────────────────────────────────────────────────────────────
 
 app.post('/api/login', (req, res) => {
-  const { password } = req.body;
-  const correct = process.env.APP_PASSWORD || 'admin';
-  if (password === correct) return res.json({ success: true, token: 'factory-auth-token-9988' });
-  return res.status(401).json({ error: 'Senha incorreta.' });
+  const { email, password } = req.body;
+  const correctEmail    = process.env.APP_EMAIL    || 'minhaautomacao10@gmail.com';
+  const correctPassword = process.env.APP_PASSWORD || '12345678';
+  if (email === correctEmail && password === correctPassword) {
+    return res.json({ success: true, token: 'factory-auth-token-9988' });
+  }
+  return res.status(401).json({ error: 'Email ou senha incorretos.' });
 });
 
 app.get('/api/auth-status', (_req, res) => {
