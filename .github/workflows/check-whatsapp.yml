@@ -4,17 +4,15 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Check connection state
+      - name: Verificar QR e estado detalhado
         run: |
+          echo "=== Estado da conexao ==="
           CONN=$(curl -s -H "apikey: enemeop_evo_key_2026" \
             https://enemeop-evolution.onrender.com/instance/connectionState/floricultura)
           echo "Connection: $CONN"
 
-          echo "=== Webhook atual ==="
-          WH=$(curl -s -H "apikey: enemeop_evo_key_2026" \
-            https://enemeop-evolution.onrender.com/webhook/find/floricultura)
-          echo "Webhook: $WH"
-
-          echo "=== Orchestrador health ==="
-          ORCH=$(curl -s https://enemeop-orchestrator.onrender.com/)
-          echo "Orchestrador: $ORCH"
+          echo "=== Tentar obter QR sem logout ==="
+          QR=$(curl -s -H "apikey: enemeop_evo_key_2026" \
+            "https://enemeop-evolution.onrender.com/instance/connect/floricultura")
+          # Trunca se for base64 grande
+          echo "${QR:0:500}"
