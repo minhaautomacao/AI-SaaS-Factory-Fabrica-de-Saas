@@ -9,6 +9,7 @@
     "@hapi/boom": "^7.4.11",
     "@whiskeysockets/baileys": "^6.7.18",
     "express": "^4.21.2",
-    "pino": "^9.7.0"
+    "pino": "^9.7.0",
+    "qrcode": "^1.5.4"
   }
 }
