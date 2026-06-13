@@ -2,6 +2,7 @@ import Groq from 'groq-sdk'
 import { getRedis } from './redis.js'
 import { getSupabase } from './supabase.js'
 import { responderLead, notificarEscalada } from './whatsapp.js'
+import { responderInstagram, salvarConversa } from './instagram.js'
 import { randomUUID } from 'crypto'
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
@@ -162,4 +163,61 @@ export async function processarMensagemSDR(numero: string, textoCliente: string)
 
   await responderLead({ numero, mensagem: resposta })
   console.log(`[SDR] Respondido ${numero}: ${resposta.substring(0, 80)}...`)
+}
+
+export async function processarMensagemSDRInstagram(
+  canalId: string,
+  textoCliente: string,
+  opts?: { leadId?: string; nomeExibido?: string }
+): Promise<void> {
+  if (deveEscalar(textoCliente)) {
+    await responderInstagram(canalId,
+      'Um momento! Vou conectar você com nossa especialista. Ela entrará em contato em instantes pelo número (11) 98282-9083.'
+    )
+    return
+  }
+
+  const chave = `ig:${canalId}`
+  const historico = await carregarHistorico(chave)
+  const primeiraMensagem = historico.length === 0
+  historico.push({ role: 'user', content: textoCliente })
+
+  const systemFinal = primeiraMensagem
+    ? SYSTEM_PROMPT + '\n\n## INSTRUÇÃO OBRIGATÓRIA PARA ESTA RESPOSTA\nEsta é a PRIMEIRA mensagem do cliente. Independente do que ele escreveu, sua resposta DEVE começar pedindo o nome dele. Exemplo: "Oi, pode me dizer seu nome pra eu te atender melhor?" — depois disso pode responder o conteúdo da mensagem se necessário.'
+    : SYSTEM_PROMPT
+
+  const response = await groq.chat.completions.create({
+    model: 'llama-3.1-8b-instant',
+    messages: [{ role: 'system', content: systemFinal }, ...historico],
+    temperature: 0.7,
+    max_tokens: 400,
+  })
+
+  const resposta = response.choices[0]?.message?.content ?? 'Olá! Obrigada pelo contato com a Enemeop Flores. Como posso te ajudar?'
+  historico.push({ role: 'assistant', content: resposta })
+  await salvarHistorico(chave, historico)
+
+  // Extrai nome do histórico
+  const nomeMatch = historico
+    .filter(m => m.role === 'user').map(m => m.content).join(' ')
+    .match(/(?:me\s+chamo|meu\s+nome\s+[eé]|sou\s+[oa]?\s*|chamo\s+)([A-ZÁÉÍÓÚÂÊÎÔÛÃÕ][a-záéíóúâêîôûãõ]+)/i)
+  const nome = nomeMatch?.[1] ?? opts?.nomeExibido ?? null
+
+  // Salva conversa no Supabase para o Monitor Social
+  if (opts?.leadId) {
+    await salvarConversa({
+      leadId: opts.leadId,
+      canalId,
+      canal: 'instagram',
+      historico,
+      nomeExibido: nome ?? undefined,
+    })
+    // Atualiza nome no lead se encontrado
+    if (nome) {
+      await getSupabase().from('leads').update({ nome, nome_exibido: nome }).eq('id', opts.leadId)
+    }
+  }
+
+  await responderInstagram(canalId, resposta)
+  console.log(`[SDR/Instagram] Respondido ${canalId}: ${resposta.substring(0, 80)}...`)
 }
