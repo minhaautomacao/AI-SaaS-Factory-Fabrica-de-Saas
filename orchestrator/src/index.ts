@@ -3,6 +3,7 @@ import { createServer, IncomingMessage, ServerResponse } from 'http'
 import { iniciarWorkers } from './workers/orquestrador.js'
 import { getSupabase } from './lib/supabase.js'
 import { processarMensagemSDR } from './lib/sdr.js'
+import { registrarWebhookEvolution } from './lib/whatsapp.js'
 
 console.log('=== Fábrica de SaaS — Orquestrador Central ===')
 console.log(`Ambiente: ${process.env.NODE_ENV ?? 'development'}`)
@@ -65,6 +66,10 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
   res.end(JSON.stringify({ status: 'ok', uptime: process.uptime() }))
 }).listen(PORT, () => {
   console.log(`[Orquestrador] Servidor em http://0.0.0.0:${PORT}`)
+
+  // Auto-registra webhook na Evolution API para receber mensagens WhatsApp
+  const selfUrl = process.env.RENDER_EXTERNAL_URL ?? `http://localhost:${PORT}`
+  registrarWebhookEvolution(`${selfUrl}/webhook/whatsapp`)
 })
 
 console.log('')
