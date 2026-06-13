@@ -20,7 +20,7 @@ async function callGroq(apiKey: string, systemPrompt: string, userMessage: strin
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
     body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
+      model: 'llama-3.1-8b-instant',
       max_tokens: maxTokens,
       messages: [
         { role: 'system', content: systemPrompt },

@@ -86,11 +86,14 @@ Deno.serve(async (req: Request) => {
 
   try {
     const contexto = JSON.stringify(payload, null, 2);
-    const resposta = await callClaude(SYSTEM_PROMPT, `Dados do lead:\n${contexto}`);
-
-    // Limpa possível markdown do retorno
-    const jsonStr = resposta.replace(/```json\n?|\n?```/g, '').trim();
-    const resultado = JSON.parse(jsonStr);
+    let resultado: { intencao?: string; status?: string; notas?: string; acoes?: string[] } = {};
+    try {
+      const resposta = await callClaude(SYSTEM_PROMPT, `Dados do lead:\n${contexto}`);
+      const jsonStr = resposta.replace(/```json\n?|\n?```/g, '').trim();
+      resultado = JSON.parse(jsonStr);
+    } catch (e) {
+      console.warn(`[captacao-leads] IA indisponivel, classificando como desconhecida: ${e}`);
+    }
 
     // Garante valor válido de intencao
     const intencoesValidas = ['urgente', 'alta', 'media', 'baixa', 'desconhecida'];

@@ -329,7 +329,7 @@ async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; co
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
           body: JSON.stringify({
-            model: 'llama-3.3-70b-versatile',
+            model: 'llama-3.1-8b-instant',
             max_tokens: maxTokens,
             messages: [{ role: 'system', content: systemPrompt }, ...mensagens],
           }),
