@@ -29,3 +29,4 @@ dist
 logs
 backups
 .cloudcode/cache
+.claude/settings.local.json
