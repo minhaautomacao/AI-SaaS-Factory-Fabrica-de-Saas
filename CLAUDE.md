@@ -194,9 +194,9 @@ Estas regras são obrigatórias em todas as sessões, sem exceção.
 - [x] Primeiro lead real capturado (canal_id: 9530087693699545)
 
 ### Fase 8 — Próximos passos
-- [x] Corrigir bug de login em enemeop-flores.vercel.app — rota /api/auth/signout criada (estava faltando, logout retornava 404)
-- [ ] Implementar resposta automática via WhatsApp (agente whatsapp-sdr)
-- [ ] Dashboard de leads no painel admin (tabela leads existe em gftnjvdvzgjkhwxnxnwl)
+- [x] Corrigir bug de login em enemeop-flores.vercel.app — rota /api/auth/signout criada
+- [x] Dashboard de leads — Edge Functions leads-enemeop e conversas-enemeop em ebeapnydeiwuewxatuuw (v4/v3), 368 leads Instagram visíveis
+- [ ] Implementar resposta automática via WhatsApp (agente whatsapp-sdr) — requer Oracle Cloud VM com Baileys
 - [ ] Renovação do token Instagram (~60 dias)
 
 ## Contato e repositório
