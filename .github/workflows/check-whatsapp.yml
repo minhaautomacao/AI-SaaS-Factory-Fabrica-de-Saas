@@ -4,15 +4,15 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Fix webhook + check status
+      - name: Fix webhook Evolution API v2 format
         run: |
-          echo "=== Registrando webhook correto ==="
+          echo "=== Tentando formato v2 ==="
           WH=$(curl -s -X POST \
             -H "apikey: enemeop_evo_key_2026" \
             -H "Content-Type: application/json" \
-            -d '{"url":"https://enemeop-orchestrator.onrender.com/webhook/whatsapp","webhook_by_events":false,"webhook_base64":false,"events":["MESSAGES_UPSERT"]}' \
+            -d '{"webhook":{"url":"https://enemeop-orchestrator.onrender.com/webhook/whatsapp","enabled":true,"webhookByEvents":false,"webhookBase64":false,"events":["MESSAGES_UPSERT"]}}' \
             https://enemeop-evolution.onrender.com/webhook/set/floricultura)
-          echo "Webhook set: $WH"
+          echo "Webhook set v2: $WH"
 
           echo "=== Estado da conexao ==="
           CONN=$(curl -s -H "apikey: enemeop_evo_key_2026" \
@@ -23,3 +23,15 @@ jobs:
           WH_CHECK=$(curl -s -H "apikey: enemeop_evo_key_2026" \
             https://enemeop-evolution.onrender.com/webhook/find/floricultura)
           echo "Webhook: $WH_CHECK"
+
+      - name: Force reconnect if not open
+        run: |
+          CONN=$(curl -s -H "apikey: enemeop_evo_key_2026" \
+            https://enemeop-evolution.onrender.com/instance/connectionState/floricultura)
+          STATE=$(echo "$CONN" | grep -o '"state":"[^"]*"' | cut -d'"' -f4)
+          echo "State: $STATE"
+          if [ "$STATE" != "open" ]; then
+            echo "Tentando reconectar..."
+            curl -s -H "apikey: enemeop_evo_key_2026" \
+              https://enemeop-evolution.onrender.com/instance/connect/floricultura
+          fi
