@@ -10,7 +10,7 @@ jobs:
           WH=$(curl -s -X POST \
             -H "apikey: enemeop_evo_key_2026" \
             -H "Content-Type: application/json" \
-            -d '{"url":"https://enemeop-orchestrator.onrender.com/webhook/whatsapp","webhook_by_events":false,"events":["MESSAGES_UPSERT","CONNECTION_UPDATE"]}' \
+            -d '{"url":"https://enemeop-orchestrator.onrender.com/webhook/whatsapp","webhook_by_events":false,"webhook_base64":false,"events":["MESSAGES_UPSERT"]}' \
             https://enemeop-evolution.onrender.com/webhook/set/floricultura)
           echo "Webhook set: $WH"
 
