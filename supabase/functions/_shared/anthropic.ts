@@ -52,13 +52,20 @@ async function callAnthropic(apiKey: string, systemPrompt: string, userMessage: 
  *   2. ANTHROPIC_API_KEY (env var ou Vault)
  */
 export async function callClaude(systemPrompt: string, userMessage: string, maxTokens = 2048): Promise<string> {
-  // Tenta Groq primeiro
   const groqKey = Deno.env.get('GROQ_API_KEY') || await getConfigDB('GROQ_API_KEY');
   if (groqKey) {
-    return callGroq(groqKey, systemPrompt, userMessage, maxTokens);
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        if (attempt > 0) await new Promise(r => setTimeout(r, 1500));
+        return await callGroq(groqKey, systemPrompt, userMessage, maxTokens);
+      } catch (e) {
+        const msg = String(e);
+        if (!msg.includes('429')) { console.warn('[callClaude] Groq erro não-429:', msg); break; }
+        console.warn('[callClaude] Groq rate limit, tentando novamente...');
+      }
+    }
   }
 
-  // Fallback: Anthropic
   const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY') || await getConfigDB('ANTHROPIC_API_KEY');
   if (anthropicKey) {
     return callAnthropic(anthropicKey, systemPrompt, userMessage, maxTokens);

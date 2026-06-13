@@ -322,21 +322,26 @@ Retorne APENAS JSON válido:
 async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; content: string}>, maxTokens = 120): Promise<string | null> {
   const groqKey = Deno.env.get('GROQ_API_KEY') || await buscarConfigDB('GROQ_API_KEY');
   if (groqKey) {
-    try {
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
-        body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          max_tokens: maxTokens,
-          messages: [{ role: 'system', content: systemPrompt }, ...mensagens],
-        }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        return (data.choices?.[0]?.message?.content as string)?.trim() ?? null;
-      }
-    } catch (e) { console.error('[ia] Groq falhou:', e); }
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        if (attempt > 0) await new Promise(r => setTimeout(r, 1500));
+        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
+          body: JSON.stringify({
+            model: 'llama-3.3-70b-versatile',
+            max_tokens: maxTokens,
+            messages: [{ role: 'system', content: systemPrompt }, ...mensagens],
+          }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          return (data.choices?.[0]?.message?.content as string)?.trim() ?? null;
+        }
+        if (res.status !== 429) { console.error(`[ia] Groq ${res.status}`); break; }
+        console.warn('[ia] Groq rate limit, aguardando retry...');
+      } catch (e) { console.error('[ia] Groq falhou:', e); break; }
+    }
   }
 
   const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY') || await buscarConfigDB('ANTHROPIC_API_KEY');
@@ -356,6 +361,7 @@ async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; co
         const data = await res.json();
         return (data.content?.[0]?.text as string)?.trim() ?? null;
       }
+      console.error(`[ia] Anthropic ${res.status}: ${await res.text()}`);
     } catch (e) { console.error('[ia] Anthropic falhou:', e); }
   }
 
@@ -413,19 +419,17 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
   const novaMsg: Mensagem = { role: 'user', content: mensagemCliente, ts: new Date().toISOString() };
   const historico = [...(conversa.historico ?? []), novaMsg].slice(-20);
 
-  // 4. Gerar resposta e analisar fase em paralelo
-  const [respostaIA, analiseRaw] = await Promise.all([
-    chamarIA(
-      buildSystemPrompt(conversa.fase, conversa.pedido_info, nomeCliente),
-      historico.map(m => ({ role: m.role, content: m.content })),
-      350,
-    ),
-    chamarIA(
-      buildFasePrompt(historico, mensagemCliente, conversa.fase),
-      [{ role: 'user', content: mensagemCliente }],
-      200,
-    ),
-  ]);
+  // 4. Gerar resposta (sequencial para não sobrecarregar Groq rate limit)
+  const respostaIA = await chamarIA(
+    buildSystemPrompt(conversa.fase, conversa.pedido_info, nomeCliente),
+    historico.map(m => ({ role: m.role, content: m.content })),
+    350,
+  );
+  const analiseRaw = await chamarIA(
+    buildFasePrompt(historico, mensagemCliente, conversa.fase),
+    [{ role: 'user', content: mensagemCliente }],
+    200,
+  );
 
   // 5. Processar análise de fase
   let novaFase = conversa.fase;

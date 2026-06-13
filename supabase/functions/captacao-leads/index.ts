@@ -130,8 +130,9 @@ Deno.serve(async (req: Request) => {
       leadId = novoLead?.id;
     }
 
-    // Dispara lead-qualificado → orquestrador → whatsapp-sdr
-    if (leadId) {
+    // Dispara lead-qualificado → orquestrador → whatsapp-sdr (apenas para canais com telefone)
+    const canalDoLead = (payload?.canal as string) ?? 'outro';
+    if (leadId && canalDoLead !== 'instagram' && canalDoLead !== 'facebook') {
       await dispararLeadQualificado({
         task_id,
         escopo,
