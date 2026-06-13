@@ -14,7 +14,7 @@ jobs:
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 https://enemeop-orchestrator.onrender.com/)
           echo "Orchestrator: $STATUS"
 
-      - name: Ping Evolution API
+      - name: Ping WhatsApp Bridge
         run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 https://enemeop-evolution.onrender.com/)
-          echo "Evolution API: $STATUS"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 https://enemeop-whatsapp-bridge.onrender.com/)
+          echo "WhatsApp Bridge: $STATUS"

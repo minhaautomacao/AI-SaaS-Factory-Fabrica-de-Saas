@@ -2,7 +2,7 @@ services:
   - type: web
     name: enemeop-whatsapp-bridge
     runtime: node
-    region: frankfurt
+    region: oregon
     plan: free
     rootDir: whatsapp-bridge
     buildCommand: npm install
@@ -15,4 +15,4 @@ services:
       - key: EVOLUTION_INSTANCE
         value: floricultura
       - key: ORCHESTRATOR_WEBHOOK
-        value: https://gftnjvdvzgjkhwxnxnwl.supabase.co/functions/v1/webhook-meta
+        value: https://enemeop-orchestrator.onrender.com/webhook/whatsapp
