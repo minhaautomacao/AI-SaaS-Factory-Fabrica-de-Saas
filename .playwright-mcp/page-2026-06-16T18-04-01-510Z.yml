@@ -1,0 +1,86 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e713]:
+    - banner [ref=e714]:
+      - generic [ref=e716]:
+        - generic [ref=e717]:
+          - link [ref=e718] [cursor=pointer]:
+            - /url: /redis
+            - img [ref=e719]
+          - button "Personal" [ref=e726] [cursor=pointer]:
+            - generic [ref=e727]: Personal
+            - img [ref=e729]
+        - generic [ref=e733]:
+          - link "Redis" [ref=e734] [cursor=pointer]:
+            - /url: /redis
+            - generic [ref=e736]: Redis
+          - link "QStash" [ref=e737] [cursor=pointer]:
+            - /url: /qstash
+            - generic [ref=e738]: QStash
+          - link "Workflow" [ref=e739] [cursor=pointer]:
+            - /url: /workflow
+            - generic [ref=e740]: Workflow
+          - link "Vector" [ref=e741] [cursor=pointer]:
+            - /url: /vector
+            - generic [ref=e742]: Vector
+          - link "Box NEW" [ref=e743] [cursor=pointer]:
+            - /url: /box
+            - generic [ref=e744]: Box
+            - generic [ref=e745]: NEW
+          - generic [ref=e746] [cursor=pointer]:
+            - button [ref=e747]:
+              - img [ref=e748]
+            - generic [ref=e753]: "6"
+        - generic [ref=e754]:
+          - button [ref=e755] [cursor=pointer]:
+            - img [ref=e756]
+          - button [ref=e759] [cursor=pointer]:
+            - generic [ref=e760]:
+              - img [ref=e761]
+              - superscript [ref=e764]
+          - button [ref=e765] [cursor=pointer]:
+            - img [ref=e767]
+    - generic [ref=e769]:
+      - generic [ref=e770]:
+        - img [ref=e772]
+        - generic [ref=e776]: Redis
+        - generic [ref=e777]: "-"
+        - generic [ref=e778]: Low-latency, serverless key-value store
+      - generic [ref=e779]:
+        - generic [ref=e780]:
+          - heading "COMMANDS" [level=5] [ref=e781]
+          - paragraph [ref=e783]: 708 mil
+        - generic [ref=e784]:
+          - heading "AVERAGE STORAGE" [level=5] [ref=e785]
+          - paragraph [ref=e787]: 1021 KB
+        - generic [ref=e788]:
+          - heading "COST" [level=5] [ref=e789]
+          - paragraph [ref=e791]: $0.00
+    - generic [ref=e793]:
+      - generic [ref=e794]:
+        - generic [ref=e796]:
+          - img [ref=e798]
+          - textbox "Search..." [ref=e801]
+        - generic [ref=e803]:
+          - button [ref=e804] [cursor=pointer]:
+            - img [ref=e806]
+          - button "Import..." [ref=e810] [cursor=pointer]:
+            - generic [ref=e811]: Import...
+          - button "Create Database" [ref=e813] [cursor=pointer]:
+            - img [ref=e815]
+            - generic [ref=e816]: Create Database
+      - generic [ref=e818]:
+        - img [ref=e820]
+        - generic [ref=e824]:
+          - heading "No database has been created yet." [level=3] [ref=e825]
+          - generic [ref=e826]: Create a new database
+    - contentinfo [ref=e827]:
+      - generic [ref=e828]: © 2026 Upstash, Inc. Based in California.
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - alert [ref=e11]: "Database: floricultura - Upstash"
+  - iframe [ref=e653]:
+    
+  - generic [ref=e658]:
+    - alert
+    - alert
