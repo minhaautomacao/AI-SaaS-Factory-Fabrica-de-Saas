@@ -40,7 +40,14 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
         const { numero, texto, nome } = msg
         console.log(`[Webhook/WhatsApp] Mensagem de ${nome ? nome + ' ' : ''}${numero}: ${texto.substring(0, 80)}`)
 
-        const { error } = await getSupabase()
+        const sb = getSupabase()
+        const { data: leadExistente } = await sb
+          .from('leads')
+          .select('id')
+          .eq('telefone', numero)
+          .single()
+
+        const { error } = await sb
           .from('leads')
           .upsert(
             {
@@ -49,6 +56,7 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
               ultimo_contato: new Date().toISOString(),
               intencao: 'pesquisando',
               ...(nome ? { nome } : {}),
+              ...(!leadExistente ? { mensagem_inicial: texto, status: 'novo' } : {}),
             },
             { onConflict: 'telefone' }
           )
