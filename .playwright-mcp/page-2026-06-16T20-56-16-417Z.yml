@@ -1,0 +1,102 @@
+- generic [ref=e2]:
+  - generic:
+    - iframe
+  - generic:
+    - iframe
+  - generic:
+    - iframe
+  - generic:
+    - iframe
+  - generic [ref=e3]:
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - link "Logotipo da Meta" [ref=e12] [cursor=pointer]:
+          - /url: /?no_redirect=true
+          - img "Logotipo da Meta" [ref=e14]
+        - tablist [ref=e23]:
+          - link "Meus apps" [ref=e24] [cursor=pointer]:
+            - /url: /apps/
+            - generic [ref=e27]: Meus apps
+          - link "Ações necessárias" [ref=e28] [cursor=pointer]:
+            - /url: /required-actions/
+            - generic [ref=e31]: Ações necessárias
+          - tab "Documentos" [ref=e32] [cursor=pointer]:
+            - generic [ref=e35]: Documentos
+          - tab "Ferramentas" [ref=e37] [cursor=pointer]:
+            - generic [ref=e40]: Ferramentas
+          - tab "Suporte" [ref=e42] [cursor=pointer]:
+            - generic [ref=e45]: Suporte
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - generic [ref=e54]: Entrada da pesquisa
+          - textbox "Entrada da pesquisa" [ref=e65]:
+            - /placeholder: Pesquisar...
+        - link [ref=e68] [cursor=pointer]:
+          - /url: "#"
+        - link "Facebook" [ref=e73] [cursor=pointer]:
+          - /url: "#"
+          - img "Facebook" [ref=e78]
+    - main [ref=e79]:
+      - generic [ref=e85]:
+        - generic [ref=e86]:
+          - generic [ref=e87]: Apps
+          - generic [ref=e88]:
+            - textbox [ref=e103]:
+              - /placeholder: Pesquise pelo nome ou identificação do aplicativo
+            - button "Criar aplicativo" [ref=e105] [cursor=pointer]:
+              - generic [ref=e109]: Criar aplicativo
+        - generic [ref=e110]:
+          - generic [ref=e116]:
+            - generic [ref=e117]:
+              - heading "Filtrar por" [ref=e119]:
+                - heading "Filtrar por" [level=3] [ref=e121]:
+                  - heading "Filtrar por" [level=4] [ref=e122]
+              - listbox "Filtrar por" [ref=e123]:
+                - option "Todos os apps (1)" [selected] [ref=e124]:
+                  - button
+                  - generic [ref=e125]:
+                    - radio [checked] [ref=e128] [cursor=pointer]
+                    - generic [ref=e130]: Todos os apps (1)
+                - option "Arquivados" [ref=e131]:
+                  - button
+                  - generic [ref=e132]:
+                    - radio [ref=e135] [cursor=pointer]
+                    - generic [ref=e137]: Arquivados
+                - option "Ações necessárias" [ref=e138]:
+                  - button
+                  - generic [ref=e139]:
+                    - radio [ref=e142] [cursor=pointer]
+                    - generic [ref=e144]: Ações necessárias
+            - generic [ref=e145]:
+              - heading "Portfólio empresarial" [level=4] [ref=e146]
+              - link "Limpar" [ref=e147] [cursor=pointer]:
+                - /url: "#"
+            - generic [ref=e148]:
+              - generic [ref=e154]: Portfólio empresarial
+              - combobox "Portfólio empresarial Nenhum portfólio empresarial selecionado" [ref=e159] [cursor=pointer]:
+                - generic [ref=e166]: Nenhum portfólio empresarial selecionado
+          - generic [ref=e171]:
+            - heading "Apps de administrador" [level=2] [ref=e173]
+            - generic [ref=e179]:
+              - generic [ref=e180]:
+                - link [ref=e181] [cursor=pointer]:
+                  - /url: /apps/512230540723061
+                  - generic [ref=e182]:
+                    - img
+                - generic [ref=e184]:
+                  - link "enemeopflores" [ref=e186] [cursor=pointer]:
+                    - /url: /apps/512230540723061
+                    - heading "enemeopflores" [level=3] [ref=e187]
+                  - generic [ref=e188]:
+                    - generic [ref=e189]: Identificação do aplicativo
+                    - 'button ": 512230540723061" [ref=e191]':
+                      - generic [ref=e193] [cursor=pointer]: ": 512230540723061"
+                  - generic [ref=e195]: "Modo: Ativo"
+                  - generic [ref=e198]:
+                    - text: "Empresa:"
+                    - link "Enemeop Flores" [ref=e199] [cursor=pointer]:
+                      - /url: https://business.intern.facebook.com/settings/people?business_id=404645956664099
+              - generic [ref=e201]:
+                - generic [ref=e205]: Administrador
+                - button "Abrir menu suspenso" [ref=e208] [cursor=pointer]:
+                  - generic [ref=e211]: Abrir menu suspenso
