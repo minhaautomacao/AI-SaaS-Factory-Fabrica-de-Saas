@@ -1,0 +1,220 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - complementary [ref=e6]:
+      - generic [ref=e7]:
+        - img [ref=e8]
+        - button [ref=e9] [cursor=pointer]:
+          - img [ref=e10]
+      - navigation [ref=e13]:
+        - generic [ref=e14]: Menu principal
+        - list [ref=e15]:
+          - listitem [ref=e16] [cursor=pointer]:
+            - link "Dashboard" [ref=e18]:
+              - /url: /app
+              - img [ref=e20]
+              - generic [ref=e22]: Dashboard
+          - listitem [ref=e23] [cursor=pointer]:
+            - link "Instâncias Web" [ref=e24]:
+              - /url: /app/instances
+              - img [ref=e26]
+              - generic [ref=e29]: Instâncias Web
+          - listitem [ref=e30] [cursor=pointer]:
+            - link "Dados da conta" [ref=e31]:
+              - /url: /app/account
+              - img [ref=e33]
+              - generic [ref=e35]: Dados da conta
+          - listitem [ref=e36] [cursor=pointer]:
+            - link "Segurança" [ref=e37]:
+              - /url: /app/security
+              - img [ref=e39]
+              - generic [ref=e41]: Segurança
+          - listitem [ref=e42] [cursor=pointer]:
+            - generic [ref=e43]:
+              - img [ref=e45]
+              - generic [ref=e47]: Configurações Beta
+        - generic [ref=e48]:
+          - generic [ref=e49]: Ajuda
+          - list [ref=e50]:
+            - listitem [ref=e51] [cursor=pointer]:
+              - link "WhatsApp" [ref=e52]:
+                - /url: https://api.whatsapp.com/send?phone=554431421722&text=Ol%C3%A1,%20gostaria%20de%20falar%20com%20o%20suporte%20da%20Z-API
+                - img [ref=e54]
+                - generic [ref=e56]: WhatsApp
+            - listitem [ref=e57] [cursor=pointer]:
+              - link "Github" [ref=e58]:
+                - /url: https://github.com/z-api
+                - img [ref=e60]
+                - generic [ref=e62]: Github
+            - listitem [ref=e63] [cursor=pointer]:
+              - link "Documentação" [ref=e64]:
+                - /url: https://developer.z-api.io
+                - img [ref=e66]
+                - generic [ref=e68]: Documentação
+            - listitem [ref=e69] [cursor=pointer]:
+              - link "Postman Collection" [ref=e70]:
+                - /url: https://www.postman.com/docs-z-api/z-api-s-public-workspace/collection/gwri249/z-api-collection
+                - img [ref=e72]
+                - generic [ref=e74]: Postman Collection
+    - generic [ref=e75]:
+      - generic [ref=e76]:
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - heading "Dashboard" [level=1] [ref=e79]
+            - paragraph [ref=e80]: Veja os principais indicadores
+          - generic [ref=e84]:
+            - img [ref=e85]
+            - textbox "Busque aqui..." [ref=e88]
+        - generic [ref=e89]:
+          - button [ref=e91] [cursor=pointer]:
+            - img [ref=e92]
+          - button "ANTONIO CARLOS RODRIGUES SOUSA Cliente ACRS" [ref=e97] [cursor=pointer]:
+            - generic [ref=e98]:
+              - generic [ref=e99]: ANTONIO CARLOS RODRIGUES SOUSA
+              - generic [ref=e100]: Cliente
+            - img [ref=e101]
+            - generic [ref=e103]: ACRS
+      - generic [ref=e104]:
+        - generic [ref=e106]:
+          - button [ref=e107] [cursor=pointer]:
+            - img [ref=e108]
+          - generic [ref=e113]:
+            - img [ref=e115]
+            - generic [ref=e117]:
+              - generic [ref=e118]:
+                - generic [ref=e119]: Novidade
+                - generic [ref=e120]: Em breve
+              - heading "Ligações via WhatsApp na Z-API" [level=3] [ref=e121]
+              - paragraph [ref=e122]: Faça e receba chamadas de voz diretamente pela API. Integre ligações ao seu fluxo de atendimento e leve sua comunicação a outro nível.
+            - button "Entrar na fila de espera" [ref=e123] [cursor=pointer]:
+              - text: Entrar na fila de espera
+              - img [ref=e124]
+        - generic [ref=e128]: Última atualização 16/06/2026 14:26:32
+        - generic [ref=e129]:
+          - generic [ref=e130]:
+            - generic [ref=e131]:
+              - img [ref=e133]
+              - generic [ref=e135]:
+                - generic [ref=e137]: Total de instâncias web
+                - generic [ref=e138]: "1"
+                - generic [ref=e139]: Total de instâncias web executando
+              - button [ref=e141] [cursor=pointer]:
+                - img [ref=e142]
+            - generic [ref=e146]:
+              - img [ref=e148]
+              - generic [ref=e151]:
+                - generic [ref=e153]: Instâncias web conectadas
+                - generic [ref=e154]: "1"
+                - generic [ref=e155]: Total de instâncias web conectadas
+              - button [ref=e157] [cursor=pointer]:
+                - img [ref=e158]
+            - generic [ref=e162]:
+              - img [ref=e164]
+              - generic [ref=e166]:
+                - generic [ref=e168]: Instâncias web desconectadas
+                - generic [ref=e169]: "0"
+                - generic [ref=e170]: Total de instâncias web desconectadas
+              - button [ref=e172] [cursor=pointer]:
+                - img [ref=e173]
+          - generic [ref=e177]:
+            - generic [ref=e178]:
+              - generic [ref=e179]:
+                - generic [ref=e180]:
+                  - generic [ref=e181]: Instância web
+                  - generic [ref=e183]:
+                    - log [ref=e185]
+                    - generic [ref=e186]:
+                      - generic [ref=e187]:
+                        - generic [ref=e188]: Todos
+                        - combobox [ref=e190]
+                      - generic [ref=e191]:
+                        - img [ref=e193]
+                        - img [ref=e197]
+                - generic [ref=e199]:
+                  - generic [ref=e200]: Período
+                  - generic [ref=e201]:
+                    - button "Este mês" [ref=e203] [cursor=pointer]
+                    - button "Mês passado" [ref=e205] [cursor=pointer]
+                    - button "Ontem" [ref=e207] [cursor=pointer]
+                    - button "Hoje" [ref=e209] [cursor=pointer]
+              - generic [ref=e211]:
+                - generic [ref=e212]: Total recebido/enviado no último mês
+                - generic [ref=e214]:
+                  - img [ref=e215]:
+                    - generic [ref=e220]:
+                      - generic [ref=e222]: 10/06/2026
+                      - generic [ref=e224]: 11/06/2026
+                      - generic [ref=e226]: 12/06/2026
+                      - generic [ref=e228]: 16/06/2026
+                    - generic [ref=e230]:
+                      - generic [ref=e232]: "0"
+                      - generic [ref=e234]: "6"
+                      - generic [ref=e236]: "12"
+                      - generic [ref=e238]: "18"
+                      - generic [ref=e240]: "24"
+                  - list [ref=e256]:
+                    - listitem [ref=e257]:
+                      - img [ref=e258]
+                      - text: Qtd. recebida
+                    - listitem [ref=e260]:
+                      - img [ref=e261]
+                      - text: Qtd. enviada
+            - generic [ref=e263]:
+              - generic [ref=e264]:
+                - generic [ref=e265] [cursor=pointer]:
+                  - generic [ref=e266]:
+                    - img [ref=e268]
+                    - generic [ref=e272]: Total enviado
+                  - generic [ref=e273]: "16"
+                - generic [ref=e274] [cursor=pointer]:
+                  - generic [ref=e275]:
+                    - img [ref=e277]
+                    - generic [ref=e281]: Total recebido
+                  - generic [ref=e282]: "24"
+              - generic [ref=e283]:
+                - generic [ref=e284]:
+                  - generic [ref=e285]: Mensagens Enviadas
+                  - generic [ref=e286]:
+                    - button "Enviadas" [ref=e287] [cursor=pointer]
+                    - button "Recebidas" [ref=e288] [cursor=pointer]
+                - generic [ref=e289]:
+                  - generic [ref=e290]:
+                    - generic [ref=e291]: Textos
+                    - generic [ref=e292]: "16"
+                  - generic [ref=e293]:
+                    - generic [ref=e294]: Botões
+                    - generic [ref=e295]: "0"
+                  - generic [ref=e296]:
+                    - generic [ref=e297]: Links
+                    - generic [ref=e298]: "0"
+                  - generic [ref=e299]:
+                    - generic [ref=e300]: Opções
+                    - generic [ref=e301]: "0"
+                  - generic [ref=e302]:
+                    - generic [ref=e303]: Documentos
+                    - generic [ref=e304]: "0"
+                  - generic [ref=e305]:
+                    - generic [ref=e306]: Áudios
+                    - generic [ref=e307]: "0"
+                  - generic [ref=e308]:
+                    - generic [ref=e309]: Vídeos
+                    - generic [ref=e310]: "0"
+                  - generic [ref=e311]:
+                    - generic [ref=e312]: Contatos
+                    - generic [ref=e313]: "0"
+                  - generic [ref=e314]:
+                    - generic [ref=e315]: Imagens
+                    - generic [ref=e316]: "0"
+                  - generic [ref=e317]:
+                    - generic [ref=e318]: Localizações
+                    - generic [ref=e319]: "0"
+                  - generic [ref=e320]:
+                    - generic [ref=e321]: Stickers
+                    - generic [ref=e322]: "0"
+  - alert [ref=e323]
+  - generic [ref=e324]: "0"
+  - button [ref=e326] [cursor=pointer]:
+    - img [ref=e327]
+  - generic:
+    - iframe
+  - iframe [ref=e330]:
+    
