@@ -1,0 +1,266 @@
+- generic [active]:
+  - generic:
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic [ref=e1]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - link "Logotipo da Meta" [ref=e7] [cursor=pointer]:
+            - /url: /?no_redirect=true
+            - img "Logotipo da Meta" [ref=e9]
+          - tablist [ref=e18]:
+            - link "Meus apps" [ref=e19] [cursor=pointer]:
+              - /url: /apps/
+              - generic [ref=e22]: Meus apps
+            - link "Ações necessárias" [ref=e23] [cursor=pointer]:
+              - /url: /required-actions/
+              - generic [ref=e26]: Ações necessárias
+            - tab "Documentos" [ref=e27] [cursor=pointer]:
+              - generic [ref=e30]: Documentos
+            - tab "Ferramentas" [ref=e32] [cursor=pointer]:
+              - generic [ref=e35]: Ferramentas
+            - tab "Suporte" [ref=e37] [cursor=pointer]:
+              - generic [ref=e40]: Suporte
+        - generic [ref=e42]:
+          - generic [ref=e43]:
+            - generic [ref=e49]: Entrada da pesquisa
+            - textbox "Entrada da pesquisa" [ref=e60]:
+              - /placeholder: Pesquisar...
+          - link [ref=e63] [cursor=pointer]:
+            - /url: "#"
+          - link "Facebook" [ref=e68] [cursor=pointer]:
+            - /url: "#"
+            - img "Facebook" [ref=e73]
+      - generic [ref=e74]:
+        - generic [ref=e76]:
+          - generic [ref=e79]:
+            - generic [ref=e82]:
+              - generic [ref=e88]: Searchable selector for all apps
+              - combobox "Searchable selector for all apps enemeopflores" [ref=e93] [cursor=pointer]:
+                - generic [ref=e103]: enemeopflores
+            - navigation [ref=e106]:
+              - list [ref=e107]:
+                - listitem [ref=e108]:
+                  - button "Painel" [ref=e110] [cursor=pointer]
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Painel
+                - listitem [ref=e116]:
+                  - button "Ações necessárias" [ref=e118] [cursor=pointer]
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Ações necessárias
+                - listitem [ref=e124]:
+                  - button "Casos de uso" [ref=e126] [cursor=pointer]
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Casos de uso
+                - listitem [ref=e132]:
+                  - generic [ref=e133]:
+                    - button "Login do Facebook para Empresas" [ref=e135] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Login do Facebook para Empresas
+                          - button "Alternar grupo" [ref=e141] [cursor=pointer]:
+                            - generic [ref=e144]: Alternar grupo
+                  - list [ref=e147]:
+                    - generic [ref=e148]:
+                      - button "Configurações" [ref=e150] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Configurações
+                    - generic [ref=e155]:
+                      - button "Início rápido" [ref=e157] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Início rápido
+                    - generic [ref=e162]:
+                      - button "Configurações" [ref=e164] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Configurações
+                    - generic [ref=e169]:
+                      - button "Modelos" [ref=e171] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Modelos
+                - listitem [ref=e176]:
+                  - generic [ref=e177]:
+                    - button "Analisar" [ref=e179] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Analisar
+                          - button "Alternar grupo" [ref=e185] [cursor=pointer]:
+                            - generic [ref=e188]: Alternar grupo
+                  - list [ref=e191]:
+                    - generic [ref=e192]:
+                      - button "Teste" [ref=e194] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Teste
+                    - generic [ref=e199]:
+                      - button "Verificação" [ref=e201] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Verificação
+                    - generic [ref=e206]:
+                      - button "Análise do app" [ref=e208] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Análise do app
+                - listitem [ref=e213]:
+                  - button "Publicar" [ref=e215] [cursor=pointer]:
+                    - generic [ref=e218]:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Publicado
+                          - status: Status da publicação do app
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Publicar
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Publicado
+                            - status: Status da publicação do app
+          - generic [ref=e221]:
+            - navigation [ref=e222]:
+              - list [ref=e223]:
+                - listitem [ref=e224]:
+                  - generic [ref=e225]:
+                    - button "Configurações do app" [ref=e227] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Configurações do app
+                          - button "Alternar grupo" [ref=e233] [cursor=pointer]:
+                            - generic [ref=e236]: Alternar grupo
+                  - list [ref=e239]:
+                    - generic [ref=e240]:
+                      - button "Básico" [ref=e242] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Básico
+                    - generic [ref=e247]:
+                      - button "Avançado" [ref=e249] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Avançado
+                - listitem [ref=e254]:
+                  - generic [ref=e255]:
+                    - button "Funções do app" [ref=e257] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Funções do app
+                          - button "Alternar grupo" [ref=e263] [cursor=pointer]:
+                            - generic [ref=e266]: Alternar grupo
+                  - list [ref=e269]:
+                    - generic [ref=e270]:
+                      - button "Funções" [ref=e272] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Funções
+                    - generic [ref=e277]:
+                      - button "Usuários de teste" [ref=e279] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Usuários de teste
+                - listitem [ref=e284]:
+                  - button "Caixa de Entrada de alertas" [ref=e286] [cursor=pointer]:
+                    - generic [ref=e289]:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: "2"
+                          - status: 2 alertas não lidos
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Caixa de Entrada de alertas
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: "2"
+                            - status: 2 alertas não lidos
+            - separator [ref=e292]
+            - generic [ref=e293]:
+              - button "Registro de atividades" [ref=e294] [cursor=pointer]:
+                - generic [ref=e297]: Registro de atividades
+              - button "Ajuda" [ref=e301] [cursor=pointer]:
+                - generic [ref=e304]: Ajuda
+              - button "Abrir/fechar navegação lateral" [ref=e309] [cursor=pointer]:
+                - generic [ref=e312]: Abrir/fechar navegação lateral
+        - generic [ref=e321]:
+          - generic [ref=e322]:
+            - progressbar [ref=e323]
+            - progressbar [ref=e324]
+          - generic [ref=e330]:
+            - progressbar [ref=e331]
+            - progressbar [ref=e332]
+            - progressbar [ref=e333]
+            - progressbar [ref=e334]
