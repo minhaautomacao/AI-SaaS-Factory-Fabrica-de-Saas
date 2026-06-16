@@ -1,0 +1,106 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation [ref=e114]:
+      - generic [ref=e116]:
+        - link [ref=e118] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e122]:
+          - generic [ref=e123]:
+            - link [ref=e124] [cursor=pointer]:
+              - /url: /monitors
+              - img [ref=e126]
+            - link [ref=e133] [cursor=pointer]:
+              - /url: /incidents
+              - img [ref=e135]
+            - link [ref=e140] [cursor=pointer]:
+              - /url: /status
+              - img [ref=e142]
+            - link [ref=e149] [cursor=pointer]:
+              - /url: /maintenance
+              - img [ref=e151]
+            - link [ref=e154] [cursor=pointer]:
+              - /url: /team
+              - img [ref=e156]
+            - link [ref=e161] [cursor=pointer]:
+              - /url: /integrations
+              - img [ref=e163]
+          - img "minhaautomacao" [ref=e174] [cursor=pointer]: m.
+        - button [ref=e176] [cursor=pointer]:
+          - img [ref=e177]
+    - main [ref=e179]:
+      - generic [ref=e181]:
+        - generic [ref=e183]:
+          - generic [ref=e184]:
+            - heading "Monitors." [level=2] [ref=e185]
+            - group [ref=e186]:
+              - link "New" [ref=e187] [cursor=pointer]:
+                - /url: /monitors/new/http
+                - img [ref=e189]
+                - text: New
+              - button "Options" [ref=e193] [cursor=pointer]:
+                - img [ref=e194]
+          - generic [ref=e196]:
+            - generic [ref=e198] [cursor=pointer]:
+              - img [ref=e199]
+              - generic [ref=e202]: Show groups
+            - generic [ref=e203]:
+              - button "Search" [ref=e204] [cursor=pointer]:
+                - img [ref=e205]
+              - button "Filter" [ref=e208] [cursor=pointer]:
+                - img [ref=e210]
+                - text: Filter
+        - generic [ref=e216]:
+          - link "enemeop-orchestrator.onrender.com/ HTTP Preparing..." [ref=e222] [cursor=pointer]:
+            - /url: /monitors/803311569
+            - generic [ref=e223]:
+              - generic [ref=e224]: enemeop-orchestrator.onrender.com/
+              - generic [ref=e225]: HTTP
+              - text: Preparing...
+          - button [ref=e227] [cursor=pointer]:
+            - img [ref=e228]
+        - complementary [ref=e233]:
+          - generic [ref=e235]:
+            - paragraph [ref=e236]: Current status.
+            - img [ref=e238]
+            - generic [ref=e240]:
+              - generic [ref=e241]:
+                - paragraph [ref=e242]: "0"
+                - paragraph [ref=e243]: Down
+              - generic [ref=e244]:
+                - paragraph [ref=e245]: "0"
+                - paragraph [ref=e246]: Up
+              - generic [ref=e247]:
+                - paragraph [ref=e248]: "0"
+                - paragraph [ref=e249]: Paused
+          - generic [ref=e251]:
+            - generic [ref=e252]:
+              - paragraph [ref=e253]: Last 24 hours.
+              - button [ref=e254] [cursor=pointer]:
+                - img [ref=e255]
+            - generic [ref=e259]:
+              - generic [ref=e260]:
+                - paragraph [ref=e261]: 100%
+                - paragraph [ref=e262]: Overall uptime
+              - generic [ref=e263]:
+                - paragraph [ref=e264]: N/A
+                - paragraph [ref=e265]: MTBF
+              - generic [ref=e266]:
+                - paragraph [ref=e267]: 1d
+                - paragraph [ref=e268]: Without inc.
+              - generic [ref=e269]:
+                - paragraph [ref=e270]: "0"
+                - paragraph [ref=e271]: Incidents
+  - alert [ref=e61]: Monitors | UptimeRobot
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - iframe [ref=e62]:
+    
+  - button "Open Intercom Messenger" [ref=e63] [cursor=pointer]:
+    - img [ref=e65]
+    - generic:
+      - img
