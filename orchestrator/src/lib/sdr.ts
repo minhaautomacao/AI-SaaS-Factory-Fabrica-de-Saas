@@ -2,7 +2,7 @@ import Groq from 'groq-sdk'
 import { getRedis } from './redis.js'
 import { getSupabase } from './supabase.js'
 import { responderLead, notificarEscalada } from './whatsapp.js'
-import { responderInstagram, salvarConversa } from './instagram.js'
+import { responderInstagram, salvarConversa, responderComentarioInstagram, responderComentarioFacebook } from './instagram.js'
 import { randomUUID } from 'crypto'
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
@@ -171,6 +171,44 @@ export async function processarMensagemSDR(numero: string, textoCliente: string,
 
   await responderLead({ numero, mensagem: resposta })
   console.log(`[SDR] Respondido ${numero}: ${resposta.substring(0, 80)}...`)
+}
+
+const SYSTEM_COMENTARIO = `Você é Flora, assistente da Enemeop Flores (floricultura em SP desde 1997).
+Alguém comentou em uma publicação nossa. Responda de forma curta, calorosa e pública (máx 2 linhas).
+Nunca peça dados pessoais — convide para o WhatsApp: https://wa.me/5511912808282
+Tom: informal, direto, sem emojis excessivos.`
+
+export async function processarComentarioSDR(
+  canal: 'instagram' | 'facebook',
+  commentId: string,
+  textoComentario: string,
+  nomeUsuario?: string
+): Promise<void> {
+  console.log(`[SDR/${canal}] Comentário de ${nomeUsuario ?? 'desconhecido'}: ${textoComentario.substring(0, 80)}`)
+
+  try {
+    const response = await groq.chat.completions.create({
+      model: 'llama-3.1-8b-instant',
+      messages: [
+        { role: 'system', content: SYSTEM_COMENTARIO },
+        { role: 'user', content: nomeUsuario ? `${nomeUsuario} comentou: "${textoComentario}"` : `Comentário: "${textoComentario}"` },
+      ],
+      temperature: 0.7,
+      max_tokens: 150,
+    })
+
+    const resposta = response.choices[0]?.message?.content ?? 'Obrigada pelo comentário! Fale com a gente no WhatsApp: https://wa.me/5511912808282'
+
+    if (canal === 'instagram') {
+      await responderComentarioInstagram(commentId, resposta)
+    } else {
+      await responderComentarioFacebook(commentId, resposta)
+    }
+
+    console.log(`[SDR/${canal}/Comentário] Respondido: ${resposta.substring(0, 80)}`)
+  } catch (e) {
+    console.error(`[SDR/${canal}/Comentário] Erro:`, e)
+  }
 }
 
 export async function processarMensagemSDRInstagram(

@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { createServer, IncomingMessage, ServerResponse } from 'http'
 import { iniciarWorkers } from './workers/orquestrador.js'
 import { getSupabase } from './lib/supabase.js'
-import { processarMensagemSDR, processarMensagemSDRInstagram } from './lib/sdr.js'
+import { processarMensagemSDR, processarMensagemSDRInstagram, processarComentarioSDR } from './lib/sdr.js'
 import { extrairMensagemZApi } from './lib/whatsapp.js'
 
 console.log('=== Fábrica de SaaS — Orquestrador Central ===')
@@ -103,6 +103,7 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
         const payload = JSON.parse(raw)
 
         for (const entry of payload?.entry ?? []) {
+          // ── DMs Instagram (messaging) ──
           for (const event of entry?.messaging ?? []) {
             const senderId = event?.sender?.id
             const texto    = event?.message?.text
@@ -110,7 +111,6 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
 
             console.log(`[Webhook/Instagram] DM de ${senderId}: ${texto.substring(0, 80)}`)
 
-            // Busca ou cria lead no Supabase
             const sb = getSupabase()
             const { data: leadExistente } = await sb
               .from('leads')
@@ -128,11 +128,41 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
               leadId = novoLead?.id
             }
 
-            // SDR Flora responde via Instagram Graph API
             processarMensagemSDRInstagram(senderId, texto, {
               leadId,
               nomeExibido: leadExistente?.nome_exibido ?? undefined,
             }).catch(e => console.error('[SDR/Instagram] Erro:', e.message))
+          }
+
+          // ── Comentários Instagram (changes) ──
+          for (const change of entry?.changes ?? []) {
+            if (change.field === 'comments') {
+              const v = change.value
+              // Ignora comentários próprios (da página)
+              if (!v?.id || v?.from?.id === process.env.INSTAGRAM_PAGE_ID) continue
+              const commentId = v.id as string
+              const texto     = (v.text ?? '') as string
+              const usuario   = (v.from?.username ?? v.from?.name ?? undefined) as string | undefined
+              if (!texto) continue
+              console.log(`[Webhook/Instagram] Comentário de ${usuario ?? 'anon'}: ${texto.substring(0, 80)}`)
+              processarComentarioSDR('instagram', commentId, texto, usuario)
+                .catch(e => console.error('[SDR/Instagram/Comentário] Erro:', e.message))
+            }
+
+            // ── Comentários Facebook (feed) ──
+            if (change.field === 'feed') {
+              const v = change.value
+              if (v?.item !== 'comment' || v?.verb !== 'add') continue
+              // Ignora comentários da própria página
+              if (v?.from?.id === process.env.META_PAGE_ID) continue
+              const commentId = v.comment_id as string
+              const texto     = (v.message ?? '') as string
+              const usuario   = (v.from?.name ?? undefined) as string | undefined
+              if (!commentId || !texto) continue
+              console.log(`[Webhook/Facebook] Comentário de ${usuario ?? 'anon'}: ${texto.substring(0, 80)}`)
+              processarComentarioSDR('facebook', commentId, texto, usuario)
+                .catch(e => console.error('[SDR/Facebook/Comentário] Erro:', e.message))
+            }
           }
         }
 

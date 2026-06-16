@@ -8,8 +8,10 @@
 
 import { getSupabase } from './supabase.js'
 
-const ACCESS_TOKEN = process.env.INSTAGRAM_ACCESS_TOKEN ?? ''
-const PAGE_ID      = process.env.INSTAGRAM_PAGE_ID ?? '17841402064363907'
+const ACCESS_TOKEN    = process.env.INSTAGRAM_ACCESS_TOKEN ?? ''
+const PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN ?? ''
+const PAGE_ID         = process.env.INSTAGRAM_PAGE_ID ?? '17841402064363907'
+const FB_PAGE_ID      = process.env.META_PAGE_ID ?? '350648311678163'
 
 export async function responderInstagram(recipientId: string, texto: string): Promise<boolean> {
   if (!ACCESS_TOKEN) {
@@ -39,6 +41,61 @@ export async function responderInstagram(recipientId: string, texto: string): Pr
     return true
   } catch (e) {
     console.error('[Instagram] Falha ao enviar:', e)
+    return false
+  }
+}
+
+export async function responderComentarioInstagram(commentId: string, texto: string): Promise<boolean> {
+  const token = ACCESS_TOKEN || PAGE_ACCESS_TOKEN
+  if (!token) {
+    console.warn('[Instagram] Token não configurado — comentário não respondido')
+    return false
+  }
+  try {
+    const res = await fetch(
+      `https://graph.facebook.com/v19.0/${commentId}/replies?access_token=${token}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: texto }),
+      }
+    )
+    const data = await res.json() as { id?: string; error?: { message: string } }
+    if (data.error) {
+      console.error('[Instagram/Comentário] Erro:', data.error.message)
+      return false
+    }
+    console.log(`[Instagram/Comentário] ✓ Respondido comentário ${commentId}`)
+    return true
+  } catch (e) {
+    console.error('[Instagram/Comentário] Falha:', e)
+    return false
+  }
+}
+
+export async function responderComentarioFacebook(commentId: string, texto: string): Promise<boolean> {
+  if (!PAGE_ACCESS_TOKEN) {
+    console.warn('[Facebook] META_PAGE_ACCESS_TOKEN não configurado')
+    return false
+  }
+  try {
+    const res = await fetch(
+      `https://graph.facebook.com/v19.0/${commentId}/comments?access_token=${PAGE_ACCESS_TOKEN}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: texto }),
+      }
+    )
+    const data = await res.json() as { id?: string; error?: { message: string } }
+    if (data.error) {
+      console.error('[Facebook/Comentário] Erro:', data.error.message)
+      return false
+    }
+    console.log(`[Facebook/Comentário] ✓ Respondido comentário ${commentId}`)
+    return true
+  } catch (e) {
+    console.error('[Facebook/Comentário] Falha:', e)
     return false
   }
 }
