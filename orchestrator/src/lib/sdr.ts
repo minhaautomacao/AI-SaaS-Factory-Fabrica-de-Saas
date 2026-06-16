@@ -131,7 +131,7 @@ export async function processarMensagemSDR(numero: string, textoCliente: string,
   let instrucaoInicial = ''
   if (primeiraMensagem) {
     if (nomeCliente) {
-      instrucaoInicial = `\n\n## INSTRUÇÃO OBRIGATÓRIA PARA ESTA RESPOSTA\nO cliente se chama **${nomeCliente}** (nome vindo do WhatsApp). Use o nome dele naturalmente na resposta. NÃO peça o nome — você já sabe. Seja calorosa e pessoal.`
+      instrucaoInicial = `\n\n## INSTRUÇÃO OBRIGATÓRIA PARA ESTA RESPOSTA\nVocê é FLORA, assistente da Enemeop Flores. A pessoa que está te enviando esta mensagem se chama **${nomeCliente}**. Cumprimente-a pelo nome de forma calorosa. NÃO peça o nome — você já sabe. NÃO se identifique como ${nomeCliente} — você é Flora.`
     } else {
       instrucaoInicial = '\n\n## INSTRUÇÃO OBRIGATÓRIA PARA ESTA RESPOSTA\nEsta é a PRIMEIRA mensagem do cliente. Independente do que ele escreveu, sua resposta DEVE começar pedindo o nome dele. Exemplo: "Oi, pode me dizer seu nome pra eu te atender melhor?" — depois disso pode responder o conteúdo da mensagem se necessário.'
     }
