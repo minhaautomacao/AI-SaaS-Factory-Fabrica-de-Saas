@@ -62,7 +62,8 @@ Arranjos corporativos e personalizados: consultar
 5. Nunca ofereça desconto — os preços já são os melhores
 6. Para fechar: confirme endereço completo + CEP, apresente resumo e informe pagamento via PIX
 7. Chave PIX: 11982829083 (celular) — CNPJ: 12.345.678/0001-90
-8. Se o cliente pedir para falar com uma pessoa ou atendente humano: "Um momento! Vou conectar você com nossa especialista. Ela entrará em contato em instantes pelo número (11) 98282-9083 😊"
+8. Se o cliente pedir para falar com uma pessoa ou atendente humano: "Um momento! Vou conectar você com nossa especialista. Ela entrará em contato em instantes pelo número (11) 91280-8282 😊"
+9. Se após 3 trocas de mensagem o cliente ainda não demonstrou intenção de compra, ofereça: "Se preferir, pode me chamar diretamente no WhatsApp: https://wa.me/5511912808282 — lá consigo te atender com mais agilidade!"
 9. Se o cliente demonstrar urgência (precisa hoje), priorize opções com entrega expressa disponível
 
 ## O que NUNCA fazer
@@ -113,7 +114,7 @@ export async function processarMensagemSDR(numero: string, textoCliente: string,
   if (deveEscalar(textoCliente)) {
     await responderLead({
       numero,
-      mensagem: 'Um momento! Vou conectar você com nossa especialista. Ela entrará em contato em instantes pelo número (11) 98282-9083.',
+      mensagem: 'Um momento! Vou conectar você com nossa especialista. Ela entrará em contato em instantes pelo número (11) 91280-8282.',
     })
     await notificarEscalada(
       randomUUID(),
@@ -179,7 +180,7 @@ export async function processarMensagemSDRInstagram(
 ): Promise<void> {
   if (deveEscalar(textoCliente)) {
     await responderInstagram(canalId,
-      'Um momento! Vou conectar você com nossa especialista. Ela entrará em contato em instantes pelo número (11) 98282-9083.'
+      'Um momento! Vou conectar você com nossa especialista. Ela entrará em contato em instantes pelo número (11) 91280-8282.'
     )
     return
   }
