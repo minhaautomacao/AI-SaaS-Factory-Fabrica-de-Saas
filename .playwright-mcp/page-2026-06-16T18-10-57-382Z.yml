@@ -1,0 +1,574 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - banner [ref=e4]:
+        - generic [ref=e5]:
+          - link "Render" [ref=e7] [cursor=pointer]:
+            - /url: /
+            - img "Render" [ref=e8]
+          - button "M My Workspace" [ref=e12] [cursor=pointer]:
+            - generic [ref=e13]:
+              - generic [ref=e14]: M
+              - generic "My Workspace" [ref=e15]
+              - img [ref=e16]
+        - generic [ref=e20]:
+          - navigation [ref=e21]:
+            - list [ref=e22]:
+              - listitem [ref=e23]:
+                - link "enemeop-orchestrator" [ref=e24] [cursor=pointer]:
+                  - /url: /web/srv-d8km0f3eo5us73ekgs50
+                  - img [ref=e25]
+                  - generic [ref=e27]: enemeop-orchestrator
+                - button [ref=e30] [cursor=pointer]:
+                  - img [ref=e31]
+          - button "Search Ctrl + K" [ref=e34] [cursor=pointer]:
+            - img [ref=e36]
+            - text: Search
+            - generic [ref=e38]:
+              - img [ref=e39]
+              - generic [ref=e41]: Ctrl
+              - generic [ref=e42]: +
+              - generic [ref=e43]: K
+              - generic [ref=e44]: K
+        - generic [ref=e45]:
+          - button "New" [ref=e47] [cursor=pointer]:
+            - generic [ref=e48]:
+              - img [ref=e49]
+              - generic [ref=e51]: New
+          - button "Upgrade" [ref=e53] [cursor=pointer]:
+            - generic [ref=e54]:
+              - img [ref=e55]
+              - generic [ref=e57]: Upgrade
+          - button "Help" [ref=e59] [cursor=pointer]:
+            - img "Help" [ref=e60]
+          - button "Gravatar for minhaautomacao10@gmail.com" [ref=e65] [cursor=pointer]:
+            - img "Gravatar for minhaautomacao10@gmail.com" [ref=e67]
+      - generic [ref=e68]:
+        - navigation [ref=e69]:
+          - separator [ref=e70]
+          - generic [ref=e71]:
+            - generic [ref=e72]:
+              - link "Dashboard" [ref=e73] [cursor=pointer]:
+                - /url: /
+                - img [ref=e74]
+                - generic [ref=e76]: Dashboard
+              - generic [ref=e77]:
+                - img [ref=e78]
+                - generic [ref=e80]: enemeop-orchestrator
+            - generic [ref=e81]:
+              - list [ref=e82]:
+                - listitem [ref=e83]:
+                  - link "Events" [ref=e84] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/events
+                    - img [ref=e85]
+                    - generic [ref=e92]: Events
+                - listitem [ref=e93]:
+                  - link "Settings" [ref=e94] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/settings
+                    - img [ref=e95]
+                    - generic [ref=e98]: Settings
+              - generic [ref=e99]:
+                - generic [ref=e100]: Monitor
+                - list "Monitor" [ref=e101]:
+                  - listitem [ref=e102]:
+                    - link "Logs" [ref=e103] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/logs
+                      - img [ref=e104]
+                      - generic [ref=e109]: Logs
+                  - listitem [ref=e110]:
+                    - link "Metrics" [ref=e111] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/metrics
+                      - img [ref=e112]
+                      - generic [ref=e114]: Metrics
+              - generic [ref=e115]:
+                - generic [ref=e116]: Manage
+                - list "Manage" [ref=e117]:
+                  - listitem [ref=e118]:
+                    - link "Environment" [ref=e119] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/env
+                      - img [ref=e120]
+                      - generic [ref=e124]: Environment
+                  - listitem [ref=e125]:
+                    - link "Shell" [ref=e126] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/shell
+                      - img [ref=e127]
+                      - generic [ref=e131]:
+                        - generic [ref=e132]: Shell
+                        - status [ref=e135]:
+                          - img [ref=e136]
+                  - listitem [ref=e138]:
+                    - link "Scaling" [ref=e139] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/scaling
+                      - img [ref=e140]
+                      - generic [ref=e145]:
+                        - generic [ref=e146]: Scaling
+                        - status [ref=e149]:
+                          - img [ref=e150]
+                  - listitem [ref=e152]:
+                    - link "Previews" [ref=e153] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/previews
+                      - img [ref=e154]
+                      - generic [ref=e158]: Previews
+                  - listitem [ref=e159]:
+                    - link "Disk" [ref=e160] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/disks
+                      - img [ref=e161]
+                      - generic [ref=e166]:
+                        - generic [ref=e167]: Disk
+                        - status [ref=e170]:
+                          - img [ref=e171]
+                  - listitem [ref=e173]:
+                    - link "One-Off Jobs" [ref=e174] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/jobs
+                      - img [ref=e175]
+                      - generic [ref=e181]:
+                        - generic [ref=e182]: One-Off Jobs
+                        - status [ref=e185]:
+                          - img [ref=e186]
+          - generic [ref=e189]:
+            - button "Collapse items" [expanded] [ref=e190] [cursor=pointer]:
+              - img [ref=e191]
+            - list "Footer navigation" [ref=e193]:
+              - listitem [ref=e194]:
+                - link "Changelog" [ref=e195] [cursor=pointer]:
+                  - /url: https://render.com/changelog
+                  - img [ref=e196]
+                  - generic [ref=e201]: Changelog
+              - listitem [ref=e202]:
+                - link "Invite a friend" [ref=e203] [cursor=pointer]:
+                  - /url: /invites
+                  - img [ref=e204]
+                  - generic [ref=e206]: Invite a friend
+              - listitem [ref=e207]:
+                - button "Contact support" [ref=e208] [cursor=pointer]:
+                  - img [ref=e209]
+                  - generic [ref=e213]: Contact support
+            - link "Render Status" [ref=e215] [cursor=pointer]:
+              - /url: https://status.render.com
+              - img [ref=e216]
+              - generic [ref=e218]: Render Status
+        - generic [ref=e220]:
+          - banner [ref=e222]:
+            - generic [ref=e223]:
+              - generic [ref=e224]:
+                - img [ref=e225]
+                - generic [ref=e227]: Web Service
+              - generic [ref=e228]:
+                - heading "enemeop-orchestrator Node Free Upgrade your instance" [level=1] [ref=e230]:
+                  - generic [ref=e231]: enemeop-orchestrator
+                  - generic [ref=e232]:
+                    - generic [ref=e233]: Node
+                    - link "Free" [ref=e234] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/plan
+                      - generic [ref=e235]: Free
+                    - link "Upgrade your instance" [ref=e236] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/plan
+                      - text: Upgrade your instance
+                      - img [ref=e238]
+                - generic [ref=e241]:
+                  - button "Connect" [ref=e242] [cursor=pointer]:
+                    - generic [ref=e243]: Connect
+                    - img [ref=e244]
+                  - button "Manual Deploy" [ref=e246] [cursor=pointer]:
+                    - generic [ref=e247]: Manual Deploy
+                    - img [ref=e248]
+            - generic [ref=e252]:
+              - generic [ref=e254]:
+                - generic [ref=e255]: "Service ID:"
+                - generic "Service ID:" [ref=e256]:
+                  - generic [ref=e257]: srv-d8km0f3eo5us73ekgs50
+                  - button "Copy" [ref=e260] [cursor=pointer]:
+                    - img [ref=e261]
+              - generic [ref=e265]:
+                - img "GitHub" [ref=e267]
+                - link "minhaautomacao / AI-SaaS-Factory-Fabrica-de-Saas main" [ref=e269] [cursor=pointer]:
+                  - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/tree/main
+                  - generic [ref=e270]:
+                    - generic [ref=e271]: minhaautomacao / AI-SaaS-Factory-Fabrica-de-Saas
+                    - img [ref=e272]
+                    - generic [ref=e274]: main
+              - generic "Copy" [ref=e276]:
+                - link "https://enemeop-orchestrator.onrender.com" [ref=e278] [cursor=pointer]:
+                  - /url: https://enemeop-orchestrator.onrender.com
+                - button "Copy" [ref=e281] [cursor=pointer]:
+                  - img [ref=e282]
+          - main [ref=e285]:
+            - generic [ref=e286]:
+              - alert [ref=e287]:
+                - generic [ref=e289]:
+                  - img [ref=e291]
+                  - generic [ref=e295]:
+                    - generic [ref=e297]: Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.
+                    - link "Upgrade now" [ref=e299] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/plan
+              - button "Filter events 31" [ref=e301] [cursor=pointer]:
+                - img [ref=e303]
+                - generic [ref=e305]:
+                  - text: Filter events
+                  - generic [ref=e306]: "31"
+                - img [ref=e307]
+              - generic [ref=e309]:
+                - list [ref=e310]:
+                  - listitem [ref=e311]:
+                    - generic [ref=e312]:
+                      - img [ref=e315]
+                      - generic [ref=e317]:
+                        - generic [ref=e318]:
+                          - generic [ref=e319]:
+                            - link "Deploy" [ref=e320] [cursor=pointer]:
+                              - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8op240g4nts7397d1ag
+                            - text: live
+                          - text: for
+                          - link "b10ff8f" [ref=e322] [cursor=pointer]:
+                            - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/b10ff8f91bbdfc0126257315fcd8f3f99b22bcee
+                          - text: ":"
+                          - generic [ref=e323]: "auto-commit: salva alteracoes antes de encerrar sessao [2026-06-16 15:03]"
+                        - generic [ref=e324]: June 16, 2026 at 3:09 PM
+                  - listitem [ref=e325]:
+                    - generic [ref=e326]:
+                      - img [ref=e329]
+                      - generic [ref=e332]:
+                        - generic [ref=e333]:
+                          - generic [ref=e334]:
+                            - generic [ref=e335]:
+                              - link "Deploy" [ref=e336] [cursor=pointer]:
+                                - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8op240g4nts7397d1ag
+                              - text: started
+                            - text: for
+                            - link "b10ff8f" [ref=e338] [cursor=pointer]:
+                              - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/b10ff8f91bbdfc0126257315fcd8f3f99b22bcee
+                            - text: ":"
+                            - generic [ref=e339]: "auto-commit: salva alteracoes antes de encerrar sessao [2026-06-16 15:03]"
+                          - generic [ref=e340]: Environment updated
+                        - generic [ref=e341]: June 16, 2026 at 3:08 PM
+                  - listitem [ref=e342]:
+                    - generic [ref=e343]:
+                      - img [ref=e346]
+                      - generic [ref=e348]:
+                        - generic [ref=e349]:
+                          - generic [ref=e350]:
+                            - link "Deploy" [ref=e351] [cursor=pointer]:
+                              - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8oongkvikkc73fd7dpg
+                            - text: live
+                          - text: for
+                          - link "1ca94ed" [ref=e353] [cursor=pointer]:
+                            - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/1ca94edadf0f497a9cc014a01d3db382fd59f814
+                          - text: ":"
+                          - generic [ref=e354]: "auto-commit: salva alteracoes antes de encerrar sessao [2026-06-16 14:38]"
+                        - generic [ref=e355]: June 16, 2026 at 2:49 PM
+                    - link "Rollback" [ref=e357] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8oongkvikkc73fd7dpg/rollback
+                      - img [ref=e359]
+                      - text: Rollback
+                  - listitem [ref=e361]:
+                    - generic [ref=e362]:
+                      - img [ref=e365]
+                      - generic [ref=e368]:
+                        - generic [ref=e369]:
+                          - generic [ref=e370]:
+                            - generic [ref=e371]:
+                              - link "Deploy" [ref=e372] [cursor=pointer]:
+                                - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8oongkvikkc73fd7dpg
+                              - text: started
+                            - text: for
+                            - link "1ca94ed" [ref=e374] [cursor=pointer]:
+                              - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/1ca94edadf0f497a9cc014a01d3db382fd59f814
+                            - text: ":"
+                            - generic [ref=e375]: "auto-commit: salva alteracoes antes de encerrar sessao [2026-06-16 14:38]"
+                          - generic [ref=e376]: Environment updated
+                        - generic [ref=e377]: June 16, 2026 at 2:45 PM
+                  - listitem [ref=e378]:
+                    - generic [ref=e379]:
+                      - img [ref=e382]
+                      - generic [ref=e384]:
+                        - generic [ref=e385]:
+                          - generic [ref=e386]:
+                            - link "Deploy" [ref=e387] [cursor=pointer]:
+                              - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8oom3q8qa3s739s1kr0
+                            - text: live
+                          - text: for
+                          - link "1ca94ed" [ref=e389] [cursor=pointer]:
+                            - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/1ca94edadf0f497a9cc014a01d3db382fd59f814
+                          - text: ":"
+                          - generic [ref=e390]: "auto-commit: salva alteracoes antes de encerrar sessao [2026-06-16 14:38]"
+                        - generic [ref=e391]: June 16, 2026 at 2:43 PM
+                    - link "Rollback" [ref=e393] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8oom3q8qa3s739s1kr0/rollback
+                      - img [ref=e395]
+                      - text: Rollback
+                  - listitem [ref=e397]:
+                    - generic [ref=e398]:
+                      - img [ref=e401]
+                      - generic [ref=e404]:
+                        - generic [ref=e405]:
+                          - generic [ref=e406]:
+                            - generic [ref=e407]:
+                              - link "Deploy" [ref=e408] [cursor=pointer]:
+                                - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8oom3q8qa3s739s1kr0
+                              - text: started
+                            - text: for
+                            - link "1ca94ed" [ref=e410] [cursor=pointer]:
+                              - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/1ca94edadf0f497a9cc014a01d3db382fd59f814
+                            - text: ":"
+                            - generic [ref=e411]: "auto-commit: salva alteracoes antes de encerrar sessao [2026-06-16 14:38]"
+                          - generic [ref=e412]: Environment updated
+                        - generic [ref=e413]: June 16, 2026 at 2:42 PM
+                  - listitem [ref=e414]:
+                    - generic [ref=e415]:
+                      - img [ref=e418]
+                      - generic [ref=e420]:
+                        - generic [ref=e421]:
+                          - generic [ref=e422]:
+                            - link "Deploy" [ref=e423] [cursor=pointer]:
+                              - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8obq11o3t8c73dganq0
+                            - text: live
+                          - text: for
+                          - link "950a7c6" [ref=e425] [cursor=pointer]:
+                            - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/950a7c6ec6ad420ae8750fcd9e2c8f1be98d6c7f
+                          - text: ":"
+                          - generic [ref=e426]: "auto-commit: salva alteracoes antes de encerrar sessao [2026-06-16 00:01]"
+                        - generic [ref=e427]: June 16, 2026 at 12:04 AM
+                    - link "Rollback" [ref=e429] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8obq11o3t8c73dganq0/rollback
+                      - img [ref=e431]
+                      - text: Rollback
+                  - listitem [ref=e433]:
+                    - generic [ref=e434]:
+                      - img [ref=e437]
+                      - generic [ref=e440]:
+                        - generic [ref=e441]:
+                          - generic [ref=e442]:
+                            - generic [ref=e443]:
+                              - link "Deploy" [ref=e444] [cursor=pointer]:
+                                - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8obq11o3t8c73dganq0
+                              - text: started
+                            - text: for
+                            - link "950a7c6" [ref=e446] [cursor=pointer]:
+                              - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/950a7c6ec6ad420ae8750fcd9e2c8f1be98d6c7f
+                            - text: ":"
+                            - generic [ref=e447]: "auto-commit: salva alteracoes antes de encerrar sessao [2026-06-16 00:01]"
+                          - generic [ref=e448]: Environment updated
+                        - generic [ref=e449]: June 16, 2026 at 12:03 AM
+                  - listitem [ref=e450]:
+                    - generic [ref=e451]:
+                      - img [ref=e454]
+                      - generic [ref=e456]:
+                        - generic [ref=e457]:
+                          - generic [ref=e458]:
+                            - link "Deploy" [ref=e459] [cursor=pointer]:
+                              - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8obot0jo6nc73b2ltcg
+                            - text: live
+                          - text: for
+                          - link "4625407" [ref=e461] [cursor=pointer]:
+                            - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/4625407fe13f6202da9f882e2b178cfe03303a41
+                          - text: ":"
+                          - generic [ref=e462]: "feat: integração WhatsApp via Z-API — webhook, parser, testes e documentação"
+                        - generic [ref=e463]: June 16, 2026 at 12:01 AM
+                    - link "Rollback" [ref=e465] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8obot0jo6nc73b2ltcg/rollback
+                      - img [ref=e467]
+                      - text: Rollback
+                  - listitem [ref=e469]:
+                    - generic [ref=e470]:
+                      - img [ref=e473]
+                      - generic [ref=e476]:
+                        - generic [ref=e477]:
+                          - generic [ref=e478]:
+                            - generic [ref=e479]:
+                              - link "Deploy" [ref=e480] [cursor=pointer]:
+                                - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8obot0jo6nc73b2ltcg
+                              - text: started
+                            - text: for
+                            - link "4625407" [ref=e482] [cursor=pointer]:
+                              - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/4625407fe13f6202da9f882e2b178cfe03303a41
+                            - text: ":"
+                            - generic [ref=e483]: "feat: integração WhatsApp via Z-API — webhook, parser, testes e documentação"
+                          - generic [ref=e484]: New commit via Auto-Deploy
+                        - generic [ref=e485]: June 16, 2026 at 12:01 AM
+                  - listitem [ref=e486]:
+                    - generic [ref=e487]:
+                      - img [ref=e490]
+                      - generic [ref=e492]:
+                        - generic [ref=e493]:
+                          - generic [ref=e494]:
+                            - link "Deploy" [ref=e495] [cursor=pointer]:
+                              - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8mmoccm0tmc73asvf1g
+                            - text: live
+                          - text: for
+                          - link "8e8b170" [ref=e497] [cursor=pointer]:
+                            - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/8e8b17005eaa6954134875bd2ebfa4afd1c5e586
+                          - text: ":"
+                          - generic [ref=e498]: "orquestrador: webhook Instagram + SDR Flora responde DM + salva conversas"
+                        - generic [ref=e499]: June 13, 2026 at 11:42 AM
+                    - link "Rollback" [ref=e501] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8mmoccm0tmc73asvf1g/rollback
+                      - img [ref=e503]
+                      - text: Rollback
+                  - listitem [ref=e505]:
+                    - generic [ref=e506]:
+                      - img [ref=e509]
+                      - generic [ref=e512]:
+                        - generic [ref=e513]:
+                          - generic [ref=e514]:
+                            - generic [ref=e515]:
+                              - link "Deploy" [ref=e516] [cursor=pointer]:
+                                - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8mmoccm0tmc73asvf1g
+                              - text: started
+                            - text: for
+                            - link "8e8b170" [ref=e518] [cursor=pointer]:
+                              - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/8e8b17005eaa6954134875bd2ebfa4afd1c5e586
+                            - text: ":"
+                            - generic [ref=e519]: "orquestrador: webhook Instagram + SDR Flora responde DM + salva conversas"
+                          - generic [ref=e520]: New commit via Auto-Deploy
+                        - generic [ref=e521]: June 13, 2026 at 11:41 AM
+                  - listitem [ref=e522]:
+                    - generic [ref=e523]:
+                      - img [ref=e526]
+                      - generic [ref=e528]:
+                        - generic [ref=e529]:
+                          - generic [ref=e530]:
+                            - link "Deploy" [ref=e531] [cursor=pointer]:
+                              - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8mkineq1p3s73fpsl8g
+                            - text: live
+                          - text: for
+                          - link "cc72d68" [ref=e533] [cursor=pointer]:
+                            - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/cc72d68dbcb10069b65938bb02d58559360e56b0
+                          - text: ":"
+                          - generic [ref=e534]: "auto-commit: salva alteracoes antes de encerrar sessao [2026-06-13 08:58]"
+                        - generic [ref=e535]: June 13, 2026 at 9:13 AM
+                    - link "Rollback" [ref=e537] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8mkineq1p3s73fpsl8g/rollback
+                      - img [ref=e539]
+                      - text: Rollback
+                  - listitem [ref=e541]:
+                    - generic [ref=e542]:
+                      - img [ref=e545]
+                      - generic [ref=e548]:
+                        - generic [ref=e549]:
+                          - generic [ref=e550]:
+                            - generic [ref=e551]:
+                              - link "Deploy" [ref=e552] [cursor=pointer]:
+                                - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8mkineq1p3s73fpsl8g
+                              - text: started
+                            - text: for
+                            - link "cc72d68" [ref=e554] [cursor=pointer]:
+                              - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/cc72d68dbcb10069b65938bb02d58559360e56b0
+                            - text: ":"
+                            - generic [ref=e555]: "auto-commit: salva alteracoes antes de encerrar sessao [2026-06-13 08:58]"
+                          - generic [ref=e556]: New commit via Auto-Deploy
+                        - generic [ref=e557]: June 13, 2026 at 9:13 AM
+                  - listitem [ref=e558]:
+                    - generic [ref=e559]:
+                      - img [ref=e562]
+                      - generic [ref=e564]:
+                        - generic [ref=e565]:
+                          - generic [ref=e566]:
+                            - link "Deploy" [ref=e567] [cursor=pointer]:
+                              - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8mcne19rddc73972b70
+                            - text: live
+                          - text: for
+                          - link "f588cbb" [ref=e569] [cursor=pointer]:
+                            - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/f588cbbe388caf2d0c1e71dd55be30a01f3bd45f
+                          - text: ":"
+                          - generic [ref=e570]: "auto-commit: salva alteracoes antes de encerrar sessao [2026-06-13 00:17]"
+                        - generic [ref=e571]: June 13, 2026 at 12:17 AM
+                  - listitem [ref=e572]:
+                    - generic [ref=e573]:
+                      - img [ref=e576]
+                      - generic [ref=e579]:
+                        - generic [ref=e580]:
+                          - generic [ref=e581]:
+                            - generic [ref=e582]:
+                              - link "Deploy" [ref=e583] [cursor=pointer]:
+                                - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8mcne19rddc73972b70
+                              - text: started
+                            - text: for
+                            - link "f588cbb" [ref=e585] [cursor=pointer]:
+                              - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/f588cbbe388caf2d0c1e71dd55be30a01f3bd45f
+                            - text: ":"
+                            - generic [ref=e586]: "auto-commit: salva alteracoes antes de encerrar sessao [2026-06-13 00:17]"
+                          - generic [ref=e587]: New commit via Auto-Deploy
+                        - generic [ref=e588]: June 13, 2026 at 12:17 AM
+                  - listitem [ref=e589]:
+                    - generic [ref=e590]:
+                      - img [ref=e593]
+                      - generic [ref=e595]:
+                        - generic [ref=e596]:
+                          - generic [ref=e597]:
+                            - link "Deploy" [ref=e598] [cursor=pointer]:
+                              - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8mb98v7f7vs73f2mmtg
+                            - text: live
+                          - text: for
+                          - link "441cf22" [ref=e600] [cursor=pointer]:
+                            - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/441cf22b13461af79e73f7053e12f010bcdff375
+                          - text: ":"
+                          - generic [ref=e601]: "Corrige pipeline de respostas Instagram, Facebook e WhatsApp - webhook-meta: responde DMs do Facebook com IA (antes só Instagram) - webhook-meta: adiciona processarComentario para responder posts públicos - webhook-meta: corrige detecção de canal via body.object (antes era heurística) - webhook-meta: aumenta max_tokens de 150 para 350 (respostas mais naturais) - sdr.ts: atualiza catálogo completo com 60+ produtos (antes só 8 itens) - whatsapp.ts: adiciona registrarWebhookEvolution para auto-configuração - orchestrator/index.ts: registra webhook Evolution API no startup Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+                        - generic [ref=e602]: June 12, 2026 at 10:39 PM
+                  - listitem [ref=e603]:
+                    - generic [ref=e604]:
+                      - img [ref=e607]
+                      - generic [ref=e610]:
+                        - generic [ref=e611]:
+                          - generic [ref=e612]:
+                            - generic [ref=e613]:
+                              - link "Deploy" [ref=e614] [cursor=pointer]:
+                                - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8mb98v7f7vs73f2mmtg
+                              - text: started
+                            - text: for
+                            - link "441cf22" [ref=e616] [cursor=pointer]:
+                              - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/441cf22b13461af79e73f7053e12f010bcdff375
+                            - text: ":"
+                            - generic [ref=e617]: "Corrige pipeline de respostas Instagram, Facebook e WhatsApp - webhook-meta: responde DMs do Facebook com IA (antes só Instagram) - webhook-meta: adiciona processarComentario para responder posts públicos - webhook-meta: corrige detecção de canal via body.object (antes era heurística) - webhook-meta: aumenta max_tokens de 150 para 350 (respostas mais naturais) - sdr.ts: atualiza catálogo completo com 60+ produtos (antes só 8 itens) - whatsapp.ts: adiciona registrarWebhookEvolution para auto-configuração - orchestrator/index.ts: registra webhook Evolution API no startup Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+                          - generic [ref=e618]: New commit via Auto-Deploy
+                        - generic [ref=e619]: June 12, 2026 at 10:38 PM
+                  - listitem [ref=e620]:
+                    - generic [ref=e621]:
+                      - img [ref=e624]
+                      - generic [ref=e626]:
+                        - generic [ref=e627]:
+                          - generic [ref=e628]:
+                            - link "Deploy" [ref=e629] [cursor=pointer]:
+                              - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8lb73k8aovs73a2h9d0
+                            - text: live
+                          - text: for
+                          - link "5603ac7" [ref=e631] [cursor=pointer]:
+                            - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/5603ac7965e1c8b2b1c98114997568c49571bf14
+                          - text: ":"
+                          - generic [ref=e632]: "Ativa agente Flor: webhook-meta lê credenciais do DB, orchestrator usa Evolution API - webhook-meta v16: buscarConfigDB() como fallback para META_IG_ACCESS_TOKEN e GROQ_API_KEY quando variáveis de ambiente não estão setadas — credenciais lidas de funcao_configs - Cria tabela funcao_configs no Supabase com todos os tokens necessários - orchestrator/whatsapp.ts: migra Z-API → Evolution API (enemeop-evolution.onrender.com) - orchestrator/index.ts: parseia formato Evolution API no webhook /webhook/whatsapp Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+                        - generic [ref=e633]: June 11, 2026 at 10:10 AM
+                  - listitem [ref=e634]:
+                    - generic [ref=e635]:
+                      - img [ref=e638]
+                      - generic [ref=e641]:
+                        - generic [ref=e642]:
+                          - generic [ref=e643]:
+                            - generic [ref=e644]:
+                              - link "Deploy" [ref=e645] [cursor=pointer]:
+                                - /url: /web/srv-d8km0f3eo5us73ekgs50/deploys/dep-d8lb73k8aovs73a2h9d0
+                              - text: started
+                            - text: for
+                            - link "5603ac7" [ref=e647] [cursor=pointer]:
+                              - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/commit/5603ac7965e1c8b2b1c98114997568c49571bf14
+                            - text: ":"
+                            - generic [ref=e648]: "Ativa agente Flor: webhook-meta lê credenciais do DB, orchestrator usa Evolution API - webhook-meta v16: buscarConfigDB() como fallback para META_IG_ACCESS_TOKEN e GROQ_API_KEY quando variáveis de ambiente não estão setadas — credenciais lidas de funcao_configs - Cria tabela funcao_configs no Supabase com todos os tokens necessários - orchestrator/whatsapp.ts: migra Z-API → Evolution API (enemeop-evolution.onrender.com) - orchestrator/index.ts: parseia formato Evolution API no webhook /webhook/whatsapp Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+                          - generic [ref=e649]: New commit via Auto-Deploy
+                        - generic [ref=e650]: June 11, 2026 at 10:09 AM
+                - img "Loading..." [ref=e652]
+    - generic:
+      - generic:
+        - generic: "0 services selected:"
+        - generic:
+          - generic:
+            - button:
+              - generic:
+                - img
+              - generic: Move
+              - img
+      - generic:
+        - separator
+        - generic:
+          - generic:
+            - button:
+              - img
+  - iframe [ref=e655]:
+    
