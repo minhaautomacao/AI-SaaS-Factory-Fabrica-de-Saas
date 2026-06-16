@@ -1,0 +1,551 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "Render" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - img "Render" [ref=e8]
+        - button "M My Workspace" [ref=e12] [cursor=pointer]:
+          - generic [ref=e13]:
+            - generic [ref=e14]: M
+            - generic "My Workspace" [ref=e15]
+            - img [ref=e16]
+      - generic [ref=e20]:
+        - navigation [ref=e21]:
+          - list [ref=e22]:
+            - listitem [ref=e23]:
+              - link "enemeop-orchestrator" [ref=e24] [cursor=pointer]:
+                - /url: /web/srv-d8km0f3eo5us73ekgs50
+                - img [ref=e25]
+                - generic [ref=e27]: enemeop-orchestrator
+              - button [ref=e30] [cursor=pointer]:
+                - img [ref=e31]
+        - button "Search Ctrl + K" [ref=e34] [cursor=pointer]:
+          - img [ref=e36]
+          - text: Search
+          - generic [ref=e38]:
+            - img [ref=e39]
+            - generic [ref=e41]: Ctrl
+            - generic [ref=e42]: +
+            - generic [ref=e43]: K
+            - generic [ref=e44]: K
+      - generic [ref=e45]:
+        - button "New" [ref=e47] [cursor=pointer]:
+          - generic [ref=e48]:
+            - img [ref=e49]
+            - generic [ref=e51]: New
+        - button "Upgrade" [ref=e53] [cursor=pointer]:
+          - generic [ref=e54]:
+            - img [ref=e55]
+            - generic [ref=e57]: Upgrade
+        - button "Help" [ref=e59] [cursor=pointer]:
+          - img "Help" [ref=e60]
+        - button "Gravatar for minhaautomacao10@gmail.com" [ref=e65] [cursor=pointer]:
+          - img "Gravatar for minhaautomacao10@gmail.com" [ref=e67]
+    - generic [ref=e68]:
+      - navigation [ref=e69]:
+        - separator [ref=e70]
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - link "Dashboard" [ref=e73] [cursor=pointer]:
+              - /url: /
+              - img [ref=e74]
+              - generic [ref=e76]: Dashboard
+            - generic [ref=e77]:
+              - img [ref=e78]
+              - generic [ref=e80]: enemeop-orchestrator
+          - generic [ref=e81]:
+            - list [ref=e82]:
+              - listitem [ref=e83]:
+                - link "Events" [ref=e84] [cursor=pointer]:
+                  - /url: /web/srv-d8km0f3eo5us73ekgs50/events
+                  - img [ref=e85]
+                  - generic [ref=e92]: Events
+              - listitem [ref=e93]:
+                - link "Settings" [ref=e94] [cursor=pointer]:
+                  - /url: /web/srv-d8km0f3eo5us73ekgs50/settings
+                  - img [ref=e95]
+                  - generic [ref=e98]: Settings
+            - generic [ref=e99]:
+              - generic [ref=e100]: Monitor
+              - list "Monitor" [ref=e101]:
+                - listitem [ref=e102]:
+                  - link "Logs" [ref=e103] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/logs
+                    - img [ref=e104]
+                    - generic [ref=e109]: Logs
+                - listitem [ref=e110]:
+                  - link "Metrics" [ref=e111] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/metrics
+                    - img [ref=e112]
+                    - generic [ref=e114]: Metrics
+            - generic [ref=e115]:
+              - generic [ref=e116]: Manage
+              - list "Manage" [ref=e117]:
+                - listitem [ref=e118]:
+                  - link "Environment" [ref=e119] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/env
+                    - img [ref=e120]
+                    - generic [ref=e124]: Environment
+                - listitem [ref=e125]:
+                  - link "Shell" [ref=e126] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/shell
+                    - img [ref=e127]
+                    - generic [ref=e131]:
+                      - generic [ref=e132]: Shell
+                      - status [ref=e135]:
+                        - img [ref=e136]
+                - listitem [ref=e138]:
+                  - link "Scaling" [ref=e139] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/scaling
+                    - img [ref=e140]
+                    - generic [ref=e145]:
+                      - generic [ref=e146]: Scaling
+                      - status [ref=e149]:
+                        - img [ref=e150]
+                - listitem [ref=e152]:
+                  - link "Previews" [ref=e153] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/previews
+                    - img [ref=e154]
+                    - generic [ref=e158]: Previews
+                - listitem [ref=e159]:
+                  - link "Disk" [ref=e160] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/disks
+                    - img [ref=e161]
+                    - generic [ref=e166]:
+                      - generic [ref=e167]: Disk
+                      - status [ref=e170]:
+                        - img [ref=e171]
+                - listitem [ref=e173]:
+                  - link "One-Off Jobs" [ref=e174] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/jobs
+                    - img [ref=e175]
+                    - generic [ref=e181]:
+                      - generic [ref=e182]: One-Off Jobs
+                      - status [ref=e185]:
+                        - img [ref=e186]
+        - generic [ref=e189]:
+          - button "Collapse items" [expanded] [ref=e190] [cursor=pointer]:
+            - img [ref=e191]
+          - list "Footer navigation" [ref=e193]:
+            - listitem [ref=e194]:
+              - link "Changelog" [ref=e195] [cursor=pointer]:
+                - /url: https://render.com/changelog
+                - img [ref=e196]
+                - generic [ref=e201]: Changelog
+            - listitem [ref=e202]:
+              - link "Invite a friend" [ref=e203] [cursor=pointer]:
+                - /url: /invites
+                - img [ref=e204]
+                - generic [ref=e206]: Invite a friend
+            - listitem [ref=e207]:
+              - button "Contact support" [ref=e208] [cursor=pointer]:
+                - img [ref=e209]
+                - generic [ref=e213]: Contact support
+          - link "Render Status" [ref=e215] [cursor=pointer]:
+            - /url: https://status.render.com
+            - img [ref=e216]
+            - generic [ref=e218]: Render Status
+      - main [ref=e221]:
+        - generic [ref=e224]:
+          - alert [ref=e225]:
+            - generic [ref=e227]:
+              - img [ref=e229]
+              - generic [ref=e233]:
+                - generic [ref=e235]: Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.
+                - link "Upgrade now" [ref=e237] [cursor=pointer]:
+                  - /url: /web/srv-d8km0f3eo5us73ekgs50/plan
+          - alert [ref=e238]:
+            - generic [ref=e240]:
+              - img [ref=e242]
+              - generic [ref=e248]:
+                - text: Newer logs may be unavailable because a recent deploy failed. View
+                - link "recent events." [ref=e249] [cursor=pointer]:
+                  - /url: /web/srv-d8km0f3eo5us73ekgs50/events
+          - generic [ref=e251]:
+            - button "Application logs" [ref=e254] [cursor=pointer]:
+              - generic [ref=e255]:
+                - generic [ref=e256]: Application logs
+                - img [ref=e257]
+            - generic [ref=e260]:
+              - generic [ref=e261]: Search
+              - generic [ref=e263]:
+                - img [ref=e264]
+                - searchbox "Search" [ref=e266]
+            - button "Last hour" [ref=e269] [cursor=pointer]:
+              - generic [ref=e272]:
+                - img [ref=e273]
+                - generic [ref=e276]: Last hour
+                - img [ref=e277]
+            - button "Maximize" [ref=e283] [cursor=pointer]:
+              - img "Maximize" [ref=e284]
+            - button "Options" [ref=e289] [cursor=pointer]:
+              - img "Options" [ref=e290]
+          - generic:
+            - button "Return to Bottom":
+              - img
+          - listbox [ref=e294]:
+            - generic [ref=e295]: Jun 16
+            - 'option "03:44:29 PM [j6w79] [WhatsApp] Enviado para 5511982829083 — id: 019ED1BFD1C67A8A894DF9D31AEBBAF9" [ref=e296]':
+              - generic [ref=e297]:
+                - generic [ref=e298]:
+                  - img [ref=e300]
+                  - time [ref=e304]: 03:44:29 PM
+                - generic [ref=e308] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e310]: "[WhatsApp] Enviado para 5511982829083 — id: 019ED1BFD1C67A8A894DF9D31AEBBAF9"
+            - 'option "03:44:29 PM [j6w79] [SDR] Respondido 5511982829083: Parabéns! Sua compra foi concluída com sucesso!" [ref=e311]':
+              - generic [ref=e312]:
+                - generic [ref=e313]:
+                  - img [ref=e315]
+                  - time [ref=e319]: 03:44:29 PM
+                - generic [ref=e323] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e325]: "[SDR] Respondido 5511982829083: Parabéns! Sua compra foi concluída com sucesso!"
+            - option "03:44:29 PM [j6w79]" [ref=e326]:
+              - generic [ref=e327]:
+                - generic [ref=e328]:
+                  - img [ref=e330]
+                  - time [ref=e334]: 03:44:29 PM
+                - generic [ref=e338] [cursor=pointer]: "[j6w79]"
+            - option "03:44:29 PM [j6w79] Aqui está o resumo da sua compr..." [ref=e340]:
+              - generic [ref=e341]:
+                - generic [ref=e342]:
+                  - img [ref=e344]
+                  - time [ref=e348]: 03:44:29 PM
+                - generic [ref=e352] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e354]: Aqui está o resumo da sua compr...
+            - 'option "03:44:45 PM [j6w79] [Webhook/WhatsApp] Mensagem de Enemeop Flores 5511982829083: 04204001" [ref=e355]':
+              - generic [ref=e356]:
+                - generic [ref=e357]:
+                  - img [ref=e359]
+                  - time [ref=e363]: 03:44:45 PM
+                - generic [ref=e367] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e369]: "[Webhook/WhatsApp] Mensagem de Enemeop Flores 5511982829083: 04204001"
+            - 'option "03:44:53 PM [j6w79] [WhatsApp] Enviado para 5511982829083 — id: 019ED1C02EFB772B82E6878CF1CFB021" [ref=e370]':
+              - generic [ref=e371]:
+                - generic [ref=e372]:
+                  - img [ref=e374]
+                  - time [ref=e378]: 03:44:53 PM
+                - generic [ref=e382] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e384]: "[WhatsApp] Enviado para 5511982829083 — id: 019ED1C02EFB772B82E6878CF1CFB021"
+            - 'option "03:44:53 PM [j6w79] [SDR] Respondido 5511982829083: O seu CEP foi adicionado ao pedido. Estamos processando a sua compra e enviando ..." [ref=e385]':
+              - generic [ref=e386]:
+                - generic [ref=e387]:
+                  - img [ref=e389]
+                  - time [ref=e393]: 03:44:53 PM
+                - generic [ref=e397] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e399]: "[SDR] Respondido 5511982829083: O seu CEP foi adicionado ao pedido. Estamos processando a sua compra e enviando ..."
+            - 'option "03:47:31 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Oi Antonio Carlos…" [ref=e400]':
+              - generic [ref=e401]:
+                - generic [ref=e402]:
+                  - img [ref=e404]
+                  - time [ref=e408]: 03:47:31 PM
+                - generic [ref=e412] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e414]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Oi Antonio Carlos…"
+            - 'option "03:47:33 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C29E4F771381232934C74EBCC2" [ref=e415]':
+              - generic [ref=e416]:
+                - generic [ref=e417]:
+                  - img [ref=e419]
+                  - time [ref=e423]: 03:47:33 PM
+                - generic [ref=e427] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e429]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C29E4F771381232934C74EBCC2"
+            - 'option "03:47:33 PM [j6w79] [SDR] Respondido 5511958081374: Prazer em te atender, Antonio Carlos! Você está procurando por um presente espec..." [ref=e430]':
+              - generic [ref=e431]:
+                - generic [ref=e432]:
+                  - img [ref=e434]
+                  - time [ref=e438]: 03:47:33 PM
+                - generic [ref=e442] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e444]: "[SDR] Respondido 5511958081374: Prazer em te atender, Antonio Carlos! Você está procurando por um presente espec..."
+            - 'option "03:47:39 PM [j6w79] [Webhook/WhatsApp] Mensagem de Ron Sousa 5511948579179: quero mais flores" [ref=e445]':
+              - generic [ref=e446]:
+                - generic [ref=e447]:
+                  - img [ref=e449]
+                  - time [ref=e453]: 03:47:39 PM
+                - generic [ref=e457] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e459]: "[Webhook/WhatsApp] Mensagem de Ron Sousa 5511948579179: quero mais flores"
+            - 'option "03:47:41 PM [j6w79] [WhatsApp] Enviado para 5511948579179 — id: 019ED1C2BF537BF8A6B0AFDE6528ECCE" [ref=e460]':
+              - generic [ref=e461]:
+                - generic [ref=e462]:
+                  - img [ref=e464]
+                  - time [ref=e468]: 03:47:41 PM
+                - generic [ref=e472] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e474]: "[WhatsApp] Enviado para 5511948579179 — id: 019ED1C2BF537BF8A6B0AFDE6528ECCE"
+            - 'option "03:47:41 PM [j6w79] [SDR] Respondido 5511948579179: Clara deve estar se sentindo muito especial!" [ref=e475]':
+              - generic [ref=e476]:
+                - generic [ref=e477]:
+                  - img [ref=e479]
+                  - time [ref=e483]: 03:47:41 PM
+                - generic [ref=e487] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e489]: "[SDR] Respondido 5511948579179: Clara deve estar se sentindo muito especial!"
+            - option "03:47:41 PM [j6w79]" [ref=e490]:
+              - generic [ref=e491]:
+                - generic [ref=e492]:
+                  - img [ref=e494]
+                  - time [ref=e498]: 03:47:41 PM
+                - generic [ref=e502] [cursor=pointer]: "[j6w79]"
+            - option "03:47:41 PM [j6w79] Qual é a ocasião agora? É para o m..." [ref=e504]:
+              - generic [ref=e505]:
+                - generic [ref=e506]:
+                  - img [ref=e508]
+                  - time [ref=e512]: 03:47:41 PM
+                - generic [ref=e516] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e518]: Qual é a ocasião agora? É para o m...
+            - 'option "03:47:52 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Caramba!!!!" [ref=e519]':
+              - generic [ref=e520]:
+                - generic [ref=e521]:
+                  - img [ref=e523]
+                  - time [ref=e527]: 03:47:52 PM
+                - generic [ref=e531] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e533]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Caramba!!!!"
+            - 'option "03:47:54 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C2F1B37F8C8D8CE4B0FCD254ED" [ref=e534]':
+              - generic [ref=e535]:
+                - generic [ref=e536]:
+                  - img [ref=e538]
+                  - time [ref=e542]: 03:47:54 PM
+                - generic [ref=e546] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e548]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C2F1B37F8C8D8CE4B0FCD254ED"
+            - 'option "03:47:54 PM [j6w79] [SDR] Respondido 5511958081374: Desculpe, Antonio Carlos, mas não consegui entender bem. Você queria saber sobre..." [ref=e549]':
+              - generic [ref=e550]:
+                - generic [ref=e551]:
+                  - img [ref=e553]
+                  - time [ref=e557]: 03:47:54 PM
+                - generic [ref=e561] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e563]: "[SDR] Respondido 5511958081374: Desculpe, Antonio Carlos, mas não consegui entender bem. Você queria saber sobre..."
+            - 'option "03:48:01 PM [j6w79] [Webhook/WhatsApp] Mensagem de Ron Sousa 5511948579179: o que vc tem em tom de amarelo?" [ref=e564]':
+              - generic [ref=e565]:
+                - generic [ref=e566]:
+                  - img [ref=e568]
+                  - time [ref=e572]: 03:48:01 PM
+                - generic [ref=e576] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e578]: "[Webhook/WhatsApp] Mensagem de Ron Sousa 5511948579179: o que vc tem em tom de amarelo?"
+            - 'option "03:48:02 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Como você digita rápido" [ref=e579]':
+              - generic [ref=e580]:
+                - generic [ref=e581]:
+                  - img [ref=e583]
+                  - time [ref=e587]: 03:48:02 PM
+                - generic [ref=e591] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e593]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Como você digita rápido"
+            - 'option "03:48:03 PM [j6w79] [WhatsApp] Enviado para 5511948579179 — id: 019ED1C3140E7F18B35EA5EB7A505D54" [ref=e594]':
+              - generic [ref=e595]:
+                - generic [ref=e596]:
+                  - img [ref=e598]
+                  - time [ref=e602]: 03:48:03 PM
+                - generic [ref=e606] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e608]: "[WhatsApp] Enviado para 5511948579179 — id: 019ED1C3140E7F18B35EA5EB7A505D54"
+            - 'option "03:48:03 PM [j6w79] [SDR] Respondido 5511948579179: Nós temos várias opções de flores em tom de amarelo!" [ref=e609]':
+              - generic [ref=e610]:
+                - generic [ref=e611]:
+                  - img [ref=e613]
+                  - time [ref=e617]: 03:48:03 PM
+                - generic [ref=e621] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e623]: "[SDR] Respondido 5511948579179: Nós temos várias opções de flores em tom de amarelo!"
+            - option "03:48:03 PM [j6w79]" [ref=e624]:
+              - generic [ref=e625]:
+                - generic [ref=e626]:
+                  - img [ref=e628]
+                  - time [ref=e632]: 03:48:03 PM
+                - generic [ref=e636] [cursor=pointer]: "[j6w79]"
+            - option "03:48:03 PM [j6w79] Uma das opções mais popula..." [ref=e638]:
+              - generic [ref=e639]:
+                - generic [ref=e640]:
+                  - img [ref=e642]
+                  - time [ref=e646]: 03:48:03 PM
+                - generic [ref=e650] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e652]: Uma das opções mais popula...
+            - 'option "03:48:23 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C3617A731B8E050575C2519446" [ref=e653]':
+              - generic [ref=e654]:
+                - generic [ref=e655]:
+                  - img [ref=e657]
+                  - time [ref=e661]: 03:48:23 PM
+                - generic [ref=e665] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e667]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C3617A731B8E050575C2519446"
+            - 'option "03:48:23 PM [j6w79] [SDR] Respondido 5511958081374: Peço desculpas pela digitação rápida, Antonio Carlos. Posso te ajudar melhor se ..." [ref=e668]':
+              - generic [ref=e669]:
+                - generic [ref=e670]:
+                  - img [ref=e672]
+                  - time [ref=e676]: 03:48:23 PM
+                - generic [ref=e680] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e682]: "[SDR] Respondido 5511958081374: Peço desculpas pela digitação rápida, Antonio Carlos. Posso te ajudar melhor se ..."
+            - 'option "03:48:35 PM [j6w79] [Webhook/WhatsApp] Mensagem de Ron Sousa 5511948579179: me mande fotos" [ref=e683]':
+              - generic [ref=e684]:
+                - generic [ref=e685]:
+                  - img [ref=e687]
+                  - time [ref=e691]: 03:48:35 PM
+                - generic [ref=e695] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e697]: "[Webhook/WhatsApp] Mensagem de Ron Sousa 5511948579179: me mande fotos"
+            - 'option "03:48:52 PM [j6w79] [WhatsApp] Enviado para 5511948579179 — id: 019ED1C3D3DF7CCFB857DD9BF305773E" [ref=e698]':
+              - generic [ref=e699]:
+                - generic [ref=e700]:
+                  - img [ref=e702]
+                  - time [ref=e706]: 03:48:52 PM
+                - generic [ref=e710] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e712]: "[WhatsApp] Enviado para 5511948579179 — id: 019ED1C3D3DF7CCFB857DD9BF305773E"
+            - 'option "03:48:52 PM [j6w79] [SDR] Respondido 5511948579179: Infelizmente, não posso enviar fotos pelo WhatsApp. Mas posso descrever as opçõe..." [ref=e713]':
+              - generic [ref=e714]:
+                - generic [ref=e715]:
+                  - img [ref=e717]
+                  - time [ref=e721]: 03:48:52 PM
+                - generic [ref=e725] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e727]: "[SDR] Respondido 5511948579179: Infelizmente, não posso enviar fotos pelo WhatsApp. Mas posso descrever as opçõe..."
+            - 'option "03:49:52 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Eu preciso de um buquê de rosas vermelhas" [ref=e728]':
+              - generic [ref=e729]:
+                - generic [ref=e730]:
+                  - img [ref=e732]
+                  - time [ref=e736]: 03:49:52 PM
+                - generic [ref=e740] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e742]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Eu preciso de um buquê de rosas vermelhas"
+            - 'option "03:49:54 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C4C41672F4835B6CC1A7252213" [ref=e743]':
+              - generic [ref=e744]:
+                - generic [ref=e745]:
+                  - img [ref=e747]
+                  - time [ref=e751]: 03:49:54 PM
+                - generic [ref=e755] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e757]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C4C41672F4835B6CC1A7252213"
+            - 'option "03:49:54 PM [j6w79] [SDR] Respondido 5511958081374: Um buquê de rosas vermelhas é uma escolha clássica. Qual é o tamanho que você go..." [ref=e758]':
+              - generic [ref=e759]:
+                - generic [ref=e760]:
+                  - img [ref=e762]
+                  - time [ref=e766]: 03:49:54 PM
+                - generic [ref=e770] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e772]: "[SDR] Respondido 5511958081374: Um buquê de rosas vermelhas é uma escolha clássica. Qual é o tamanho que você go..."
+            - 'option "03:50:28 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Preciso com 24 rosas para Mariângela Oliveira" [ref=e773]':
+              - generic [ref=e774]:
+                - generic [ref=e775]:
+                  - img [ref=e777]
+                  - time [ref=e781]: 03:50:28 PM
+                - generic [ref=e785] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e787]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Preciso com 24 rosas para Mariângela Oliveira"
+            - 'option "03:50:30 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C552637F7A8D5960EA8203D3AD" [ref=e788]':
+              - generic [ref=e789]:
+                - generic [ref=e790]:
+                  - img [ref=e792]
+                  - time [ref=e796]: 03:50:30 PM
+                - generic [ref=e800] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e802]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C552637F7A8D5960EA8203D3AD"
+            - 'option "03:50:30 PM [j6w79] [SDR] Respondido 5511958081374: Um buquê de 24 rosas vermelhas é lindo! O valor é R$560. Você gostaria de adicio..." [ref=e803]':
+              - generic [ref=e804]:
+                - generic [ref=e805]:
+                  - img [ref=e807]
+                  - time [ref=e811]: 03:50:30 PM
+                - generic [ref=e815] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e817]: "[SDR] Respondido 5511958081374: Um buquê de 24 rosas vermelhas é lindo! O valor é R$560. Você gostaria de adicio..."
+            - 'option "03:50:47 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Gostaria de uma caixa de chocolates e um urso de pelúcia" [ref=e818]':
+              - generic [ref=e819]:
+                - generic [ref=e820]:
+                  - img [ref=e822]
+                  - time [ref=e826]: 03:50:47 PM
+                - generic [ref=e830] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e832]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Gostaria de uma caixa de chocolates e um urso de pelúcia"
+            - 'option "03:50:49 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C59CD47398B0AE1E278DCACEA2" [ref=e833]':
+              - generic [ref=e834]:
+                - generic [ref=e835]:
+                  - img [ref=e837]
+                  - time [ref=e841]: 03:50:49 PM
+                - generic [ref=e845] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e847]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C59CD47398B0AE1E278DCACEA2"
+            - 'option "03:50:49 PM [j6w79] [SDR] Respondido 5511958081374: Um presente completo! A caixa de chocolates é R$35 e o urso de pelúcia é R$45. E..." [ref=e848]':
+              - generic [ref=e849]:
+                - generic [ref=e850]:
+                  - img [ref=e852]
+                  - time [ref=e856]: 03:50:49 PM
+                - generic [ref=e860] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e862]: "[SDR] Respondido 5511958081374: Um presente completo! A caixa de chocolates é R$35 e o urso de pelúcia é R$45. E..."
+            - 'option "03:51:22 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Rua Brás Lourenço 182 cep 041 13 110" [ref=e863]':
+              - generic [ref=e864]:
+                - generic [ref=e865]:
+                  - img [ref=e867]
+                  - time [ref=e871]: 03:51:22 PM
+                - generic [ref=e875] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e877]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Rua Brás Lourenço 182 cep 041 13 110"
+            - 'option "03:51:24 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C6266C7142B9D83724CC92F3AC" [ref=e878]':
+              - generic [ref=e879]:
+                - generic [ref=e880]:
+                  - img [ref=e882]
+                  - time [ref=e886]: 03:51:24 PM
+                - generic [ref=e890] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e892]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C6266C7142B9D83724CC92F3AC"
+            - 'option "03:51:24 PM [j6w79] [SDR] Respondido 5511958081374: O endereço está correto: Rua Brás Lourenço, 182, CEP 04113-110. Vou finalizar a ..." [ref=e893]':
+              - generic [ref=e894]:
+                - generic [ref=e895]:
+                  - img [ref=e897]
+                  - time [ref=e901]: 03:51:24 PM
+                - generic [ref=e905] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e907]: "[SDR] Respondido 5511958081374: O endereço está correto: Rua Brás Lourenço, 182, CEP 04113-110. Vou finalizar a ..."
+            - 'option "03:51:55 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Gostaria de ter os preços em separado frete e os produtos" [ref=e908]':
+              - generic [ref=e909]:
+                - generic [ref=e910]:
+                  - img [ref=e912]
+                  - time [ref=e916]: 03:51:55 PM
+                - generic [ref=e920] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e922]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Gostaria de ter os preços em separado frete e os produtos"
+            - 'option "03:51:57 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C6A71A7DA383C0295DCAF56BE3" [ref=e923]':
+              - generic [ref=e924]:
+                - generic [ref=e925]:
+                  - img [ref=e927]
+                  - time [ref=e931]: 03:51:57 PM
+                - generic [ref=e935] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e937]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C6A71A7DA383C0295DCAF56BE3"
+            - 'option "03:51:57 PM [j6w79] [SDR] Respondido 5511958081374: Vou detalhar os custos para você, Antonio Carlos. O valor total é R$640,00, que ..." [ref=e938]':
+              - generic [ref=e939]:
+                - generic [ref=e940]:
+                  - img [ref=e942]
+                  - time [ref=e946]: 03:51:57 PM
+                - generic [ref=e950] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e952]: "[SDR] Respondido 5511958081374: Vou detalhar os custos para você, Antonio Carlos. O valor total é R$640,00, que ..."
+            - 'option "03:52:22 PM [j6w79] [Webhook/WhatsApp] Mensagem de Ron Sousa 5511948579179: ola" [ref=e953]':
+              - generic [ref=e954]:
+                - generic [ref=e955]:
+                  - img [ref=e957]
+                  - time [ref=e961]: 03:52:22 PM
+                - generic [ref=e965] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e967]: "[Webhook/WhatsApp] Mensagem de Ron Sousa 5511948579179: ola"
+            - 'option "03:52:23 PM [j6w79] [WhatsApp] Enviado para 5511948579179 — id: 019ED1C70C6D701AA535C7010C1C417F" [ref=e968]':
+              - generic [ref=e969]:
+                - generic [ref=e970]:
+                  - img [ref=e972]
+                  - time [ref=e976]: 03:52:23 PM
+                - generic [ref=e980] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e982]: "[WhatsApp] Enviado para 5511948579179 — id: 019ED1C70C6D701AA535C7010C1C417F"
+            - 'option "03:52:23 PM [j6w79] [SDR] Respondido 5511948579179: Pode me dizer seu nome pra eu te atender melhor?..." [ref=e983]':
+              - generic [ref=e984]:
+                - generic [ref=e985]:
+                  - img [ref=e987]
+                  - time [ref=e991]: 03:52:23 PM
+                - generic [ref=e995] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e997]: "[SDR] Respondido 5511948579179: Pode me dizer seu nome pra eu te atender melhor?..."
+            - 'option "03:53:39 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Consegue me enviar uma foto do produto?" [ref=e998]':
+              - generic [ref=e999]:
+                - generic [ref=e1000]:
+                  - img [ref=e1002]
+                  - time [ref=e1006]: 03:53:39 PM
+                - generic [ref=e1010] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e1012]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Consegue me enviar uma foto do produto?"
+            - 'option "03:53:41 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C83B5F778896EB0AC034584485" [ref=e1013]':
+              - generic [ref=e1014]:
+                - generic [ref=e1015]:
+                  - img [ref=e1017]
+                  - time [ref=e1021]: 03:53:41 PM
+                - generic [ref=e1025] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e1027]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C83B5F778896EB0AC034584485"
+            - 'option "03:53:41 PM [j6w79] [SDR] Respondido 5511958081374: Antonio Carlos, não tenho a capacidade de enviar fotos através do WhatsApp. Mas ..." [ref=e1028]':
+              - generic [ref=e1029]:
+                - generic [ref=e1030]:
+                  - img [ref=e1032]
+                  - time [ref=e1036]: 03:53:41 PM
+                - generic [ref=e1040] [cursor=pointer]: "[j6w79]"
+              - generic [ref=e1042]: "[SDR] Respondido 5511958081374: Antonio Carlos, não tenho a capacidade de enviar fotos através do WhatsApp. Mas ..."
+  - generic:
+    - generic:
+      - generic: "0 services selected:"
+      - generic:
+        - generic:
+          - button:
+            - generic:
+              - img
+            - generic: Move
+            - img
+    - generic:
+      - separator
+      - generic:
+        - generic:
+          - button:
+            - img
