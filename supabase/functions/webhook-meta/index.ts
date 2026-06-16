@@ -588,11 +588,11 @@ function extrairEventos(body: Record<string, unknown>): MetaEvento[] {
         if (field !== 'feed' && field !== 'comments' && field !== 'instagram_comments') continue;
         const val = change['value'] as Record<string, unknown> | undefined;
         if (!val) continue;
-        const msg = (val['message'] as string) ?? '';
+        const msg = ((val['message'] ?? val['text']) as string) ?? '';
         if (!msg) continue;
         const from = val['from'] as Record<string, unknown> | undefined;
         const canal: 'instagram' | 'facebook' = objectType === 'instagram' || field === 'instagram_comments' ? 'instagram' : 'facebook';
-        const commentId = (val['id'] as string) ?? undefined;
+        const commentId = ((val['id'] ?? val['comment_id']) as string) ?? undefined;
         eventos.push({ canal, tipo: 'comentario', canal_id: String(from?.['id'] ?? ''), comment_id: commentId, nome: (from?.['name'] as string) ?? null, mensagem: msg, post_id: (val['post_id'] as string) ?? undefined, timestamp: new Date().toISOString() });
       }
     }
