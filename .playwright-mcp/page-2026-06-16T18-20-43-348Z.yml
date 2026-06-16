@@ -1,0 +1,491 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - banner [ref=e4]:
+        - generic [ref=e5]:
+          - link "Render" [ref=e7] [cursor=pointer]:
+            - /url: /
+            - img "Render" [ref=e8]
+          - button "M My Workspace" [ref=e12] [cursor=pointer]:
+            - generic [ref=e13]:
+              - generic [ref=e14]: M
+              - generic "My Workspace" [ref=e15]
+              - img [ref=e16]
+        - generic [ref=e20]:
+          - navigation [ref=e21]:
+            - list [ref=e22]:
+              - listitem [ref=e23]:
+                - link "enemeop-orchestrator" [ref=e24] [cursor=pointer]:
+                  - /url: /web/srv-d8km0f3eo5us73ekgs50
+                  - img [ref=e25]
+                  - generic [ref=e27]: enemeop-orchestrator
+                - button [ref=e30] [cursor=pointer]:
+                  - img [ref=e31]
+          - button "Search Ctrl + K" [ref=e34] [cursor=pointer]:
+            - img [ref=e36]
+            - text: Search
+            - generic [ref=e38]:
+              - img [ref=e39]
+              - generic [ref=e41]: Ctrl
+              - generic [ref=e42]: +
+              - generic [ref=e43]: K
+              - generic [ref=e44]: K
+        - generic [ref=e45]:
+          - button "New" [ref=e47] [cursor=pointer]:
+            - generic [ref=e48]:
+              - img [ref=e49]
+              - generic [ref=e51]: New
+          - button "Upgrade" [ref=e53] [cursor=pointer]:
+            - generic [ref=e54]:
+              - img [ref=e55]
+              - generic [ref=e57]: Upgrade
+          - button "Help" [ref=e59] [cursor=pointer]:
+            - img "Help" [ref=e60]
+          - button "Gravatar for minhaautomacao10@gmail.com" [ref=e65] [cursor=pointer]:
+            - img "Gravatar for minhaautomacao10@gmail.com" [ref=e67]
+      - generic [ref=e68]:
+        - navigation [ref=e69]:
+          - separator [ref=e70]
+          - generic [ref=e71]:
+            - generic [ref=e72]:
+              - link "Dashboard" [ref=e73] [cursor=pointer]:
+                - /url: /
+                - img [ref=e74]
+                - generic [ref=e76]: Dashboard
+              - generic [ref=e77]:
+                - img [ref=e78]
+                - generic [ref=e80]: enemeop-orchestrator
+            - generic [ref=e81]:
+              - list [ref=e82]:
+                - listitem [ref=e83]:
+                  - link "Events" [ref=e84] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/events
+                    - img [ref=e85]
+                    - generic [ref=e92]: Events
+                - listitem [ref=e93]:
+                  - link "Settings" [ref=e94] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/settings
+                    - img [ref=e95]
+                    - generic [ref=e98]: Settings
+              - generic [ref=e99]:
+                - generic [ref=e100]: Monitor
+                - list "Monitor" [ref=e101]:
+                  - listitem [ref=e102]:
+                    - link "Logs" [ref=e103] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/logs
+                      - img [ref=e104]
+                      - generic [ref=e109]: Logs
+                  - listitem [ref=e110]:
+                    - link "Metrics" [ref=e111] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/metrics
+                      - img [ref=e112]
+                      - generic [ref=e114]: Metrics
+              - generic [ref=e115]:
+                - generic [ref=e116]: Manage
+                - list "Manage" [ref=e117]:
+                  - listitem [ref=e118]:
+                    - link "Environment" [ref=e119] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/env
+                      - img [ref=e120]
+                      - generic [ref=e124]: Environment
+                  - listitem [ref=e125]:
+                    - link "Shell" [ref=e126] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/shell
+                      - img [ref=e127]
+                      - generic [ref=e131]:
+                        - generic [ref=e132]: Shell
+                        - status [ref=e135]:
+                          - img [ref=e136]
+                  - listitem [ref=e138]:
+                    - link "Scaling" [ref=e139] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/scaling
+                      - img [ref=e140]
+                      - generic [ref=e145]:
+                        - generic [ref=e146]: Scaling
+                        - status [ref=e149]:
+                          - img [ref=e150]
+                  - listitem [ref=e152]:
+                    - link "Previews" [ref=e153] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/previews
+                      - img [ref=e154]
+                      - generic [ref=e158]: Previews
+                  - listitem [ref=e159]:
+                    - link "Disk" [ref=e160] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/disks
+                      - img [ref=e161]
+                      - generic [ref=e166]:
+                        - generic [ref=e167]: Disk
+                        - status [ref=e170]:
+                          - img [ref=e171]
+                  - listitem [ref=e173]:
+                    - link "One-Off Jobs" [ref=e174] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/jobs
+                      - img [ref=e175]
+                      - generic [ref=e181]:
+                        - generic [ref=e182]: One-Off Jobs
+                        - status [ref=e185]:
+                          - img [ref=e186]
+          - generic [ref=e204]:
+            - button "Collapse items" [expanded] [ref=e205] [cursor=pointer]:
+              - img [ref=e206]
+            - list "Footer navigation" [ref=e208]:
+              - listitem [ref=e209]:
+                - link "Changelog" [ref=e210] [cursor=pointer]:
+                  - /url: https://render.com/changelog
+                  - img [ref=e211]
+                  - generic [ref=e216]: Changelog
+              - listitem [ref=e217]:
+                - link "Invite a friend" [ref=e218] [cursor=pointer]:
+                  - /url: /invites
+                  - img [ref=e219]
+                  - generic [ref=e221]: Invite a friend
+              - listitem [ref=e222]:
+                - button "Contact support" [ref=e223] [cursor=pointer]:
+                  - img [ref=e224]
+                  - generic [ref=e228]: Contact support
+            - link "Render Status" [ref=e230] [cursor=pointer]:
+              - /url: https://status.render.com
+              - img [ref=e231]
+              - generic [ref=e233]: Render Status
+        - generic [ref=e235]:
+          - banner [ref=e237]:
+            - generic [ref=e238]:
+              - generic [ref=e239]:
+                - img [ref=e240]
+                - generic [ref=e242]: Web Service
+              - generic [ref=e243]:
+                - heading "enemeop-orchestrator Node Free Upgrade your instance" [level=1] [ref=e245]:
+                  - generic [ref=e246]: enemeop-orchestrator
+                  - generic [ref=e247]:
+                    - generic [ref=e248]: Node
+                    - link "Free" [ref=e249] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/plan
+                      - generic [ref=e250]: Free
+                    - link "Upgrade your instance" [ref=e251] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/plan
+                      - text: Upgrade your instance
+                      - img [ref=e253]
+                - generic [ref=e256]:
+                  - button "Connect" [ref=e257] [cursor=pointer]:
+                    - generic [ref=e258]: Connect
+                    - img [ref=e259]
+                  - button "Manual Deploy" [ref=e261] [cursor=pointer]:
+                    - generic [ref=e262]: Manual Deploy
+                    - img [ref=e263]
+            - generic [ref=e267]:
+              - generic [ref=e269]:
+                - generic [ref=e270]: "Service ID:"
+                - generic "Service ID:" [ref=e271]:
+                  - generic [ref=e272]: srv-d8km0f3eo5us73ekgs50
+                  - button "Copy" [ref=e275] [cursor=pointer]:
+                    - img [ref=e276]
+              - generic [ref=e280]:
+                - img "GitHub" [ref=e282]
+                - link "minhaautomacao / AI-SaaS-Factory-Fabrica-de-Saas main" [ref=e284] [cursor=pointer]:
+                  - /url: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas/tree/main
+                  - generic [ref=e285]:
+                    - generic [ref=e286]: minhaautomacao / AI-SaaS-Factory-Fabrica-de-Saas
+                    - img [ref=e287]
+                    - generic [ref=e289]: main
+              - generic "Copy" [ref=e291]:
+                - link "https://enemeop-orchestrator.onrender.com" [ref=e293] [cursor=pointer]:
+                  - /url: https://enemeop-orchestrator.onrender.com
+                - button "Copy" [ref=e296] [cursor=pointer]:
+                  - img [ref=e297]
+          - main [ref=e300]:
+            - generic [ref=e307]:
+              - heading "Environment" [level=2] [ref=e308]
+              - button "Create environment group" [ref=e309] [cursor=pointer]:
+                - img [ref=e311]
+                - text: Create environment group
+            - generic [ref=e313]:
+              - generic [ref=e315]:
+                - generic [ref=e318]:
+                  - heading "Environment Variables" [level=4] [ref=e320]
+                  - generic [ref=e321]:
+                    - text: Set environment-specific config and secrets (such as API keys), then read those values from your code.
+                    - link "Learn more." [ref=e322] [cursor=pointer]:
+                      - /url: https://render.com/docs/configure-environment-variables
+                - generic [ref=e335]:
+                  - table [ref=e336]:
+                    - rowgroup [ref=e337]:
+                      - row "Key Value Delete" [ref=e561]:
+                        - columnheader "Key" [ref=e339]
+                        - columnheader "Value" [ref=e340]
+                        - columnheader "Delete" [ref=e562]:
+                          - generic [ref=e563]: Delete
+                    - rowgroup [ref=e341]:
+                      - row "Key CARLOS_WHATSAPP Value • • • • • • • • • • • • Show secret Delete" [ref=e564]:
+                        - rowheader "Key CARLOS_WHATSAPP" [ref=e343]:
+                          - generic [ref=e345]:
+                            - generic [ref=e346]: Key
+                            - textbox "Key" [ref=e348]:
+                              - /placeholder: NAME_OF_VARIABLE
+                              - text: CARLOS_WHATSAPP
+                        - cell "Value • • • • • • • • • • • • Show secret" [ref=e349]:
+                          - generic [ref=e350]:
+                            - generic [ref=e351]:
+                              - generic [ref=e352]: Value
+                              - generic [ref=e353]:
+                                - textbox "Value" [ref=e354]:
+                                  - /placeholder: value
+                                - generic:
+                                  - generic: • • • • • • • • • • • •
+                            - button "Show secret" [ref=e355] [cursor=pointer]:
+                              - img "Show secret" [ref=e356]
+                        - cell "Delete" [ref=e565]:
+                          - button "Delete" [ref=e566] [cursor=pointer]:
+                            - img "Delete" [ref=e567]
+                      - row "Key GROQ_API_KEY Value • • • • • • • • • • • • Show secret Delete" [ref=e572]:
+                        - rowheader "Key GROQ_API_KEY" [ref=e360]:
+                          - generic [ref=e362]:
+                            - generic [ref=e363]: Key
+                            - textbox "Key" [ref=e365]:
+                              - /placeholder: NAME_OF_VARIABLE
+                              - text: GROQ_API_KEY
+                        - cell "Value • • • • • • • • • • • • Show secret" [ref=e366]:
+                          - generic [ref=e367]:
+                            - generic [ref=e368]:
+                              - generic [ref=e369]: Value
+                              - generic [ref=e370]:
+                                - textbox "Value" [ref=e371]:
+                                  - /placeholder: value
+                                - generic:
+                                  - generic: • • • • • • • • • • • •
+                            - button "Show secret" [ref=e372] [cursor=pointer]:
+                              - img "Show secret" [ref=e373]
+                        - cell "Delete" [ref=e573]:
+                          - button "Delete" [ref=e574] [cursor=pointer]:
+                            - img "Delete" [ref=e575]
+                      - row "Key NODE_ENV Value • • • • • • • • • • • • Show secret Delete" [ref=e580]:
+                        - rowheader "Key NODE_ENV" [ref=e377]:
+                          - generic [ref=e379]:
+                            - generic [ref=e380]: Key
+                            - textbox "Key" [ref=e382]:
+                              - /placeholder: NAME_OF_VARIABLE
+                              - text: NODE_ENV
+                        - cell "Value • • • • • • • • • • • • Show secret" [ref=e383]:
+                          - generic [ref=e384]:
+                            - generic [ref=e385]:
+                              - generic [ref=e386]: Value
+                              - generic [ref=e387]:
+                                - textbox "Value" [ref=e388]:
+                                  - /placeholder: value
+                                - generic:
+                                  - generic: • • • • • • • • • • • •
+                            - button "Show secret" [ref=e389] [cursor=pointer]:
+                              - img "Show secret" [ref=e390]
+                        - cell "Delete" [ref=e581]:
+                          - button "Delete" [ref=e582] [cursor=pointer]:
+                            - img "Delete" [ref=e583]
+                      - row "Key SUPABASE_SERVICE_ROLE_KEY Value • • • • • • • • • • • • Show secret Delete" [ref=e588]:
+                        - rowheader "Key SUPABASE_SERVICE_ROLE_KEY" [ref=e394]:
+                          - generic [ref=e396]:
+                            - generic [ref=e397]: Key
+                            - textbox "Key" [ref=e399]:
+                              - /placeholder: NAME_OF_VARIABLE
+                              - text: SUPABASE_SERVICE_ROLE_KEY
+                        - cell "Value • • • • • • • • • • • • Show secret" [ref=e400]:
+                          - generic [ref=e401]:
+                            - generic [ref=e402]:
+                              - generic [ref=e403]: Value
+                              - generic [ref=e404]:
+                                - textbox "Value" [ref=e405]:
+                                  - /placeholder: value
+                                - generic:
+                                  - generic: • • • • • • • • • • • •
+                            - button "Show secret" [ref=e406] [cursor=pointer]:
+                              - img "Show secret" [ref=e407]
+                        - cell "Delete" [ref=e589]:
+                          - button "Delete" [ref=e590] [cursor=pointer]:
+                            - img "Delete" [ref=e591]
+                      - row "Key SUPABASE_URL Value • • • • • • • • • • • • Show secret Delete" [ref=e596]:
+                        - rowheader "Key SUPABASE_URL" [ref=e411]:
+                          - generic [ref=e413]:
+                            - generic [ref=e414]: Key
+                            - textbox "Key" [ref=e416]:
+                              - /placeholder: NAME_OF_VARIABLE
+                              - text: SUPABASE_URL
+                        - cell "Value • • • • • • • • • • • • Show secret" [ref=e417]:
+                          - generic [ref=e418]:
+                            - generic [ref=e419]:
+                              - generic [ref=e420]: Value
+                              - generic [ref=e421]:
+                                - textbox "Value" [ref=e422]:
+                                  - /placeholder: value
+                                - generic:
+                                  - generic: • • • • • • • • • • • •
+                            - button "Show secret" [ref=e423] [cursor=pointer]:
+                              - img "Show secret" [ref=e424]
+                        - cell "Delete" [ref=e597]:
+                          - button "Delete" [ref=e598] [cursor=pointer]:
+                            - img "Delete" [ref=e599]
+                      - row "Key UPSTASH_REDIS_TOKEN Value gQAAAAAAAklyAAIgcDI3N2MwYzViYmNjNzg0M2Q0YjA2YTNjNDBjYjFkYjk3NQ Hide secret Delete" [ref=e668]:
+                        - rowheader "Key UPSTASH_REDIS_TOKEN" [ref=e428]:
+                          - generic [ref=e430]:
+                            - generic [ref=e431]: Key
+                            - textbox "Key" [ref=e433]:
+                              - /placeholder: NAME_OF_VARIABLE
+                              - text: UPSTASH_REDIS_TOKEN
+                        - cell "Value gQAAAAAAAklyAAIgcDI3N2MwYzViYmNjNzg0M2Q0YjA2YTNjNDBjYjFkYjk3NQ Hide secret" [ref=e669]:
+                          - generic [ref=e435]:
+                            - generic [ref=e436]:
+                              - generic [ref=e437]: Value
+                              - textbox "Value" [ref=e439]:
+                                - /placeholder: value
+                                - text: gQAAAAAAAklyAAIgcDI3N2MwYzViYmNjNzg0M2Q0YjA2YTNjNDBjYjFkYjk3NQ
+                            - button "Hide secret" [ref=e670] [cursor=pointer]:
+                              - img "Hide secret" [ref=e671]
+                        - cell "Delete" [ref=e605]:
+                          - button "Delete" [ref=e606] [cursor=pointer]:
+                            - img "Delete" [ref=e607]
+                      - row "Key UPSTASH_REDIS_URL Value rediss://default:gQAAAAAAAklyAAIgcDI3N2MwYzViYmNjNzg0M2Q0YjA2YTNjNDBjYjFkYjk3NQ@possible-monster-149874.upstash.io:6379 Hide secret Delete" [ref=e675]:
+                        - rowheader "Key UPSTASH_REDIS_URL" [ref=e445]:
+                          - generic [ref=e447]:
+                            - generic [ref=e448]: Key
+                            - textbox "Key" [ref=e450]:
+                              - /placeholder: NAME_OF_VARIABLE
+                              - text: UPSTASH_REDIS_URL
+                        - cell "Value rediss://default:gQAAAAAAAklyAAIgcDI3N2MwYzViYmNjNzg0M2Q0YjA2YTNjNDBjYjFkYjk3NQ@possible-monster-149874.upstash.io:6379 Hide secret" [ref=e676]:
+                          - generic [ref=e452]:
+                            - generic [ref=e453]:
+                              - generic [ref=e454]: Value
+                              - textbox "Value" [ref=e456]:
+                                - /placeholder: value
+                                - text: rediss://default:gQAAAAAAAklyAAIgcDI3N2MwYzViYmNjNzg0M2Q0YjA2YTNjNDBjYjFkYjk3NQ@possible-monster-149874.upstash.io:6379
+                            - button "Hide secret" [ref=e677] [cursor=pointer]:
+                              - img "Hide secret" [ref=e678]
+                        - cell "Delete" [ref=e613]:
+                          - button "Delete" [ref=e614] [cursor=pointer]:
+                            - img "Delete" [ref=e615]
+                      - row "Key ZAPI_CLIENT_TOKEN Value • • • • • • • • • • • • Show secret Delete" [ref=e620]:
+                        - rowheader "Key ZAPI_CLIENT_TOKEN" [ref=e462]:
+                          - generic [ref=e464]:
+                            - generic [ref=e465]: Key
+                            - textbox "Key" [ref=e467]:
+                              - /placeholder: NAME_OF_VARIABLE
+                              - text: ZAPI_CLIENT_TOKEN
+                        - cell "Value • • • • • • • • • • • • Show secret" [ref=e468]:
+                          - generic [ref=e469]:
+                            - generic [ref=e470]:
+                              - generic [ref=e471]: Value
+                              - generic [ref=e472]:
+                                - textbox "Value" [ref=e473]:
+                                  - /placeholder: value
+                                - generic:
+                                  - generic: • • • • • • • • • • • •
+                            - button "Show secret" [ref=e474] [cursor=pointer]:
+                              - img "Show secret" [ref=e475]
+                        - cell "Delete" [ref=e621]:
+                          - button "Delete" [ref=e622] [cursor=pointer]:
+                            - img "Delete" [ref=e623]
+                      - row "Key ZAPI_INSTANCE_ID Value • • • • • • • • • • • • Show secret Delete" [ref=e628]:
+                        - rowheader "Key ZAPI_INSTANCE_ID" [ref=e479]:
+                          - generic [ref=e481]:
+                            - generic [ref=e482]: Key
+                            - textbox "Key" [ref=e484]:
+                              - /placeholder: NAME_OF_VARIABLE
+                              - text: ZAPI_INSTANCE_ID
+                        - cell "Value • • • • • • • • • • • • Show secret" [ref=e485]:
+                          - generic [ref=e486]:
+                            - generic [ref=e487]:
+                              - generic [ref=e488]: Value
+                              - generic [ref=e489]:
+                                - textbox "Value" [ref=e490]:
+                                  - /placeholder: value
+                                - generic:
+                                  - generic: • • • • • • • • • • • •
+                            - button "Show secret" [ref=e491] [cursor=pointer]:
+                              - img "Show secret" [ref=e492]
+                        - cell "Delete" [ref=e629]:
+                          - button "Delete" [ref=e630] [cursor=pointer]:
+                            - img "Delete" [ref=e631]
+                      - row "Key ZAPI_TOKEN Value • • • • • • • • • • • • Show secret Delete" [ref=e636]:
+                        - rowheader "Key ZAPI_TOKEN" [ref=e496]:
+                          - generic [ref=e498]:
+                            - generic [ref=e499]: Key
+                            - textbox "Key" [ref=e501]:
+                              - /placeholder: NAME_OF_VARIABLE
+                              - text: ZAPI_TOKEN
+                        - cell "Value • • • • • • • • • • • • Show secret" [ref=e502]:
+                          - generic [ref=e503]:
+                            - generic [ref=e504]:
+                              - generic [ref=e505]: Value
+                              - generic [ref=e506]:
+                                - textbox "Value" [ref=e507]:
+                                  - /placeholder: value
+                                - generic:
+                                  - generic: • • • • • • • • • • • •
+                            - button "Show secret" [ref=e508] [cursor=pointer]:
+                              - img "Show secret" [ref=e509]
+                        - cell "Delete" [ref=e637]:
+                          - button "Delete" [ref=e638] [cursor=pointer]:
+                            - img "Delete" [ref=e639]
+                  - generic [ref=e644]:
+                    - generic [ref=e645]:
+                      - button "Show less" [ref=e646] [cursor=pointer]:
+                        - img [ref=e648]
+                        - text: Show less
+                      - generic [ref=e651]:
+                        - button "Add variable" [ref=e652] [cursor=pointer]:
+                          - img [ref=e654]
+                          - text: Add variable
+                        - button "More options" [ref=e656] [cursor=pointer]:
+                          - generic [ref=e657]: More options
+                          - img [ref=e658]
+                    - generic [ref=e660]:
+                      - generic [ref=e661]:
+                        - button "Loading... Save, rebuild, and deploy" [disabled] [ref=e682]:
+                          - img "Loading..." [ref=e683]
+                          - text: Save, rebuild, and deploy
+                        - button "Choose an option" [disabled] [ref=e663]:
+                          - generic [ref=e664]: Choose an option
+                          - img [ref=e665]
+                      - button "Cancel" [disabled] [ref=e667]
+              - generic [ref=e519]:
+                - generic [ref=e522]:
+                  - heading "Secret Files" [level=4] [ref=e524]
+                  - generic [ref=e526]:
+                    - generic [ref=e527]:
+                      - text: Store plaintext files containing secret data (such as a
+                      - code [ref=e528]: .env
+                      - text: file or a private key).
+                    - generic [ref=e529]:
+                      - text: Access during builds and at runtime from your app's root, or from
+                      - code [ref=e530]: /etc/secrets/<filename>
+                      - text: .
+                - generic [ref=e535]:
+                  - button "Add file" [ref=e536] [cursor=pointer]:
+                    - img [ref=e538]
+                    - text: Add file
+                  - button "More options" [ref=e540] [cursor=pointer]:
+                    - generic [ref=e541]: More options
+                    - img [ref=e542]
+              - generic [ref=e545]:
+                - generic [ref=e548]:
+                  - heading "Linked Environment Groups" [level=4] [ref=e550]
+                  - generic [ref=e551]: Environment groups are collections of environment variables and secret files that you can share across multiple services.
+                - generic [ref=e554]:
+                  - generic [ref=e555]: No environment groups available to link.
+                  - link "New Environment Group" [ref=e556] [cursor=pointer]:
+                    - /url: /new/env-group
+                    - img [ref=e558]
+                    - text: New Environment Group
+    - generic:
+      - generic:
+        - generic: "0 services selected:"
+        - generic:
+          - generic:
+            - button:
+              - generic:
+                - img
+              - generic: Move
+              - img
+      - generic:
+        - separator
+        - generic:
+          - generic:
+            - button:
+              - img
+  - iframe [ref=e560]:
+    
