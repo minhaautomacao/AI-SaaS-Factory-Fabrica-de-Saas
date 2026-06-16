@@ -1,0 +1,41 @@
+- generic [ref=e10]:
+  - generic [ref=e11]:
+    - button "Abrir menu suspenso Facebook" [ref=e19] [cursor=pointer]:
+      - generic [ref=e21]:
+        - generic [ref=e22]: Abrir menu suspenso
+        - generic [ref=e25]:
+          - generic:
+            - img
+          - img "Facebook" [ref=e27]
+    - progressbar [ref=e30]
+  - generic [ref=e67]:
+    - generic [ref=e68]:
+      - heading "Escolha os(as) Páginas que o enemeopfloresdeverá acessar" [level=2] [ref=e69]
+      - generic [ref=e70]: Mais tarde, será possível analisar o que o enemeopflores poderá fazer com os(as) Páginas que você selecionou.
+    - radiogroup [ref=e77]:
+      - generic [ref=e78]:
+        - generic [ref=e81] [cursor=pointer]:
+          - radio "Aceitar todos(as) Páginas atuais e no futuro" [checked] [ref=e86]
+          - generic [ref=e89]:
+            - generic [ref=e91]: Aceitar todos(as) Páginas atuais e no futuro
+            - generic [ref=e92]: Com isso, o enemeopflores terá acesso aos(às) Páginas atuais, além de quaisquer Páginas que você criar no futuro.
+        - generic [ref=e95] [cursor=pointer]:
+          - radio "Aceitar apenas os(as) Páginas atuais" [ref=e100]
+          - generic [ref=e101]:
+            - generic [ref=e103]: Aceitar apenas os(as) Páginas atuais
+            - generic [ref=e104]: Com isso, o enemeopflores terá acesso aos(às) Páginas selecionados(as).
+  - generic [ref=e106]:
+    - separator [ref=e107]
+    - generic [ref=e108]:
+      - generic [ref=e110]:
+        - link "Política de Privacidade" [ref=e111] [cursor=pointer]:
+          - /url: https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.enemeopflores.com.br%2Fpolitica-de-privacidade%2F%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExQUtYb2I4aEpGU282dlFSenNydGMGYXBwX2lkDDI1NjI4MTA0MDU1OAABHrK2aCmtdpdiNwv90k2ny-GxHQ_7nRvo8DUOjndm2AzZlyBdO9DFH_DtQJ05_aem_ZCRheTcw0B7M_iyukYzFQQ&h=AUAq_bZa28VJsdD2s9C-Z_nWGpgd7b1gGxEBS41eAQbJu47lqpms67qWZfczLDW3ThXgCQi2UfTr1Ne7TG0JArWlSL9YMpd-_oC12uZmUfCSM4fuVa-AEZWsvpeMPh0tU6XH2pSluHPfB8DnbCHg-A
+        - text: e
+        - link "Termos de Serviço" [ref=e112] [cursor=pointer]:
+          - /url: https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.enemeopflores.com.br%2Ftermos-de-uso%2F%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExQUtYb2I4aEpGU282dlFSenNydGMGYXBwX2lkDDI1NjI4MTA0MDU1OAABHpv3bTdBCd2Jqyi7i8qrlDDYvSVKbsb_lSr3MraKkGAAKnNoKw5Y_od_A90K_aem_Kj6QHeYx0oB36pryRFVa_Q&h=AUAq_bZa28VJsdD2s9C-Z_nWGpgd7b1gGxEBS41eAQbJu47lqpms67qWZfczLDW3ThXgCQi2UfTr1Ne7TG0JArWlSL9YMpd-_oC12uZmUfCSM4fuVa-AEZWsvpeMPh0tU6XH2pSluHPfB8DnbCHg-A
+        - text: do enemeopflores
+      - generic [ref=e113]:
+        - button "Voltar" [ref=e115] [cursor=pointer]:
+          - generic [ref=e119]: Voltar
+        - button "Continuar" [ref=e121] [cursor=pointer]:
+          - generic [ref=e125]: Continuar

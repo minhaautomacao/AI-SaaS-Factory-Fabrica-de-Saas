@@ -1,0 +1,84 @@
+- generic [ref=e10]:
+  - generic [ref=e11]:
+    - button "Abrir menu suspenso Facebook" [ref=e19] [cursor=pointer]:
+      - generic [ref=e21]:
+        - generic [ref=e22]: Abrir menu suspenso
+        - generic [ref=e25]:
+          - generic:
+            - img
+          - img "Facebook" [ref=e27]
+    - progressbar [ref=e30]
+  - generic [ref=e246]:
+    - heading "Analise a solicitação de acesso do enemeopflores" [level=2] [ref=e248]
+    - list [ref=e250]:
+      - listitem [ref=e252]:
+        - generic [ref=e254]:
+          - generic [ref=e256]: Gerenciar seu negócio
+          - generic [ref=e257]: 1 Empresa selecionado(a)
+      - separator [ref=e258]
+      - listitem [ref=e260]:
+        - generic [ref=e262]:
+          - generic [ref=e264]: Acessar o perfil e os posts da conta do Instagram selecionada
+          - generic [ref=e265]: 1 Conta do Instagram selecionado(a)
+      - separator [ref=e266]
+      - listitem [ref=e268]:
+        - generic [ref=e270]:
+          - generic [ref=e272]: Carregar mídia e criar posts para a conta do Instagram
+          - generic [ref=e273]: 1 Conta do Instagram selecionado(a)
+      - separator [ref=e274]
+      - listitem [ref=e276]:
+        - generic [ref=e278]:
+          - generic [ref=e280]: Gerenciar comentários para a conta do Instagram selecionada
+          - generic [ref=e281]: 1 Conta do Instagram selecionado(a)
+      - separator [ref=e282]
+      - listitem [ref=e284]:
+        - generic [ref=e286]:
+          - generic [ref=e288]: Gerenciar suas contas do WhatsApp
+          - generic [ref=e289]: 1 Conta do WhatsApp selecionado(a)
+      - separator [ref=e290]
+      - listitem [ref=e292]:
+        - generic [ref=e294]:
+          - generic [ref=e296]: Gerenciar e acessar mensagens para a conta do Instagram
+          - generic [ref=e297]: 1 Conta do Instagram selecionado(a)
+      - separator [ref=e298]
+      - listitem [ref=e300]:
+        - generic [ref=e302]:
+          - generic [ref=e304]: Gerenciar e acessar conversas no WhatsApp
+          - generic [ref=e305]: 1 Conta do WhatsApp selecionado(a)
+      - separator [ref=e306]
+      - listitem [ref=e308]:
+        - generic [ref=e310]:
+          - generic [ref=e312]: Ler o conteúdo postado na Página
+          - generic [ref=e313]: Aceitou a totalidade de Páginas atuais e no futuro
+      - separator [ref=e314]
+      - listitem [ref=e316]:
+        - generic [ref=e318]:
+          - generic [ref=e320]: Mostrar uma lista das Páginas que você gerencia
+          - generic [ref=e321]: Aceitou a totalidade de Páginas atuais e no futuro
+    - generic [ref=e322]:
+      - heading "Revise os termos com os quais está concordando" [level=2] [ref=e324]
+      - list [ref=e325]:
+        - listitem [ref=e326]:
+          - link "Meta Business Tools" [ref=e328] [cursor=pointer]:
+            - /url: https://www.facebook.com/legal/technology_terms
+    - alert [ref=e329]:
+      - generic [ref=e333]:
+        - text: Esta integração permite que o app enemeopflores estabeleça uma conexão com seus portfólios empresariais e gerencie tudo no portfólio, exceto ações sensíveis, como a exclusão dele. É possível usar uma API para gerenciar o portfólio, incluindo dar acesso a terceiros.
+        - link "Sobre integrações comerciais" [ref=e334] [cursor=pointer]:
+          - /url: https://www.facebook.com/help/615546898822465
+        - text: .
+  - generic [ref=e336]:
+    - separator [ref=e337]
+    - generic [ref=e338]:
+      - generic [ref=e340]:
+        - link "Política de Privacidade" [ref=e341] [cursor=pointer]:
+          - /url: https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.enemeopflores.com.br%2Fpolitica-de-privacidade%2F%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExQUtYb2I4aEpGU282dlFSenNydGMGYXBwX2lkDDI1NjI4MTA0MDU1OAABHogyWvivDlIqCxKx0zd9-BItDNaq5YUoxAQNK4hYsU3N5jp5wJ8GkFfxBnKC_aem_I6MwWFiYEQoYm49d3WdxqQ&h=AUAq_bZa28VJsdD2s9C-Z_nWGpgd7b1gGxEBS41eAQbJu47lqpms67qWZfczLDW3ThXgCQi2UfTr1Ne7TG0JArWlSL9YMpd-_oC12uZmUfCSM4fuVa-AEZWsvpeMPh0tU6XH2pSluHPfB8DnbCHg-A
+        - text: e
+        - link "Termos de Serviço" [ref=e342] [cursor=pointer]:
+          - /url: https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.enemeopflores.com.br%2Ftermos-de-uso%2F%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExQUtYb2I4aEpGU282dlFSenNydGMGYXBwX2lkDDI1NjI4MTA0MDU1OAABHgWcdMlS55YRp-MKW56j4XQFmWo5snkSQPfr7KM6IowCLPpMBIM4ssXbJZOS_aem_W9wqhH2EFQ2fZQuIPP5qfQ&h=AUAq_bZa28VJsdD2s9C-Z_nWGpgd7b1gGxEBS41eAQbJu47lqpms67qWZfczLDW3ThXgCQi2UfTr1Ne7TG0JArWlSL9YMpd-_oC12uZmUfCSM4fuVa-AEZWsvpeMPh0tU6XH2pSluHPfB8DnbCHg-A
+        - text: do enemeopflores
+      - generic [ref=e343]:
+        - button "Voltar" [ref=e345] [cursor=pointer]:
+          - generic [ref=e349]: Voltar
+        - button "Salvar" [ref=e351] [cursor=pointer]:
+          - generic [ref=e355]: Salvar
