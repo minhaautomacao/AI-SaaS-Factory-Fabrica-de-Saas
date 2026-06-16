@@ -3,7 +3,7 @@ import { createServer, IncomingMessage, ServerResponse } from 'http'
 import { iniciarWorkers } from './workers/orquestrador.js'
 import { getSupabase } from './lib/supabase.js'
 import { processarMensagemSDR, processarMensagemSDRInstagram } from './lib/sdr.js'
-import { registrarWebhookEvolution } from './lib/whatsapp.js'
+import { extrairMensagemZApi } from './lib/whatsapp.js'
 
 console.log('=== Fábrica de SaaS — Orquestrador Central ===')
 console.log(`Ambiente: ${process.env.NODE_ENV ?? 'development'}`)
@@ -25,36 +25,44 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
   if (req.method === 'POST' && req.url === '/webhook/whatsapp') {
     try {
       const raw = await lerBody(req)
-      const payload = JSON.parse(raw)
+      let parsed: unknown
+      try {
+        parsed = JSON.parse(raw)
+      } catch {
+        res.writeHead(400)
+        res.end(JSON.stringify({ error: 'invalid_json' }))
+        return
+      }
 
-      // Evolution API: { event, data: { key: { remoteJid, fromMe }, message: { conversation } } }
-      const fromMe = payload.data?.key?.fromMe === true
-      const texto = !fromMe
-        ? (payload.data?.message?.conversation ?? payload.data?.message?.extendedTextMessage?.text ?? '')
-        : ''
-      const remoteJid = String(payload.data?.key?.remoteJid ?? '')
-      const numero = remoteJid.replace('@s.whatsapp.net', '').replace('@g.us', '')
+      // Z-API webhook: { type, phone, fromMe, text: { message }, senderName, ... }
+      const msg = extrairMensagemZApi(parsed)
+      if (msg) {
+        const { numero, texto, nome } = msg
+        console.log(`[Webhook/WhatsApp] Mensagem de ${nome ? nome + ' ' : ''}${numero}: ${texto.substring(0, 80)}`)
 
-      if (texto && numero) {
-        console.log(`[Webhook] Mensagem recebida de ${numero}: ${texto.substring(0, 80)}`)
-
-        // Salva/atualiza lead no Supabase
         const { error } = await getSupabase()
           .from('leads')
           .upsert(
-            { telefone: numero, canal: 'whatsapp', ultimo_contato: new Date().toISOString(), intencao: 'pesquisando' },
+            {
+              telefone: numero,
+              canal: 'whatsapp',
+              ultimo_contato: new Date().toISOString(),
+              intencao: 'pesquisando',
+              ...(nome ? { nome } : {}),
+            },
             { onConflict: 'telefone' }
           )
-        if (error) console.error('[Webhook] Erro ao salvar lead:', error.message)
+        if (error) console.error('[Webhook/WhatsApp] Erro ao salvar lead:', error.message)
 
-        // SDR com IA responde naturalmente
-        await processarMensagemSDR(numero, texto)
+        processarMensagemSDR(numero, texto).catch(e =>
+          console.error('[Webhook/WhatsApp] Erro no SDR:', e)
+        )
       }
 
       res.writeHead(200, { 'Content-Type': 'application/json' })
       res.end(JSON.stringify({ received: true }))
     } catch (err) {
-      console.error('[Webhook] Erro ao processar payload:', err)
+      console.error('[Webhook/WhatsApp] Erro inesperado:', err)
       res.writeHead(500)
       res.end(JSON.stringify({ error: 'internal' }))
     }
@@ -136,10 +144,7 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
   res.end(JSON.stringify({ status: 'ok', uptime: process.uptime() }))
 }).listen(PORT, () => {
   console.log(`[Orquestrador] Servidor em http://0.0.0.0:${PORT}`)
-
-  // Auto-registra webhook na Evolution API para receber mensagens WhatsApp
-  const selfUrl = process.env.RENDER_EXTERNAL_URL ?? `http://localhost:${PORT}`
-  registrarWebhookEvolution(`${selfUrl}/webhook/whatsapp`)
+  console.log(`[Orquestrador] Webhook WhatsApp (Z-API): POST /webhook/whatsapp`)
 })
 
 console.log('')
