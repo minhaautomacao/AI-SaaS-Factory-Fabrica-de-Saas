@@ -1,0 +1,105 @@
+- generic [ref=e1]:
+  - generic [ref=e11]:
+    - banner [ref=e12]:
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - link [ref=e16] [cursor=pointer]:
+            - /url: /redis
+            - img [ref=e17]
+          - button "Personal" [ref=e24] [cursor=pointer]:
+            - generic [ref=e25]: Personal
+            - img [ref=e27]
+        - generic [ref=e31]:
+          - link "Redis" [ref=e32] [cursor=pointer]:
+            - /url: /redis
+            - generic [ref=e34]: Redis
+          - link "QStash" [ref=e35] [cursor=pointer]:
+            - /url: /qstash
+            - generic [ref=e36]: QStash
+          - link "Workflow" [ref=e37] [cursor=pointer]:
+            - /url: /workflow
+            - generic [ref=e38]: Workflow
+          - link "Vector" [ref=e39] [cursor=pointer]:
+            - /url: /vector
+            - generic [ref=e40]: Vector
+          - link "Box NEW" [ref=e41] [cursor=pointer]:
+            - /url: /box
+            - generic [ref=e42]: Box
+            - generic [ref=e43]: NEW
+          - generic [ref=e44] [cursor=pointer]:
+            - button [ref=e45]:
+              - img [ref=e46]
+            - generic [ref=e51]: "6"
+        - generic [ref=e52]:
+          - button [ref=e53] [cursor=pointer]:
+            - img [ref=e54]
+          - button [ref=e57] [cursor=pointer]:
+            - generic [ref=e58]:
+              - img [ref=e59]
+              - superscript [ref=e62]
+          - button [ref=e63] [cursor=pointer]:
+            - img [ref=e65]
+    - generic [ref=e67]:
+      - generic [ref=e68]:
+        - img [ref=e70]
+        - generic [ref=e74]: Redis
+        - generic [ref=e75]: "-"
+        - generic [ref=e76]: Low-latency, serverless key-value store
+      - generic [ref=e77]:
+        - generic [ref=e78]:
+          - heading "COMMANDS" [level=5] [ref=e79]
+          - paragraph [ref=e81]: 708 mil
+        - generic [ref=e82]:
+          - heading "AVERAGE STORAGE" [level=5] [ref=e83]
+          - paragraph [ref=e85]: 1021 KB
+        - generic [ref=e86]:
+          - heading "COST" [level=5] [ref=e87]
+          - paragraph [ref=e89]: $0.00
+    - generic [ref=e91]:
+      - generic [ref=e92]:
+        - generic [ref=e94]:
+          - img [ref=e96]
+          - textbox "Search..." [ref=e99]
+        - generic [ref=e101]:
+          - button [ref=e102] [cursor=pointer]:
+            - img [ref=e104]
+          - button "Import..." [ref=e108] [cursor=pointer]:
+            - generic [ref=e109]: Import...
+          - button "Create Database" [active] [ref=e110] [cursor=pointer]:
+            - generic [ref=e111]: Create Database
+      - generic [ref=e112]:
+        - paragraph [ref=e113]: DATABASES
+        - table [ref=e120]:
+          - rowgroup [ref=e127]:
+            - row "floricultura legal-imp AWS SA-EAST-1 Free Tier Upgrade..." [ref=e128]:
+              - cell "floricultura legal-imp" [ref=e129]:
+                - link "floricultura legal-imp" [ref=e130] [cursor=pointer]:
+                  - /url: /redis/c7a83cac-e6be-4591-91e8-9b4a1afd60e6/settings
+                  - img [ref=e132]
+                  - generic [ref=e137]:
+                    - heading "floricultura" [level=3] [ref=e138]
+                    - paragraph [ref=e139]: legal-imp
+              - cell "AWS SA-EAST-1" [ref=e140]:
+                - generic [ref=e141]:
+                  - heading "AWS" [level=5] [ref=e142]
+                  - generic [ref=e143]: SA-EAST-1
+              - cell "Free Tier Upgrade..." [ref=e144]:
+                - generic [ref=e145]:
+                  - heading "Free Tier" [level=5] [ref=e146]
+                  - generic [ref=e147] [cursor=pointer]: Upgrade...
+              - cell [ref=e148]:
+                - img [ref=e154]
+              - cell [ref=e159]:
+                - img [ref=e162] [cursor=pointer]
+    - contentinfo [ref=e164]:
+      - generic [ref=e165]: © 2026 Upstash, Inc. Based in California.
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - alert [ref=e166]
+  - iframe [ref=e182]:
+    
+  - button "Open Intercom Messenger" [ref=e183] [cursor=pointer]:
+    - img [ref=e185]
+    - generic:
+      - img
