@@ -108,7 +108,7 @@ async function salvarHistorico(numero: string, historico: Mensagem[]): Promise<v
   await redis.setex(`sdr:hist:${numero}`, HISTORICO_TTL_S, JSON.stringify(recente))
 }
 
-export async function processarMensagemSDR(numero: string, textoCliente: string): Promise<void> {
+export async function processarMensagemSDR(numero: string, textoCliente: string, nomeCliente?: string): Promise<void> {
   // Verifica se cliente quer falar com humano
   if (deveEscalar(textoCliente)) {
     await responderLead({
@@ -128,9 +128,16 @@ export async function processarMensagemSDR(numero: string, textoCliente: string)
   const primeiraMensagem = historico.length === 0
   historico.push({ role: 'user', content: textoCliente })
 
-  const systemFinal = primeiraMensagem
-    ? SYSTEM_PROMPT + '\n\n## INSTRUÇÃO OBRIGATÓRIA PARA ESTA RESPOSTA\nEsta é a PRIMEIRA mensagem do cliente. Independente do que ele escreveu, sua resposta DEVE começar pedindo o nome dele. Exemplo: "Oi, pode me dizer seu nome pra eu te atender melhor?" — depois disso pode responder o conteúdo da mensagem se necessário.'
-    : SYSTEM_PROMPT
+  let instrucaoInicial = ''
+  if (primeiraMensagem) {
+    if (nomeCliente) {
+      instrucaoInicial = `\n\n## INSTRUÇÃO OBRIGATÓRIA PARA ESTA RESPOSTA\nO cliente se chama **${nomeCliente}** (nome vindo do WhatsApp). Use o nome dele naturalmente na resposta. NÃO peça o nome — você já sabe. Seja calorosa e pessoal.`
+    } else {
+      instrucaoInicial = '\n\n## INSTRUÇÃO OBRIGATÓRIA PARA ESTA RESPOSTA\nEsta é a PRIMEIRA mensagem do cliente. Independente do que ele escreveu, sua resposta DEVE começar pedindo o nome dele. Exemplo: "Oi, pode me dizer seu nome pra eu te atender melhor?" — depois disso pode responder o conteúdo da mensagem se necessário.'
+    }
+  }
+
+  const systemFinal = SYSTEM_PROMPT + instrucaoInicial
 
   const response = await groq.chat.completions.create({
     model: 'llama-3.1-8b-instant',

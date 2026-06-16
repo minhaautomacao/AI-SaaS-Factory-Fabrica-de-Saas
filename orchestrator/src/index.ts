@@ -62,7 +62,7 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
           )
         if (error) console.error('[Webhook/WhatsApp] Erro ao salvar lead:', error.message)
 
-        processarMensagemSDR(numero, texto).catch(e =>
+        processarMensagemSDR(numero, texto, nome).catch(e =>
           console.error('[Webhook/WhatsApp] Erro no SDR:', e)
         )
       }
