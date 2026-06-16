@@ -1,0 +1,541 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - banner [ref=e4]:
+        - generic [ref=e5]:
+          - link "Render" [ref=e7] [cursor=pointer]:
+            - /url: /
+            - img "Render" [ref=e8]
+          - button "M My Workspace" [ref=e12] [cursor=pointer]:
+            - generic [ref=e13]:
+              - generic [ref=e14]: M
+              - generic "My Workspace" [ref=e15]
+              - img [ref=e16]
+        - generic [ref=e20]:
+          - navigation [ref=e21]:
+            - list [ref=e22]:
+              - listitem [ref=e23]:
+                - link "enemeop-orchestrator" [ref=e24] [cursor=pointer]:
+                  - /url: /web/srv-d8km0f3eo5us73ekgs50
+                  - img [ref=e25]
+                  - generic [ref=e27]: enemeop-orchestrator
+                - button [ref=e30] [cursor=pointer]:
+                  - img [ref=e31]
+          - button "Search Ctrl + K" [ref=e34] [cursor=pointer]:
+            - img [ref=e36]
+            - text: Search
+            - generic [ref=e38]:
+              - img [ref=e39]
+              - generic [ref=e41]: Ctrl
+              - generic [ref=e42]: +
+              - generic [ref=e43]: K
+              - generic [ref=e44]: K
+        - generic [ref=e45]:
+          - button "New" [ref=e47] [cursor=pointer]:
+            - generic [ref=e48]:
+              - img [ref=e49]
+              - generic [ref=e51]: New
+          - button "Upgrade" [ref=e53] [cursor=pointer]:
+            - generic [ref=e54]:
+              - img [ref=e55]
+              - generic [ref=e57]: Upgrade
+          - button "Help" [ref=e59] [cursor=pointer]:
+            - img "Help" [ref=e60]
+          - button "Gravatar for minhaautomacao10@gmail.com" [ref=e65] [cursor=pointer]:
+            - img "Gravatar for minhaautomacao10@gmail.com" [ref=e67]
+      - generic [ref=e68]:
+        - navigation [ref=e69]:
+          - separator [ref=e70]
+          - generic [ref=e71]:
+            - generic [ref=e72]:
+              - link "Dashboard" [ref=e73] [cursor=pointer]:
+                - /url: /
+                - img [ref=e74]
+                - generic [ref=e76]: Dashboard
+              - generic [ref=e77]:
+                - img [ref=e78]
+                - generic [ref=e80]: enemeop-orchestrator
+            - generic [ref=e81]:
+              - list [ref=e82]:
+                - listitem [ref=e83]:
+                  - link "Events" [ref=e84] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/events
+                    - img [ref=e85]
+                    - generic [ref=e92]: Events
+                - listitem [ref=e93]:
+                  - link "Settings" [ref=e94] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/settings
+                    - img [ref=e95]
+                    - generic [ref=e98]: Settings
+              - generic [ref=e99]:
+                - generic [ref=e100]: Monitor
+                - list "Monitor" [ref=e101]:
+                  - listitem [ref=e102]:
+                    - link "Logs" [ref=e103] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/logs
+                      - img [ref=e104]
+                      - generic [ref=e109]: Logs
+                  - listitem [ref=e110]:
+                    - link "Metrics" [ref=e111] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/metrics
+                      - img [ref=e112]
+                      - generic [ref=e114]: Metrics
+              - generic [ref=e115]:
+                - generic [ref=e116]: Manage
+                - list "Manage" [ref=e117]:
+                  - listitem [ref=e118]:
+                    - link "Environment" [ref=e119] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/env
+                      - img [ref=e120]
+                      - generic [ref=e124]: Environment
+                  - listitem [ref=e125]:
+                    - link "Shell" [ref=e126] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/shell
+                      - img [ref=e127]
+                      - generic [ref=e131]:
+                        - generic [ref=e132]: Shell
+                        - status [ref=e135]:
+                          - img [ref=e136]
+                  - listitem [ref=e138]:
+                    - link "Scaling" [ref=e139] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/scaling
+                      - img [ref=e140]
+                      - generic [ref=e145]:
+                        - generic [ref=e146]: Scaling
+                        - status [ref=e149]:
+                          - img [ref=e150]
+                  - listitem [ref=e152]:
+                    - link "Previews" [ref=e153] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/previews
+                      - img [ref=e154]
+                      - generic [ref=e158]: Previews
+                  - listitem [ref=e159]:
+                    - link "Disk" [ref=e160] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/disks
+                      - img [ref=e161]
+                      - generic [ref=e166]:
+                        - generic [ref=e167]: Disk
+                        - status [ref=e170]:
+                          - img [ref=e171]
+                  - listitem [ref=e173]:
+                    - link "One-Off Jobs" [ref=e174] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/jobs
+                      - img [ref=e175]
+                      - generic [ref=e181]:
+                        - generic [ref=e182]: One-Off Jobs
+                        - status [ref=e185]:
+                          - img [ref=e186]
+          - generic [ref=e189]:
+            - button "Collapse items" [expanded] [ref=e190] [cursor=pointer]:
+              - img [ref=e191]
+            - list "Footer navigation" [ref=e193]:
+              - listitem [ref=e194]:
+                - link "Changelog" [ref=e195] [cursor=pointer]:
+                  - /url: https://render.com/changelog
+                  - img [ref=e196]
+                  - generic [ref=e201]: Changelog
+              - listitem [ref=e202]:
+                - link "Invite a friend" [ref=e203] [cursor=pointer]:
+                  - /url: /invites
+                  - img [ref=e204]
+                  - generic [ref=e206]: Invite a friend
+              - listitem [ref=e207]:
+                - button "Contact support" [ref=e208] [cursor=pointer]:
+                  - img [ref=e209]
+                  - generic [ref=e213]: Contact support
+            - link "Render Status" [ref=e215] [cursor=pointer]:
+              - /url: https://status.render.com
+              - img [ref=e216]
+              - generic [ref=e218]: Render Status
+        - main [ref=e221]:
+          - generic [ref=e224]:
+            - alert [ref=e225]:
+              - generic [ref=e227]:
+                - img [ref=e229]
+                - generic [ref=e233]:
+                  - generic [ref=e235]: Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.
+                  - link "Upgrade now" [ref=e237] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/plan
+            - generic [ref=e239]:
+              - button "Application logs" [ref=e242] [cursor=pointer]:
+                - generic [ref=e243]:
+                  - generic [ref=e244]: Application logs
+                  - img [ref=e245]
+              - generic [ref=e248]:
+                - generic [ref=e249]: Search
+                - generic [ref=e251]:
+                  - img [ref=e252]
+                  - searchbox "Search" [ref=e254]
+              - button "Live tail" [ref=e257] [cursor=pointer]:
+                - generic [ref=e260]:
+                  - img [ref=e261]
+                  - generic [ref=e263]: Live tail
+                  - img [ref=e264]
+              - button "Maximize" [ref=e270] [cursor=pointer]:
+                - img "Maximize" [ref=e271]
+              - button "Options" [ref=e276] [cursor=pointer]:
+                - img "Options" [ref=e277]
+            - generic:
+              - button "Return to Bottom":
+                - img
+            - listbox [ref=e281]:
+              - generic [ref=e282]: Jun 16
+              - 'option "03:49:52 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Eu preciso de um buquê de rosas vermelhas" [ref=e283]':
+                - generic [ref=e284]:
+                  - generic [ref=e285]:
+                    - img [ref=e287]
+                    - time [ref=e291]: 03:49:52 PM
+                  - generic [ref=e295] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e297]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Eu preciso de um buquê de rosas vermelhas"
+              - 'option "03:49:54 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C4C41672F4835B6CC1A7252213" [ref=e298]':
+                - generic [ref=e299]:
+                  - generic [ref=e300]:
+                    - img [ref=e302]
+                    - time [ref=e306]: 03:49:54 PM
+                  - generic [ref=e310] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e312]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C4C41672F4835B6CC1A7252213"
+              - 'option "03:49:54 PM [j6w79] [SDR] Respondido 5511958081374: Um buquê de rosas vermelhas é uma escolha clássica. Qual é o tamanho que você go..." [ref=e313]':
+                - generic [ref=e314]:
+                  - generic [ref=e315]:
+                    - img [ref=e317]
+                    - time [ref=e321]: 03:49:54 PM
+                  - generic [ref=e325] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e327]: "[SDR] Respondido 5511958081374: Um buquê de rosas vermelhas é uma escolha clássica. Qual é o tamanho que você go..."
+              - 'option "03:50:28 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Preciso com 24 rosas para Mariângela Oliveira" [ref=e328]':
+                - generic [ref=e329]:
+                  - generic [ref=e330]:
+                    - img [ref=e332]
+                    - time [ref=e336]: 03:50:28 PM
+                  - generic [ref=e340] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e342]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Preciso com 24 rosas para Mariângela Oliveira"
+              - 'option "03:50:30 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C552637F7A8D5960EA8203D3AD" [ref=e343]':
+                - generic [ref=e344]:
+                  - generic [ref=e345]:
+                    - img [ref=e347]
+                    - time [ref=e351]: 03:50:30 PM
+                  - generic [ref=e355] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e357]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C552637F7A8D5960EA8203D3AD"
+              - 'option "03:50:30 PM [j6w79] [SDR] Respondido 5511958081374: Um buquê de 24 rosas vermelhas é lindo! O valor é R$560. Você gostaria de adicio..." [ref=e358]':
+                - generic [ref=e359]:
+                  - generic [ref=e360]:
+                    - img [ref=e362]
+                    - time [ref=e366]: 03:50:30 PM
+                  - generic [ref=e370] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e372]: "[SDR] Respondido 5511958081374: Um buquê de 24 rosas vermelhas é lindo! O valor é R$560. Você gostaria de adicio..."
+              - 'option "03:50:47 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Gostaria de uma caixa de chocolates e um urso de pelúcia" [ref=e373]':
+                - generic [ref=e374]:
+                  - generic [ref=e375]:
+                    - img [ref=e377]
+                    - time [ref=e381]: 03:50:47 PM
+                  - generic [ref=e385] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e387]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Gostaria de uma caixa de chocolates e um urso de pelúcia"
+              - 'option "03:50:49 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C59CD47398B0AE1E278DCACEA2" [ref=e388]':
+                - generic [ref=e389]:
+                  - generic [ref=e390]:
+                    - img [ref=e392]
+                    - time [ref=e396]: 03:50:49 PM
+                  - generic [ref=e400] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e402]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C59CD47398B0AE1E278DCACEA2"
+              - 'option "03:50:49 PM [j6w79] [SDR] Respondido 5511958081374: Um presente completo! A caixa de chocolates é R$35 e o urso de pelúcia é R$45. E..." [ref=e403]':
+                - generic [ref=e404]:
+                  - generic [ref=e405]:
+                    - img [ref=e407]
+                    - time [ref=e411]: 03:50:49 PM
+                  - generic [ref=e415] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e417]: "[SDR] Respondido 5511958081374: Um presente completo! A caixa de chocolates é R$35 e o urso de pelúcia é R$45. E..."
+              - 'option "03:51:22 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Rua Brás Lourenço 182 cep 041 13 110" [ref=e418]':
+                - generic [ref=e419]:
+                  - generic [ref=e420]:
+                    - img [ref=e422]
+                    - time [ref=e426]: 03:51:22 PM
+                  - generic [ref=e430] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e432]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Rua Brás Lourenço 182 cep 041 13 110"
+              - 'option "03:51:24 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C6266C7142B9D83724CC92F3AC" [ref=e433]':
+                - generic [ref=e434]:
+                  - generic [ref=e435]:
+                    - img [ref=e437]
+                    - time [ref=e441]: 03:51:24 PM
+                  - generic [ref=e445] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e447]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C6266C7142B9D83724CC92F3AC"
+              - 'option "03:51:24 PM [j6w79] [SDR] Respondido 5511958081374: O endereço está correto: Rua Brás Lourenço, 182, CEP 04113-110. Vou finalizar a ..." [ref=e448]':
+                - generic [ref=e449]:
+                  - generic [ref=e450]:
+                    - img [ref=e452]
+                    - time [ref=e456]: 03:51:24 PM
+                  - generic [ref=e460] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e462]: "[SDR] Respondido 5511958081374: O endereço está correto: Rua Brás Lourenço, 182, CEP 04113-110. Vou finalizar a ..."
+              - 'option "03:51:55 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Gostaria de ter os preços em separado frete e os produtos" [ref=e463]':
+                - generic [ref=e464]:
+                  - generic [ref=e465]:
+                    - img [ref=e467]
+                    - time [ref=e471]: 03:51:55 PM
+                  - generic [ref=e475] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e477]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Gostaria de ter os preços em separado frete e os produtos"
+              - 'option "03:51:57 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C6A71A7DA383C0295DCAF56BE3" [ref=e478]':
+                - generic [ref=e479]:
+                  - generic [ref=e480]:
+                    - img [ref=e482]
+                    - time [ref=e486]: 03:51:57 PM
+                  - generic [ref=e490] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e492]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C6A71A7DA383C0295DCAF56BE3"
+              - 'option "03:51:57 PM [j6w79] [SDR] Respondido 5511958081374: Vou detalhar os custos para você, Antonio Carlos. O valor total é R$640,00, que ..." [ref=e493]':
+                - generic [ref=e494]:
+                  - generic [ref=e495]:
+                    - img [ref=e497]
+                    - time [ref=e501]: 03:51:57 PM
+                  - generic [ref=e505] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e507]: "[SDR] Respondido 5511958081374: Vou detalhar os custos para você, Antonio Carlos. O valor total é R$640,00, que ..."
+              - 'option "03:52:22 PM [j6w79] [Webhook/WhatsApp] Mensagem de Ron Sousa 5511948579179: ola" [ref=e508]':
+                - generic [ref=e509]:
+                  - generic [ref=e510]:
+                    - img [ref=e512]
+                    - time [ref=e516]: 03:52:22 PM
+                  - generic [ref=e520] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e522]: "[Webhook/WhatsApp] Mensagem de Ron Sousa 5511948579179: ola"
+              - 'option "03:52:23 PM [j6w79] [WhatsApp] Enviado para 5511948579179 — id: 019ED1C70C6D701AA535C7010C1C417F" [ref=e523]':
+                - generic [ref=e524]:
+                  - generic [ref=e525]:
+                    - img [ref=e527]
+                    - time [ref=e531]: 03:52:23 PM
+                  - generic [ref=e535] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e537]: "[WhatsApp] Enviado para 5511948579179 — id: 019ED1C70C6D701AA535C7010C1C417F"
+              - 'option "03:52:23 PM [j6w79] [SDR] Respondido 5511948579179: Pode me dizer seu nome pra eu te atender melhor?..." [ref=e538]':
+                - generic [ref=e539]:
+                  - generic [ref=e540]:
+                    - img [ref=e542]
+                    - time [ref=e546]: 03:52:23 PM
+                  - generic [ref=e550] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e552]: "[SDR] Respondido 5511948579179: Pode me dizer seu nome pra eu te atender melhor?..."
+              - 'option "03:53:39 PM [j6w79] [Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Consegue me enviar uma foto do produto?" [ref=e553]':
+                - generic [ref=e554]:
+                  - generic [ref=e555]:
+                    - img [ref=e557]
+                    - time [ref=e561]: 03:53:39 PM
+                  - generic [ref=e565] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e567]: "[Webhook/WhatsApp] Mensagem de Avelar 5511958081374: Consegue me enviar uma foto do produto?"
+              - 'option "03:53:41 PM [j6w79] [WhatsApp] Enviado para 5511958081374 — id: 019ED1C83B5F778896EB0AC034584485" [ref=e568]':
+                - generic [ref=e569]:
+                  - generic [ref=e570]:
+                    - img [ref=e572]
+                    - time [ref=e576]: 03:53:41 PM
+                  - generic [ref=e580] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e582]: "[WhatsApp] Enviado para 5511958081374 — id: 019ED1C83B5F778896EB0AC034584485"
+              - 'option "03:53:41 PM [j6w79] [SDR] Respondido 5511958081374: Antonio Carlos, não tenho a capacidade de enviar fotos através do WhatsApp. Mas ..." [ref=e583]':
+                - generic [ref=e584]:
+                  - generic [ref=e585]:
+                    - img [ref=e587]
+                    - time [ref=e591]: 03:53:41 PM
+                  - generic [ref=e595] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e597]: "[SDR] Respondido 5511958081374: Antonio Carlos, não tenho a capacidade de enviar fotos através do WhatsApp. Mas ..."
+              - 'option "04:01:18 PM [j6w79] [Webhook/WhatsApp] Mensagem de Ron Sousa 5511948579179: Carlos" [ref=e598]':
+                - generic [ref=e599]:
+                  - generic [ref=e600]:
+                    - img [ref=e602]
+                    - time [ref=e606]: 04:01:18 PM
+                  - generic [ref=e610] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e612]: "[Webhook/WhatsApp] Mensagem de Ron Sousa 5511948579179: Carlos"
+              - 'option "04:01:21 PM [j6w79] [WhatsApp] Enviado para 5511948579179 — id: 019ED1CF40D0749BAF30912873F85261" [ref=e613]':
+                - generic [ref=e614]:
+                  - generic [ref=e615]:
+                    - img [ref=e617]
+                    - time [ref=e621]: 04:01:21 PM
+                  - generic [ref=e625] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e627]: "[WhatsApp] Enviado para 5511948579179 — id: 019ED1CF40D0749BAF30912873F85261"
+              - 'option "04:01:21 PM [j6w79] [SDR] Respondido 5511948579179: Oi, Carlos! Pra começar, pode me dizer o que te traz aqui hoje? Quer comprar um ..." [ref=e628]':
+                - generic [ref=e629]:
+                  - generic [ref=e630]:
+                    - img [ref=e632]
+                    - time [ref=e636]: 04:01:21 PM
+                  - generic [ref=e640] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e642]: "[SDR] Respondido 5511948579179: Oi, Carlos! Pra começar, pode me dizer o que te traz aqui hoje? Quer comprar um ..."
+              - option "04:05:31 PM ==> Deploying... Menu" [ref=e1008]:
+                - generic [ref=e645]:
+                  - img [ref=e647]
+                  - time [ref=e651]: 04:05:31 PM
+                - generic [ref=e654]: ==> Deploying...
+                - button "Menu" [ref=e1010] [cursor=pointer]:
+                  - generic [ref=e1011]: Menu
+                  - img [ref=e1012]
+              - option "04:05:31 PM ==> Setting WEB_CONCURRENCY=1 by default, based on available CPUs in the instance" [ref=e655]:
+                - generic [ref=e657]:
+                  - img [ref=e659]
+                  - time [ref=e663]: 04:05:31 PM
+                - generic [ref=e666]: ==> Setting WEB_CONCURRENCY=1 by default, based on available CPUs in the instance
+              - option "04:05:44 PM [ntb6b] ==> Running 'node dist/index.js'" [ref=e667]:
+                - generic [ref=e668]:
+                  - generic [ref=e669]:
+                    - img [ref=e671]
+                    - time [ref=e675]: 04:05:44 PM
+                  - generic [ref=e679] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e681]: ==> Running 'node dist/index.js'
+              - option "04:05:47 PM [ntb6b] === Fábrica de SaaS — Orquestrador Central ===" [ref=e682]:
+                - generic [ref=e683]:
+                  - generic [ref=e684]:
+                    - img [ref=e686]
+                    - time [ref=e690]: 04:05:47 PM
+                  - generic [ref=e694] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e696]: === Fábrica de SaaS — Orquestrador Central ===
+              - 'option "04:05:47 PM [ntb6b] Ambiente: production" [ref=e697]':
+                - generic [ref=e698]:
+                  - generic [ref=e699]:
+                    - img [ref=e701]
+                    - time [ref=e705]: 04:05:47 PM
+                  - generic [ref=e709] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e711]: "Ambiente: production"
+              - 'option "04:05:47 PM [ntb6b] Iniciando em: 16/06/2026, 19:05:47" [ref=e712]':
+                - generic [ref=e713]:
+                  - generic [ref=e714]:
+                    - img [ref=e716]
+                    - time [ref=e720]: 04:05:47 PM
+                  - generic [ref=e724] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e726]: "Iniciando em: 16/06/2026, 19:05:47"
+              - option "04:05:47 PM [ntb6b]" [ref=e727]:
+                - generic [ref=e728]:
+                  - generic [ref=e729]:
+                    - img [ref=e731]
+                    - time [ref=e735]: 04:05:47 PM
+                  - generic [ref=e739] [cursor=pointer]: "[ntb6b]"
+              - 'option "04:05:47 PM [ntb6b] [Orquestrador] Worker iniciado: fabrica-critical" [ref=e741]':
+                - generic [ref=e742]:
+                  - generic [ref=e743]:
+                    - img [ref=e745]
+                    - time [ref=e749]: 04:05:47 PM
+                  - generic [ref=e753] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e755]: "[Orquestrador] Worker iniciado: fabrica-critical"
+              - 'option "04:05:47 PM [ntb6b] [Orquestrador] Worker iniciado: fabrica-normal" [ref=e756]':
+                - generic [ref=e757]:
+                  - generic [ref=e758]:
+                    - img [ref=e760]
+                    - time [ref=e764]: 04:05:47 PM
+                  - generic [ref=e768] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e770]: "[Orquestrador] Worker iniciado: fabrica-normal"
+              - 'option "04:05:47 PM [ntb6b] [Orquestrador] Worker iniciado: fabrica-low" [ref=e771]':
+                - generic [ref=e772]:
+                  - generic [ref=e773]:
+                    - img [ref=e775]
+                    - time [ref=e779]: 04:05:47 PM
+                  - generic [ref=e783] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e785]: "[Orquestrador] Worker iniciado: fabrica-low"
+              - 'option "04:05:47 PM [ntb6b] [Orquestrador] Worker iniciado: producao-critical" [ref=e786]':
+                - generic [ref=e787]:
+                  - generic [ref=e788]:
+                    - img [ref=e790]
+                    - time [ref=e794]: 04:05:47 PM
+                  - generic [ref=e798] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e800]: "[Orquestrador] Worker iniciado: producao-critical"
+              - 'option "04:05:47 PM [ntb6b] [Orquestrador] Worker iniciado: producao-normal" [ref=e801]':
+                - generic [ref=e802]:
+                  - generic [ref=e803]:
+                    - img [ref=e805]
+                    - time [ref=e809]: 04:05:47 PM
+                  - generic [ref=e813] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e815]: "[Orquestrador] Worker iniciado: producao-normal"
+              - 'option "04:05:47 PM [ntb6b] [Orquestrador] Worker iniciado: producao-low" [ref=e816]':
+                - generic [ref=e817]:
+                  - generic [ref=e818]:
+                    - img [ref=e820]
+                    - time [ref=e824]: 04:05:47 PM
+                  - generic [ref=e828] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e830]: "[Orquestrador] Worker iniciado: producao-low"
+              - 'option "04:05:47 PM [ntb6b] [Orquestrador] Worker de resultados iniciado: results" [ref=e831]':
+                - generic [ref=e832]:
+                  - generic [ref=e833]:
+                    - img [ref=e835]
+                    - time [ref=e839]: 04:05:47 PM
+                  - generic [ref=e843] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e845]: "[Orquestrador] Worker de resultados iniciado: results"
+              - option "04:05:47 PM [ntb6b]" [ref=e846]:
+                - generic [ref=e847]:
+                  - generic [ref=e848]:
+                    - img [ref=e850]
+                    - time [ref=e854]: 04:05:47 PM
+                  - generic [ref=e858] [cursor=pointer]: "[ntb6b]"
+              - option "04:05:47 PM [ntb6b] [Orquestrador] Aguardando eventos nas filas BullMQ..." [ref=e860]:
+                - generic [ref=e861]:
+                  - generic [ref=e862]:
+                    - img [ref=e864]
+                    - time [ref=e868]: 04:05:47 PM
+                  - generic [ref=e872] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e874]: "[Orquestrador] Aguardando eventos nas filas BullMQ..."
+              - option "04:05:47 PM [ntb6b] [Orquestrador] Servidor em http://0.0.0.0:10000" [ref=e875]:
+                - generic [ref=e876]:
+                  - generic [ref=e877]:
+                    - img [ref=e879]
+                    - time [ref=e883]: 04:05:47 PM
+                  - generic [ref=e887] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e890]:
+                  - text: "[Orquestrador] Servidor em"
+                  - link "http://0.0.0.0:10000" [ref=e891] [cursor=pointer]:
+                    - /url: http://0.0.0.0:10000
+              - 'option "04:05:47 PM [ntb6b] [Orquestrador] Webhook WhatsApp (Z-API): POST /webhook/whatsapp" [ref=e892]':
+                - generic [ref=e893]:
+                  - generic [ref=e894]:
+                    - img [ref=e896]
+                    - time [ref=e900]: 04:05:47 PM
+                  - generic [ref=e904] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e906]: "[Orquestrador] Webhook WhatsApp (Z-API): POST /webhook/whatsapp"
+              - option "04:05:47 PM [ntb6b] [Redis] Conectado" [ref=e907]:
+                - generic [ref=e908]:
+                  - generic [ref=e909]:
+                    - img [ref=e911]
+                    - time [ref=e915]: 04:05:47 PM
+                  - generic [ref=e919] [cursor=pointer]: "[ntb6b]"
+                - generic [ref=e921]: "[Redis] Conectado"
+              - option "04:05:52 PM ==> Your service is live 🎉" [ref=e922]:
+                - generic [ref=e924]:
+                  - img [ref=e926]
+                  - time [ref=e930]: 04:05:52 PM
+                - generic [ref=e933]: ==> Your service is live 🎉
+              - option "04:05:52 PM ==>" [ref=e934]:
+                - generic [ref=e936]:
+                  - img [ref=e938]
+                  - time [ref=e942]: 04:05:52 PM
+                - generic [ref=e945]: ==>
+              - option "04:05:52 PM ==> ///////////////////////////////////////////////////////////" [ref=e946]:
+                - generic [ref=e948]:
+                  - img [ref=e950]
+                  - time [ref=e954]: 04:05:52 PM
+                - generic [ref=e957]: ==> ///////////////////////////////////////////////////////////
+              - option "04:05:52 PM ==>" [ref=e958]:
+                - generic [ref=e960]:
+                  - img [ref=e962]
+                  - time [ref=e966]: 04:05:52 PM
+                - generic [ref=e969]: ==>
+              - option "04:05:52 PM ==> Available at your primary URL https://enemeop-orchestrator.onrender.com" [ref=e970]:
+                - generic [ref=e972]:
+                  - img [ref=e974]
+                  - time [ref=e978]: 04:05:52 PM
+                - generic [ref=e981]:
+                  - text: ==>
+                  - generic [ref=e982]:
+                    - text: Available at your primary URL
+                    - link "https://enemeop-orchestrator.onrender.com" [ref=e983] [cursor=pointer]:
+                      - /url: https://enemeop-orchestrator.onrender.com
+              - option "04:05:52 PM ==>" [ref=e984]:
+                - generic [ref=e986]:
+                  - img [ref=e988]
+                  - time [ref=e992]: 04:05:52 PM
+                - generic [ref=e995]: ==>
+              - option "04:05:52 PM ==> ///////////////////////////////////////////////////////////" [ref=e996]:
+                - generic [ref=e998]:
+                  - img [ref=e1000]
+                  - time [ref=e1004]: 04:05:52 PM
+                - generic [ref=e1007]: ==> ///////////////////////////////////////////////////////////
+    - generic:
+      - generic:
+        - generic: "0 services selected:"
+        - generic:
+          - generic:
+            - button:
+              - generic:
+                - img
+              - generic: Move
+              - img
+      - generic:
+        - separator
+        - generic:
+          - generic:
+            - button:
+              - img
+  - iframe [ref=e1016]:
+    
