@@ -65,11 +65,9 @@ export function criarWorker<T>(
     concurrency: 2,
     // Sem jobs na fila: aguarda 30s antes de re-poll (padrão é 5ms → 200x/seg)
     drainDelay: 30000,
-    settings: {
-      // Verifica jobs travados a cada 5 minutos (padrão 30s)
-      stalledInterval: 300000,
-      // Lock dura 60s (padrão 30s), reduz renovações
-      lockDuration: 60000,
-    },
+    // Verifica jobs travados a cada 5 minutos (padrão 30s)
+    stalledInterval: 300000,
+    // Lock dura 60s (padrão 30s), reduz renovações
+    lockDuration: 60000,
   })
 }
