@@ -24,6 +24,7 @@ const SERVICE_KEY    = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
 const WORKSPACE_ID   = Deno.env.get('SAAS_WORKSPACE_ID') ?? '';
 const SUPABASE_URL   = Deno.env.get('SUPABASE_URL') ?? '';
 const IG_TOKEN       = Deno.env.get('META_IG_ACCESS_TOKEN') ?? '';
+const PAGE_TOKEN     = Deno.env.get('META_PAGE_ACCESS_TOKEN') ?? '';
 const WHATSAPP_NUM   = '5511912808282';
 
 // ── Catálogo de produtos (extraído de enemeopflores.com.br) ──────────────────
@@ -488,7 +489,9 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
   console.log(`[webhook-meta] ${canalId} | fase: ${conversa.fase}→${novaFase} | resposta: ${respostaFinal.slice(0, 60)}`);
 
   try {
-    const res = await fetch(`https://graph.facebook.com/v19.0/me/messages?access_token=${igToken}`, {
+    const pageToken = PAGE_TOKEN || await buscarConfigDB('META_PAGE_ACCESS_TOKEN');
+    const dmToken = pageToken || igToken;
+    const res = await fetch(`https://graph.facebook.com/v21.0/me/messages?access_token=${dmToken}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -498,6 +501,7 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
       }),
     });
     if (!res.ok) console.error(`[webhook-meta] erro DM: ${await res.text()}`);
+    else console.log(`[webhook-meta] DM enviado para ${canalId}`);
   } catch (e) { console.error(`[webhook-meta] falha DM: ${e}`); }
 }
 
