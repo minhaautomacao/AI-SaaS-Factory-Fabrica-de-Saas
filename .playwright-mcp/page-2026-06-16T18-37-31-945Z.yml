@@ -1,0 +1,537 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - banner [ref=e4]:
+        - generic [ref=e5]:
+          - link "Render" [ref=e7] [cursor=pointer]:
+            - /url: /
+            - img "Render" [ref=e8]
+          - button "M My Workspace" [ref=e12] [cursor=pointer]:
+            - generic [ref=e13]:
+              - generic [ref=e14]: M
+              - generic "My Workspace" [ref=e15]
+              - img [ref=e16]
+        - generic [ref=e20]:
+          - navigation [ref=e21]:
+            - list [ref=e22]:
+              - listitem [ref=e23]:
+                - link "enemeop-orchestrator" [ref=e24] [cursor=pointer]:
+                  - /url: /web/srv-d8km0f3eo5us73ekgs50
+                  - img [ref=e25]
+                  - generic [ref=e27]: enemeop-orchestrator
+                - button [ref=e30] [cursor=pointer]:
+                  - img [ref=e31]
+          - button "Search Ctrl + K" [ref=e34] [cursor=pointer]:
+            - img [ref=e36]
+            - text: Search
+            - generic [ref=e38]:
+              - img [ref=e39]
+              - generic [ref=e41]: Ctrl
+              - generic [ref=e42]: +
+              - generic [ref=e43]: K
+              - generic [ref=e44]: K
+        - generic [ref=e45]:
+          - button "New" [ref=e47] [cursor=pointer]:
+            - generic [ref=e48]:
+              - img [ref=e49]
+              - generic [ref=e51]: New
+          - button "Upgrade" [ref=e53] [cursor=pointer]:
+            - generic [ref=e54]:
+              - img [ref=e55]
+              - generic [ref=e57]: Upgrade
+          - button "Help" [ref=e59] [cursor=pointer]:
+            - img "Help" [ref=e60]
+          - button "Gravatar for minhaautomacao10@gmail.com" [ref=e65] [cursor=pointer]:
+            - img "Gravatar for minhaautomacao10@gmail.com" [ref=e67]
+      - generic [ref=e68]:
+        - navigation [ref=e69]:
+          - separator [ref=e70]
+          - generic [ref=e71]:
+            - generic [ref=e72]:
+              - link "Dashboard" [ref=e73] [cursor=pointer]:
+                - /url: /
+                - img [ref=e74]
+                - generic [ref=e76]: Dashboard
+              - generic [ref=e77]:
+                - img [ref=e78]
+                - generic [ref=e80]: enemeop-orchestrator
+            - generic [ref=e81]:
+              - list [ref=e82]:
+                - listitem [ref=e83]:
+                  - link "Events" [ref=e84] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/events
+                    - img [ref=e85]
+                    - generic [ref=e92]: Events
+                - listitem [ref=e93]:
+                  - link "Settings" [ref=e94] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/settings
+                    - img [ref=e95]
+                    - generic [ref=e98]: Settings
+              - generic [ref=e99]:
+                - generic [ref=e100]: Monitor
+                - list "Monitor" [ref=e101]:
+                  - listitem [ref=e102]:
+                    - link "Logs" [ref=e103] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/logs
+                      - img [ref=e104]
+                      - generic [ref=e109]: Logs
+                  - listitem [ref=e110]:
+                    - link "Metrics" [ref=e111] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/metrics
+                      - img [ref=e112]
+                      - generic [ref=e114]: Metrics
+              - generic [ref=e115]:
+                - generic [ref=e116]: Manage
+                - list "Manage" [ref=e117]:
+                  - listitem [ref=e118]:
+                    - link "Environment" [ref=e119] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/env
+                      - img [ref=e120]
+                      - generic [ref=e124]: Environment
+                  - listitem [ref=e125]:
+                    - link "Shell" [ref=e126] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/shell
+                      - img [ref=e127]
+                      - generic [ref=e131]:
+                        - generic [ref=e132]: Shell
+                        - status [ref=e135]:
+                          - img [ref=e136]
+                  - listitem [ref=e138]:
+                    - link "Scaling" [ref=e139] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/scaling
+                      - img [ref=e140]
+                      - generic [ref=e145]:
+                        - generic [ref=e146]: Scaling
+                        - status [ref=e149]:
+                          - img [ref=e150]
+                  - listitem [ref=e152]:
+                    - link "Previews" [ref=e153] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/previews
+                      - img [ref=e154]
+                      - generic [ref=e158]: Previews
+                  - listitem [ref=e159]:
+                    - link "Disk" [ref=e160] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/disks
+                      - img [ref=e161]
+                      - generic [ref=e166]:
+                        - generic [ref=e167]: Disk
+                        - status [ref=e170]:
+                          - img [ref=e171]
+                  - listitem [ref=e173]:
+                    - link "One-Off Jobs" [ref=e174] [cursor=pointer]:
+                      - /url: /web/srv-d8km0f3eo5us73ekgs50/jobs
+                      - img [ref=e175]
+                      - generic [ref=e181]:
+                        - generic [ref=e182]: One-Off Jobs
+                        - status [ref=e185]:
+                          - img [ref=e186]
+          - generic [ref=e204]:
+            - button "Collapse items" [expanded] [ref=e205] [cursor=pointer]:
+              - img [ref=e206]
+            - list "Footer navigation" [ref=e208]:
+              - listitem [ref=e209]:
+                - link "Changelog" [ref=e210] [cursor=pointer]:
+                  - /url: https://render.com/changelog
+                  - img [ref=e211]
+                  - generic [ref=e216]: Changelog
+              - listitem [ref=e217]:
+                - link "Invite a friend" [ref=e218] [cursor=pointer]:
+                  - /url: /invites
+                  - img [ref=e219]
+                  - generic [ref=e221]: Invite a friend
+              - listitem [ref=e222]:
+                - button "Contact support" [ref=e223] [cursor=pointer]:
+                  - img [ref=e224]
+                  - generic [ref=e228]: Contact support
+            - link "Render Status" [ref=e230] [cursor=pointer]:
+              - /url: https://status.render.com
+              - img [ref=e231]
+              - generic [ref=e233]: Render Status
+        - main [ref=e236]:
+          - generic [ref=e239]:
+            - alert [ref=e240]:
+              - generic [ref=e242]:
+                - img [ref=e244]
+                - generic [ref=e248]:
+                  - generic [ref=e250]: Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.
+                  - link "Upgrade now" [ref=e252] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/plan
+            - alert [ref=e301]:
+              - generic [ref=e303]:
+                - img [ref=e305]
+                - generic [ref=e311]:
+                  - text: Newer logs may be unavailable because a recent deploy failed. View
+                  - link "recent events." [ref=e312] [cursor=pointer]:
+                    - /url: /web/srv-d8km0f3eo5us73ekgs50/events
+            - generic [ref=e254]:
+              - button "Application logs" [ref=e257] [cursor=pointer]:
+                - generic [ref=e258]:
+                  - generic [ref=e259]: Application logs
+                  - img [ref=e260]
+              - generic [ref=e263]:
+                - generic [ref=e264]: Search
+                - generic [ref=e266]:
+                  - img [ref=e267]
+                  - searchbox "Search" [ref=e269]
+              - button "Live tail" [ref=e272] [cursor=pointer]:
+                - generic [ref=e275]:
+                  - img [ref=e276]
+                  - generic [ref=e278]: Live tail
+                  - img [ref=e279]
+              - button "Maximize" [ref=e285] [cursor=pointer]:
+                - img "Maximize" [ref=e286]
+              - button "Options" [ref=e291] [cursor=pointer]:
+                - img "Options" [ref=e292]
+            - generic:
+              - button "Return to Bottom":
+                - img
+            - listbox [ref=e296]:
+              - generic [ref=e313]: Jun 16
+              - 'option "03:18:14 PM [lvtld] hostname: ''legal-imp-145889.upstash.io''" [ref=e314]':
+                - generic [ref=e315]:
+                  - generic [ref=e316]:
+                    - img [ref=e318]
+                    - time [ref=e322]: 03:18:14 PM
+                  - generic [ref=e326] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e328]: "hostname: 'legal-imp-145889.upstash.io'"
+              - 'option "03:18:14 PM [lvtld] }" [ref=e329]':
+                - generic [ref=e330]:
+                  - generic [ref=e331]:
+                    - img [ref=e333]
+                    - time [ref=e337]: 03:18:14 PM
+                  - generic [ref=e341] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e343]: "}"
+              - 'option "03:18:14 PM [lvtld] Error: getaddrinfo ENOTFOUND legal-imp-145889.upstash.io" [ref=e344]':
+                - generic [ref=e345]:
+                  - generic [ref=e346]:
+                    - img [ref=e348]
+                    - time [ref=e352]: 03:18:14 PM
+                  - generic [ref=e356] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e358]: "Error: getaddrinfo ENOTFOUND legal-imp-145889.upstash.io"
+              - 'option "03:18:14 PM [lvtld] at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {" [ref=e359]':
+                - generic [ref=e360]:
+                  - generic [ref=e361]:
+                    - img [ref=e363]
+                    - time [ref=e367]: 03:18:14 PM
+                  - generic [ref=e371] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e373]: "at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {"
+              - 'option "03:18:14 PM [lvtld] errno: -3008," [ref=e374]':
+                - generic [ref=e375]:
+                  - generic [ref=e376]:
+                    - img [ref=e378]
+                    - time [ref=e382]: 03:18:14 PM
+                  - generic [ref=e386] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e388]: "errno: -3008,"
+              - 'option "03:18:14 PM [lvtld] code: ''ENOTFOUND''," [ref=e389]':
+                - generic [ref=e390]:
+                  - generic [ref=e391]:
+                    - img [ref=e393]
+                    - time [ref=e397]: 03:18:14 PM
+                  - generic [ref=e401] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e403]: "code: 'ENOTFOUND',"
+              - 'option "03:18:14 PM [lvtld] syscall: ''getaddrinfo''," [ref=e404]':
+                - generic [ref=e405]:
+                  - generic [ref=e406]:
+                    - img [ref=e408]
+                    - time [ref=e412]: 03:18:14 PM
+                  - generic [ref=e416] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e418]: "syscall: 'getaddrinfo',"
+              - 'option "03:18:14 PM [lvtld] Error: getaddrinfo ENOTFOUND legal-imp-145889.upstash.io" [ref=e419]':
+                - generic [ref=e420]:
+                  - generic [ref=e421]:
+                    - img [ref=e423]
+                    - time [ref=e427]: 03:18:14 PM
+                  - generic [ref=e431] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e433]: "Error: getaddrinfo ENOTFOUND legal-imp-145889.upstash.io"
+              - 'option "03:18:14 PM [lvtld] at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {" [ref=e434]':
+                - generic [ref=e435]:
+                  - generic [ref=e436]:
+                    - img [ref=e438]
+                    - time [ref=e442]: 03:18:14 PM
+                  - generic [ref=e446] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e448]: "at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {"
+              - 'option "03:18:14 PM [lvtld] errno: -3008," [ref=e449]':
+                - generic [ref=e450]:
+                  - generic [ref=e451]:
+                    - img [ref=e453]
+                    - time [ref=e457]: 03:18:14 PM
+                  - generic [ref=e461] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e463]: "errno: -3008,"
+              - 'option "03:18:14 PM [lvtld] code: ''ENOTFOUND''," [ref=e464]':
+                - generic [ref=e465]:
+                  - generic [ref=e466]:
+                    - img [ref=e468]
+                    - time [ref=e472]: 03:18:14 PM
+                  - generic [ref=e476] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e478]: "code: 'ENOTFOUND',"
+              - 'option "03:18:14 PM [lvtld] syscall: ''getaddrinfo''," [ref=e479]':
+                - generic [ref=e480]:
+                  - generic [ref=e481]:
+                    - img [ref=e483]
+                    - time [ref=e487]: 03:18:14 PM
+                  - generic [ref=e491] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e493]: "syscall: 'getaddrinfo',"
+              - 'option "03:18:14 PM [lvtld] hostname: ''legal-imp-145889.upstash.io''" [ref=e494]':
+                - generic [ref=e495]:
+                  - generic [ref=e496]:
+                    - img [ref=e498]
+                    - time [ref=e502]: 03:18:14 PM
+                  - generic [ref=e506] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e508]: "hostname: 'legal-imp-145889.upstash.io'"
+              - 'option "03:18:14 PM [lvtld] }" [ref=e509]':
+                - generic [ref=e510]:
+                  - generic [ref=e511]:
+                    - img [ref=e513]
+                    - time [ref=e517]: 03:18:14 PM
+                  - generic [ref=e521] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e523]: "}"
+              - 'option "03:18:14 PM [lvtld] Error: getaddrinfo ENOTFOUND legal-imp-145889.upstash.io" [ref=e524]':
+                - generic [ref=e525]:
+                  - generic [ref=e526]:
+                    - img [ref=e528]
+                    - time [ref=e532]: 03:18:14 PM
+                  - generic [ref=e536] [cursor=pointer]: "[lvtld]"
+                - generic [ref=e538]: "Error: getaddrinfo ENOTFOUND legal-imp-145889.upstash.io"
+              - option "03:18:16 PM ==> Your service is live 🎉" [ref=e539]:
+                - generic [ref=e541]:
+                  - img [ref=e543]
+                  - time [ref=e547]: 03:18:16 PM
+                - generic [ref=e550]: ==> Your service is live 🎉
+              - option "03:18:17 PM ==>" [ref=e551]:
+                - generic [ref=e553]:
+                  - img [ref=e555]
+                  - time [ref=e559]: 03:18:17 PM
+                - generic [ref=e562]: ==>
+              - option "03:18:17 PM ==> ///////////////////////////////////////////////////////////" [ref=e563]:
+                - generic [ref=e565]:
+                  - img [ref=e567]
+                  - time [ref=e571]: 03:18:17 PM
+                - generic [ref=e574]: ==> ///////////////////////////////////////////////////////////
+              - option "03:18:17 PM ==>" [ref=e575]:
+                - generic [ref=e577]:
+                  - img [ref=e579]
+                  - time [ref=e583]: 03:18:17 PM
+                - generic [ref=e586]: ==>
+              - option "03:18:17 PM ==> Available at your primary URL https://enemeop-orchestrator.onrender.com" [ref=e587]:
+                - generic [ref=e589]:
+                  - img [ref=e591]
+                  - time [ref=e595]: 03:18:17 PM
+                - generic [ref=e598]:
+                  - text: ==>
+                  - generic [ref=e599]:
+                    - text: Available at your primary URL
+                    - link "https://enemeop-orchestrator.onrender.com" [ref=e600] [cursor=pointer]:
+                      - /url: https://enemeop-orchestrator.onrender.com
+              - option "03:18:17 PM ==>" [ref=e601]:
+                - generic [ref=e603]:
+                  - img [ref=e605]
+                  - time [ref=e609]: 03:18:17 PM
+                - generic [ref=e612]: ==>
+              - option "03:18:17 PM ==> ///////////////////////////////////////////////////////////" [ref=e613]:
+                - generic [ref=e615]:
+                  - img [ref=e617]
+                  - time [ref=e621]: 03:18:17 PM
+                - generic [ref=e624]: ==> ///////////////////////////////////////////////////////////
+              - option "03:22:07 PM ==> Deploying..." [ref=e625]:
+                - generic [ref=e627]:
+                  - img [ref=e629]
+                  - time [ref=e633]: 03:22:07 PM
+                - generic [ref=e636]: ==> Deploying...
+              - option "03:22:07 PM ==> Setting WEB_CONCURRENCY=1 by default, based on available CPUs in the instance" [ref=e637]:
+                - generic [ref=e639]:
+                  - img [ref=e641]
+                  - time [ref=e645]: 03:22:07 PM
+                - generic [ref=e648]: ==> Setting WEB_CONCURRENCY=1 by default, based on available CPUs in the instance
+              - option "03:22:30 PM [j6w79] ==> Running 'node dist/index.js'" [ref=e649]:
+                - generic [ref=e650]:
+                  - generic [ref=e651]:
+                    - img [ref=e653]
+                    - time [ref=e657]: 03:22:30 PM
+                  - generic [ref=e661] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e663]: ==> Running 'node dist/index.js'
+              - option "03:22:33 PM [j6w79] === Fábrica de SaaS — Orquestrador Central ===" [ref=e664]:
+                - generic [ref=e665]:
+                  - generic [ref=e666]:
+                    - img [ref=e668]
+                    - time [ref=e672]: 03:22:33 PM
+                  - generic [ref=e676] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e678]: === Fábrica de SaaS — Orquestrador Central ===
+              - 'option "03:22:33 PM [j6w79] Ambiente: production" [ref=e679]':
+                - generic [ref=e680]:
+                  - generic [ref=e681]:
+                    - img [ref=e683]
+                    - time [ref=e687]: 03:22:33 PM
+                  - generic [ref=e691] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e693]: "Ambiente: production"
+              - 'option "03:22:33 PM [j6w79] Iniciando em: 16/06/2026, 18:22:33" [ref=e694]':
+                - generic [ref=e695]:
+                  - generic [ref=e696]:
+                    - img [ref=e698]
+                    - time [ref=e702]: 03:22:33 PM
+                  - generic [ref=e706] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e708]: "Iniciando em: 16/06/2026, 18:22:33"
+              - option "03:22:33 PM [j6w79]" [ref=e709]:
+                - generic [ref=e710]:
+                  - generic [ref=e711]:
+                    - img [ref=e713]
+                    - time [ref=e717]: 03:22:33 PM
+                  - generic [ref=e721] [cursor=pointer]: "[j6w79]"
+              - 'option "03:22:33 PM [j6w79] [Orquestrador] Worker iniciado: fabrica-critical" [ref=e723]':
+                - generic [ref=e724]:
+                  - generic [ref=e725]:
+                    - img [ref=e727]
+                    - time [ref=e731]: 03:22:33 PM
+                  - generic [ref=e735] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e737]: "[Orquestrador] Worker iniciado: fabrica-critical"
+              - 'option "03:22:33 PM [j6w79] [Orquestrador] Worker iniciado: fabrica-normal" [ref=e738]':
+                - generic [ref=e739]:
+                  - generic [ref=e740]:
+                    - img [ref=e742]
+                    - time [ref=e746]: 03:22:33 PM
+                  - generic [ref=e750] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e752]: "[Orquestrador] Worker iniciado: fabrica-normal"
+              - 'option "03:22:33 PM [j6w79] [Orquestrador] Worker iniciado: fabrica-low" [ref=e753]':
+                - generic [ref=e754]:
+                  - generic [ref=e755]:
+                    - img [ref=e757]
+                    - time [ref=e761]: 03:22:33 PM
+                  - generic [ref=e765] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e767]: "[Orquestrador] Worker iniciado: fabrica-low"
+              - 'option "03:22:33 PM [j6w79] [Orquestrador] Worker iniciado: producao-critical" [ref=e768]':
+                - generic [ref=e769]:
+                  - generic [ref=e770]:
+                    - img [ref=e772]
+                    - time [ref=e776]: 03:22:33 PM
+                  - generic [ref=e780] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e782]: "[Orquestrador] Worker iniciado: producao-critical"
+              - 'option "03:22:33 PM [j6w79] [Orquestrador] Worker iniciado: producao-normal" [ref=e783]':
+                - generic [ref=e784]:
+                  - generic [ref=e785]:
+                    - img [ref=e787]
+                    - time [ref=e791]: 03:22:33 PM
+                  - generic [ref=e795] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e797]: "[Orquestrador] Worker iniciado: producao-normal"
+              - 'option "03:22:33 PM [j6w79] [Orquestrador] Worker iniciado: producao-low" [ref=e798]':
+                - generic [ref=e799]:
+                  - generic [ref=e800]:
+                    - img [ref=e802]
+                    - time [ref=e806]: 03:22:33 PM
+                  - generic [ref=e810] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e812]: "[Orquestrador] Worker iniciado: producao-low"
+              - 'option "03:22:33 PM [j6w79] [Orquestrador] Worker de resultados iniciado: results" [ref=e813]':
+                - generic [ref=e814]:
+                  - generic [ref=e815]:
+                    - img [ref=e817]
+                    - time [ref=e821]: 03:22:33 PM
+                  - generic [ref=e825] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e827]: "[Orquestrador] Worker de resultados iniciado: results"
+              - option "03:22:33 PM [j6w79]" [ref=e828]:
+                - generic [ref=e829]:
+                  - generic [ref=e830]:
+                    - img [ref=e832]
+                    - time [ref=e836]: 03:22:33 PM
+                  - generic [ref=e840] [cursor=pointer]: "[j6w79]"
+              - option "03:22:33 PM [j6w79] [Orquestrador] Aguardando eventos nas filas BullMQ..." [ref=e842]:
+                - generic [ref=e843]:
+                  - generic [ref=e844]:
+                    - img [ref=e846]
+                    - time [ref=e850]: 03:22:33 PM
+                  - generic [ref=e854] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e856]: "[Orquestrador] Aguardando eventos nas filas BullMQ..."
+              - option "03:22:33 PM [j6w79] [Orquestrador] Servidor em http://0.0.0.0:10000" [ref=e857]:
+                - generic [ref=e858]:
+                  - generic [ref=e859]:
+                    - img [ref=e861]
+                    - time [ref=e865]: 03:22:33 PM
+                  - generic [ref=e869] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e872]:
+                  - text: "[Orquestrador] Servidor em"
+                  - link "http://0.0.0.0:10000" [ref=e873] [cursor=pointer]:
+                    - /url: http://0.0.0.0:10000
+              - 'option "03:22:33 PM [j6w79] [Orquestrador] Webhook WhatsApp (Z-API): POST /webhook/whatsapp" [ref=e874]':
+                - generic [ref=e875]:
+                  - generic [ref=e876]:
+                    - img [ref=e878]
+                    - time [ref=e882]: 03:22:33 PM
+                  - generic [ref=e886] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e888]: "[Orquestrador] Webhook WhatsApp (Z-API): POST /webhook/whatsapp"
+              - option "03:22:33 PM [j6w79] [Redis] Conectado" [ref=e889]:
+                - generic [ref=e890]:
+                  - generic [ref=e891]:
+                    - img [ref=e893]
+                    - time [ref=e897]: 03:22:33 PM
+                  - generic [ref=e901] [cursor=pointer]: "[j6w79]"
+                - generic [ref=e903]: "[Redis] Conectado"
+              - option "03:22:38 PM ==> Your service is live 🎉" [ref=e904]:
+                - generic [ref=e906]:
+                  - img [ref=e908]
+                  - time [ref=e912]: 03:22:38 PM
+                - generic [ref=e915]: ==> Your service is live 🎉
+              - option "03:22:38 PM ==>" [ref=e916]:
+                - generic [ref=e918]:
+                  - img [ref=e920]
+                  - time [ref=e924]: 03:22:38 PM
+                - generic [ref=e927]: ==>
+              - option "03:22:38 PM ==> ///////////////////////////////////////////////////////////" [ref=e928]:
+                - generic [ref=e930]:
+                  - img [ref=e932]
+                  - time [ref=e936]: 03:22:38 PM
+                - generic [ref=e939]: ==> ///////////////////////////////////////////////////////////
+              - option "03:22:38 PM ==>" [ref=e940]:
+                - generic [ref=e942]:
+                  - img [ref=e944]
+                  - time [ref=e948]: 03:22:38 PM
+                - generic [ref=e951]: ==>
+              - option "03:22:38 PM ==> Available at your primary URL https://enemeop-orchestrator.onrender.com" [ref=e952]:
+                - generic [ref=e954]:
+                  - img [ref=e956]
+                  - time [ref=e960]: 03:22:38 PM
+                - generic [ref=e963]:
+                  - text: ==>
+                  - generic [ref=e964]:
+                    - text: Available at your primary URL
+                    - link "https://enemeop-orchestrator.onrender.com" [ref=e965] [cursor=pointer]:
+                      - /url: https://enemeop-orchestrator.onrender.com
+              - option "03:22:38 PM ==>" [ref=e966]:
+                - generic [ref=e968]:
+                  - img [ref=e970]
+                  - time [ref=e974]: 03:22:38 PM
+                - generic [ref=e977]: ==>
+              - option "03:22:38 PM ==> ///////////////////////////////////////////////////////////" [ref=e978]:
+                - generic [ref=e980]:
+                  - img [ref=e982]
+                  - time [ref=e986]: 03:22:38 PM
+                - generic [ref=e989]: ==> ///////////////////////////////////////////////////////////
+              - option "03:27:40 PM ==> Detected service running on port 10000" [ref=e990]:
+                - generic [ref=e992]:
+                  - img [ref=e994]
+                  - time [ref=e998]: 03:27:40 PM
+                - generic [ref=e1001]: ==> Detected service running on port 10000
+              - 'option "03:27:40 PM ==> Docs on specifying a port: https://render.com/docs/web-services#port-binding" [ref=e1002]':
+                - generic [ref=e1004]:
+                  - img [ref=e1006]
+                  - time [ref=e1010]: 03:27:40 PM
+                - generic [ref=e1013]:
+                  - text: ==>
+                  - generic [ref=e1014]:
+                    - text: "Docs on specifying a port:"
+                    - link "https://render.com/docs/web-services#port-binding" [ref=e1015] [cursor=pointer]:
+                      - /url: https://render.com/docs/web-services#port-binding
+    - generic:
+      - generic:
+        - generic: "0 services selected:"
+        - generic:
+          - generic:
+            - button:
+              - generic:
+                - img
+              - generic: Move
+              - img
+      - generic:
+        - separator
+        - generic:
+          - generic:
+            - button:
+              - img
+  - iframe [ref=e1016]:
+    

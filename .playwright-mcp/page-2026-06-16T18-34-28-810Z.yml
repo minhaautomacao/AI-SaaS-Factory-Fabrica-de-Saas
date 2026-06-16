@@ -1,0 +1,162 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e373]:
+    - complementary [ref=e375]:
+      - generic [ref=e376]:
+        - img [ref=e377]
+        - button [ref=e378] [cursor=pointer]:
+          - img [ref=e379]
+      - navigation [ref=e382]:
+        - generic [ref=e383]: Menu principal
+        - list [ref=e384]:
+          - listitem [ref=e385] [cursor=pointer]:
+            - link "Dashboard" [ref=e386]:
+              - /url: /app
+              - img [ref=e388]
+              - generic [ref=e390]: Dashboard
+          - listitem [ref=e391] [cursor=pointer]:
+            - link "Instâncias Web" [ref=e393]:
+              - /url: /app/instances
+              - img [ref=e395]
+              - generic [ref=e398]: Instâncias Web
+          - listitem [ref=e399] [cursor=pointer]:
+            - link "Dados da conta" [ref=e400]:
+              - /url: /app/account
+              - img [ref=e402]
+              - generic [ref=e404]: Dados da conta
+          - listitem [ref=e405] [cursor=pointer]:
+            - link "Segurança" [ref=e406]:
+              - /url: /app/security
+              - img [ref=e408]
+              - generic [ref=e410]: Segurança
+          - listitem [ref=e411] [cursor=pointer]:
+            - generic [ref=e412]:
+              - img [ref=e414]
+              - generic [ref=e416]: Configurações Beta
+        - generic [ref=e417]:
+          - generic [ref=e418]: Ajuda
+          - list [ref=e419]:
+            - listitem [ref=e420] [cursor=pointer]:
+              - link "WhatsApp" [ref=e421]:
+                - /url: https://api.whatsapp.com/send?phone=554431421722&text=Ol%C3%A1,%20gostaria%20de%20falar%20com%20o%20suporte%20da%20Z-API
+                - img [ref=e423]
+                - generic [ref=e425]: WhatsApp
+            - listitem [ref=e426] [cursor=pointer]:
+              - link "Github" [ref=e427]:
+                - /url: https://github.com/z-api
+                - img [ref=e429]
+                - generic [ref=e431]: Github
+            - listitem [ref=e432] [cursor=pointer]:
+              - link "Documentação" [ref=e433]:
+                - /url: https://developer.z-api.io
+                - img [ref=e435]
+                - generic [ref=e437]: Documentação
+            - listitem [ref=e438] [cursor=pointer]:
+              - link "Postman Collection" [ref=e439]:
+                - /url: https://www.postman.com/docs-z-api/z-api-s-public-workspace/collection/gwri249/z-api-collection
+                - img [ref=e441]
+                - generic [ref=e443]: Postman Collection
+    - generic [ref=e444]:
+      - generic [ref=e445]:
+        - generic [ref=e446]:
+          - generic [ref=e447]:
+            - heading "Visualização de Instância web" [level=1] [ref=e448]
+            - paragraph [ref=e449]: Visualização da instância web Enemeop Flores
+          - generic [ref=e453]:
+            - img [ref=e454]
+            - textbox "Busque aqui..." [ref=e457]
+        - generic [ref=e458]:
+          - button [ref=e460] [cursor=pointer]:
+            - img [ref=e461]
+          - button "ANTONIO CARLOS RODRIGUES SOUSA Cliente ACRS" [ref=e466] [cursor=pointer]:
+            - generic [ref=e467]:
+              - generic [ref=e468]: ANTONIO CARLOS RODRIGUES SOUSA
+              - generic [ref=e469]: Cliente
+            - img [ref=e470]
+            - generic [ref=e472]: ACRS
+      - generic [ref=e474]:
+        - list [ref=e475] [cursor=pointer]:
+          - listitem [ref=e476]: Dados da instância web
+          - listitem [ref=e477]: Webhooks e configurações gerais
+          - listitem [ref=e478]: Pagamentos
+        - generic [ref=e481]:
+          - generic [ref=e483]:
+            - button [ref=e484] [cursor=pointer]:
+              - img [ref=e485]
+            - list:
+              - listitem:
+                - generic:
+                  - img
+                - text: Reiniciar
+              - listitem:
+                - generic:
+                  - img
+                - text: Desconectar
+              - listitem:
+                - generic:
+                  - img
+                - text: Tags da Instância
+          - generic [ref=e489]:
+            - generic [ref=e490]:
+              - generic [ref=e491]:
+                - generic [ref=e492]:
+                  - button "Enemeop Flores" [ref=e494] [cursor=pointer]:
+                    - heading "Enemeop Flores" [level=2] [ref=e495]
+                    - img [ref=e496]
+                  - generic [ref=e499]: Criado em 15/06/2026
+                - generic [ref=e500]:
+                  - heading "Credenciais" [level=3] [ref=e501]
+                  - generic [ref=e502]:
+                    - text: API da instância
+                    - generic [ref=e503]:
+                      - code [ref=e504]: https://api.z-api.io/instances/3F4B4EBCBF57819B4C199EBEB687E09D/token/23A3BBB9EBFED71EB53E773B/send-text
+                      - button [ref=e505] [cursor=pointer]:
+                        - img [ref=e506]
+                  - generic [ref=e510]:
+                    - generic [ref=e511]:
+                      - generic [ref=e513]: ID da instância
+                      - generic [ref=e514]:
+                        - code [ref=e515]: 3F4B4EBCBF57819B4C199EBEB687E09D
+                        - button [ref=e516] [cursor=pointer]:
+                          - img [ref=e517]
+                    - generic [ref=e520]:
+                      - generic [ref=e521]:
+                        - generic [ref=e522]: Token da instância
+                        - button "Gerar novo token" [ref=e523] [cursor=pointer]
+                      - generic [ref=e524]:
+                        - code [ref=e525]: 23A3BBB9EBFED71EB53E773B
+                        - button [ref=e526] [cursor=pointer]:
+                          - img [ref=e527]
+              - generic [ref=e531]:
+                - generic [ref=e532]:
+                  - heading "Assinatura" [level=3] [ref=e533]
+                  - generic [ref=e534]:
+                    - generic [ref=e535]:
+                      - generic [ref=e536]: "Status atual:"
+                      - generic [ref=e537]: PAGA
+                    - generic [ref=e538]: •
+                    - generic [ref=e539]:
+                      - generic [ref=e540]: Renova em
+                      - generic [ref=e541]: Calculando...
+                    - generic [ref=e542]: •
+                    - button "Atualizar dados de pagamento" [ref=e543] [cursor=pointer]:
+                      - img [ref=e544]
+                      - text: Atualizar dados de pagamento
+                    - generic [ref=e547]: •
+                    - button "Cancelar assinatura" [ref=e548] [cursor=pointer]
+                  - button "Atualizar dados de pagamento" [ref=e549] [cursor=pointer]:
+                    - img [ref=e550]
+                    - generic [ref=e553]: Atualizar dados de pagamento
+                  - button "Cancelar assinatura" [ref=e554] [cursor=pointer]
+                - paragraph [ref=e555]: Ao cancelar uma assinatura, a instância permanecerá ativa até o final do período já pago. Não haverá estorno do valor referente ao ciclo atual.
+            - generic [ref=e557]:
+              - heading "Conectado" [level=1] [ref=e558]
+              - paragraph [ref=e559]: Sua instância está conectada, você já pode enviar mensagens via API
+              - img [ref=e564]
+              - generic [ref=e566]: "Versão: Multi Device"
+  - alert [ref=e269]: Z-API - Visualização de Instância web
+  - button [ref=e367] [cursor=pointer]:
+    - img [ref=e368]
+  - generic:
+    - iframe
+  - iframe [ref=e371]:
+    
