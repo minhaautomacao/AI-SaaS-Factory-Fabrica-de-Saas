@@ -1,0 +1,302 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - banner [ref=e6]:
+        - generic [ref=e7]:
+          - generic [ref=e8]:
+            - link "Supabase" [ref=e9] [cursor=pointer]:
+              - /url: /dashboard/org/fwlgmqkqauqaaopbnquj
+              - img "Supabase" [ref=e10]
+            - generic [ref=e11]:
+              - img [ref=e13]
+              - generic [ref=e15]:
+                - link "Minha Automação Free" [ref=e16] [cursor=pointer]:
+                  - /url: /dashboard/org/fwlgmqkqauqaaopbnquj
+                  - img [ref=e17]
+                  - generic [ref=e27]: Minha Automação
+                  - generic [ref=e28]: Free
+                - button [ref=e29] [cursor=pointer]:
+                  - img [ref=e31]
+              - generic [ref=e34]:
+                - img [ref=e36]
+                - generic [ref=e38]:
+                  - link "enemeop-flores" [ref=e39] [cursor=pointer]:
+                    - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl
+                    - img [ref=e40]
+                    - generic "enemeop-flores" [ref=e43]
+                  - button [ref=e44] [cursor=pointer]:
+                    - img [ref=e46]
+                - img [ref=e50]
+                - generic [ref=e52]:
+                  - link "main Production" [ref=e53] [cursor=pointer]:
+                    - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl
+                    - generic "main" [ref=e54]
+                    - generic [ref=e55]: Production
+                  - button [ref=e56] [cursor=pointer]:
+                    - img [ref=e58]
+            - button "Connect" [ref=e62] [cursor=pointer]:
+              - img [ref=e64]
+              - generic [ref=e66]: Connect
+          - generic [ref=e67]:
+            - generic [ref=e69] [cursor=pointer]: Feedback
+            - generic [ref=e70]:
+              - button "Search..." [ref=e71]:
+                - generic [ref=e72]:
+                  - img [ref=e73]
+                  - paragraph [ref=e76]: Search...
+                - generic [ref=e78]: Ctrl K
+              - button "Help" [ref=e79] [cursor=pointer]:
+                - generic [ref=e80]:
+                  - img [ref=e81]
+                  - generic [ref=e84]: Help
+              - button "Advisor Center" [ref=e86] [cursor=pointer]:
+                - generic [ref=e87]:
+                  - img [ref=e88]
+                  - generic [ref=e90]: Advisor Center
+              - button "SQL Editor" [ref=e91] [cursor=pointer]:
+                - generic [ref=e92]:
+                  - img [ref=e93]
+                  - generic [ref=e95]: SQL Editor
+              - button "AI Assistant" [ref=e96] [cursor=pointer]:
+                - generic [ref=e97]:
+                  - img [ref=e100]
+                  - generic [ref=e103]: AI Assistant
+            - button "minhaautomacao" [ref=e104] [cursor=pointer]:
+              - img "minhaautomacao" [ref=e106]
+      - generic [ref=e107]:
+        - generic [ref=e111]:
+          - list [ref=e114]:
+            - generic [ref=e115]:
+              - listitem [ref=e116]:
+                - link "Project Overview" [ref=e117] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl
+                  - img [ref=e118]
+                  - generic: Project Overview
+              - listitem [ref=e120]:
+                - link "Table Editor" [ref=e121] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/editor
+                  - img [ref=e122]
+                  - generic: Table Editor
+              - listitem [ref=e124]:
+                - link "SQL Editor" [ref=e125] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/sql
+                  - img [ref=e126]
+                  - generic: SQL Editor
+            - generic [ref=e128]:
+              - listitem [ref=e129]:
+                - link "Database" [ref=e130] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/database/schemas
+                  - img [ref=e131]
+                  - generic: Database
+              - listitem [ref=e135]:
+                - link "Authentication" [ref=e136] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/auth/users
+                  - img [ref=e137]
+                  - generic: Authentication
+              - listitem [ref=e139]:
+                - link "Storage" [ref=e140] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/storage/files
+                  - img [ref=e141]
+                  - generic: Storage
+              - listitem [ref=e143]:
+                - link "Edge Functions" [ref=e144] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions
+                  - img [ref=e145]
+                  - generic: Edge Functions
+              - listitem [ref=e150]:
+                - link "Realtime" [ref=e151] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/realtime/inspector
+                  - img [ref=e152]
+                  - generic: Realtime
+            - generic [ref=e154]:
+              - listitem [ref=e156]:
+                - link "Advisors" [ref=e157] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/advisors/security
+                  - img [ref=e158]
+                  - generic: Advisors
+              - listitem [ref=e160]:
+                - link "Observability" [ref=e161] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/observability
+                  - img [ref=e162]
+                  - generic: Observability
+              - listitem [ref=e170]:
+                - link "Logs" [ref=e171] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/logs/explorer
+                  - img [ref=e172]
+                  - generic: Logs
+              - listitem [ref=e173]:
+                - link "Integrations" [ref=e174] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/integrations
+                  - img [ref=e175]
+                  - generic: Integrations
+            - listitem [ref=e179]:
+              - link "Project Settings" [ref=e180] [cursor=pointer]:
+                - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/settings/general
+                - img [ref=e181]
+                - generic: Project Settings
+          - button "Sidebar control" [ref=e186] [cursor=pointer]:
+            - img [ref=e188]
+        - generic [ref=e195]:
+          - generic [ref=e199]:
+            - heading "Edge Functions" [level=4] [ref=e201]
+            - menu "Sidebar" [disabled] [ref=e204]:
+              - list [ref=e205]:
+                - generic [ref=e208]:
+                  - generic [ref=e212]: Manage
+                  - generic [ref=e213]:
+                    - link "Functions" [disabled] [ref=e214] [cursor=pointer]:
+                      - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions
+                      - menuitem "Functions" [disabled] [ref=e215]:
+                        - generic [ref=e219]: Functions
+                    - link "Secrets" [disabled] [ref=e220] [cursor=pointer]:
+                      - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions/secrets
+                      - menuitem "Secrets" [disabled] [ref=e221]:
+                        - generic [ref=e225]: Secrets
+          - separator [disabled] [ref=e226]:
+            - img [ref=e228]
+          - main [ref=e237]:
+            - generic [ref=e238]:
+              - generic [ref=e239]:
+                - navigation "breadcrumb" [ref=e241]:
+                  - list [ref=e242]:
+                    - listitem [ref=e243]:
+                      - link "Edge Functions" [ref=e244] [cursor=pointer]:
+                        - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions
+                    - listitem [ref=e245]:
+                      - img [ref=e246]
+                    - listitem [ref=e248]:
+                      - link "webhook-meta" [ref=e249] [cursor=pointer]:
+                        - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions/webhook-meta
+                - generic [ref=e251]:
+                  - generic [ref=e252]:
+                    - heading "webhook-meta" [level=1] [ref=e253]
+                    - generic [ref=e254]:
+                      - generic [ref=e255]:
+                        - generic [ref=e256]: https://gftnjvdvzgjkhwxnxnwl.supabase.co/functions/v1/webhook-meta
+                        - button [ref=e257] [cursor=pointer]:
+                          - img [ref=e259]
+                      - button "2 minutes ago" [ref=e262]:
+                        - img [ref=e263]
+                        - generic [ref=e266]: 2 minutes ago
+                  - generic [ref=e268]:
+                    - link "Docs" [ref=e269] [cursor=pointer]:
+                      - /url: https://supabase.com/docs/guides/functions
+                      - img [ref=e271]
+                      - generic [ref=e274]: Docs
+                    - button "Download" [ref=e275] [cursor=pointer]:
+                      - img [ref=e277]
+                      - generic [ref=e280]: Download
+                    - button "Test" [ref=e281] [cursor=pointer]:
+                      - img [ref=e283]
+                      - generic [ref=e286]: Test
+                - navigation [ref=e289]:
+                  - menu [ref=e290]:
+                    - listitem [ref=e291]:
+                      - link "Overview" [ref=e292] [cursor=pointer]:
+                        - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions/webhook-meta
+                    - listitem [ref=e293]:
+                      - link "Invocations" [ref=e294] [cursor=pointer]:
+                        - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions/webhook-meta/invocations
+                    - listitem [ref=e295]:
+                      - link "Logs" [ref=e296] [cursor=pointer]:
+                        - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions/webhook-meta/logs
+                    - listitem [ref=e297]:
+                      - link "Code" [ref=e298] [cursor=pointer]:
+                        - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions/webhook-meta/code
+                    - listitem [ref=e299]:
+                      - link "Settings" [ref=e300] [cursor=pointer]:
+                        - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions/webhook-meta/details
+              - generic [ref=e301]:
+                - generic [ref=e302]:
+                  - heading "Function configuration" [level=2] [ref=e306]
+                  - generic [ref=e309]:
+                    - generic [ref=e312]:
+                      - group [ref=e314]:
+                        - textbox [ref=e315]: webhook-meta
+                      - generic [ref=e316]:
+                        - generic [ref=e318]: Name
+                        - generic [ref=e319]: Your slug and endpoint URL will remain the same
+                    - generic [ref=e322]:
+                      - generic [ref=e323]:
+                        - switch [checked] [ref=e324] [cursor=pointer]
+                        - checkbox [checked]
+                      - generic [ref=e325]:
+                        - generic [ref=e327]: Verify JWT with legacy secret
+                        - generic [ref=e328]:
+                          - paragraph [ref=e329]:
+                            - text: Requires a JWT signed
+                            - emphasis [ref=e330]: only by the legacy secret
+                            - text: in the
+                            - code [ref=e331]: Authorization
+                            - text: header. The
+                            - code [ref=e332]: anon
+                            - text: key satisfies this.
+                          - paragraph [ref=e333]: "Recommended: OFF with JWT and custom auth logic in your function code."
+                    - generic [ref=e334]:
+                      - button "Save changes" [disabled]:
+                        - generic: Save changes
+                - generic [ref=e335]:
+                  - heading "Invoke function" [level=2] [ref=e339]
+                  - generic [ref=e343]:
+                    - tablist [ref=e344]:
+                      - tab "cURL" [selected] [ref=e345]
+                      - tab "JavaScript" [ref=e346]
+                      - tab "Swift" [ref=e347]
+                      - tab "Flutter" [ref=e348]
+                      - tab "Python" [ref=e349]
+                      - button "Show anon key" [ref=e350] [cursor=pointer]:
+                        - generic [ref=e351]: Show anon key
+                    - tabpanel "cURL" [ref=e352]:
+                      - generic [ref=e353]:
+                        - code [ref=e355]: "curl -L -X POST 'https://gftnjvdvzgjkhwxnxnwl.supabase.co/functions/v1/webhook-meta' \\ -H 'Authorization: Bearer SUPABASE_ANON_KEY' \\ -H 'Content-Type: application/json' \\ --data '{\"name\":\"Functions\"}'"
+                        - button [ref=e357] [cursor=pointer]:
+                          - img [ref=e359]
+                - generic [ref=e362]:
+                  - heading "Develop locally" [level=2] [ref=e366]
+                  - generic [ref=e369]:
+                    - generic [ref=e371]:
+                      - text: "> 1. Download the function"
+                      - generic [ref=e373]:
+                        - generic [ref=e374]: $
+                        - generic [ref=e375]:
+                          - generic [ref=e376]: supabase functions download webhook-meta
+                          - button [ref=e377]:
+                            - img [ref=e378]
+                    - generic [ref=e382]:
+                      - text: "> Deploy a new version"
+                      - generic [ref=e384]:
+                        - generic [ref=e385]: $
+                        - generic [ref=e386]:
+                          - generic [ref=e387]: supabase functions deploy webhook-meta
+                          - button [ref=e388]:
+                            - img [ref=e389]
+                    - generic [ref=e393]:
+                      - text: "> Delete the function"
+                      - generic [ref=e395]:
+                        - generic [ref=e396]: $
+                        - generic [ref=e397]:
+                          - generic [ref=e398]: supabase functions delete webhook-meta
+                          - button [ref=e399]:
+                            - img [ref=e400]
+                - generic [ref=e403]:
+                  - heading "Delete function" [level=2] [ref=e407]
+                  - alert [ref=e409]:
+                    - img [ref=e410]
+                    - heading "Once your function is deleted, it can no longer be restored" [level=5] [ref=e412]
+                    - paragraph [ref=e414]: Make sure you have made a backup if you want to restore your edge function
+                    - button "Delete edge function" [ref=e416] [cursor=pointer]:
+                      - generic [ref=e417]: Delete edge function
+    - generic [ref=e421]:
+      - generic:
+        - img "Background pattern"
+      - generic [ref=e422]:
+        - button "Close banner" [ref=e424] [cursor=pointer]:
+          - img [ref=e426]
+        - generic [ref=e429]:
+          - generic [ref=e430]: Notice
+          - generic [ref=e431]:
+            - paragraph [ref=e432]: We've updated our Terms of Service
+            - paragraph [ref=e433]: Updates define the responsibilities of both you and Supabase in the use of AI.
+          - button "Learn more" [ref=e434] [cursor=pointer]:
+            - generic [ref=e435]: Learn more
+  - alert [ref=e436]: webhook-meta | Settings | Edge Functions | Supabase
