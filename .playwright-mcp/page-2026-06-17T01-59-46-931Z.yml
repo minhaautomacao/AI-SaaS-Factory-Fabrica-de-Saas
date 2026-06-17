@@ -1,0 +1,422 @@
+- generic:
+  - generic:
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic [ref=e1]:
+      - generic [ref=e39]:
+        - generic [ref=e40]:
+          - link "Logotipo da Meta" [ref=e42] [cursor=pointer]:
+            - /url: /?no_redirect=true
+            - img "Logotipo da Meta" [ref=e44]
+          - tablist [ref=e53]:
+            - link "Meus apps" [ref=e54] [cursor=pointer]:
+              - /url: /apps/
+              - generic [ref=e57]: Meus apps
+            - link "Ações necessárias" [ref=e58] [cursor=pointer]:
+              - /url: /required-actions/
+              - generic [ref=e61]: Ações necessárias
+            - tab "Documentos" [ref=e62] [cursor=pointer]:
+              - generic [ref=e65]: Documentos
+            - tab "Ferramentas" [ref=e67] [cursor=pointer]:
+              - generic [ref=e70]: Ferramentas
+            - tab "Suporte" [ref=e72] [cursor=pointer]:
+              - generic [ref=e75]: Suporte
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e84]: Entrada da pesquisa
+            - textbox "Entrada da pesquisa" [ref=e95]:
+              - /placeholder: Pesquisar...
+          - link "1" [ref=e98] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e101]:
+              - generic [ref=e103]: "1"
+              - status [ref=e104]: Número de notificações
+          - link "Facebook" [ref=e107] [cursor=pointer]:
+            - /url: "#"
+            - img "Facebook" [ref=e112]
+      - generic [ref=e8]:
+        - generic [ref=e113]:
+          - generic [ref=e116]:
+            - generic [ref=e119]:
+              - generic [ref=e125]: Searchable selector for all apps
+              - combobox "Searchable selector for all apps enemeopflores" [ref=e130] [cursor=pointer]:
+                - generic [ref=e135]:
+                  - generic:
+                    - generic: enemeopflores
+            - navigation [ref=e139]:
+              - list [ref=e140]:
+                - listitem [ref=e141]:
+                  - button "Painel" [ref=e143] [cursor=pointer]
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Painel
+                - listitem [ref=e149]:
+                  - button "Ações necessárias" [ref=e151] [cursor=pointer]
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Ações necessárias
+                - listitem [ref=e157]:
+                  - button "Casos de uso" [ref=e159] [cursor=pointer]
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Casos de uso
+                - listitem [ref=e165]:
+                  - generic [ref=e166]:
+                    - button "Login do Facebook para Empresas" [ref=e168] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Login do Facebook para Empresas
+                          - button "Alternar grupo" [disabled] [ref=e174]:
+                            - generic [ref=e177]: Alternar grupo
+                  - list [ref=e180]:
+                    - generic [ref=e181]:
+                      - button "Configurações" [ref=e183] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Configurações
+                    - generic [ref=e188]:
+                      - button "Início rápido" [ref=e190] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Início rápido
+                    - generic [ref=e195]:
+                      - button "Configurações" [ref=e197] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Configurações
+                    - generic [ref=e202]:
+                      - button "Modelos" [ref=e204] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Modelos
+                - listitem [ref=e209]:
+                  - generic [ref=e210]:
+                    - button "Analisar" [ref=e212] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Analisar
+                          - button "Alternar grupo" [disabled] [ref=e218]:
+                            - generic [ref=e221]: Alternar grupo
+                  - list [ref=e224]:
+                    - generic [ref=e225]:
+                      - button "Teste" [ref=e227] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Teste
+                    - generic [ref=e232]:
+                      - button "Verificação" [ref=e234] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Verificação
+                    - generic [ref=e239]:
+                      - button "Análise do app" [ref=e241] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Análise do app
+                - listitem [ref=e246]:
+                  - button "Publicar" [ref=e248] [cursor=pointer]
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Publicar
+          - generic [ref=e254]:
+            - navigation [ref=e255]:
+              - list [ref=e256]:
+                - listitem [ref=e257]:
+                  - generic [ref=e258]:
+                    - button "Configurações do app" [ref=e260] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Configurações do app
+                          - button "Alternar grupo" [disabled] [ref=e266]:
+                            - generic [ref=e269]: Alternar grupo
+                  - list [ref=e272]:
+                    - generic [ref=e273]:
+                      - button "Básico" [ref=e275] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Básico
+                    - generic [ref=e280]:
+                      - button "Avançado" [ref=e282] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Avançado
+                - listitem [ref=e287]:
+                  - generic [ref=e288]:
+                    - button "Funções do app" [ref=e290] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Funções do app
+                          - button "Alternar grupo" [disabled] [ref=e296]:
+                            - generic [ref=e299]: Alternar grupo
+                  - list [ref=e302]:
+                    - generic [ref=e303]:
+                      - button "Funções" [ref=e305] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Funções
+                    - generic [ref=e310]:
+                      - button "Usuários de teste" [ref=e312] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Usuários de teste
+                - listitem [ref=e317]:
+                  - button "Caixa de Entrada de alertas" [ref=e319] [cursor=pointer]:
+                    - generic [ref=e326]:
+                      - generic [ref=e328]: "3"
+                      - status [ref=e329]: 3 alertas não lidos
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Caixa de Entrada de alertas
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: "3"
+                            - status: 3 alertas não lidos
+            - separator [ref=e330]
+            - generic [ref=e331]:
+              - button "Registro de atividades" [ref=e332] [cursor=pointer]:
+                - generic [ref=e335]: Registro de atividades
+              - button "Ajuda" [ref=e339] [cursor=pointer]:
+                - generic [ref=e342]: Ajuda
+              - button "Abrir/fechar navegação lateral" [ref=e347] [cursor=pointer]:
+                - generic [ref=e350]: Abrir/fechar navegação lateral
+        - generic [ref=e361]:
+          - navigation "Trilha de navegação" [ref=e363]:
+            - generic [ref=e364]:
+              - link "Casos de uso" [ref=e365] [cursor=pointer]:
+                - /url: "#"
+                - heading "Casos de uso" [level=4] [ref=e366]
+              - heading "Personalizar" [level=4] [ref=e368]
+          - generic [ref=e372]:
+            - heading "Personalizar caso de uso" [level=2] [ref=e373]
+            - generic [ref=e374]: Personalize as configurações e permissões de casos de uso para que seu app funcione do jeito que você quer.
+          - generic [ref=e375]:
+            - generic [ref=e381]:
+              - generic [ref=e383]:
+                - generic [ref=e389]: Alterar caso de uso
+                - combobox "Alterar caso de uso API do Instagram" [ref=e394] [cursor=pointer]:
+                  - generic [ref=e403]: API do Instagram
+              - navigation "Principais casos de uso" [ref=e410]:
+                - list [ref=e411]:
+                  - generic [ref=e412]:
+                    - listitem [ref=e414]:
+                      - button "Permissões e recursos" [ref=e416] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Permissões e recursos
+                    - listitem [ref=e420]:
+                      - button "Configuração da API com login do Instagram" [ref=e422] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Configuração da API com login do Instagram
+                    - listitem [ref=e426]:
+                      - button "Auxiliar de integração de API" [ref=e428] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Auxiliar de integração de API
+                    - listitem [ref=e432]:
+                      - button "Configuração da API com login do Facebook" [ref=e434] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Configuração da API com login do Facebook
+                    - listitem [ref=e438]:
+                      - button "Webhooks" [ref=e440] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Webhooks
+            - generic [ref=e447]:
+              - generic [ref=e451]:
+                - generic [ref=e455]:
+                  - generic [ref=e458]:
+                    - heading "Conheça a API do Instagram" [level=3] [ref=e462]
+                    - button "Fechar" [expanded] [ref=e464] [cursor=pointer]:
+                      - generic [ref=e467]: Fechar
+                  - generic "Conheça a API do Instagram" [ref=e470]:
+                    - generic [ref=e471]:
+                      - generic [ref=e472]:
+                        - text: Comece a usar a API do Instagram para criar, publicar e gerenciar conteúdo. Para interagir com os usuários, você também pode enviar e receber mensagens, além de moderar comentários.
+                        - link "Saiba mais" [ref=e473] [cursor=pointer]:
+                          - /url: https://developers.facebook.com/docs/instagram-platform/
+                      - generic [ref=e474]:
+                        - text: Se quiser rastrear hashtags e insights, troque para o
+                        - link "API setup with Facebook login." [ref=e475] [cursor=pointer]:
+                          - /url: "#"
+                - generic [ref=e483]:
+                  - generic [ref=e484]:
+                    - heading "Nome do app do Instagram" [level=4] [ref=e485]
+                    - generic [ref=e486]: enemeopflores-IG
+                  - generic [ref=e487]:
+                    - heading "ID do app do Instagram" [level=4] [ref=e488]
+                    - link "1403719804436572" [ref=e489] [cursor=pointer]:
+                      - /url: "#"
+                      - button "1403719804436572" [active] [ref=e490]:
+                        - generic [ref=e491]: "1403719804436572"
+                  - generic [ref=e494]:
+                    - generic [ref=e500]: Chave secreta do app do Instagram
+                    - generic [ref=e504]:
+                      - generic [ref=e505]:
+                        - generic [ref=e511]: Chave secreta do app do Instagram
+                        - textbox "Chave secreta do app do Instagram Chave secreta do app do Instagram" [disabled] [ref=e520]: •••••••••
+                      - button "Mostrar" [ref=e522] [cursor=pointer]:
+                        - generic [ref=e526]: Mostrar
+                - generic [ref=e529]:
+                  - generic [ref=e532]:
+                    - heading "1. Adicionar permissões obrigatórias de mensagens" [level=3] [ref=e536]
+                    - button "Fechar" [expanded] [ref=e538] [cursor=pointer]:
+                      - generic [ref=e541]: Fechar
+                  - generic "1. Adicionar permissões obrigatórias de mensagens" [ref=e544]:
+                    - generic [ref=e545]:
+                      - text: Add the listed content management and messaging permissions to create, publish and manage content and respond directly to messages and send private replies with your Instagram account. Manage these and optional permissions and features on the Permissions and features page.
+                      - list [ref=e546]:
+                        - listitem [ref=e547]: instagram_business_basic
+                        - listitem [ref=e548]: instagram_business_manage_comments
+                        - listitem [ref=e549]: instagram_business_manage_messages
+                    - button "Go to permissions and features" [ref=e551] [cursor=pointer]:
+                      - generic [ref=e555]: Go to permissions and features
+                - generic [ref=e562]:
+                  - generic [ref=e565]:
+                    - heading "2. Gerar tokens de acesso" [level=3] [ref=e566]
+                    - generic [ref=e567]: Adicione uma conta do Instagram para gerar tokens de acesso e configurar assinaturas de webhook.
+                  - button "Ver mais" [ref=e569] [cursor=pointer]:
+                    - generic [ref=e572]: Ver mais
+                - generic [ref=e581]:
+                  - generic [ref=e584]:
+                    - heading "3. Configurar webhooks" [level=3] [ref=e585]
+                    - generic [ref=e586]:
+                      - text: Configure um URL de webhook personalizado ou use serviços para configurar um ponto de extremidade.
+                      - link "Saiba mais" [ref=e587] [cursor=pointer]:
+                        - /url: https://developers.facebook.com/docs/instagram/platform/instagram-api/webhooks/
+                  - button "Ver mais" [ref=e589] [cursor=pointer]:
+                    - generic [ref=e592]: Ver mais
+                - generic [ref=e598]:
+                  - generic [ref=e601]:
+                    - generic [ref=e604]:
+                      - heading "4. Configurar o login da empresa no Instagram" [level=3] [ref=e605]
+                      - generic [ref=e606]: Forneça uma forma segura para as empresas concederem permissões ao seu app para acessar dados com o login da empresa.
+                    - button "Fechar" [expanded] [ref=e608] [cursor=pointer]:
+                      - generic [ref=e611]: Fechar
+                  - generic "4. Configurar o login da empresa no Instagram" [ref=e614]:
+                    - button "Configurar" [ref=e615] [cursor=pointer]:
+                      - generic [ref=e619]: Configurar
+                - generic [ref=e626]:
+                  - generic [ref=e629]:
+                    - heading "5. Concluir a análise do app" [level=3] [ref=e630]
+                    - generic [ref=e631]: Para que seu app acesse dados ao vivo, o Instagram exige que o processo de análise do app seja realizado. Passe por esse processo para ter acesso avançado às permissões do Instagram. Envie sua solicitação de análise do app quando tudo estiver pronto.
+                  - button "Ver mais" [ref=e633] [cursor=pointer]:
+                    - generic [ref=e636]: Ver mais
+              - generic [ref=e642]:
+                - generic [ref=e648]:
+                  - heading "Sobre" [level=3] [ref=e649]
+                  - text: Com a API do Instagram, você pode criar apps para publicar e interagir com conteúdo, além de gerenciar mensagens no Instagram...
+                  - link "Ver mais" [ref=e650] [cursor=pointer]:
+                    - /url: "#"
+                - generic [ref=e656]:
+                  - heading "Recursos" [level=3] [ref=e657]
+                  - generic [ref=e658]:
+                    - generic [ref=e659]: Reunimos alguns recursos para ajudar você a começar a construir.
+                    - link "Documentação para desenvolvedores" [ref=e660] [cursor=pointer]:
+                      - /url: https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/
+                      - generic [ref=e663]: Documentação para desenvolvedores
+                    - link "Introdução" [ref=e664] [cursor=pointer]:
+                      - /url: https://developers.facebook.com/docs/instagram/platform/instagram-api/get-started/
+                      - generic [ref=e667]: Introdução
+                    - link "Comunidade de desenvolvedores" [ref=e668] [cursor=pointer]:
+                      - /url: /community
+                      - generic [ref=e671]: Comunidade de desenvolvedores
+                - generic [ref=e677]:
+                  - heading "Políticas" [level=3] [ref=e678]
+                  - generic [ref=e679]:
+                    - generic [ref=e680]: Ao acessar e usar a plataforma, você concorda com os Termos da Plataforma da Meta e as Políticas do Desenvolvedor, bem como com todos os outros termos e políticas aplicáveis.
+                    - link "Política da plataforma" [ref=e681] [cursor=pointer]:
+                      - /url: https://developers.facebook.com/terms/#messengerplatform
+                      - generic [ref=e684]: Política da plataforma
+                    - link "Política do desenvolvedor" [ref=e685] [cursor=pointer]:
+                      - /url: https://developers.facebook.com/devpolicy/
+                      - generic [ref=e688]: Política do desenvolvedor
+  - alert [ref=e691]:
+    - generic [ref=e692]:
+      - generic [ref=e696]: ID do app copiado para a área de transferência
+      - button "Fechar" [ref=e698] [cursor=pointer]:
+        - generic [ref=e701]: Fechar
+  - generic [ref=e708]: Copiar ID do app do Instagram para a área de transferência
