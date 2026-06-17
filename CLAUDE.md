@@ -2,67 +2,190 @@
 
 ## O que é este projeto
 
-Sistema automatizado para criar, configurar e lançar SaaS completos usando IA. O objetivo é ter um processo repetível que vai desde a ideia até o produto online em produção, usando apenas ferramentas gratuitas ou de baixo custo.
+Sistema automatizado para criar, configurar e lançar SaaS completos usando IA.
+Repositório: `minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas`
+SaaS em produção: **Enemeop Flores** (`minhaautomacao/enemeop-flores`)
+
+---
+
+## PROTOCOLO OBRIGATÓRIO DE INÍCIO DE SESSÃO
+
+**Nunca comece programando.** Sempre execute esta sequência primeiro:
+
+```
+1. Ler CLAUDE.md (este arquivo)
+2. Ler docs/SESSION_STATE.md
+3. Ler últimos 20 blocos de docs/CHANGELOG_AGENT.md
+4. Ler docs/GITHUB_SYNC_STATE.md
+5. Ler docs/CREDENTIALS_INDEX.md
+6. Rodar: git status && git branch --show-current && git remote -v
+7. Apresentar diagnóstico objetivo
+8. Informar próximo passo — sem recomeçar configuração já feita
+```
+
+Este protocolo é ativado automaticamente pelo comando `RETOMAR`.
+
+---
+
+## PROTOCOLO OBRIGATÓRIO DE ENCERRAMENTO / CHECKPOINT
+
+Ao final de toda tarefa relevante ou quando solicitado `CHECKPOINT`:
+
+```
+1. Atualizar docs/SESSION_STATE.md com estado atual
+2. Registrar entrada em docs/CHANGELOG_AGENT.md
+3. Atualizar docs/GITHUB_SYNC_STATE.md com git status atual
+4. Listar arquivos alterados nesta sessão
+5. Listar comandos críticos executados
+6. Registrar pendências abertas
+7. Rodar git status
+8. Sugerir mensagem de commit — não commitar sem autorização explícita
+```
+
+---
+
+## COMANDOS OPERACIONAIS
+
+### `RETOMAR`
+Executa o Protocolo de Início de Sessão completo (passos 1–8 acima).
+
+### `CHECKPOINT`
+Executa o Protocolo de Encerramento completo.
+
+### `SYNC_GITHUB`
+```
+1. Localizar repositórios Git no workspace
+2. Rodar: git status, git branch --show-current, git remote -v
+3. Verificar se há arquivos sensíveis prontos para commit
+4. Atualizar docs/GITHUB_SYNC_STATE.md
+5. Sugerir plano de commit/push por repositório
+6. NÃO executar push sem autorização explícita
+```
+
+### `ATUALIZAR_CREDENCIAL <nome_do_serviço>`
+```
+1. Identificar onde a credencial deve ficar (.credentials/<categoria>/.env)
+2. Garantir que o arquivo está fora do Git (.gitignore)
+3. Atualizar placeholder no arquivo de credenciais se necessário
+4. Atualizar docs/CREDENTIALS_INDEX.md (status + data, nunca o valor)
+5. Validar se a aplicação reconhece a credencial sem imprimir o valor
+6. Registrar em docs/CHANGELOG_AGENT.md
+7. NUNCA exibir o segredo no terminal ou em arquivos versionados
+```
+
+---
 
 ## Contexto e objetivos
 
-- **Público-alvo**: Empreendedores e desenvolvedores brasileiros que querem criar produtos digitais com baixo investimento inicial
+- **Público-alvo**: Empreendedores e desenvolvedores brasileiros
 - **Stack padrão**: React/Next.js + Supabase + Vercel + Cloudflare
-- **Idioma**: Português brasileiro em toda a documentação e interfaces
+- **Idioma**: Português brasileiro em toda documentação e interfaces
 - **Filosofia**: Infraestrutura gratuita no início, escalável conforme necessidade
+
+---
 
 ## Estrutura do projeto
 
 ```
 fabrica-saas/
-├── CLAUDE.md              # Este arquivo — instruções para IA
-├── .claude/               # Configurações do Claude Code
-│   ├── memory/            # Memórias persistentes entre sessões
-│   ├── skills/            # Skills customizados
-│   ├── agents/            # Agentes especializados
-│   └── commands/          # Comandos slash customizados
-├── .credentials/          # Templates de credenciais (nunca commitar valores reais)
-│   ├── financeiro/
-│   ├── marketing/
-│   ├── whatsapp/
-│   ├── logistica/
-│   ├── comunicacao/
-│   └── infraestrutura/
-├── infraestrutura/        # Guias de configuração gratuita
-│   ├── vercel.md
-│   ├── supabase.md
-│   ├── render.md
-│   ├── upstash.md
-│   ├── uptimerobot.md
-│   └── cloudflare.md
-├── templates/             # Estruturas iniciais prontas
-│   ├── saas-base/
-│   ├── saas-b2b/
-│   └── agente-base/
-└── src/                   # Código da aplicação web
+├── CLAUDE.md                    # Este arquivo — fonte de verdade de regras
+├── docs/
+│   ├── SESSION_STATE.md         # Estado atual do projeto
+│   ├── CHANGELOG_AGENT.md       # Histórico cronológico de ações
+│   ├── GITHUB_SYNC_STATE.md     # Status Git de todos os repositórios
+│   └── CREDENTIALS_INDEX.md     # Índice seguro de credenciais (sem valores)
+├── .claude/
+│   ├── memory/                  # Memórias persistentes entre sessões
+│   │   ├── estado-atual.md      # Snapshot rápido para o hook de sync
+│   │   └── MEMORY.md            # Índice de memórias do usuário
+│   ├── settings.json            # MCPs + hooks ativos
+│   └── settings.local.json      # Permissões locais (não versionado)
+├── .credentials/                # Segredos reais — NUNCA commitar
+│   ├── INDICE.md                # Índice commitado (sem valores)
+│   ├── infraestrutura/.env
+│   ├── meta/.env
+│   └── whatsapp/.env
+├── scripts/
+│   ├── sincronizar-repos.ps1    # Hook sync: roda 1x/dia, silencioso depois
+│   └── auto-commit-ao-sair.ps1  # Hook stop: auto-commit ao encerrar
+├── infraestrutura/              # Guias de configuração gratuita
+├── templates/                   # Templates de SaaS prontos
+└── src/                         # Código da aplicação web
 ```
 
-## Regras de desenvolvimento
+---
 
-### O que fazer sempre
-- Escrever código limpo e sem comentários óbvios
-- Usar TypeScript com tipagem estrita
-- Validar inputs do usuário nas bordas do sistema (APIs, formulários)
-- Seguir a estrutura de pastas estabelecida
-- Commitar com mensagens claras em português
+## Regras de uso de tokens
 
-### O que nunca fazer
-- Commitar arquivos `.env` ou credenciais reais
-- Adicionar dependências sem necessidade clara
-- Criar abstrações prematuras para código que só existe uma vez
-- Deixar `console.log` de debug no código de produção
+1. **Nunca repita informações já confirmadas** nesta sessão
+2. **Nunca refaça tarefas já concluídas** — verifique o que existe antes de criar
+3. **Leia arquivos existentes antes de qualquer ação** — nunca assuma conteúdo
+4. **Execute em ordem lógica sem voltar atrás** — planeje antes, execute uma vez
+5. **Respostas curtas e diretas** — sem introduções longas, sem resumos do que acabou de fazer
+6. **Verifique se o arquivo existe** antes de criar (Glob ou Read primeiro)
+7. **Agrupe ações relacionadas** — git add + commit juntos, não separados
+8. **Use `/compact` quando contexto > 50%** — não espere encher
+9. **Para investigações amplas use subagentes** — não explore a codebase inteira sozinho
+10. **Edite apenas o trecho relevante** — nunca reescreva arquivo inteiro por um bloco
+11. **Antes de carregar arquivo longo, leia só o cabeçalho** (offset+limit) para decidir
+12. **Use `git diff --stat` antes de `git diff`** para avaliar tamanho
+13. **Registre decisões uma vez** em CHANGELOG_AGENT.md e referencie depois
+14. **Mantenha SESSION_STATE.md curto** — máx. 60 linhas, objetivo, sem histórico
+
+---
+
+## Regras de uso de MCPs
+
+### MCPs configurados (settings.json do projeto)
+- **Playwright MCP**: `npx @playwright/mcp@latest --headed` — navegação autônoma
+- **Vercel MCP**: `mcp__a0c23722-*` — deploy, logs, projetos
+- **Supabase MCP**: `mcp__a7729ab9-*` — SQL, migrations, edge functions
+
+### Regras de uso
+- **Playwright é o padrão para navegação** — nunca usar extensão Claude in Chrome como alternativa
+- Se ferramentas `mcp__playwright__*` não aparecerem: reiniciar sessão antes de investigar código
+- Playwright snapshots (`browser_snapshot`) nunca commitar — `.playwright-mcp/` está no `.gitignore`
+- Vercel: sempre usar conta **Minha Automação** — nunca conta Essencial Auto Peças
+- Deploy: `npx vercel --prod`
+
+---
+
+## Regras de Git/GitHub
+
+- Commitar antes de qualquer refatoração grande
+- Mensagens de commit em português, descritivas, no imperativo
+- Commitar ao fim da sessão antes de usar `/clear`
+- **Nunca commitar** `.env`, credenciais reais, `.claude/settings.local.json`
+- **Nunca fazer push** sem autorização explícita do usuário
+- Hook `UserPromptSubmit`: sync automático 1x/dia (silencioso nas demais mensagens)
+- Hook `Stop`: auto-commit ao encerrar sessão
+
+### Repositórios locais do projeto
+| Repositório | Caminho local | Branch | Remote |
+|---|---|---|---|
+| Fábrica de SaaS | `C:\Users\NOTEBOOK\Documents\GitHub\AI-SaaS-Factory-Fabrica-de-Saas` | main | github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas |
+| Enemeop Flores | `C:\Users\NOTEBOOK\Documents\GitHub\enemeop-flores` | master | github.com/minhaautomacao/enemeop-flores |
+
+---
+
+## Regras de credenciais
+
+- **Nunca registrar valores reais** em arquivos versionados
+- Toda nova credencial vai em `.credentials/<categoria>/.env`
+- Após inserir credencial: atualizar `docs/CREDENTIALS_INDEX.md` imediatamente
+- Verificar `.gitignore` antes de qualquer `git add`
+- Padrões sempre no `.gitignore`: `.credentials/**/*.env`, `.env*`, `*.key`, `*.pem`, `*.p12`
+- Backup seguro: cofre de senhas (Bitwarden, 1Password) — não em chat, não em email
+- Rotação recomendada: 90 dias para chaves de API
+
+---
 
 ## Stack técnica
 
 ### Frontend
 - **Framework**: React 18 + Vite (ou Next.js para novos projetos)
 - **Estilo**: Tailwind CSS
-- **Estado**: Zustand para estado global, useState para estado local
+- **Estado**: Zustand global, useState local
 - **Formulários**: React Hook Form + Zod
 
 ### Backend
@@ -73,133 +196,31 @@ fabrica-saas/
 
 ### Integrações frequentes
 - **Pagamentos**: Stripe ou Mercado Pago
-- **WhatsApp**: Evolution API (self-hosted) ou Z-API
-- **Email**: Resend (gratuito até 3.000 emails/mês)
-- **Monitoramento**: UptimeRobot (gratuito)
+- **WhatsApp**: Z-API (~R$79/mês) — Evolution/Baileys descartados
+- **Email**: Resend (gratuito até 3.000/mês)
+- **Monitoramento**: UptimeRobot
 
-## Fluxo de trabalho
-
-### Novo SaaS
-1. Copiar template adequado (`saas-base` ou `saas-b2b`)
-2. Configurar Supabase (banco + auth)
-3. Configurar Vercel (deploy + domínio)
-4. Configurar Cloudflare (DNS)
-5. Configurar UptimeRobot (monitoramento)
-6. Implementar features do produto
-
-### Deploy
-```bash
-git push origin main  # Deploy automático via Vercel
-```
-
-### Banco de dados
-- Usar migrations do Supabase para todas as alterações de schema
-- Nunca alterar o banco direto em produção sem migration
-- Testar em branch Supabase antes de aplicar em prod
-
-## Variáveis de ambiente obrigatórias
-
-Todo SaaS criado aqui precisa dessas variáveis configuradas:
-
-```env
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-
-# Auth
-NEXTAUTH_SECRET=
-NEXTAUTH_URL=
-
-# App
-NEXT_PUBLIC_APP_URL=
-NEXT_PUBLIC_APP_NAME=
-```
+---
 
 ## Comandos úteis
 
 ```bash
-# Desenvolvimento local
-npm run dev
-
-# Build de produção
-npm run build
-
-# Verificar tipos TypeScript
-npm run typecheck
-
-# Supabase local
-supabase start
-supabase db diff     # ver mudanças pendentes
-supabase db push     # aplicar migrations
+npm run dev          # Desenvolvimento local
+npm run build        # Build de produção
+npm run typecheck    # Verificar tipos TypeScript
+supabase db diff     # Ver mudanças pendentes
+supabase db push     # Aplicar migrations
+git push origin main # Deploy automático via Vercel
 ```
 
-## Regras de Eficiência de Tokens
-
-Estas regras são obrigatórias em todas as sessões, sem exceção.
-
-1. **Nunca repita informações já confirmadas** — se algo foi dito ou feito nesta sessão, não repita
-2. **Nunca refaça tarefas já concluídas** — sempre verifique o que existe antes de criar qualquer coisa
-3. **Sempre leia os arquivos existentes antes de qualquer ação** — nunca assuma o conteúdo
-4. **Sempre execute em ordem lógica sem voltar atrás** — planeje antes, execute uma vez
-5. **Respostas curtas e diretas** — sem introduções longas, sem resumos do que acabou de fazer
-6. **Antes de criar qualquer arquivo verifique se já existe** — use Glob ou Read antes de Write
-7. **Agrupe ações relacionadas num único comando** — um `git add` + `commit` juntos, não separados
-8. **Nunca peça confirmação para ações já aprovadas como padrão** — commits, leitura de arquivos e criação de agentes são ações padrão aprovadas
-9. **Use `/compact` quando o contexto estiver acima de 50%** — não espere o contexto encher
-10. **Ao iniciar sessão nova leia `estado-atual.md` e continue de onde parou** — sem perguntar o que fazer, sem pedir contexto
-11. **Para investigações amplas use subagentes** — `"Use subagents to investigate [tópico] and report back a summary"` — não explore a codebase inteira sozinho
-12. **Edite apenas o trecho relevante** — nunca reescreva um arquivo inteiro quando só um bloco muda
-
-## Fluxo de Sessão Recomendado
-
-1. Ler `estado-atual.md` e identificar o próximo passo sem perguntar
-2. Definir escopo claro antes de qualquer ação (arquivo + objetivo)
-3. Trabalhar em uma tarefa focada por vez
-4. Commitar no Git ao fim de cada tarefa concluída
-5. Usar `/compact` após cada fase de trabalho
-6. Usar `/clear` ao trocar para contexto completamente diferente
-7. Atualizar `estado-atual.md` quando concluir uma fase significativa
-
-## Checkpoints Git
-
-- Commitar antes de iniciar qualquer refatoração grande
-- Mensagens de commit em português, descritivas e no imperativo
-- Commitar ao fim da sessão antes de usar `/clear`
-- Não commitar `.claude/settings.local.json` (configurações locais)
-- Nunca commitar arquivos `.env` ou credenciais reais
+---
 
 ## Foco do Sprint Atual
 
-> Atualizar a cada sessão com o que está em andamento.
+> Ver docs/SESSION_STATE.md para estado detalhado atualizado.
 
-### Fase atual: Skills e comandos slash
-### Fase 4-5 — Agente Dev + Comandos slash (concluída)
-- [x] `agente-dev.md` — agente que escreve código React/Supabase
-- [x] `configurar-agentes.md`, `configurar-auth.md`, `configurar-infraestrutura.md`
-- [x] `configurar-whatsapp.md`, `pipeline-novo-saas.md`, `setup-pagamentos.md`
-- [x] `/novo-saas`, `/setup-auth`, `/criar-pagina`, `/checklist-deploy`
-
-### Fase 6 — Schema do banco e infraestrutura real (concluída)
-- [x] Migration Supabase para tabelas `leads` e `orchestrator_logs`
-- [x] Configuração BullMQ com Upstash Redis (`orchestrator/`)
-- [x] Documento de teste do fluxo completo (`testes/fluxo-completo.md`)
-
-### Fase 7 — Execução real (CONCLUÍDA em 2026-06-02)
-- [x] App Meta publicado em modo Live
-- [x] Webhook Instagram/Facebook verificado e ativo
-- [x] Token Instagram gerado (@enemeopflores, ID 17841402064363907)
-- [x] Pipeline completo em produção: DM → webhook-meta → orquestrador → captacao-leads → Supabase
-- [x] IA Groq (llama-3.3-70b) classificando intenção dos leads em tempo real
-- [x] Primeiro lead real capturado (canal_id: 9530087693699545)
-
-### Fase 8 — Próximos passos
-- [x] Corrigir bug de login em enemeop-flores.vercel.app — rota /api/auth/signout criada
-- [x] Dashboard de leads — Edge Functions leads-enemeop e conversas-enemeop em ebeapnydeiwuewxatuuw (v4/v3), 368 leads Instagram visíveis
-- [ ] Implementar resposta automática via WhatsApp (agente whatsapp-sdr) — requer Oracle Cloud VM com Baileys
-- [ ] Renovação do token Instagram (~60 dias)
-
-## Contato e repositório
-
-- **GitHub**: https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas
-- **Email**: minhaautomacao10@gmail.com
+### Fase 8 — Em andamento
+- [ ] Agente WhatsApp SDR — resposta automática via Z-API
+- [ ] CNAME Cloudflare para `app.enemeopflores.com.br`
+- [ ] Renovação token Instagram — prazo: 2026-08-01
+- [ ] Bug REQUER_ESCALADA — `orchestrator/src/workers/orquestrador.ts` linhas 38–43
