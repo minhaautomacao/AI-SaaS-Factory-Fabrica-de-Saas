@@ -1,6 +1,0 @@
-- generic [ref=e13]:
-  - generic [ref=e18]:
-    - generic [ref=e19]: Este conteúdo não está disponível no momento
-    - text: "Invalid Scopes: pages_messaging, pages_manage_metadata. This message is only shown to developers. Users of your app will ignore these permissions if present. Please read the documentation for valid permissions at: https://developers.facebook.com/docs/facebook-login/permissions"
-  - button "OK" [ref=e22] [cursor=pointer]:
-    - generic [ref=e25]: OK

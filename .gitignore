@@ -30,3 +30,4 @@ logs
 backups
 .cloudcode/cache
 .claude/settings.local.json
+.playwright-mcp/
