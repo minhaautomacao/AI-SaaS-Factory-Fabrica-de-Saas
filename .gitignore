@@ -31,3 +31,9 @@ backups
 .cloudcode/cache
 .claude/settings.local.json
 .playwright-mcp/
+
+# Skills do Claude Code (gerenciados pelo sistema, nao versionar)
+.claude/skills/hyperframes/
+.claude/skills/hyperframes-cli/
+.claude/skills/hyperframes-media/
+.claude/skills/hyperframes-registry/
