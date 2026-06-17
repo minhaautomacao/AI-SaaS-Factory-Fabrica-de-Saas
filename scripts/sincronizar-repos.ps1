@@ -43,7 +43,7 @@ function Sincronizar-Repo {
   Write-Host "=== $Nome — branch: $branch$aviso ===" -ForegroundColor Cyan
 
   $pullOut = git pull origin $branch 2>$null
-  $linha   = ($pullOut | Select-String -NotMatch "^$") -join " | "
+  $linha   = ($pullOut | Where-Object { $_ -match '\S' }) -join " | "
   if ($linha) { Write-Host "  pull: $linha" -ForegroundColor DarkGray }
 
   $aheadOut = git rev-list --count "origin/$branch..HEAD" 2>$null
