@@ -607,11 +607,10 @@ function extrairEventos(body: Record<string, unknown>): MetaEvento[] {
 // ── Envia ao orquestrador (captura lead em paralelo) ─────────────────────────
 
 async function enviarAoOrquestrador(evento: MetaEvento): Promise<void> {
-  const authKey = FACTORY_SECRET || SERVICE_KEY;
-  if (!authKey || !SUPABASE_URL) return;
+  if (!SERVICE_KEY || !SUPABASE_URL) return;
   await fetch(`${SUPABASE_URL}/functions/v1/orquestrador`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authKey}` },
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SERVICE_KEY}` },
     body: JSON.stringify({
       tipo: 'novo-lead',
       task_id: crypto.randomUUID(),
