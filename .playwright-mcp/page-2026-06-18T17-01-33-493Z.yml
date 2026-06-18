@@ -1,0 +1,21 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content":
+    - /url: "#geist-skip-nav"
+  - main [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e8]: Not Found
+      - generic [ref=e14]:
+        - img [ref=e15]
+        - heading "404" [level=1] [ref=e22]
+        - generic [ref=e24]:
+          - paragraph [ref=e25]:
+            - text: You are logged in as
+            - strong [ref=e26]: minhaautomacao10@gmail.com
+          - button "Sign in as a different user" [ref=e27] [cursor=pointer]:
+            - generic [ref=e28]: Sign in as a different user
+  - alert [ref=e29]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - img
