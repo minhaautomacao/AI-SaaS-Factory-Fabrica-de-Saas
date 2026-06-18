@@ -220,6 +220,12 @@ export async function processarMensagemSDRInstagram(
     await responderInstagram(canalId,
       'Um momento! Vou conectar você com nossa especialista. Ela entrará em contato em instantes pelo número (11) 91280-8282.'
     )
+    await notificarEscalada(
+      randomUUID(),
+      'escalada-instagram',
+      `Cliente Instagram (${canalId}) pediu atendimento humano. Última mensagem: "${textoCliente}"`
+    )
+    console.log(`[SDR/Instagram] Escalada solicitada por ${canalId}`)
     return
   }
 

@@ -159,6 +159,11 @@ async function processarResultado(job: Job<AgentResult>): Promise<void> {
       lead_id: resultado.lead_id,
       pedido_id: resultado.pedido_id,
     })
+    await notificarEscalada(
+      resultado.task_id,
+      `bloqueio-agente-${resultado.agente}`,
+      resultado.bloqueio?.motivo ?? resultado.erro ?? 'Agente bloqueado sem motivo definido'
+    )
     console.warn(
       `[Orquestrador] BLOQUEADO — agente: ${resultado.agente} task: ${resultado.task_id}`,
       resultado.bloqueio?.motivo
