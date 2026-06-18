@@ -1,0 +1,158 @@
+- generic [ref=e3]:
+  - main [ref=e7]:
+    - banner "Cabeçalho principal do site" [ref=e8]:
+      - generic [ref=e9]:
+        - link "Logotipo Cielo - Clique para retornar à página inicial" [ref=e11] [cursor=pointer]:
+          - /url: /site/home
+        - navigation "Ações do cabeçalho" [ref=e12]:
+          - 'button "Trocar estabelecimento. Usuário: ENEMEOP COMERCIO DE FLORES E PRE. Estabelecimento comercial, EC: 2897449769. Tipo do estabelecimento: undefined" [ref=e15] [cursor=pointer]':
+            - generic [ref=e16]:
+              - generic [ref=e17]: 
+              - generic [ref=e18]:
+                - generic "ENEMEOP COMERCIO DE FLORES E PRE" [ref=e19]: Enemeop Comercio De Flores E Pre
+                - group "Enemeop Comercio De Flores E Pre" [ref=e20]:
+                  - generic "Código EC" [ref=e21]: "EC: 2897449769"
+                  - generic "Nome do estabelecimento:"
+            - generic [ref=e24]: 
+          - generic [ref=e25]:
+            - 'button " Minhas notificações: 0 notificações" [ref=e28] [cursor=pointer]':
+              - generic [ref=e29]: 
+              - generic [ref=e30]: "Minhas notificações: 0 notificações"
+            - link "Central de Ajuda - Clique para abrir" [ref=e33] [cursor=pointer]:
+              - /url: javascript:void(0)
+              - generic [ref=e34]: 
+          - button "Menu do usuário" [ref=e37] [cursor=pointer]:
+            - generic [ref=e38]:
+              - generic [ref=e39]:
+                - generic [ref=e40]: CA
+                - generic "Informações do usuário" [ref=e41]:
+                  - generic "CLEAN ESPINDULA AVELAR" [ref=e42]: Olá, Clean
+                  - generic [ref=e43]: Administrador
+              - generic [ref=e44]: 
+            - menu "Opções do usuário":
+              - menu "Menu de opções do usuário":
+                - generic:
+                  - generic: Conta Cielo
+                  - separator
+                - menuitem "Dados do usuário"
+                - menuitem "Dados do estabelecimento"
+                - menuitem "Dados bancários"
+                - menuitem "Gestão de acessos"
+                - menuitem "Autorizações"
+                - menuitem "Sair da conta"
+          - button "Abrir menu de navegação" [ref=e45] [cursor=pointer]:
+            - generic [ref=e46]: 
+  - generic [ref=e48]:
+    - banner [ref=e50]:
+      - generic [ref=e53]:
+        - heading "Link de Pagamento" [level=1] [ref=e54]
+        - paragraph
+    - iframe [active] [ref=e110]:
+      - generic [ref=f146e3]:
+        - list [ref=f146e4]:
+          - listitem [ref=f146e5]:
+            - link "Dashboard" [ref=f146e6] [cursor=pointer]:
+              - /url: /Backoffice/Merchant/Account
+          - listitem [ref=f146e7]:
+            - link "Pedidos" [ref=f146e8] [cursor=pointer]:
+              - /url: /Backoffice/Merchant/Order
+          - listitem [ref=f146e9]:
+            - link "Links de Pagamento" [ref=f146e10] [cursor=pointer]:
+              - /url: /Backoffice/Merchant/Product
+          - listitem [ref=f146e11]:
+            - link "Relatórios" [ref=f146e12] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f146e13]:
+            - link "Suporte" [ref=f146e14] [cursor=pointer]:
+              - /url: "#"
+              - strong [ref=f146e15]: Suporte
+          - listitem [ref=f146e16]:
+            - link "Configurações" [active] [ref=f146e17] [cursor=pointer]:
+              - /url: /Backoffice/Merchant/Configuration/Show
+            - list [ref=f146e68]:
+              - listitem:
+                - link "Configurações da loja" [ref=f146e69] [cursor=pointer]:
+                  - /url: /Backoffice/Merchant/Configuration/Show
+              - listitem:
+                - link "Dados cadastrais" [ref=f146e70] [cursor=pointer]:
+                  - /url: /Backoffice/Merchant/Account/Details
+              - listitem:
+                - link "Alterar senha" [ref=f146e71] [cursor=pointer]:
+                  - /url: /Backoffice/Merchant/Account/ChangePassword
+          - listitem [ref=f146e18]:
+            - link "Personalização" [ref=f146e19] [cursor=pointer]:
+              - /url: /Backoffice/Merchant/LayoutConfiguration
+            - text: Novo
+        - generic [ref=f146e21]:
+          - heading "Dashboard" [level=1] [ref=f146e22]
+          - generic:
+            - generic [ref=f146e23]:
+              - generic [ref=f146e25]:
+                - term [ref=f146e26]: "Status:"
+                - definition [ref=f146e27]: Ativa
+                - term [ref=f146e28]: "Total de vendas:"
+                - definition [ref=f146e29]: "0"
+              - heading "Alertas" [level=2] [ref=f146e30]
+              - list [ref=f146e31]:
+                - listitem [ref=f146e32]:
+                  - link "Você não tem alertas no momento." [ref=f146e33] [cursor=pointer]:
+                    - /url: "#"
+                    - text: Você não tem alertas no momento.
+            - generic [ref=f146e35]:
+              - heading "Volume financeiro" [level=2] [ref=f146e36]
+              - generic "A chart." [ref=f146e54]:
+                - img "A chart." [ref=f146e41]:
+                  - generic [ref=f146e43]: No data
+                - generic "A tabular representation of the data in the chart." [ref=f146e55]:
+                  - table [ref=f146e56]:
+                    - rowgroup [ref=f146e57]:
+                      - row "Task Volume financeiro" [ref=f146e58]:
+                        - columnheader "Task" [ref=f146e59]
+                        - columnheader "Volume financeiro" [ref=f146e60]
+                    - rowgroup
+              - heading "Volume transacional" [level=2] [ref=f146e44]
+              - generic "A chart." [ref=f146e61]:
+                - img "A chart." [ref=f146e49]:
+                  - generic [ref=f146e51]: No data
+                - generic "A tabular representation of the data in the chart." [ref=f146e62]:
+                  - table [ref=f146e63]:
+                    - rowgroup [ref=f146e64]:
+                      - row "Task Volume transacional" [ref=f146e65]:
+                        - columnheader "Task" [ref=f146e66]
+                        - columnheader "Volume transacional" [ref=f146e67]
+                    - rowgroup
+              - emphasis [ref=f146e52]: Valores referentes ao mês 06/2026
+  - generic [ref=e69]:
+    - generic [ref=e71]:
+      - generic [ref=e72]:
+        - heading "Atendimento para Deficientes Auditivos ou de Fala" [level=2] [ref=e73]
+        - generic [ref=e75]:
+          - paragraph [ref=e76]: "Estamos prontos para te atender em libras:"
+          - link "Iniciar atendimento" [ref=e77] [cursor=pointer]:
+            - /url: https://www.cielo.com.br/atendimento-em-libras/
+        - generic [ref=e79]:
+          - paragraph [ref=e80]: "Envie uma mensagem via WhatsApp:"
+          - link "(11) 3003 5525" [ref=e81] [cursor=pointer]:
+            - /url: https://api.whatsapp.com/send/?phone=551130035525&text&app_absent=0
+      - generic [ref=e82]:
+        - heading "Segurança" [level=2] [ref=e83]
+        - paragraph [ref=e86]:
+          - text: Acesse dicas de segurança, proteção de dados, prevenção de fraudes e muito mais!
+          - link "Saiba como se proteger" [ref=e87] [cursor=pointer]:
+            - /url: /site/central-seguranca
+      - generic [ref=e88]:
+        - heading "Ouvidoria" [level=2] [ref=e89]
+        - generic [ref=e91]:
+          - paragraph [ref=e92]: Não consegue resolver em outros canais?
+          - generic [ref=e93] [cursor=pointer]: Abrir um chamado
+        - generic [ref=e95]:
+          - paragraph [ref=e96]: 0800 570 2288
+          - paragraph [ref=e97]: Todas as localidades. Atendimento de segunda a sexta, das 8h às 18h. Exceto Feriados Nacionais.
+      - generic [ref=e99]:
+        - heading "Central de Ajuda" [level=2] [ref=e100]
+        - generic [ref=e102]:
+          - paragraph [ref=e103]: Dúvidas frequentes, tutoriais e materiais de apoio.
+          - generic [ref=e104] [cursor=pointer]: Acessar a Central de ajuda
+    - generic [ref=e106]:
+      - img "Cielo" [ref=e107]
+      - paragraph [ref=e109]: Copyright © 2026 Cielo S.A. - Instituição de Pagamento. Todos os direitos reservados.

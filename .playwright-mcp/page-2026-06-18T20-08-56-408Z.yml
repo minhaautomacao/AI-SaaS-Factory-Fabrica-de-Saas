@@ -1,0 +1,212 @@
+- generic [ref=e3]:
+  - main [ref=e7]:
+    - banner "Cabeçalho principal do site" [ref=e8]:
+      - generic [ref=e9]:
+        - link "Logotipo Cielo - Clique para retornar à página inicial" [ref=e11] [cursor=pointer]:
+          - /url: /site/home
+        - navigation "Ações do cabeçalho" [ref=e12]:
+          - 'button "Trocar estabelecimento. Usuário: ENEMEOP COMERCIO DE FLORES E PRE. Estabelecimento comercial, EC: 2897449769. Tipo do estabelecimento: undefined" [ref=e15] [cursor=pointer]':
+            - generic [ref=e16]:
+              - generic [ref=e17]: 
+              - generic [ref=e18]:
+                - generic "ENEMEOP COMERCIO DE FLORES E PRE" [ref=e19]: Enemeop Comercio De Flores E Pre
+                - group "Enemeop Comercio De Flores E Pre" [ref=e20]:
+                  - generic "Código EC" [ref=e21]: "EC: 2897449769"
+                  - generic "Nome do estabelecimento:"
+            - generic [ref=e24]: 
+          - generic [ref=e25]:
+            - 'button " Minhas notificações: 0 notificações" [ref=e28] [cursor=pointer]':
+              - generic [ref=e29]: 
+              - generic [ref=e30]: "Minhas notificações: 0 notificações"
+            - link "Central de Ajuda - Clique para abrir" [ref=e33] [cursor=pointer]:
+              - /url: javascript:void(0)
+              - generic [ref=e34]: 
+          - button "Menu do usuário" [ref=e37] [cursor=pointer]:
+            - generic [ref=e38]:
+              - generic [ref=e39]:
+                - generic [ref=e40]: CA
+                - generic "Informações do usuário" [ref=e41]:
+                  - generic "CLEAN ESPINDULA AVELAR" [ref=e42]: Olá, Clean
+                  - generic [ref=e43]: Administrador
+              - generic [ref=e44]: 
+            - menu "Opções do usuário":
+              - menu "Menu de opções do usuário":
+                - generic:
+                  - generic: Conta Cielo
+                  - separator
+                - menuitem "Dados do usuário"
+                - menuitem "Dados do estabelecimento"
+                - menuitem "Dados bancários"
+                - menuitem "Gestão de acessos"
+                - menuitem "Autorizações"
+                - menuitem "Sair da conta"
+          - button "Abrir menu de navegação" [ref=e45] [cursor=pointer]:
+            - generic [ref=e46]: 
+  - generic [ref=e49]:
+    - generic [ref=e50]:
+      - generic [ref=e51]:
+        - generic [ref=e52]:
+          - generic [ref=e53]:
+            - link "ir para Início" [ref=e54] [cursor=pointer]:
+              - /url: /minha-conta/home
+              - img [ref=e56]
+              - text: Início
+            - img [ref=e59]
+            - link "ir para E-commerce" [ref=e62] [cursor=pointer]:
+              - /url: /site/ecommerce
+              - text: E-commerce
+          - generic [ref=e63]:
+            - button "Voltar para pagina anterior" [ref=e65] [cursor=pointer]:
+              - img [ref=e67]
+            - heading "Link de Pagamento e Checkout" [level=1] [ref=e70]
+        - button "Ajuda" [ref=e72] [cursor=pointer]:
+          - generic [ref=e73]: Ajuda
+      - generic [ref=e75]:
+        - generic [ref=e76] [cursor=pointer]: Geral
+        - generic [ref=e77] [cursor=pointer]: Configurações
+    - generic [ref=e126]:
+      - complementary [ref=e127]:
+        - navigation "Configurações" [ref=e128]:
+          - list [ref=e129]:
+            - listitem [ref=e130]:
+              - button "Estabelecimento" [ref=e131] [cursor=pointer]:
+                - img [ref=e133]
+                - generic [ref=e136]: Estabelecimento
+            - listitem [ref=e137]:
+              - button "Modo de teste" [ref=e138] [cursor=pointer]:
+                - img [ref=e140]
+                - generic [ref=e142]: Modo de teste
+            - listitem [ref=e143]:
+              - button "Personalização" [ref=e144] [cursor=pointer]:
+                - img [ref=e146]
+                - generic [ref=e149]: Personalização
+            - listitem [ref=e150]:
+              - button "Notificação de pagamentos" [ref=e151] [cursor=pointer]:
+                - img [ref=e153]
+                - generic [ref=e155]: Notificação de pagamentos
+            - listitem [ref=e156]:
+              - button "Formas de pagamento" [ref=e157] [cursor=pointer]:
+                - img [ref=e159]
+                - generic [ref=e161]: Formas de pagamento
+            - listitem [ref=e162]:
+              - button "Antifraude, 3DS e captura" [ref=e163] [cursor=pointer]:
+                - img [ref=e165]
+                - generic [ref=e168]: Antifraude, 3DS e captura
+            - listitem [ref=e169]:
+              - button "Credenciais de API" [ref=e170] [cursor=pointer]:
+                - img [ref=e172]
+                - generic [ref=e177]: Credenciais de API
+      - main [ref=e178]:
+        - generic [ref=e281]:
+          - generic [ref=e282]:
+            - generic [ref=e285]:
+              - paragraph [ref=e286]: Notificação de pagamentos
+              - text: Configure como receberá o aviso de suas transações
+            - generic [ref=e289]:
+              - generic [ref=e291] [cursor=pointer]:
+                - checkbox [checked]
+              - generic [ref=e293]:
+                - generic [ref=e294]: Enviar e‑mail sobre o status da transação ao cliente
+                - generic [ref=e295]: O cliente recebe um e‑mail quando a transação fica pendente, é aprovada ou recusada.
+          - generic [ref=e296]:
+            - paragraph [ref=e300]: Tipo de notificação
+            - generic [ref=e301]:
+              - generic [ref=e302]:
+                - generic [ref=e304] [cursor=pointer]:
+                  - generic [ref=e305]:
+                    - generic [ref=e306]: Receber como POST
+                    - generic [ref=e307]: O método POST é usado para enviar dados para um servidor web.
+                  - radio "Receber como POST O método POST é usado para enviar dados para um servidor web." [checked] [ref=e308]
+                - generic [ref=e310] [cursor=pointer]:
+                  - generic [ref=e311]:
+                    - generic [ref=e312]: Buscar como JSON
+                    - generic [ref=e313]: É um formato de dados utilizado para armazenar e transmitir informações de maneira estruturada.
+                  - radio "Buscar como JSON É um formato de dados utilizado para armazenar e transmitir informações de maneira estruturada." [ref=e314]
+              - generic [ref=e318]:
+                - text: Esta é uma opção de mudança no fluxo de recebimento de alerta das suas transações. A opção via JSON funciona apenas para integração por API. Consulte a pessoa desenvolvedora da sua loja para esta opção.
+                - link "Acessar documentação." [ref=e319] [cursor=pointer]
+              - button "Salvar" [disabled] [ref=e320]:
+                - generic [ref=e321]: Salvar
+          - generic [ref=e322]:
+            - paragraph [ref=e326]: Configure as URLs
+            - generic [ref=e327]:
+              - generic [ref=e329]:
+                - generic [ref=e330]: URL de retorno
+                - textbox "URL de retorno" [ref=e331]:
+                  - /placeholder: ""
+                - generic [ref=e333]:
+                  - img [ref=e335]
+                  - generic [ref=e338]: Endereço para onde a pessoa será redirecionada ao final do pagamento.
+              - generic [ref=e339]:
+                - generic [ref=e340]:
+                  - generic [ref=e341]: URL de notificação
+                  - textbox "URL de notificação" [ref=e342]:
+                    - /placeholder: ""
+                  - generic [ref=e344]:
+                    - img [ref=e346]
+                    - generic [ref=e349]: Endereço para onde serão enviados os dados da transação finalizada.
+                - button "Testar" [ref=e350] [cursor=pointer]:
+                  - generic [ref=e351]: Testar
+              - generic [ref=e352]:
+                - generic [ref=e353]:
+                  - generic [ref=e354]: URL de mudança de status
+                  - textbox "URL de mudança de status" [ref=e355]:
+                    - /placeholder: ""
+                  - generic [ref=e357]:
+                    - img [ref=e359]
+                    - generic [ref=e362]: Endereço para onde serão enviadas as atualizações dos status da transação.
+                - button "Testar" [ref=e363] [cursor=pointer]:
+                  - generic [ref=e364]: Testar
+              - button "Salvar" [disabled] [ref=e365]:
+                - generic [ref=e366]: Salvar
+          - generic [ref=e367]:
+            - generic [ref=e370]:
+              - paragraph [ref=e371]: Headers - URL de notificação e mudança de status
+              - text: Os headers são usados para garantir a segurança e a integridade das notificações enviadas por uma API.
+            - generic [ref=e372]:
+              - button "Adicionar nova chave" [ref=e374] [cursor=pointer]:
+                - generic [ref=e375]: Adicionar nova chave
+              - generic [ref=e378]:
+                - img [ref=e381]
+                - paragraph [ref=e399]: Quando existirem chaves de verificação, elas serão exibidas aqui.
+  - generic [ref=e211]:
+    - heading "Avalie a configuração da loja! 🚀" [level=1] [ref=e212]
+    - generic [ref=e213]:
+      - button "" [ref=e214] [cursor=pointer]:
+        - generic [ref=e215]: 
+      - button "" [ref=e216] [cursor=pointer]:
+        - generic [ref=e217]: 
+  - generic [ref=e83]:
+    - generic [ref=e85]:
+      - generic [ref=e86]:
+        - heading "Atendimento para Deficientes Auditivos ou de Fala" [level=2] [ref=e87]
+        - generic [ref=e89]:
+          - paragraph [ref=e90]: "Estamos prontos para te atender em libras:"
+          - link "Iniciar atendimento" [ref=e91] [cursor=pointer]:
+            - /url: https://www.cielo.com.br/atendimento-em-libras/
+        - generic [ref=e93]:
+          - paragraph [ref=e94]: "Envie uma mensagem via WhatsApp:"
+          - link "(11) 3003 5525" [ref=e95] [cursor=pointer]:
+            - /url: https://api.whatsapp.com/send/?phone=551130035525&text&app_absent=0
+      - generic [ref=e96]:
+        - heading "Segurança" [level=2] [ref=e97]
+        - paragraph [ref=e100]:
+          - text: Acesse dicas de segurança, proteção de dados, prevenção de fraudes e muito mais!
+          - link "Saiba como se proteger" [ref=e101] [cursor=pointer]:
+            - /url: /site/central-seguranca
+      - generic [ref=e102]:
+        - heading "Ouvidoria" [level=2] [ref=e103]
+        - generic [ref=e105]:
+          - paragraph [ref=e106]: Não consegue resolver em outros canais?
+          - generic [ref=e107] [cursor=pointer]: Abrir um chamado
+        - generic [ref=e109]:
+          - paragraph [ref=e110]: 0800 570 2288
+          - paragraph [ref=e111]: Todas as localidades. Atendimento de segunda a sexta, das 8h às 18h. Exceto Feriados Nacionais.
+      - generic [ref=e113]:
+        - heading "Central de Ajuda" [level=2] [ref=e114]
+        - generic [ref=e116]:
+          - paragraph [ref=e117]: Dúvidas frequentes, tutoriais e materiais de apoio.
+          - generic [ref=e118] [cursor=pointer]: Acessar a Central de ajuda
+    - generic [ref=e120]:
+      - img "Cielo" [ref=e121]
+      - paragraph [ref=e123]: Copyright © 2026 Cielo S.A. - Instituição de Pagamento. Todos os direitos reservados.
