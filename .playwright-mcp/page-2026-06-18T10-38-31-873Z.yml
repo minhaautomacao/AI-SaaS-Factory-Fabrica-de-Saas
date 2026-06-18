@@ -1,0 +1,28 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content":
+    - /url: "#geist-skip-nav"
+  - alert [ref=e2]
+  - main [ref=e4]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - heading "You Need Access" [level=1] [ref=e8]
+        - paragraph [ref=e9]: enemeop-flores-lop5kq51u-essencial-auto-pecas-projects.vercel.app
+        - generic [ref=e10]:
+          - paragraph [ref=e11]: This Vercel deployment is protected. A team owner needs to approve your request.
+          - button "Request Access" [ref=e13] [cursor=pointer]:
+            - generic [ref=e14]: Request Access
+      - generic [ref=e15]:
+        - paragraph [ref=e16]:
+          - generic [ref=e17]:
+            - text: Logged in as
+            - generic [ref=e18]:
+              - img "Avatar for minhaautomacao" [ref=e19]:
+                - img "Avatar for minhaautomacao" [ref=e20]
+              - generic [ref=e21]: minhaautomacao10@gmail.com
+        - button "Switch Account" [ref=e22] [cursor=pointer]:
+          - generic [ref=e23]: Switch Account
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - img

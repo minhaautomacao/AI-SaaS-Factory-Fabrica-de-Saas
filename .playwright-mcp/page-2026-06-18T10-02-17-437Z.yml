@@ -1,0 +1,113 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - img
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e12]:
+          - paragraph [ref=e13]: ENEMEOP
+          - paragraph [ref=e14]: FLORES
+      - navigation [ref=e15]:
+        - paragraph [ref=e16]: Gestão
+        - list [ref=e17]:
+          - listitem [ref=e18]:
+            - link "Visão Geral" [ref=e19] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e20]
+              - text: Visão Geral
+          - listitem [ref=e25]:
+            - link "Pedidos" [ref=e26] [cursor=pointer]:
+              - /url: /dashboard/pedidos
+              - img [ref=e27]
+              - text: Pedidos
+          - listitem [ref=e30]:
+            - link "Clientes / CRM" [ref=e31] [cursor=pointer]:
+              - /url: /dashboard/leads
+              - img [ref=e32]
+              - text: Clientes / CRM
+          - listitem [ref=e37]:
+            - link "Conversas ao Vivo" [ref=e38] [cursor=pointer]:
+              - /url: /dashboard/conversas
+              - img [ref=e39]
+              - text: Conversas ao Vivo
+          - listitem [ref=e42]:
+            - link "Entregas" [ref=e43] [cursor=pointer]:
+              - /url: /dashboard/entregas
+              - img [ref=e44]
+              - text: Entregas
+          - listitem [ref=e49]:
+            - link "Financeiro" [ref=e50] [cursor=pointer]:
+              - /url: /dashboard/financeiro
+              - img [ref=e51]
+              - text: Financeiro
+          - listitem [ref=e53]:
+            - link "Configurações" [ref=e54] [cursor=pointer]:
+              - /url: /dashboard/configuracoes
+              - img [ref=e55]
+              - text: Configurações
+      - generic [ref=e58]:
+        - paragraph [ref=e59]: Telas Auxiliares
+        - link "Tela de Pedidos ↗" [ref=e60] [cursor=pointer]:
+          - /url: /producao
+          - img [ref=e61]
+          - generic [ref=e64]:
+            - text: Tela de
+            - text: Pedidos ↗
+        - link "Monitor Social ↗" [ref=e65] [cursor=pointer]:
+          - /url: /monitor-social
+          - img [ref=e66]
+          - generic [ref=e67]:
+            - text: Monitor
+            - text: Social ↗
+      - generic [ref=e69]:
+        - generic [ref=e70]: EF
+        - generic [ref=e71]:
+          - paragraph [ref=e72]: Enemeop Flores
+          - paragraph [ref=e73]: Gerente
+        - button [ref=e75] [cursor=pointer]:
+          - img [ref=e76]
+    - main [ref=e79]:
+      - img
+      - generic [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]:
+            - heading "Bom dia, Enemeop" [level=1] [ref=e84]
+            - paragraph [ref=e85]: quinta-feira, 18 de junho
+          - generic [ref=e86]: Agente ativo
+        - generic [ref=e88]:
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - paragraph [ref=e91]: Pedidos hoje
+              - paragraph [ref=e92]: "1"
+              - paragraph [ref=e93]: registrados hoje
+            - generic [ref=e94]:
+              - paragraph [ref=e95]: Receita do dia
+              - paragraph [ref=e96]: R$ 0
+              - paragraph [ref=e97]: nenhum pedido pago ainda
+            - generic [ref=e98]:
+              - paragraph [ref=e99]: Entregas
+              - paragraph [ref=e100]: "0"
+              - paragraph [ref=e101]: nenhuma entrega hoje
+            - generic [ref=e102]:
+              - paragraph [ref=e103]: Novos clientes
+              - paragraph [ref=e104]: "0"
+              - paragraph [ref=e105]: capturados hoje
+          - generic [ref=e106]:
+            - heading "Pedidos recentes" [level=2] [ref=e108]
+            - generic [ref=e110]:
+              - generic [ref=e111]:
+                - paragraph [ref=e112]: Buquê de rosas vermelhas
+                - paragraph [ref=e113]: Maria Silva
+              - paragraph [ref=e114]: R$ 150.00
+          - generic [ref=e115]:
+            - heading "Vendas — últimos 7 dias" [level=2] [ref=e117]
+            - generic [ref=e118]:
+              - generic [ref=e121]: Seg
+              - generic [ref=e124]: Ter
+              - generic [ref=e127]: Qua
+              - generic [ref=e130]: Qui
+              - generic [ref=e133]: Sex
+              - generic [ref=e136]: Sáb
+              - generic [ref=e139]: Dom
+            - paragraph [ref=e140]: Os dados de vendas aparecerão aqui conforme pedidos forem fechados.
+  - alert [ref=e141]

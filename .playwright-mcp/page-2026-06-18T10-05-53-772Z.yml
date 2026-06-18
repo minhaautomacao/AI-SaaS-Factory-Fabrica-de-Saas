@@ -1,0 +1,157 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - img
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e12]:
+          - paragraph [ref=e13]: ENEMEOP
+          - paragraph [ref=e14]: FLORES
+      - navigation [ref=e15]:
+        - paragraph [ref=e16]: Gestão
+        - list [ref=e17]:
+          - listitem [ref=e18]:
+            - link "Visão Geral" [ref=e19] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e20]
+              - text: Visão Geral
+          - listitem [ref=e25]:
+            - link "Pedidos" [ref=e26] [cursor=pointer]:
+              - /url: /dashboard/pedidos
+              - img [ref=e27]
+              - text: Pedidos
+          - listitem [ref=e30]:
+            - link "Clientes / CRM" [ref=e31] [cursor=pointer]:
+              - /url: /dashboard/leads
+              - img [ref=e32]
+              - text: Clientes / CRM
+          - listitem [ref=e37]:
+            - link "Conversas ao Vivo" [ref=e38] [cursor=pointer]:
+              - /url: /dashboard/conversas
+              - img [ref=e39]
+              - text: Conversas ao Vivo
+          - listitem [ref=e42]:
+            - link "Entregas" [ref=e43] [cursor=pointer]:
+              - /url: /dashboard/entregas
+              - img [ref=e44]
+              - text: Entregas
+          - listitem [ref=e49]:
+            - link "Financeiro" [ref=e50] [cursor=pointer]:
+              - /url: /dashboard/financeiro
+              - img [ref=e51]
+              - text: Financeiro
+          - listitem [ref=e53]:
+            - link "Configurações" [ref=e54] [cursor=pointer]:
+              - /url: /dashboard/configuracoes
+              - img [ref=e55]
+              - text: Configurações
+      - generic [ref=e58]:
+        - paragraph [ref=e59]: Telas Auxiliares
+        - link "Tela de Pedidos ↗" [ref=e60] [cursor=pointer]:
+          - /url: /producao
+          - img [ref=e61]
+          - generic [ref=e64]:
+            - text: Tela de
+            - text: Pedidos ↗
+        - link "Monitor Social ↗" [ref=e65] [cursor=pointer]:
+          - /url: /monitor-social
+          - img [ref=e66]
+          - generic [ref=e67]:
+            - text: Monitor
+            - text: Social ↗
+      - generic [ref=e69]:
+        - generic [ref=e70]: EF
+        - generic [ref=e71]:
+          - paragraph [ref=e72]: Enemeop Flores
+          - paragraph [ref=e73]: Gerente
+        - button [ref=e75] [cursor=pointer]:
+          - img [ref=e76]
+    - main [ref=e79]:
+      - img
+      - generic [ref=e81]:
+        - generic [ref=e83]:
+          - heading "Financeiro" [level=1] [ref=e84]
+          - paragraph [ref=e85]: Receitas, despesas e fluxo de caixa
+        - generic [ref=e86]:
+          - generic [ref=e87]:
+            - generic [ref=e88]:
+              - paragraph [ref=e89]: Receita hoje
+              - paragraph [ref=e90]: R$ 1.095
+              - paragraph [ref=e91]: +8% vs. ontem
+            - generic [ref=e92]:
+              - paragraph [ref=e93]: Despesas hoje
+              - paragraph [ref=e94]: R$ 508
+              - paragraph [ref=e95]: Insumos + fretes
+            - generic [ref=e96]:
+              - paragraph [ref=e97]: Saldo líquido
+              - paragraph [ref=e98]: R$ 587
+              - paragraph [ref=e99]: Margem 54%
+          - generic [ref=e100]:
+            - generic [ref=e101]:
+              - generic [ref=e102]:
+                - heading "Meta mensal" [level=2] [ref=e103]
+                - paragraph [ref=e104]: R$ 12.400 de R$ 18.000
+              - generic [ref=e105]: 69%
+            - paragraph [ref=e108]: Faltam R$ 5.600 para atingir a meta — 12 dias restantes
+          - generic [ref=e109]:
+            - generic [ref=e110]:
+              - generic [ref=e111]:
+                - generic [ref=e112]: WhatsApp
+                - generic [ref=e113]: 50%
+              - paragraph [ref=e114]: R$ 6.200
+            - generic [ref=e117]:
+              - generic [ref=e118]:
+                - generic [ref=e119]: Site
+                - generic [ref=e120]: 31%
+              - paragraph [ref=e121]: R$ 3.800
+            - generic [ref=e124]:
+              - generic [ref=e125]:
+                - generic [ref=e126]: Presencial
+                - generic [ref=e127]: 19%
+              - paragraph [ref=e128]: R$ 2.400
+          - generic [ref=e131]:
+            - heading "Transações recentes" [level=2] [ref=e133]
+            - table [ref=e134]:
+              - rowgroup [ref=e135]:
+                - row "Descrição Canal Horário Valor" [ref=e136]:
+                  - columnheader "Descrição" [ref=e137]
+                  - columnheader "Canal" [ref=e138]
+                  - columnheader "Horário" [ref=e139]
+                  - columnheader "Valor" [ref=e140]
+              - rowgroup [ref=e141]:
+                - row "Buquê rosas — Ana Lima Pix 13:42 +R$ 180" [ref=e142]:
+                  - cell "Buquê rosas — Ana Lima" [ref=e143]
+                  - cell "Pix" [ref=e144]
+                  - cell "13:42" [ref=e145]
+                  - cell "+R$ 180" [ref=e146]
+                - row "Arranjo corporativo XYZ Cartão 12:10 +R$ 320" [ref=e147]:
+                  - cell "Arranjo corporativo XYZ" [ref=e148]
+                  - cell "Cartão" [ref=e149]
+                  - cell "12:10" [ref=e150]
+                  - cell "+R$ 320" [ref=e151]
+                - row "Flores do campo — Carla Pix 10:03 +R$ 95" [ref=e152]:
+                  - cell "Flores do campo — Carla" [ref=e153]
+                  - cell "Pix" [ref=e154]
+                  - cell "10:03" [ref=e155]
+                  - cell "+R$ 95" [ref=e156]
+                - row "Compra insumos — Ceasa Débito 08:30 -R$ 480" [ref=e157]:
+                  - cell "Compra insumos — Ceasa" [ref=e158]
+                  - cell "Débito" [ref=e159]
+                  - cell "08:30" [ref=e160]
+                  - cell "-R$ 480" [ref=e161]
+                - row "Arranjo lírios — João Neto Pix Ontem +R$ 210" [ref=e162]:
+                  - cell "Arranjo lírios — João Neto" [ref=e163]
+                  - cell "Pix" [ref=e164]
+                  - cell "Ontem" [ref=e165]
+                  - cell "+R$ 210" [ref=e166]
+                - row "Frete Melhor Envio Automático Ontem -R$ 28" [ref=e167]:
+                  - cell "Frete Melhor Envio" [ref=e168]
+                  - cell "Automático" [ref=e169]
+                  - cell "Ontem" [ref=e170]
+                  - cell "-R$ 28" [ref=e171]
+                - row "Kit maternidade — Família Melo WhatsApp Pay Ontem +R$ 290" [ref=e172]:
+                  - cell "Kit maternidade — Família Melo" [ref=e173]
+                  - cell "WhatsApp Pay" [ref=e174]
+                  - cell "Ontem" [ref=e175]
+                  - cell "+R$ 290" [ref=e176]
+  - alert [ref=e177]
