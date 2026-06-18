@@ -1,0 +1,16 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e6]:
+      - img "Snappy" [ref=e7]
+      - img "Snappy" [ref=e8]
+      - img "Snappy" [ref=e9]
+    - paragraph [ref=e12]: Só um instante!
+  - iframe [ref=e15]:
+    - generic [ref=f272e5]:
+      - generic [ref=f272e6]:
+        - text: protegido por
+        - strong [ref=f272e7]: reCAPTCHA
+      - generic [ref=f272e9]:
+        - text: Os Termos de Serviço do reCAPTCHA estão mudando.
+        - link "Acesse." [ref=f272e10] [cursor=pointer]:
+          - /url: https://google.com/recaptcha/admin/migrate
