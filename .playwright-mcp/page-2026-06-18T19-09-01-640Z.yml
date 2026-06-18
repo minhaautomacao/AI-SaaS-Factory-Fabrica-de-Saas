@@ -1,0 +1,200 @@
+- generic [ref=e3]:
+  - main [ref=e7]:
+    - banner "Cabeçalho principal do site" [ref=e8]:
+      - generic [ref=e9]:
+        - link "Logotipo Cielo - Clique para retornar à página inicial" [ref=e11] [cursor=pointer]:
+          - /url: /site/home
+        - navigation "Ações do cabeçalho" [ref=e12]:
+          - 'button "Trocar estabelecimento. Usuário: ENEMEOP COMERCIO DE FLORES E PRESENTES LTDA. Estabelecimento comercial, EC: 1017389788. Tipo do estabelecimento: Raiz CNPJ" [ref=e15] [cursor=pointer]':
+            - generic [ref=e16]:
+              - generic [ref=e17]: 
+              - generic [ref=e18]:
+                - generic "ENEMEOP COMERCIO DE FLORES E PRESENTES LTDA" [ref=e19]: Enemeop Comercio De Flores E Presentes Ltda
+                - group "Enemeop Comercio De Flores E Presentes Ltda" [ref=e20]:
+                  - generic "Código EC" [ref=e21]: "EC: 1017389788"
+                  - 'generic "Nome do estabelecimento: Raiz CNPJ" [ref=e23]': Raiz CNPJ
+            - generic [ref=e25]: 
+          - generic [ref=e26]:
+            - 'button " Minhas notificações: 14 notificações" [ref=e29] [cursor=pointer]':
+              - generic [ref=e30]: 
+              - generic [ref=e31]: "Minhas notificações: 14 notificações"
+              - generic [ref=e32]: 9+
+            - link "Central de Ajuda - Clique para abrir" [ref=e35] [cursor=pointer]:
+              - /url: javascript:void(0)
+              - generic [ref=e36]: 
+          - button "Menu do usuário" [ref=e39] [cursor=pointer]:
+            - generic [ref=e40]:
+              - generic [ref=e41]:
+                - generic [ref=e42]: CA
+                - generic "Informações do usuário" [ref=e43]:
+                  - generic "CLEAN ESPINDULA AVELAR" [ref=e44]: Olá, Clean
+                  - generic [ref=e45]: Administrador
+              - generic [ref=e46]: 
+            - menu "Opções do usuário":
+              - menu "Menu de opções do usuário":
+                - generic:
+                  - generic: Conta Cielo
+                  - separator
+                - menuitem "Dados do usuário"
+                - menuitem "Dados do estabelecimento"
+                - menuitem "Dados bancários"
+                - menuitem "Gestão de acessos"
+                - menuitem "Autorizações"
+                - menuitem "Sair da conta"
+          - button "Abrir menu de navegação" [ref=e47] [cursor=pointer]:
+            - generic [ref=e48]: 
+  - generic [ref=e99]:
+    - generic [ref=e100]:
+      - generic [ref=e102]:
+        - generic [ref=e103]:
+          - generic [ref=e104] [cursor=pointer]: Vendas
+          - generic [ref=e105] [cursor=pointer]: Recebíveis
+          - generic [ref=e106] [cursor=pointer]: Meu Negócio
+        - generic [ref=e383]:
+          - generic [ref=e384] [cursor=pointer]:
+            - generic [ref=e385]: Prazo de recebimento
+            - button [ref=e387]:
+              - img [ref=e389]
+          - generic [ref=e394]:
+            - generic [ref=e396]:
+              - paragraph [ref=e397]: Pix
+              - paragraph [ref=e399]: Mesmo dia
+            - generic [ref=e401]:
+              - paragraph [ref=e402]: Débito
+              - paragraph [ref=e404]: 1 dia útil
+            - generic [ref=e406]:
+              - paragraph [ref=e407]: Crédito à vista
+              - paragraph [ref=e409]: 31 dias úteis
+            - generic [ref=e411]:
+              - paragraph [ref=e412]: Parcelado loja
+              - paragraph [ref=e414]: 31 dias úteis para cada parcela
+            - button "Consultar detalhes" [ref=e416]:
+              - generic [ref=e417]: Consultar detalhes
+              - img [ref=e419]
+      - generic [ref=e188]:
+        - generic [ref=e192]:
+          - heading "Acessos recentes" [level=3] [ref=e193]
+          - button "Fixar E-commerce" [ref=e195] [cursor=pointer]:
+            - generic [ref=e196]:
+              - img [ref=e199]
+              - button "Fixar" [ref=e201]:
+                - img [ref=e202]
+            - generic [ref=e204]: E-commerce
+        - generic [ref=e205]:
+          - heading "Em destaque" [level=2] [ref=e206]
+          - generic [ref=e211]:
+            - generic "Carrosel de 3 itens" [ref=e212]
+            - generic [ref=e214]:
+              - generic [ref=e217]:
+                - img [ref=e219]
+                - generic [ref=e225]: No app Cielo Gestão, faça login, acesse Token e conclua a configuração.
+              - generic [ref=e228] [cursor=pointer]:
+                - img [ref=e230]
+                - generic [ref=e232]: Os Cartões JCB serão aceitos na Cielo!
+                - img [ref=e234]
+              - generic [ref=e239] [cursor=pointer]:
+                - img [ref=e241]
+                - generic [ref=e243]: Os Cartões JCB serão aceitos na Cielo!
+                - img [ref=e245]
+            - generic [ref=e249]:
+              - button "Item anterior" [ref=e250]:
+                - img [ref=e252]
+              - button "Próximo item" [ref=e259]:
+                - img [ref=e261]
+        - generic [ref=e267]:
+          - generic "Carrosel de 3 itens" [ref=e268]
+          - generic [ref=e270]:
+            - img [ref=e422] [cursor=pointer]
+            - img [ref=e378] [cursor=pointer]
+            - img "Item 3 de 3" [ref=e423] [cursor=pointer]
+          - generic [ref=e277]:
+            - generic [ref=e278]:
+              - button "Item anterior" [ref=e279]:
+                - img [ref=e281]
+              - button "Próximo item" [ref=e288]:
+                - img [ref=e290]
+            - button "Pausar carrossel" [ref=e293]:
+              - img [ref=e295]
+    - generic [ref=e299]:
+      - heading "Atalhos" [level=2] [ref=e300]
+      - generic [ref=e303]:
+        - banner [ref=e304]:
+          - img [ref=e306]
+          - heading "Antecipação de Recebíveis" [level=2] [ref=e309]
+        - main [ref=e310]:
+          - generic [ref=e312]:
+            - paragraph [ref=e313]: Antecipe o dinheiro das suas vendas, sem precisar esperar o seu prazo de recebimentos.
+            - paragraph [ref=e314]:
+              - text: "Disponível em até 1 dia útil:"
+              - generic [ref=e315]: R$ 20.416,93
+        - contentinfo [ref=e316]:
+          - button "Simular antecipação" [ref=e317] [cursor=pointer]:
+            - generic [ref=e318]: Simular antecipação
+            - img [ref=e320]
+      - generic [ref=e325]:
+        - banner [ref=e326]:
+          - img [ref=e328]
+          - heading "Link de pagamento" [level=2] [ref=e331]
+        - main [ref=e332]:
+          - generic [ref=e333]:
+            - paragraph [ref=e334]:
+              - strong [ref=e335]: Venda pelas redes sociais
+            - paragraph [ref=e336]: Com o Link de Pagamento você vende online nas redes sociais, sem taxa de adesão. Feito para seu negócio não parar, esteja você onde estiver.
+        - contentinfo [ref=e337]:
+          - button "Acessar" [ref=e338] [cursor=pointer]:
+            - generic [ref=e339]: Acessar
+            - img [ref=e341]
+      - generic [ref=e346]:
+        - banner [ref=e347]:
+          - img [ref=e349]
+          - heading "Open Finance" [level=2] [ref=e354]
+        - main [ref=e355]:
+          - generic [ref=e356]:
+            - paragraph [ref=e357]:
+              - strong [ref=e358]: Centralize seus saldos e aproveite ofertas personalizadas.
+            - paragraph [ref=e359]: Com o Open Finance Cielo, você conecta suas contas com segurança e aproveita benefícios exclusivos.
+        - contentinfo [ref=e360]:
+          - button "Saber mais" [ref=e361] [cursor=pointer]:
+            - generic [ref=e362]: Saber mais
+            - img [ref=e364]
+  - generic [ref=e368]:
+    - heading "Avalie a tela de início! 🚀" [level=1] [ref=e369]
+    - generic [ref=e370]:
+      - button "" [ref=e371] [cursor=pointer]:
+        - generic [ref=e372]: 
+      - button "" [ref=e373] [cursor=pointer]:
+        - generic [ref=e374]: 
+  - generic [ref=e58]:
+    - generic [ref=e60]:
+      - generic [ref=e61]:
+        - heading "Atendimento para Deficientes Auditivos ou de Fala" [level=2] [ref=e62]
+        - generic [ref=e64]:
+          - paragraph [ref=e65]: "Estamos prontos para te atender em libras:"
+          - link "Iniciar atendimento" [ref=e66] [cursor=pointer]:
+            - /url: https://www.cielo.com.br/atendimento-em-libras/
+        - generic [ref=e68]:
+          - paragraph [ref=e69]: "Envie uma mensagem via WhatsApp:"
+          - link "(11) 3003 5525" [ref=e70] [cursor=pointer]:
+            - /url: https://api.whatsapp.com/send/?phone=551130035525&text&app_absent=0
+      - generic [ref=e71]:
+        - heading "Segurança" [level=2] [ref=e72]
+        - paragraph [ref=e75]:
+          - text: Acesse dicas de segurança, proteção de dados, prevenção de fraudes e muito mais!
+          - link "Saiba como se proteger" [ref=e76] [cursor=pointer]:
+            - /url: /site/central-seguranca
+      - generic [ref=e77]:
+        - heading "Ouvidoria" [level=2] [ref=e78]
+        - generic [ref=e80]:
+          - paragraph [ref=e81]: Não consegue resolver em outros canais?
+          - generic [ref=e82] [cursor=pointer]: Abrir um chamado
+        - generic [ref=e84]:
+          - paragraph [ref=e85]: 0800 570 2288
+          - paragraph [ref=e86]: Todas as localidades. Atendimento de segunda a sexta, das 8h às 18h. Exceto Feriados Nacionais.
+      - generic [ref=e88]:
+        - heading "Central de Ajuda" [level=2] [ref=e89]
+        - generic [ref=e91]:
+          - paragraph [ref=e92]: Dúvidas frequentes, tutoriais e materiais de apoio.
+          - generic [ref=e93] [cursor=pointer]: Acessar a Central de ajuda
+    - generic [ref=e95]:
+      - img "Cielo" [ref=e96]
+      - paragraph [ref=e98]: Copyright © 2026 Cielo S.A. - Instituição de Pagamento. Todos os direitos reservados.

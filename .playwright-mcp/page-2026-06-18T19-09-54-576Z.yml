@@ -1,0 +1,198 @@
+- generic [ref=e3]:
+  - main [ref=e7]:
+    - banner "Cabeçalho principal do site" [ref=e8]:
+      - generic [ref=e9]:
+        - link "Logotipo Cielo - Clique para retornar à página inicial" [ref=e11] [cursor=pointer]:
+          - /url: /site/home
+        - navigation "Ações do cabeçalho" [ref=e12]:
+          - 'button "Trocar estabelecimento. Usuário: ENEMEOP COMERCIO DE FLORES E PRESENTES LTDA. Estabelecimento comercial, EC: 1017389788. Tipo do estabelecimento: Raiz CNPJ" [ref=e15] [cursor=pointer]':
+            - generic [ref=e16]:
+              - generic [ref=e17]: 
+              - generic [ref=e18]:
+                - generic "ENEMEOP COMERCIO DE FLORES E PRESENTES LTDA" [ref=e19]: Enemeop Comercio De Flores E Presentes Ltda
+                - group "Enemeop Comercio De Flores E Presentes Ltda" [ref=e20]:
+                  - generic "Código EC" [ref=e21]: "EC: 1017389788"
+                  - 'generic "Nome do estabelecimento: Raiz CNPJ" [ref=e23]': Raiz CNPJ
+            - generic [ref=e25]: 
+          - generic [ref=e26]:
+            - 'button " Minhas notificações: 14 notificações" [ref=e29] [cursor=pointer]':
+              - generic [ref=e30]: 
+              - generic [ref=e31]: "Minhas notificações: 14 notificações"
+              - generic [ref=e32]: 9+
+            - link "Central de Ajuda - Clique para abrir" [ref=e35] [cursor=pointer]:
+              - /url: javascript:void(0)
+              - generic [ref=e36]: 
+          - button "Menu do usuário" [ref=e39] [cursor=pointer]:
+            - generic [ref=e40]:
+              - generic [ref=e41]:
+                - generic [ref=e42]: CA
+                - generic "Informações do usuário" [ref=e43]:
+                  - generic "CLEAN ESPINDULA AVELAR" [ref=e44]: Olá, Clean
+                  - generic [ref=e45]: Administrador
+              - generic [ref=e46]: 
+            - menu "Opções do usuário":
+              - menu "Menu de opções do usuário":
+                - generic:
+                  - generic: Conta Cielo
+                  - separator
+                - menuitem "Dados do usuário"
+                - menuitem "Dados do estabelecimento"
+                - menuitem "Dados bancários"
+                - menuitem "Gestão de acessos"
+                - menuitem "Autorizações"
+                - menuitem "Sair da conta"
+          - button "Abrir menu de navegação" [ref=e47] [cursor=pointer]:
+            - generic [ref=e48]: 
+  - generic [ref=e479]:
+    - generic [ref=e482]:
+      - link "ir para Início" [ref=e484] [cursor=pointer]:
+        - /url: /minha-conta/home
+        - img [ref=e486]
+        - text: Início
+      - generic [ref=e488]:
+        - button "Voltar para pagina anterior" [ref=e490] [cursor=pointer]:
+          - img [ref=e492]
+        - heading "Cielo E-commerce" [level=1] [ref=e495]
+    - generic [ref=e497]:
+      - generic [ref=e498]:
+        - heading "Acesso rápido" [level=3] [ref=e499]
+        - paragraph [ref=e500]: "Tenha rápido acesso aos principais produtos da plataforma:"
+      - generic [ref=e501]:
+        - generic [ref=e502]:
+          - generic [ref=e503]:
+            - img [ref=e506]
+            - generic [ref=e508]: Link de Pagamento
+          - generic [ref=e509]: Com o Link de Pagamento você vende online nas redes sociais, sem taxa de adesão. Feito para seu negócio não parar, esteja você onde estiver.
+          - button "Acessar" [ref=e511] [cursor=pointer]:
+            - generic [ref=e512]: Acessar
+        - generic [ref=e513]:
+          - generic [ref=e514]:
+            - generic [ref=e515]:
+              - img [ref=e517]
+              - generic [ref=e522]: Novidade
+            - generic [ref=e523]: Transações
+          - generic [ref=e524]: Sua área para capturar suas vendas online e obter o relatório de transações realizadas.
+          - button "Acessar" [ref=e526] [cursor=pointer]:
+            - generic [ref=e527]: Acessar
+        - generic [ref=e528]:
+          - generic [ref=e529]:
+            - img [ref=e532]
+            - generic [ref=e536]: Cielo Checkout
+          - generic [ref=e537]: Uma solução de pagamento digital que cabe no seu orçamento. Amplie as opções de pagamento online e aceite todos os cartões de crédito e débito.
+          - button "Acessar" [ref=e539] [cursor=pointer]:
+            - generic [ref=e540]: Acessar
+        - generic [ref=e541]:
+          - generic [ref=e542]:
+            - img [ref=e545]
+            - generic [ref=e547]: Gestão API E-commerce
+          - paragraph [ref=e549]:
+            - strong [ref=e550]: Configure com facilidade, integre com segurança!
+            - text: Acesse as configurações da sua API e habilite funcionalidades disponíveis conforme sua necessidade, de forma rápida e segura.
+          - button "Acessar" [ref=e552] [cursor=pointer]:
+            - generic [ref=e553]: Acessar
+        - generic [ref=e554]:
+          - generic [ref=e555]:
+            - img [ref=e558]
+            - generic [ref=e563]: API E-commerce Cielo
+          - generic [ref=e564]: Seu e-commerce simples, modular e flexível. Tenha um e-commerce sempre disponível, com capacidade de suportar 8x o volume de transações do mercado brasileiro no pico de vendas.
+          - button "Acessar" [ref=e566] [cursor=pointer]:
+            - generic [ref=e567]: Acessar
+        - generic [ref=e568]:
+          - generic [ref=e569]:
+            - generic [ref=e570]:
+              - img [ref=e572]
+              - generic [ref=e577]: Novidade
+            - generic [ref=e578]: Central de Relatórios
+          - generic [ref=e579]: Com a Central de Relatórios você recebe seus relatórios em formato .CSV por e-mail. Acompanhe tudo com mais facilidade.
+          - button "Acessar" [ref=e581] [cursor=pointer]:
+            - generic [ref=e582]: Acessar
+        - generic [ref=e583]:
+          - generic [ref=e584]:
+            - generic [ref=e585]:
+              - img [ref=e587]
+              - generic [ref=e593]: Novidade
+            - generic [ref=e594]: Gestão de Recorrência
+          - generic [ref=e595]: "A nova Gestão de Recorrência chegou para facilitar sua rotina: visualize, edite e acompanhe suas cobranças."
+          - button "Acessar" [ref=e597] [cursor=pointer]:
+            - generic [ref=e598]: Acessar
+        - generic [ref=e599]:
+          - generic [ref=e600]:
+            - generic [ref=e601]:
+              - img [ref=e603]
+              - generic [ref=e607]: Novidade
+            - generic [ref=e608]: Meios de pagamento
+          - generic [ref=e609]: Realize habilitação e consulta das integrações com carteiras digitais.
+          - button "Acessar" [ref=e611] [cursor=pointer]:
+            - generic [ref=e612]: Acessar
+      - generic [ref=e613]:
+        - heading "Ajuda e suporte e-Commerce" [level=3] [ref=e614]
+        - paragraph [ref=e615]: Não achou o que estava procurando? Veja como podemos te ajudar
+      - generic [ref=e616]:
+        - generic [ref=e617]:
+          - generic [ref=e618]:
+            - img [ref=e621]
+            - generic [ref=e623]: Central de ajuda
+          - paragraph [ref=e625]:
+            - text: Tire suas dúvidas com a
+            - text: Central de ajuda, tudo online!
+          - button "Saiba mais" [ref=e627] [cursor=pointer]:
+            - generic [ref=e628]: Saiba mais
+        - generic [ref=e629]:
+          - generic [ref=e630]:
+            - img [ref=e633]
+            - generic [ref=e636]: Suporte E-commerce
+          - generic [ref=e638]:
+            - generic [ref=e639]: Região Metropolitana
+            - strong [ref=e640]:
+              - link "4002 5472" [ref=e641] [cursor=pointer]:
+                - /url: tel:+551140025472
+            - generic [ref=e642]: Demais regiões
+            - strong [ref=e643]:
+              - link "0800 570 8472" [ref=e644] [cursor=pointer]:
+                - /url: tel:+551108005708472
+          - button "cieloecommerce@cielo.com.br" [ref=e646] [cursor=pointer]:
+            - generic [ref=e647]: cieloecommerce@cielo.com.br
+        - generic [ref=e648]:
+          - generic [ref=e649]:
+            - img [ref=e652]
+            - generic [ref=e654]: Portal de Desenvolvedores
+          - paragraph [ref=e656]:
+            - text: Acesse nossa documentação para se
+            - text: integrar com a plataforma E-commerce
+          - generic [ref=e657]:
+            - generic [ref=e658] [cursor=pointer]: API E-commerce
+            - generic [ref=e659] [cursor=pointer]: API Link de Pagamento
+  - generic [ref=e58]:
+    - generic [ref=e60]:
+      - generic [ref=e61]:
+        - heading "Atendimento para Deficientes Auditivos ou de Fala" [level=2] [ref=e62]
+        - generic [ref=e64]:
+          - paragraph [ref=e65]: "Estamos prontos para te atender em libras:"
+          - link "Iniciar atendimento" [ref=e66] [cursor=pointer]:
+            - /url: https://www.cielo.com.br/atendimento-em-libras/
+        - generic [ref=e68]:
+          - paragraph [ref=e69]: "Envie uma mensagem via WhatsApp:"
+          - link "(11) 3003 5525" [ref=e70] [cursor=pointer]:
+            - /url: https://api.whatsapp.com/send/?phone=551130035525&text&app_absent=0
+      - generic [ref=e71]:
+        - heading "Segurança" [level=2] [ref=e72]
+        - paragraph [ref=e75]:
+          - text: Acesse dicas de segurança, proteção de dados, prevenção de fraudes e muito mais!
+          - link "Saiba como se proteger" [ref=e76] [cursor=pointer]:
+            - /url: /site/central-seguranca
+      - generic [ref=e77]:
+        - heading "Ouvidoria" [level=2] [ref=e78]
+        - generic [ref=e80]:
+          - paragraph [ref=e81]: Não consegue resolver em outros canais?
+          - generic [ref=e82] [cursor=pointer]: Abrir um chamado
+        - generic [ref=e84]:
+          - paragraph [ref=e85]: 0800 570 2288
+          - paragraph [ref=e86]: Todas as localidades. Atendimento de segunda a sexta, das 8h às 18h. Exceto Feriados Nacionais.
+      - generic [ref=e88]:
+        - heading "Central de Ajuda" [level=2] [ref=e89]
+        - generic [ref=e91]:
+          - paragraph [ref=e92]: Dúvidas frequentes, tutoriais e materiais de apoio.
+          - generic [ref=e93] [cursor=pointer]: Acessar a Central de ajuda
+    - generic [ref=e95]:
+      - img "Cielo" [ref=e96]
+      - paragraph [ref=e98]: Copyright © 2026 Cielo S.A. - Instituição de Pagamento. Todos os direitos reservados.
