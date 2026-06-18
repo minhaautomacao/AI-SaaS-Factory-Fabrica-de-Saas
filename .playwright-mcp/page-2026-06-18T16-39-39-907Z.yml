@@ -1,0 +1,35 @@
+- generic [active]:
+  - generic:
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic [ref=e1]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - progressbar [ref=e7]
+          - generic [ref=e8]:
+            - progressbar [ref=e9]
+            - progressbar [ref=e10]
+            - progressbar [ref=e11]
+            - progressbar [ref=e12]
+            - progressbar [ref=e13]
+        - generic [ref=e14]:
+          - progressbar [ref=e15]
+          - progressbar [ref=e16]
+          - progressbar [ref=e17]
+      - generic [ref=e18]:
+        - generic [ref=e20]:
+          - progressbar [ref=e21]
+          - progressbar [ref=e46]
+        - generic [ref=e62]:
+          - progressbar [ref=e63]
+          - progressbar [ref=e64]
+          - progressbar [ref=e65]
+          - progressbar [ref=e66]
+          - progressbar [ref=e67]
+          - progressbar [ref=e68]
