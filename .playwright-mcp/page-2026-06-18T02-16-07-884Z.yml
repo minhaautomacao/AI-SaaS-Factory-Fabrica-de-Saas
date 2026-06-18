@@ -1,0 +1,180 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e288]:
+      - navigation [ref=e289]:
+        - generic [ref=e290]:
+          - generic [ref=e291]:
+            - button [ref=e292] [cursor=pointer]:
+              - img [ref=e293]
+            - img [ref=e306] [cursor=pointer]
+          - list [ref=e309]:
+            - listitem [ref=e310]:
+              - button "Início" [ref=e311]:
+                - img [ref=e313]
+                - generic [ref=e315]: Início
+            - listitem [ref=e316]:
+              - button "Sites" [ref=e317]:
+                - img [ref=e319]
+                - generic [ref=e321]: Sites
+            - listitem [ref=e322]:
+              - button "E-mails" [ref=e323]:
+                - img [ref=e325]
+                - generic [ref=e327]: E-mails
+            - listitem [ref=e328]:
+              - button "Domínios" [ref=e329] [cursor=pointer]:
+                - img [ref=e331]
+                - generic [ref=e333]: Domínios
+            - listitem [ref=e334]:
+              - button "Hospedagens" [ref=e335]:
+                - img [ref=e337]
+                - generic [ref=e339]: Hospedagens
+            - listitem [ref=e340]:
+              - button "VPS e Dedicados" [ref=e341]:
+                - img [ref=e343]
+                - generic [ref=e345]: VPS e Dedicados
+            - listitem [ref=e346]:
+              - button "Segurança e Backup" [ref=e347]:
+                - img [ref=e349]
+                - generic [ref=e351]: Segurança e Backup
+            - listitem [ref=e352]:
+              - button "Agentes de IA Novo" [ref=e353]:
+                - img [ref=e355]
+                - generic [ref=e361]:
+                  - text: Agentes de IA
+                  - generic [ref=e363]: Novo
+            - listitem [ref=e364]:
+              - button "Marketing" [ref=e365]:
+                - img [ref=e367]
+                - generic [ref=e370]: Marketing
+            - listitem [ref=e371]:
+              - button "Link na bio" [ref=e372]:
+                - img [ref=e374]
+                - generic [ref=e376]: Link na bio
+            - listitem [ref=e377]:
+              - button "Indique e Ganhe" [ref=e378]:
+                - img [ref=e381]
+                - generic [ref=e383]: Indique e Ganhe
+            - listitem [ref=e384]:
+              - button "Cursos" [ref=e385]:
+                - img [ref=e387]
+                - generic [ref=e389]: Cursos
+            - listitem [ref=e390]:
+              - button "Venda com Pix, cartões e boleto" [ref=e391]:
+                - img [ref=e393]
+                - generic [ref=e395]: Venda com Pix, cartões e boleto
+      - main [ref=e396]:
+        - generic [ref=e399]:
+          - heading "Domínios" [level=1] [ref=e401]
+          - generic [ref=e404]:
+            - generic [ref=e405]:
+              - textbox "Como posso te ajudar?" [ref=e407]
+              - button [ref=e408] [cursor=pointer]:
+                - img [ref=e409]
+            - generic [ref=e411]:
+              - button "Suporte" [ref=e412] [cursor=pointer]:
+                - img [ref=e413]
+                - generic [ref=e415]: Suporte
+              - button [ref=e416] [cursor=pointer]:
+                - img [ref=e417]
+            - generic [ref=e420]: "2.0"
+          - generic [ref=e421]:
+            - generic [ref=e422] [cursor=pointer]:
+              - img [ref=e424]
+              - paragraph [ref=e426]: Ganhe até R$ 677,00
+            - button [ref=e430] [cursor=pointer]:
+              - img [ref=e431]
+            - button [ref=e434] [cursor=pointer]:
+              - img [ref=e435]
+            - button [ref=e440] [cursor=pointer]:
+              - img [ref=e441]
+            - button [ref=e446] [cursor=pointer]:
+              - img [ref=e447]
+        - generic [ref=e453]:
+          - generic [ref=e456]:
+            - generic [ref=e457]:
+              - heading "Listagem de Domínios" [level=2] [ref=e458]
+              - button "Novo domínio" [ref=e459] [cursor=pointer]
+            - button [ref=e461] [cursor=pointer]:
+              - img [ref=e462]
+          - generic [ref=e465]:
+            - img "three yellow triangle" [ref=e466]
+            - figure [ref=e467]:
+              - img "Our mascot snappy, holding a letter" [ref=e468]
+            - generic [ref=e469]:
+              - heading "Crie seu novo Plano de E-mail Essentials 30 DIAS GRÁTIS PARA TESTAR" [level=3] [ref=e470]:
+                - paragraph [ref=e471]: Crie seu novo Plano de E-mail Essentials
+                - generic [ref=e472]: 30 DIAS GRÁTIS PARA TESTAR
+              - paragraph [ref=e475] [cursor=pointer]:
+                - generic [ref=e476]: Selecione um domínio disponível
+                - img [ref=e477]
+          - list [ref=e481]:
+            - listitem [ref=e482]:
+              - generic [ref=e484]:
+                - generic [ref=e485]:
+                  - img [ref=e486]
+                  - link "enemeopflores.com.br" [ref=e488] [cursor=pointer]:
+                    - /url: https://enemeopflores.com.br
+                - generic [ref=e491]: Registrado
+              - generic [ref=e492]:
+                - button "Configurar domínio" [ref=e493] [cursor=pointer]
+                - button "Gerenciar" [ref=e494] [cursor=pointer]
+          - generic [ref=e496]:
+            - heading "Links de ajuda" [level=3] [ref=e497]
+            - img [ref=e499]
+            - list [ref=e503]:
+              - listitem [ref=e504]:
+                - generic [ref=e505] [cursor=pointer]: Como adicionar um domínio na hospedagem
+              - listitem [ref=e506]:
+                - generic [ref=e507] [cursor=pointer]: Como configurar o domínio (alterar DNS)
+              - listitem [ref=e508]:
+                - generic [ref=e509] [cursor=pointer]: Qual é o DNS da hospedagem?
+              - listitem [ref=e510]:
+                - generic [ref=e511] [cursor=pointer]: Como criar ou alterar um registro (A, MX, TXT, CNAME e outros) na Zona DNS
+              - listitem [ref=e512]:
+                - generic [ref=e513] [cursor=pointer]: Principais dúvidas e respostas sobre configuração de domínio (alteração DNS)
+            - generic [ref=e515] [cursor=pointer]: Ver mais conteúdos na Central de Ajuda
+    - generic:
+      - generic:
+        - generic "showing-side-panel-false":
+          - generic [ref=e265]:
+            - button "Diagnóstico" [ref=e266] [cursor=pointer]:
+              - img [ref=e267]
+              - text: Diagnóstico
+            - button "Atendimento" [ref=e270] [cursor=pointer]:
+              - img [ref=e271]
+              - text: Atendimento
+            - button [ref=e274] [cursor=pointer]:
+              - img [ref=e275]
+          - generic [ref=e277]:
+            - generic:
+              - img [ref=e278]
+              - heading "Está tudo certo com a sua conta no momento!" [level=4]:
+                - text: Está tudo certo com a
+                - text: sua conta no momento!
+              - paragraph:
+                - text: Fizemos uma rápida análise e não
+                - text: encontramos pendências técnicas ou financeiras.
+            - paragraph:
+              - strong [ref=e281]: Precisa de alguma ajuda?
+              - text: "Consulte os nossos principais materiais de apoio:"
+            - generic:
+              - generic: Guia de início da sua hospedagem
+              - generic: Como configurar o domínio (Alterar DNS)
+              - generic: Como adicionar um domínio na hospedagem
+              - generic: Como criar um site em WordPress pelo Portal
+              - generic: Como acessar o cPanel
+            - paragraph:
+              - text: Se preferir, fale com um de
+              - strong [ref=e282]: nossos atendentes
+            - button "Ir para o atendimento" [ref=e283] [cursor=pointer]
+  - iframe [ref=e286]:
+    - generic [ref=f49e5]:
+      - generic [ref=f49e6]:
+        - text: protegido por
+        - strong [ref=f49e7]: reCAPTCHA
+      - generic [ref=f49e9]:
+        - text: Os Termos de Serviço do reCAPTCHA estão mudando.
+        - link "Acesse." [ref=f49e10] [cursor=pointer]:
+          - /url: https://google.com/recaptcha/admin/migrate
+  - iframe [ref=e287]:
+    - alert [ref=f56e3]
