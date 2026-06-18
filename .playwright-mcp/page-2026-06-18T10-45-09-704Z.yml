@@ -1,0 +1,113 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - img
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e12]:
+          - paragraph [ref=e13]: ENEMEOP
+          - paragraph [ref=e14]: FLORES
+      - navigation [ref=e15]:
+        - paragraph [ref=e16]: Gestão
+        - list [ref=e17]:
+          - listitem [ref=e18]:
+            - link "Visão Geral" [ref=e19] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e20]
+              - text: Visão Geral
+          - listitem [ref=e25]:
+            - link "Pedidos" [ref=e26] [cursor=pointer]:
+              - /url: /dashboard/pedidos
+              - img [ref=e27]
+              - text: Pedidos
+          - listitem [ref=e30]:
+            - link "Clientes / CRM" [ref=e31] [cursor=pointer]:
+              - /url: /dashboard/leads
+              - img [ref=e32]
+              - text: Clientes / CRM
+          - listitem [ref=e37]:
+            - link "Conversas ao Vivo" [ref=e38] [cursor=pointer]:
+              - /url: /dashboard/conversas
+              - img [ref=e39]
+              - text: Conversas ao Vivo
+          - listitem [ref=e42]:
+            - link "Entregas" [ref=e43] [cursor=pointer]:
+              - /url: /dashboard/entregas
+              - img [ref=e44]
+              - text: Entregas
+          - listitem [ref=e49]:
+            - link "Financeiro" [ref=e50] [cursor=pointer]:
+              - /url: /dashboard/financeiro
+              - img [ref=e51]
+              - text: Financeiro
+          - listitem [ref=e53]:
+            - link "Configurações" [ref=e54] [cursor=pointer]:
+              - /url: /dashboard/configuracoes
+              - img [ref=e55]
+              - text: Configurações
+      - generic [ref=e58]:
+        - paragraph [ref=e59]: Telas Auxiliares
+        - link "Tela de Pedidos ↗" [ref=e60] [cursor=pointer]:
+          - /url: /producao
+          - img [ref=e61]
+          - generic [ref=e64]:
+            - text: Tela de
+            - text: Pedidos ↗
+        - link "Monitor Social ↗" [ref=e65] [cursor=pointer]:
+          - /url: /monitor-social
+          - img [ref=e66]
+          - generic [ref=e67]:
+            - text: Monitor
+            - text: Social ↗
+      - generic [ref=e69]:
+        - generic [ref=e70]: EF
+        - generic [ref=e71]:
+          - paragraph [ref=e72]: Enemeop Flores
+          - paragraph [ref=e73]: Gerente
+        - button [ref=e75] [cursor=pointer]:
+          - img [ref=e76]
+    - main [ref=e79]:
+      - img
+      - generic [ref=e81]:
+        - generic [ref=e83]:
+          - heading "Financeiro" [level=1] [ref=e84]
+          - paragraph [ref=e85]: Receitas e fluxo de caixa — dados reais
+        - generic [ref=e86]:
+          - generic [ref=e87]:
+            - generic [ref=e88]:
+              - paragraph [ref=e89]: Receita hoje
+              - paragraph [ref=e90]: R$ 0,00
+              - paragraph [ref=e91]: 0 pedido(s) confirmado/entregue
+            - generic [ref=e92]:
+              - paragraph [ref=e93]: Pedidos hoje
+              - paragraph [ref=e94]: "1"
+              - paragraph [ref=e95]: todos os status
+            - generic [ref=e96]:
+              - paragraph [ref=e97]: Receita do mês
+              - paragraph [ref=e98]: R$ 0,00
+              - paragraph [ref=e99]: 0 pedido(s) pagos
+          - generic [ref=e100]:
+            - generic [ref=e101]:
+              - generic [ref=e102]:
+                - heading "Meta mensal" [level=2] [ref=e103]
+                - paragraph [ref=e104]: R$ 0,00 de R$ 18.000
+              - generic [ref=e105]: 0%
+            - paragraph [ref=e107]: Faltam R$ 18.000,00 para atingir a meta — 12 dias restantes
+          - generic [ref=e108]:
+            - heading "Pedidos de hoje" [level=2] [ref=e110]
+            - table [ref=e111]:
+              - rowgroup [ref=e112]:
+                - row "Produto Cliente Canal Status Valor" [ref=e113]:
+                  - columnheader "Produto" [ref=e114]
+                  - columnheader "Cliente" [ref=e115]
+                  - columnheader "Canal" [ref=e116]
+                  - columnheader "Status" [ref=e117]
+                  - columnheader "Valor" [ref=e118]
+              - rowgroup [ref=e119]:
+                - row "Buquê de rosas vermelhas Maria Silva WhatsApp preparando R$ 150,00" [ref=e120]:
+                  - cell "Buquê de rosas vermelhas" [ref=e121]
+                  - cell "Maria Silva" [ref=e122]
+                  - cell "WhatsApp" [ref=e123]
+                  - cell "preparando" [ref=e124]
+                  - cell "R$ 150,00" [ref=e125]
+  - alert [ref=e126]
