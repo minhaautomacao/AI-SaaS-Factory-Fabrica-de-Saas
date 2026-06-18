@@ -9,7 +9,7 @@
 
 | Campo | Valor |
 |---|---|
-| Data deste snapshot | 2026-06-17 |
+| Data deste snapshot | 2026-06-18 |
 | Fase atual | Fase 8 — Execução pós-produção |
 | Branch fábrica | main |
 | Branch enemeop | master |
@@ -19,11 +19,10 @@
 
 ## Última tarefa concluída
 
-**2026-06-17** — Sistema de memória e retomada de sessão
-- Corrigido hook UserPromptSubmit (silencioso nas mensagens repetidas)
-- Warnings de git suprimidos (2>$null nos scripts)
-- estado-atual.md injetado automaticamente na 1ª mensagem do dia
-- Criado sistema permanente: SESSION_STATE, CHANGELOG_AGENT, GITHUB_SYNC_STATE, CREDENTIALS_INDEX
+**2026-06-18** — MCP Markitdown instalado e padronizado
+- Adicionado `markitdown-mcp-npx` ao .claude/settings.json
+- Regra adicionada ao CLAUDE.md: usar `mcp__markitdown__*` para leitura de qualquer arquivo enviado na conversa
+- Ativa na próxima sessão (requer reinício do Claude Code)
 
 ## Tarefa em andamento
 
@@ -55,6 +54,7 @@ Nenhuma. Aguardando próxima instrução.
 | Playwright (`mcp__playwright__*`) | Connected | Reiniciar sessão |
 | Vercel (`mcp__a0c23722-*`) | Connected | Checar .claude/settings.json |
 | Supabase (`mcp__a7729ab9-*`) | Connected | Checar .claude/settings.json |
+| Markitdown (`mcp__markitdown__*`) | Connected | Verificar Python 3.10+ instalado |
 
 ---
 
