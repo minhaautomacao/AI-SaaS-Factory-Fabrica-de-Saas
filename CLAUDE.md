@@ -142,7 +142,7 @@ fabrica-saas/
 - **Supabase MCP**: `mcp__a7729ab9-*` — SQL, migrations, edge functions
 
 ### Regras de uso
-- **Filesystem MCP é o padrão para leitura de qualquer arquivo** — sempre usar `mcp__filesystem__read_file` ao invés da ferramenta `Read` para qualquer arquivo enviado na conversa, para reduzir tokens injetados no contexto
+- **Markitdown MCP é o padrão para leitura de qualquer arquivo** — sempre usar ferramentas `mcp__markitdown__*` ao invés da ferramenta `Read` para qualquer arquivo enviado na conversa; converte PDF, Word, Excel, imagens e texto para Markdown sob demanda, reduzindo tokens injetados no contexto
 - **Playwright é o padrão para navegação** — nunca usar extensão Claude in Chrome como alternativa
 - Se ferramentas `mcp__playwright__*` não aparecerem: reiniciar sessão antes de investigar código
 - Playwright snapshots (`browser_snapshot`) nunca commitar — `.playwright-mcp/` está no `.gitignore`

@@ -5,9 +5,9 @@
       "command": "npx",
       "args": ["@playwright/mcp@latest", "--headed"]
     },
-    "filesystem": {
+    "markitdown": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "C:\\Users\\NOTEBOOK\\Documents\\GitHub"]
+      "args": ["-y", "markitdown-mcp-npx"]
     }
   },
   "hooks": {
