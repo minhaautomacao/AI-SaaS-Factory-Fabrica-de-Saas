@@ -21,13 +21,14 @@ import { callClaude } from '../_shared/anthropic.ts';
 import { getSupabaseAdmin } from '../_shared/supabase.ts';
 import { logEvento } from '../_shared/logger.ts';
 import { enviarWhatsApp } from '../_shared/whatsapp.ts';
+import { enviarDMInstagram } from '../_shared/instagram.ts';
 import type { OrquestradorPayload } from '../_shared/types.ts';
 
-const SYSTEM_PROMPT = `Você é o SDR via WhatsApp da Fábrica de SaaS.
-Seu papel: redigir mensagens de WhatsApp personalizadas para leads e clientes.
+const SYSTEM_PROMPT = `Você é o SDR da floricultura Enemeop Flores.
+Seu papel: redigir mensagens personalizadas para leads e clientes que entraram em contato.
 Retorne JSON:
 {
-  "mensagem": "texto da mensagem (tom profissional e caloroso, sem emojis excessivos)",
+  "mensagem": "texto da mensagem (tom acolhedor e profissional, pode usar 1-2 emojis de flores)",
   "tipo": "abordagem_inicial"|"follow_up"|"confirmacao_pedido"|"notificacao_entrega"|"reativacao",
   "acoes": ["ações executadas"]
 }
@@ -48,16 +49,20 @@ Deno.serve(async (req: Request) => {
     // 1. Enriquecer contexto com dados do lead
     let contexto = JSON.stringify(payload, null, 2);
     let telefone = payload.telefone as string | undefined;
+    let canalLead = payload.canal as string | undefined;
+    let canalId = payload.canal_id as string | undefined;
 
     if (payload.lead_id) {
       const { data: lead } = await sb
         .from('leads')
-        .select('nome, telefone, canal, intencao, status')
+        .select('nome, telefone, canal, canal_id, intencao, status')
         .eq('id', payload.lead_id)
         .single();
       if (lead) {
         contexto = JSON.stringify({ ...payload, lead }, null, 2);
         telefone = telefone ?? (lead.telefone as string | undefined);
+        canalLead = canalLead ?? (lead.canal as string | undefined);
+        canalId = canalId ?? (lead.canal_id as string | undefined);
       }
     }
 
@@ -69,23 +74,37 @@ Deno.serve(async (req: Request) => {
 
     acoes.push(`Mensagem gerada (tipo: ${resultado.tipo})`);
 
-    // 3. Envia via WhatsApp
-    if (mensagem && telefone) {
-      const envio = await enviarWhatsApp(workspace_id, telefone, mensagem);
-      if (envio.enviado) {
-        acoes.push(`WhatsApp enviado para ${telefone} via ${envio.provedor}`);
-        // Atualiza status do lead
-        if (payload.lead_id) {
-          await sb.from('leads')
-            .update({ status: 'em_atendimento' })
-            .eq('id', payload.lead_id);
-          acoes.push('Lead atualizado: status → em_atendimento');
+    // 3. Envia via canal do lead
+    if (mensagem) {
+      const isInstagram = canalLead?.toLowerCase() === 'instagram';
+
+      if (isInstagram && canalId) {
+        // Lead veio do Instagram → responde via DM
+        const envio = await enviarDMInstagram(canalId, mensagem);
+        if (envio.enviado) {
+          acoes.push(`Instagram DM enviada para ${canalId}`);
+          if (payload.lead_id) {
+            await sb.from('leads').update({ status: 'em_atendimento' }).eq('id', payload.lead_id);
+            acoes.push('Lead atualizado: status → em_atendimento');
+          }
+        } else {
+          acoes.push(`Instagram DM não enviada: ${envio.erro}`);
+        }
+      } else if (telefone) {
+        // Lead tem telefone → responde via WhatsApp
+        const envio = await enviarWhatsApp(workspace_id, telefone, mensagem);
+        if (envio.enviado) {
+          acoes.push(`WhatsApp enviado para ${telefone} via ${envio.provedor}`);
+          if (payload.lead_id) {
+            await sb.from('leads').update({ status: 'em_atendimento' }).eq('id', payload.lead_id);
+            acoes.push('Lead atualizado: status → em_atendimento');
+          }
+        } else {
+          acoes.push(`WhatsApp não enviado: ${envio.erro}`);
         }
       } else {
-        acoes.push(`WhatsApp não enviado: ${envio.erro}`);
+        acoes.push('Nenhum canal disponível para envio (sem telefone nem canal_id Instagram)');
       }
-    } else if (!telefone) {
-      acoes.push('Telefone não disponível — mensagem gerada mas não enviada');
     }
 
     await logEvento({ task_id, escopo, agente: 'whatsapp-sdr', tipo_evento: 'concluido', urgencia, duracao_ms: Date.now() - inicio, workspace_id });
