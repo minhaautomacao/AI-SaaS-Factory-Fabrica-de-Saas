@@ -1,0 +1,295 @@
+- generic [active]:
+  - generic:
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic [ref=e1]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - link "Logotipo da Meta" [ref=e7] [cursor=pointer]:
+            - /url: /?no_redirect=true
+            - img "Logotipo da Meta" [ref=e9]
+          - tablist [ref=e18]:
+            - link "Meus apps" [ref=e19] [cursor=pointer]:
+              - /url: /apps/
+              - generic [ref=e22]: Meus apps
+            - link "Ações necessárias" [ref=e23] [cursor=pointer]:
+              - /url: /required-actions/
+              - generic [ref=e26]: Ações necessárias
+            - tab "Documentos" [ref=e27] [cursor=pointer]:
+              - generic [ref=e30]: Documentos
+            - button "Mais" [ref=e32] [cursor=pointer]:
+              - generic [ref=e35]: Mais
+        - generic [ref=e37]:
+          - generic [ref=e38]:
+            - generic [ref=e44]: Entrada da pesquisa
+            - textbox "Entrada da pesquisa" [ref=e55]:
+              - /placeholder: Pesquisar...
+          - link [ref=e58] [cursor=pointer]:
+            - /url: "#"
+          - link "Facebook" [ref=e63] [cursor=pointer]:
+            - /url: "#"
+            - img "Facebook" [ref=e68]
+      - generic [ref=e69]:
+        - generic [ref=e71]:
+          - generic [ref=e74]:
+            - generic [ref=e77]:
+              - generic [ref=e83]: Searchable selector for all apps
+              - combobox "Searchable selector for all apps enemeopflores" [ref=e88] [cursor=pointer]:
+                - generic [ref=e98]: enemeopflores
+            - navigation [ref=e101]:
+              - list [ref=e102]:
+                - listitem [ref=e103]:
+                  - button "Painel" [ref=e105] [cursor=pointer]
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Painel
+                - listitem [ref=e111]:
+                  - button "Ações necessárias" [ref=e113] [cursor=pointer]
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Ações necessárias
+                - listitem [ref=e119]:
+                  - button "Casos de uso" [ref=e121] [cursor=pointer]
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Casos de uso
+                - listitem [ref=e127]:
+                  - generic [ref=e128]:
+                    - button "Login do Facebook para Empresas" [ref=e130] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Login do Facebook para Empresas
+                          - button "Alternar grupo" [ref=e136] [cursor=pointer]:
+                            - generic [ref=e139]: Alternar grupo
+                  - list [ref=e142]:
+                    - generic [ref=e143]:
+                      - button "Configurações" [ref=e145] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Configurações
+                    - generic [ref=e150]:
+                      - button "Início rápido" [ref=e152] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Início rápido
+                    - generic [ref=e157]:
+                      - button "Configurações" [ref=e159] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Configurações
+                    - generic [ref=e164]:
+                      - button "Modelos" [ref=e166] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Modelos
+                - listitem [ref=e171]:
+                  - generic [ref=e172]:
+                    - button "Analisar" [ref=e174] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Analisar
+                          - button "Alternar grupo" [ref=e180] [cursor=pointer]:
+                            - generic [ref=e183]: Alternar grupo
+                  - list [ref=e186]:
+                    - generic [ref=e187]:
+                      - button "Teste" [ref=e189] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Teste
+                    - generic [ref=e194]:
+                      - button "Verificação" [ref=e196] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Verificação
+                    - generic [ref=e201]:
+                      - button "Análise do app" [ref=e203] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Análise do app
+                - listitem [ref=e208]:
+                  - button "Publicar" [ref=e210] [cursor=pointer]:
+                    - generic [ref=e213]:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Publicado
+                          - status: Status da publicação do app
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Publicar
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Publicado
+                            - status: Status da publicação do app
+          - generic [ref=e217]:
+            - navigation [ref=e218]:
+              - list [ref=e219]:
+                - listitem [ref=e220]:
+                  - generic [ref=e221]:
+                    - button "Configurações do app" [ref=e223] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Configurações do app
+                          - button "Alternar grupo" [ref=e229] [cursor=pointer]:
+                            - generic [ref=e232]: Alternar grupo
+                  - list [ref=e235]:
+                    - generic [ref=e236]:
+                      - button "Básico" [ref=e238] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Básico
+                    - generic [ref=e243]:
+                      - button "Avançado" [ref=e245] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Avançado
+                - listitem [ref=e250]:
+                  - generic [ref=e251]:
+                    - button "Funções do app" [ref=e253] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Funções do app
+                          - button "Alternar grupo" [ref=e259] [cursor=pointer]:
+                            - generic [ref=e262]: Alternar grupo
+                  - list [ref=e265]:
+                    - generic [ref=e266]:
+                      - button "Funções" [ref=e268] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Funções
+                    - generic [ref=e273]:
+                      - button "Usuários de teste" [ref=e275] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Usuários de teste
+                - listitem [ref=e280]:
+                  - button "Caixa de Entrada de alertas" [ref=e282] [cursor=pointer]:
+                    - generic [ref=e285]:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: "3"
+                          - status: 3 alertas não lidos
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Caixa de Entrada de alertas
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: "3"
+                            - status: 3 alertas não lidos
+            - separator [ref=e288]
+            - generic [ref=e289]:
+              - button "Registro de atividades" [ref=e290] [cursor=pointer]:
+                - generic [ref=e293]: Registro de atividades
+              - button "Ajuda" [ref=e297] [cursor=pointer]:
+                - generic [ref=e300]: Ajuda
+              - button "Abrir/fechar navegação lateral" [ref=e305] [cursor=pointer]:
+                - generic [ref=e308]: Abrir/fechar navegação lateral
+        - generic [ref=e318]:
+          - generic [ref=e320]:
+            - generic [ref=e321]:
+              - generic [ref=e322]: Casos de uso
+              - generic [ref=e323]: Selecione cada caso de uso para personalizar a forma como ele funciona e adicione extensões para ter mais funcionalidade.
+            - button "Adicionar casos de uso" [ref=e325] [cursor=pointer]:
+              - generic [ref=e330]: Adicionar casos de uso
+          - generic [ref=e332]:
+            - button "Criar e gerenciar anúncios com a API de Marketing Crie, gerencie e otimize campanhas de anúncios nas tecnologias da Meta. De forma programática, estenda, interrompa ou atualize as campanhas de anúncios e muito mais. Sobre a API de Marketing Personalizar" [ref=e334] [cursor=pointer]:
+              - generic [ref=e341]:
+                - generic [ref=e343]:
+                  - heading "Criar e gerenciar anúncios com a API de Marketing" [level=4] [ref=e344]
+                  - generic [ref=e345]:
+                    - text: Crie, gerencie e otimize campanhas de anúncios nas tecnologias da Meta. De forma programática, estenda, interrompa ou atualize as campanhas de anúncios e muito mais.
+                    - link "Sobre a API de Marketing" [ref=e346]:
+                      - /url: /docs/development/create-an-app/marketing-api-use-cases/
+                - button "Personalizar" [ref=e348]:
+                  - generic [ref=e351]:
+                    - generic: Personalizar
+            - button "Gerenciar mensagens e conteúdo no Instagram Publique posts, compartilhe stories, responda a comentários, mensagens diretas e muito mais com a API do Instagram. Sobre a API do Instagram Personalizar" [ref=e354] [cursor=pointer]:
+              - generic [ref=e361]:
+                - generic [ref=e363]:
+                  - heading "Gerenciar mensagens e conteúdo no Instagram" [level=4] [ref=e364]
+                  - generic [ref=e365]:
+                    - text: Publique posts, compartilhe stories, responda a comentários, mensagens diretas e muito mais com a API do Instagram.
+                    - link "Sobre a API do Instagram" [ref=e366]:
+                      - /url: /docs/development/create-an-app/instagram-use-case/
+                - button "Personalizar" [ref=e368]:
+                  - generic [ref=e373]: Personalizar
+            - button "Conectar-se com clientes pelo WhatsApp Comece uma conversa no WhatsApp, envie notificações, crie anúncios de clique para o WhatsApp e forneça suporte. É necessário um portfólio empresarial. Sobre a Plataforma do WhatsApp Business Personalizar" [ref=e375] [cursor=pointer]:
+              - generic [ref=e382]:
+                - generic [ref=e384]:
+                  - heading "Conectar-se com clientes pelo WhatsApp" [level=4] [ref=e385]
+                  - generic [ref=e386]:
+                    - text: Comece uma conversa no WhatsApp, envie notificações, crie anúncios de clique para o WhatsApp e forneça suporte. É necessário um portfólio empresarial.
+                    - link "Sobre a Plataforma do WhatsApp Business" [ref=e387]:
+                      - /url: /docs/development/create-an-app/whatsapp-use-case/
+                - button "Personalizar" [ref=e389]:
+                  - generic [ref=e392]:
+                    - generic: Personalizar

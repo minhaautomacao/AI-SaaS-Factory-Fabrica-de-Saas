@@ -9,7 +9,8 @@
 
 import { getSupabaseAdmin } from './supabase.ts';
 
-const IG_BUSINESS_ID = '17841402064363907';
+// Facebook Page ID conectada à conta @enemeopflores (para Messenger API for Instagram)
+const IG_PAGE_ID = '350648311678163';
 
 async function getToken(): Promise<string> {
   // 1. Tenta env var (Supabase secret)
@@ -45,7 +46,7 @@ export async function enviarDMInstagram(
   const token = await getToken();
   if (!token) return { enviado: false, erro: 'META_PAGE_ACCESS_TOKEN não configurado' };
 
-  const url = `https://graph.facebook.com/v21.0/${IG_BUSINESS_ID}/messages`;
+  const url = `https://graph.facebook.com/v21.0/${IG_PAGE_ID}/messages`;
 
   try {
     const resp = await fetch(url, {

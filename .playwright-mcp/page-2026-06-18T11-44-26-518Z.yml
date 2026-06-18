@@ -1,0 +1,353 @@
+- generic:
+  - generic:
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic:
+      - iframe
+    - generic [ref=e1]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - link "Logotipo da Meta" [ref=e62] [cursor=pointer]:
+            - /url: /?no_redirect=true
+            - img "Logotipo da Meta" [ref=e64]
+          - tablist [ref=e73]:
+            - link "Meus apps" [ref=e74] [cursor=pointer]:
+              - /url: /apps/
+              - generic [ref=e77]: Meus apps
+            - link "Ações necessárias" [ref=e78] [cursor=pointer]:
+              - /url: /required-actions/
+              - generic [ref=e81]: Ações necessárias
+            - tab "Documentos" [ref=e82] [cursor=pointer]:
+              - generic [ref=e85]: Documentos
+            - tab "Ferramentas" [ref=e87] [cursor=pointer]:
+              - generic [ref=e90]: Ferramentas
+            - tab "Suporte" [ref=e92] [cursor=pointer]:
+              - generic [ref=e95]: Suporte
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - generic [ref=e104]: Entrada da pesquisa
+            - textbox "Entrada da pesquisa" [ref=e115]:
+              - /placeholder: Pesquisar...
+          - link [ref=e118] [cursor=pointer]:
+            - /url: "#"
+          - link "Facebook" [ref=e123] [cursor=pointer]:
+            - /url: "#"
+            - img "Facebook" [ref=e128]
+      - generic [ref=e8]:
+        - generic [ref=e129]:
+          - generic [ref=e132]:
+            - generic [ref=e135]:
+              - generic [ref=e141]: Searchable selector for all apps
+              - combobox "Searchable selector for all apps enemeopflores" [ref=e146] [cursor=pointer]:
+                - generic [ref=e156]: enemeopflores
+            - navigation [ref=e159]:
+              - list [ref=e160]:
+                - listitem [ref=e161]:
+                  - button "Painel" [ref=e163] [cursor=pointer]
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Painel
+                - listitem [ref=e169]:
+                  - button "Ações necessárias" [ref=e171] [cursor=pointer]
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Ações necessárias
+                - listitem [ref=e177]:
+                  - button "Casos de uso" [ref=e179] [cursor=pointer]
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Casos de uso
+                - listitem [ref=e185]:
+                  - generic [ref=e186]:
+                    - button "Login do Facebook para Empresas" [ref=e188] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Login do Facebook para Empresas
+                          - button "Alternar grupo" [ref=e194] [cursor=pointer]:
+                            - generic [ref=e197]: Alternar grupo
+                  - list [ref=e200]:
+                    - generic [ref=e201]:
+                      - button "Configurações" [ref=e203] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Configurações
+                    - generic [ref=e208]:
+                      - button "Início rápido" [ref=e210] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Início rápido
+                    - generic [ref=e215]:
+                      - button "Configurações" [ref=e217] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Configurações
+                    - generic [ref=e222]:
+                      - button "Modelos" [ref=e224] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Modelos
+                - listitem [ref=e229]:
+                  - generic [ref=e230]:
+                    - button "Analisar" [expanded] [ref=e232] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Analisar
+                          - button "Alternar grupo" [ref=e238] [cursor=pointer]:
+                            - generic [ref=e241]: Alternar grupo
+                  - list [ref=e245]:
+                    - generic [ref=e246]:
+                      - button "Teste" [ref=e248] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Teste
+                    - generic [ref=e253]:
+                      - button "Verificação" [ref=e255] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Verificação
+                    - generic [ref=e260]:
+                      - button "Análise do app" [ref=e262] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Análise do app
+                - listitem [ref=e267]:
+                  - button "Publicar" [ref=e269] [cursor=pointer]:
+                    - generic [ref=e272]:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Publicado
+                          - status: Status da publicação do app
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Publicar
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Publicado
+                            - status: Status da publicação do app
+          - generic [ref=e275]:
+            - navigation [ref=e276]:
+              - list [ref=e277]:
+                - listitem [ref=e278]:
+                  - generic [ref=e279]:
+                    - button "Configurações do app" [ref=e281] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Configurações do app
+                          - button "Alternar grupo" [ref=e287] [cursor=pointer]:
+                            - generic [ref=e290]: Alternar grupo
+                  - list [ref=e293]:
+                    - generic [ref=e294]:
+                      - button "Básico" [ref=e296] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Básico
+                    - generic [ref=e301]:
+                      - button "Avançado" [ref=e303] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Avançado
+                - listitem [ref=e308]:
+                  - generic [ref=e309]:
+                    - button "Funções do app" [ref=e311] [cursor=pointer]
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Funções do app
+                          - button "Alternar grupo" [ref=e317] [cursor=pointer]:
+                            - generic [ref=e320]: Alternar grupo
+                  - list [ref=e323]:
+                    - generic [ref=e324]:
+                      - button "Funções" [ref=e326] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Funções
+                    - generic [ref=e331]:
+                      - button "Usuários de teste" [ref=e333] [cursor=pointer]
+                      - generic:
+                        - listitem:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Usuários de teste
+                - listitem [ref=e338]:
+                  - button "Caixa de Entrada de alertas" [ref=e340] [cursor=pointer]:
+                    - generic [ref=e343]:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: "3"
+                          - status: 3 alertas não lidos
+                  - generic:
+                    - listitem:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Caixa de Entrada de alertas
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: "3"
+                            - status: 3 alertas não lidos
+            - separator [ref=e346]
+            - generic [ref=e347]:
+              - button "Registro de atividades" [ref=e348] [cursor=pointer]:
+                - generic [ref=e351]: Registro de atividades
+              - button "Ajuda" [ref=e355] [cursor=pointer]:
+                - generic [ref=e358]: Ajuda
+              - button "Abrir/fechar navegação lateral" [ref=e363] [cursor=pointer]:
+                - generic [ref=e366]: Abrir/fechar navegação lateral
+        - generic [ref=e371]:
+          - generic [ref=e504]:
+            - heading "Solicitação de análise do app" [level=3] [ref=e505]
+            - separator [ref=e506]
+            - generic [ref=e507]:
+              - generic [ref=e508]:
+                - progressbar [ref=e509]
+                - generic [ref=e511]: Verificação
+              - generic [ref=e512]:
+                - progressbar [ref=e513]
+                - generic [ref=e515]: Configurações do app
+              - generic [ref=e516]:
+                - progressbar [ref=e517]
+                - generic [ref=e519]: Uso permitido
+              - generic [ref=e520]:
+                - progressbar [ref=e521]
+                - generic [ref=e523]: Tratamento de dados
+              - generic [ref=e527]: Salvo automaticamente
+          - generic [ref=e528]:
+            - generic [ref=e530]:
+              - heading "Uso permitido" [level=2] [ref=e531]
+              - generic [ref=e532]:
+                - text: Conclua todas as etapas de uso permitido antes de enviar para análise. Se precisar remover alguma permissão do seu envio,
+                - link "edite-o" [ref=e533] [cursor=pointer]:
+                  - /url: "#"
+                - text: .
+            - generic [ref=e537]:
+              - generic [ref=e543]:
+                - heading "Como esse app usará o whatsapp_business_management?" [level=4] [ref=e544]
+                - generic [ref=e545]: Analise as políticas do whatsapp_business_management e informe-nos como você pretende usá-lo
+              - generic [ref=e548]:
+                - generic [ref=e549]:
+                  - generic [ref=e553]: Descreva como seu aplicativo usa esta permissão ou recurso
+                  - generic [ref=e557]: Carregue o screencast mostrando a experiência do usuário de ponta a ponta
+                  - generic [ref=e561]: Verifique se você fez as ligações de teste de API exigidas
+                  - generic [ref=e565]: Você concorda que está em conformidade com o uso permitido.
+                - button "Começar" [ref=e567] [cursor=pointer]:
+                  - generic [ref=e571]: Começar
+            - generic [ref=e573]:
+              - button "Voltar para o pedido" [ref=e575] [cursor=pointer]:
+                - generic [ref=e580]: Voltar para o pedido
+              - generic [ref=e581]:
+                - button "Voltar" [ref=e582] [cursor=pointer]:
+                  - generic [ref=e586]: Voltar
+                - button "Avançar" [ref=e587] [cursor=pointer]:
+                  - generic [ref=e591]: Avançar
+  - dialog "Diga-nos por qual motivo você está solicitando whatsapp_business_management" [ref=e594]:
+    - generic [ref=e597]:
+      - generic [ref=e599]:
+        - button "Fechar" [ref=e601] [cursor=pointer]
+        - heading "Diga-nos por qual motivo você está solicitando whatsapp_business_management" [level=3] [ref=e603]
+      - generic [ref=e605]:
+        - generic [ref=e607]:
+          - generic [ref=e609]:
+            - generic [ref=e610]: Com a permissão whatsapp_business_management , seu aplicativo pode ler e/ou gerenciar ativos de negócios do WhatsApp que você possui ou aos quais outras empresas concederam acesso a você por meio dessa permissão. Esses ativos comerciais incluem contas empresariais do WhatsApp, telefones, modelos de mensagem, códigos QR e mensagens associadas e assinaturas de webhook. O uso permitido dela serve para gerenciar ativos comerciais do WhatsApp e exibir análises da conta do WhatsApp Business no seu portal do cliente. Você também pode usar essa permissão para solicitar informações de análise com o objetivo de aprimorar seu app e para fins de marketing ou publicidade, por meio do uso de informações agregadas e anônimas ou sem identificação (desde que esses dados não possam ser identificados novamente).
+            - generic [ref=e611]:
+              - generic [ref=e612]:
+                - text: Forneça uma descrição detalhada de como seu aplicativo usa a permissão ou o recurso solicitado, como ele agrega valor para uma pessoa que usa seu aplicativo e por que é necessário para a funcionalidade do aplicativo.
+                - button "[?]" [ref=e613] [cursor=pointer]:
+                  - superscript [ref=e614]: "[?]"
+              - textbox [ref=e615]: Enemeop Flores é uma floricultura que usa este app para gerenciar sua conta WhatsApp Business. O app acessa configurações da conta comercial do WhatsApp (número de telefone, perfil e status de verificação) para exibir informações no painel administrativo da floricultura. O recurso whatsapp_business_management é necessário para verificar o status da conta, consultar o número associado e garantir que as mensagens automáticas de atendimento ao cliente sejam enviadas a partir da conta correta. Não armazenamos dados além do necessário para o funcionamento do painel interno.
+          - generic [ref=e616]:
+            - generic [ref=e618]:
+              - generic [ref=e619]:
+                - text: Carregue uma gravação de tela que demonstre como o seu aplicativo usará essa permissão ou recurso para que possamos confirmar se ele é usado corretamente e não viola as nossas políticas. Para obter mais informações, acesse o guia de
+                - link "gravações da tela" [ref=e620] [cursor=pointer]:
+                  - /url: /docs/app-review/submission-guide/screen-recordings/
+              - generic [ref=e621]:
+                - text: e o vídeo
+                - link "Desenvolvimento rumo ao sucesso" [ref=e622] [cursor=pointer]:
+                  - /url: /videos/2021/developing-for-success-how-to-produce-a-screencast-for-app-review/
+                - text: .
+            - generic [ref=e624]:
+              - generic [ref=e625]: Arraste e solte seu arquivo
+              - button "Carregar arquivo Choose File" [ref=e627] [cursor=pointer]:
+                - text: Carregar arquivo
+                - button "Choose File" [ref=e630]
+        - generic [ref=e631]:
+          - generic [ref=e633]:
+            - text: Teste as chamadas da API de Gerenciamento do WhatsApp Business (por exemplo, gerenciamento de números de telefone, configurações da conta do WhatsApp Business) do seu terminal ou Postman usando
+            - link "nossa coleção do Postman publicada" [ref=e634] [cursor=pointer]:
+              - /url: https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.postman.com%2Fmeta%2Fwhatsapp-business-platform%2Fexample%2F13382743-21800152-9c87-4ee0-8238-066323e0b905%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExc2JlNnNMcjlVSDJsMVlTWnNydGMGYXBwX2lkATAAAR7O74otGkQhaZEePmIWzeS3kPwcyysZQaD2j9BrBLeaznjrjurGmoPtpfG18A_aem_LXCdTQdiIujtVtIxe4Y3qQ&h=AUBN04IYrvT88H-oNH8w8XW71lrVO-4f-mMwponQFc7f4gVYApnh9Qk4xyLwcMIecCcG-00waqZxmkny_36ntBwh6HWAlHX3J1kIS1XbrHUSRjVosBuBKQPZ4Ged0IO6_wSwXvAbpTCai8-urrcctA
+            - text: . Verifique se você tem uma chave da API válida e se pode concluir as chamadas de API necessárias antes de enviar para análise do app. Lembre-se de que os dados de teste podem levar 24 horas para serem exibidos.
+          - listitem [ref=e637]:
+            - generic [ref=e640]:
+              - generic [ref=e641]: whatsapp_business_management
+              - generic [ref=e647]: Concluída
+        - generic [ref=e650]:
+          - checkbox [checked] [ref=e652] [cursor=pointer]
+          - generic [ref=e654]:
+            - text: Se aprovados, você concorda que todos os dados recebidos por meio do
+            - strong [ref=e655]: whatsapp_business_management
+            - text: serão usados conforme permitido.
+      - generic [ref=e656]:
+        - button "Cancelar" [ref=e657] [cursor=pointer]
+        - button "Salvar" [active] [ref=e658] [cursor=pointer]
