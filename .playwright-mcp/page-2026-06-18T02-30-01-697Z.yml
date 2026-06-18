@@ -1,0 +1,177 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e16]:
+        - navigation [ref=e17]:
+          - generic [ref=e18]:
+            - generic [ref=e19]:
+              - button [ref=e20] [cursor=pointer]:
+                - img [ref=e21]
+              - img [ref=e34] [cursor=pointer]
+            - list [ref=e37]:
+              - listitem [ref=e38]:
+                - button "Início" [ref=e39]:
+                  - img [ref=e41]
+                  - generic [ref=e43]: Início
+              - listitem [ref=e44]:
+                - button "Sites" [ref=e45]:
+                  - img [ref=e47]
+                  - generic [ref=e49]: Sites
+              - listitem [ref=e50]:
+                - button "E-mails" [ref=e51]:
+                  - img [ref=e53]
+                  - generic [ref=e55]: E-mails
+              - listitem [ref=e56]:
+                - button "Domínios" [ref=e57]:
+                  - img [ref=e59]
+                  - generic [ref=e61]: Domínios
+              - listitem [ref=e62]:
+                - button "Hospedagens" [ref=e63]:
+                  - img [ref=e65]
+                  - generic [ref=e67]: Hospedagens
+              - listitem [ref=e68]:
+                - button "VPS e Dedicados" [ref=e69]:
+                  - img [ref=e71]
+                  - generic [ref=e73]: VPS e Dedicados
+              - listitem [ref=e74]:
+                - button "Segurança e Backup" [ref=e75]:
+                  - img [ref=e77]
+                  - generic [ref=e79]: Segurança e Backup
+              - listitem [ref=e80]:
+                - button "Agentes de IA Novo" [ref=e81]:
+                  - img [ref=e83]
+                  - generic [ref=e89]:
+                    - text: Agentes de IA
+                    - generic [ref=e91]: Novo
+              - listitem [ref=e92]:
+                - button "Marketing" [ref=e93]:
+                  - img [ref=e95]
+                  - generic [ref=e98]: Marketing
+              - listitem [ref=e99]:
+                - button "Link na bio" [ref=e100]:
+                  - img [ref=e102]
+                  - generic [ref=e104]: Link na bio
+              - listitem [ref=e105]:
+                - button "Indique e Ganhe" [ref=e106]:
+                  - img [ref=e109]
+                  - generic [ref=e111]: Indique e Ganhe
+              - listitem [ref=e112]:
+                - button "Cursos" [ref=e113]:
+                  - img [ref=e115]
+                  - generic [ref=e117]: Cursos
+              - listitem [ref=e118]:
+                - button "Venda com Pix, cartões e boleto" [ref=e119]:
+                  - img [ref=e121]
+                  - generic [ref=e123]: Venda com Pix, cartões e boleto
+        - main [ref=e124]:
+          - generic [ref=e127]:
+            - heading "Configurar Domínio" [level=1] [ref=e129]
+            - generic [ref=e132]:
+              - generic [ref=e133]:
+                - textbox "Como posso te ajudar?" [ref=e135]
+                - button [ref=e136] [cursor=pointer]:
+                  - img [ref=e137]
+              - generic [ref=e139]:
+                - button "Suporte" [ref=e140] [cursor=pointer]:
+                  - img [ref=e141]
+                  - generic [ref=e143]: Suporte
+                - button [ref=e144] [cursor=pointer]:
+                  - img [ref=e145]
+              - generic [ref=e148]: "2.0"
+            - generic [ref=e149]:
+              - generic [ref=e150] [cursor=pointer]:
+                - img [ref=e152]
+                - paragraph [ref=e154]: Ganhe até R$ 677,00
+              - button [ref=e158] [cursor=pointer]:
+                - img [ref=e159]
+              - button [ref=e162] [cursor=pointer]:
+                - img [ref=e163]
+              - button [ref=e168] [cursor=pointer]:
+                - img [ref=e169]
+              - button [ref=e174] [cursor=pointer]:
+                - img [ref=e175]
+          - generic [ref=e185]:
+            - generic [ref=e208]:
+              - heading "Domínio selecionado:" [level=1] [ref=e209]: "Domínio selecionado:"
+              - generic [ref=e211]: enemeopflores.com.br
+            - generic [ref=e213]:
+              - img [ref=e215]
+              - heading "Domínio está configurado na plataforma de site:" [level=2] [ref=e229]:
+                - text: "Domínio está configurado na plataforma de site:"
+                - img [ref=e232]
+            - generic [ref=e235]:
+              - generic [ref=e236]:
+                - generic [ref=e237]:
+                  - img [ref=e238]
+                  - paragraph [ref=e239]: Outra plataforma de hospedagem
+                - button "Alterar plataforma" [ref=e241] [cursor=pointer]
+              - generic [ref=e242]:
+                - paragraph [ref=e243]: "Servidor 1: ns1.retoquedigital.com.br"
+                - paragraph [ref=e244]: "Servidor 2: ns2.retoquedigital.com.br"
+      - generic:
+        - generic:
+          - generic "showing-side-panel-false":
+            - generic [ref=e191]:
+              - button "Diagnóstico" [ref=e192] [cursor=pointer]:
+                - img [ref=e193]
+                - text: Diagnóstico
+              - button "Atendimento" [ref=e196] [cursor=pointer]:
+                - img [ref=e197]
+                - text: Atendimento
+              - button [ref=e200] [cursor=pointer]:
+                - img [ref=e201]
+            - generic [ref=e245]:
+              - generic:
+                - img [ref=e246]
+                - heading "Está tudo certo com a sua conta no momento!" [level=4]:
+                  - text: Está tudo certo com a
+                  - text: sua conta no momento!
+                - paragraph:
+                  - text: Fizemos uma rápida análise e não
+                  - text: encontramos pendências técnicas ou financeiras.
+              - paragraph:
+                - strong [ref=e249]: Precisa de alguma ajuda?
+                - text: "Consulte os nossos principais materiais de apoio:"
+              - generic:
+                - generic: Guia de início da sua hospedagem
+                - generic: Como configurar o domínio (Alterar DNS)
+                - generic: Como adicionar um domínio na hospedagem
+                - generic: Como criar um site em WordPress pelo Portal
+                - generic: Como acessar o cPanel
+              - paragraph:
+                - text: Se preferir, fale com um de
+                - strong [ref=e250]: nossos atendentes
+              - button "Ir para o atendimento" [ref=e251] [cursor=pointer]
+    - generic [ref=e351]:
+      - button [ref=e352] [cursor=pointer]:
+        - img [ref=e354]
+      - generic [ref=e356]:
+        - heading "Configurar domínio" [level=1] [ref=e357]
+        - heading "Essa opção permitirá que você gerencie seu domínio mesmo que não tenha um plano de hospedagem." [level=1] [ref=e358]
+        - generic [ref=e359]:
+          - img [ref=e360]
+          - paragraph [ref=e363]:
+            - text: Identificamos que o seu domínio está apontado para uma hospedagem. Ao continuar, você perderá essa configuração atual.
+            - strong [ref=e364]: "A sua configuração atual é:"
+            - strong [ref=e365]: "Servidor 1:"
+            - text: ns1.retoquedigital.com.br
+            - strong [ref=e366]: "Servidor 2:"
+            - text: ns2.retoquedigital.com.br
+            - text: Se preferir, leia mais sobre
+            - link "configuração de Zona de DNS" [ref=e367] [cursor=pointer]:
+              - /url: https://suporte.hostgator.com.br/hc/pt-br/articles/115000389554-Como-criar-ou-alterar-um-registro-A-MX-TXT-CNAME-e-outros-na-Zona-DNS
+            - text: antes de continuar.
+        - generic [ref=e368]:
+          - button "Manter configuração" [ref=e369] [cursor=pointer]
+          - button "Configurar" [ref=e370] [cursor=pointer]
+  - iframe [ref=e15]:
+    - generic [ref=f146e5]:
+      - generic [ref=f146e6]:
+        - text: protegido por
+        - strong [ref=f146e7]: reCAPTCHA
+      - generic [ref=f146e9]:
+        - text: Os Termos de Serviço do reCAPTCHA estão mudando.
+        - link "Acesse." [ref=f146e10] [cursor=pointer]:
+          - /url: https://google.com/recaptcha/admin/migrate
+  - iframe [ref=e207]:
+    - alert [ref=f153e3]
