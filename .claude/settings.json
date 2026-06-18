@@ -4,10 +4,6 @@
     "playwright": {
       "command": "npx",
       "args": ["@playwright/mcp@latest", "--headed"]
-    },
-    "markitdown": {
-      "command": "npx",
-      "args": ["-y", "markitdown-mcp-npx"]
     }
   },
   "hooks": {
