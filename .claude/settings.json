@@ -4,6 +4,10 @@
     "playwright": {
       "command": "npx",
       "args": ["@playwright/mcp@latest", "--headed"]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "C:\\Users\\NOTEBOOK\\Documents\\GitHub"]
     }
   },
   "hooks": {
