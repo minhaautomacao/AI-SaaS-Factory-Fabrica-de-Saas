@@ -118,13 +118,29 @@ export async function enviarMensagem(opts: EnviarMensagemOpts): Promise<boolean>
 // ── Escalada para humano ──────────────────────────────────────────────────────
 
 export async function notificarEscalada(taskId: string, tipo: string, motivo: string): Promise<void> {
+  // Fallback: grava no Supabase como escalada pendente (visível no dashboard)
+  // independente de WhatsApp estar configurado ou não
+  try {
+    const { getSupabase } = await import('./supabase.js')
+    await getSupabase().from('orchestrator_logs').insert({
+      task_id: taskId,
+      escopo: 'producao',
+      agente: 'orquestrador',
+      tipo_evento: 'escalada_pendente',
+      urgencia: 'critical',
+      payload: { tipo, motivo, requer_atencao_humana: true },
+    })
+  } catch (err) {
+    console.error('[WhatsApp] Falha ao gravar escalada no Supabase:', err)
+  }
+
   if (!CARLOS) {
-    console.warn('[WhatsApp] CARLOS_WHATSAPP não configurado — escalada só registrada em log')
+    console.warn(`[WhatsApp] CARLOS_WHATSAPP não configurado — escalada registrada no Supabase: ${tipo}`)
     return
   }
 
   const mensagem = [
-    '🚨 Escalada — requer sua atenção',
+    'Escalada — requer sua atenção',
     '',
     `Tipo: ${tipo}`,
     `Motivo: ${motivo}`,
