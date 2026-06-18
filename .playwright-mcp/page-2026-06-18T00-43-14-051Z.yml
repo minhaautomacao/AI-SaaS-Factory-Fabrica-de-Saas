@@ -1,0 +1,23 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - img
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - img [ref=e7]
+          - generic [ref=e13]:
+            - heading "ENEMEOP FLORES" [level=1] [ref=e14]
+            - paragraph [ref=e15]: Painel de Gestão
+        - generic [ref=e17]:
+          - heading "Bem-vindo de volta" [level=2] [ref=e18]
+          - paragraph [ref=e19]: Entre com suas credenciais para acessar
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - generic [ref=e22]: E-mail
+            - textbox "seu@email.com" [ref=e23]
+          - generic [ref=e24]:
+            - generic [ref=e25]: Senha
+            - textbox "••••••••" [ref=e26]
+          - button "Entrar" [ref=e27] [cursor=pointer]
+      - paragraph [ref=e28]: Sistema exclusivo · Enemeop Flores desde 1997
+  - alert [ref=e29]

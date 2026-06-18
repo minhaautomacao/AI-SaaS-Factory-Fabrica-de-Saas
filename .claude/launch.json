@@ -10,7 +10,8 @@
     {
       "name": "enemeop-flores",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--prefix", "C:\\Users\\NOTEBOOK\\Documents\\GitHub\\enemeop-flores"],
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "C:\\Users\\carlo\\Projetos Minha Automacao\\enemeop-flores",
       "port": 3000
     }
   ]
