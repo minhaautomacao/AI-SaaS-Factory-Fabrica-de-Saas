@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import { createServer, IncomingMessage, ServerResponse } from 'http'
 import { iniciarWorkers } from './workers/orquestrador.js'
+import { iniciarWorkerLogistica } from './workers/logistica.js'
 import { getSupabase } from './lib/supabase.js'
 import { processarMensagemSDR } from './lib/sdr.js'
 import { registrarWebhookEvolution } from './lib/whatsapp.js'
@@ -11,6 +12,7 @@ console.log(`Iniciando em: ${new Date().toLocaleString('pt-BR')}`)
 console.log('')
 
 iniciarWorkers()
+iniciarWorkerLogistica()
 
 function lerBody(req: IncomingMessage): Promise<string> {
   return new Promise((resolve) => {
