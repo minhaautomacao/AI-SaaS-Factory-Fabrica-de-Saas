@@ -61,7 +61,17 @@ export async function consultarFretes(
   dados: DadosFrete,
   extras?: OpcoesExtras,
 ): Promise<ResultadoFrete> {
-  const creds = await buscarTodasCredenciais(workspaceId, 'logistica');
+  const dbCreds = await buscarTodasCredenciais(workspaceId, 'logistica');
+
+  // Fallback: env vars para credenciais não cadastradas no banco
+  const creds: Record<string, string> = {
+    lalamove_key:        Deno.env.get('LALAMOVE_API_KEY')    ?? '',
+    lalamove_secret:     Deno.env.get('LALAMOVE_API_SECRET') ?? '',
+    melhor_envio_token:  Deno.env.get('MELHOR_ENVIO_TOKEN')  ?? '',
+    cep_origem:          Deno.env.get('CEP_ORIGEM')           ?? '',
+    ...dbCreds,
+  };
+
   const opcoes: OpcaoFrete[] = [];
   const consultadas: string[] = [];
   const erros: Record<string, string> = {};

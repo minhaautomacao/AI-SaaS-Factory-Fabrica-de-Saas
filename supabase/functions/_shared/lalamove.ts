@@ -61,15 +61,15 @@ export async function calcularFreteLalamove(
       stops: [
         {
           coordinates: {
-            lat: opcoes?.lat_origem ?? '-23.5505',
-            lng: opcoes?.lng_origem ?? '-46.6333',
+            lat: opcoes?.lat_origem ?? '-10.9472',
+            lng: opcoes?.lng_origem ?? '-37.0731',
           },
-          address: opcoes?.endereco_origem ?? 'São Paulo, SP',
+          address: opcoes?.endereco_origem ?? 'Aracaju, SE',
         },
         {
           coordinates: {
-            lat: opcoes?.lat_destino ?? '-23.5505',
-            lng: opcoes?.lng_destino ?? '-46.6333',
+            lat: opcoes?.lat_destino ?? '-10.9472',
+            lng: opcoes?.lng_destino ?? '-37.0731',
           },
           address: opcoes?.endereco_destino ?? dados.cep_destino,
         },
