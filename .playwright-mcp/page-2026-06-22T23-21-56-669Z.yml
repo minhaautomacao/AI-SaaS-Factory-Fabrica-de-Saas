@@ -1,0 +1,65 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e102]:
+    - generic [ref=e103] [cursor=pointer]:
+      - img "LalamoveFilled" [ref=e104]
+      - generic [ref=e109]: PARCEIROS
+    - heading "Portal de Parceiros" [level=1] [ref=e110]:
+      - generic [ref=e111]: Portal de Parceiros
+    - generic [ref=e113]: Gerencie os pedidos do seu canal
+    - generic [ref=e114]:
+      - generic [ref=e118]:
+        - generic:
+          - generic: Mercado
+        - combobox [ref=e119]:
+          - button "Abrir menu" [ref=e120]:
+            - generic [ref=e122]: Brasil
+            - img "DropDown" [ref=e124]:
+              - img [ref=e125]
+      - generic [ref=e128]:
+        - combobox [ref=e131]:
+          - button "Abrir menu" [disabled] [ref=e132]:
+            - generic [ref=e134]: "+55"
+            - img "DropDown" [ref=e136]:
+              - img [ref=e137]
+        - generic [ref=e140]:
+          - generic:
+            - generic: "E-mail ou celular (ex: (11) 96123-4567)"
+          - textbox "(11) 96123-4567" [ref=e141]: "11982829083"
+      - generic [ref=e144]:
+        - generic:
+          - generic: Senha
+        - textbox [ref=e145]: Tulatuco@2026
+        - button "EyeOff" [ref=e146] [cursor=pointer]:
+          - img "EyeOff" [ref=e147]
+      - link "Esqueceu sua senha?" [ref=e158] [cursor=pointer]:
+        - /url: https://web.lalamove.com/forgot-password
+        - generic [ref=e159]: Esqueceu sua senha?
+      - button "Conecte-se" [disabled] [ref=e160]:
+        - img [ref=e182]
+        - generic [ref=e162]: Conecte-se
+    - generic [ref=e163]:
+      - generic [ref=e165]: Faça login com sua conta Lalamove.
+      - generic [ref=e166]:
+        - generic [ref=e167]: É novo no Lalamove?
+        - link "Crie uma nova conta." [ref=e168] [cursor=pointer]:
+          - /url: /register
+          - generic [ref=e169]: Crie uma nova conta.
+      - generic [ref=e170]:
+        - generic [ref=e171]: Para obter assistência, entre em contato com
+        - link "partner.support@lalamove.com." [ref=e172] [cursor=pointer]:
+          - /url: mailto:partner.support@lalamove.com
+          - generic [ref=e173]: partner.support@lalamove.com.
+      - generic [ref=e174]:
+        - link "Termos e Condições" [ref=e175] [cursor=pointer]:
+          - /url: https://www.lalamove.com/pt-br/terms-and-conditions-community?section=business&hsLang=pt-br
+          - generic [ref=e176]: Termos e Condições
+        - generic [ref=e178]: ·
+        - link "política de Privacidade" [ref=e179] [cursor=pointer]:
+          - /url: https://www.lalamove.com/pt-br/politica-de-privacidade
+          - generic [ref=e180]: política de Privacidade
+  - iframe [ref=e12]:
+    - generic [active]:
+      - generic:
+        - text: 
+        - button "Open chat" [ref=f2e1] [cursor=pointer]
+  - status [ref=e93]
