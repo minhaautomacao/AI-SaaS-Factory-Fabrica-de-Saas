@@ -25,31 +25,54 @@ import type { OrquestradorPayload } from '../_shared/types.ts';
 // Número do operador humano (WhatsApp)
 const OPERADOR_WHATSAPP = Deno.env.get('CARLOS_WHATSAPP') ?? Deno.env.get('OPERADOR_WHATSAPP') ?? '';
 
-// Horário comercial: 08:00–18:00 BRT = UTC-3 = 11:00–21:00 UTC
+// Feriados nacionais fixos (MM-DD)
+const FERIADOS = new Set([
+  '01-01','04-21','05-01','09-07','10-12','11-02','11-15','11-20','12-25',
+]);
+
+// Seg–Sáb: 09–19h | Dom e feriados: 10–14h (BRT = UTC-3)
 function eHorarioComercial(): boolean {
   const agora = new Date();
   const horaBRT = (agora.getUTCHours() - 3 + 24) % 24;
-  const diaSemana = agora.getUTCDay(); // 0=dom, 6=sáb
-  if (diaSemana === 0) return false; // domingo fechado
-  return horaBRT >= 8 && horaBRT < 18;
+  const diaSemana = agora.getUTCDay();
+  const mmdd = `${String(agora.getUTCMonth() + 1).padStart(2,'0')}-${String(agora.getUTCDate()).padStart(2,'0')}`;
+  const eFeriado = FERIADOS.has(mmdd);
+  if (diaSemana === 0 || eFeriado) return horaBRT >= 10 && horaBRT < 14;
+  return horaBRT >= 9 && horaBRT < 19;
 }
 
 const SYSTEM_PROMPT = `Você é o SDR da floricultura Enemeop Flores.
-Seu papel: redigir mensagens e decidir o próximo passo no atendimento.
+Seu papel: redigir mensagens e decidir o próximo passo no atendimento via WhatsApp/Instagram.
+NUNCA mencione ligação telefônica — o atendimento é 100% por mensagem.
+
 Retorne JSON:
 {
-  "mensagem": "texto da mensagem ao cliente (tom acolhedor, 1-2 emojis de flores, máx 300 chars)",
-  "tipo": "abordagem_inicial"|"follow_up"|"cotacao_frete"|"confirmacao_pedido"|"notificacao_entrega"|"reativacao"|"handoff",
+  "mensagem": "texto ao cliente (tom acolhedor, 1-2 emojis de flores, máx 300 chars)",
+  "tipo": "abordagem_inicial"|"follow_up"|"cotacao_frete"|"confirmacao_pedido"|"notificacao_entrega"|"reativacao"|"handoff"|"pedido_agendado",
   "handoff": false,
   "motivo_handoff": null,
+  "pedido": null,
   "acoes": ["ações executadas"]
 }
 
-Quando acionar handoff (handoff: true):
-- Cliente pediu explicitamente falar com humano/atendente
-- Situação complexa que exige decisão humana (desconto especial, reclamação séria, pedido corporativo grande)
-- Mais de 5 trocas sem conseguir fechar o pedido
-Em caso de handoff, a mensagem deve ser cordial, avisando que um atendente entrará em contato em breve.`;
+PEDIDO AGENDADO — quando cliente quer encomendar para data futura:
+  "tipo": "pedido_agendado"
+  "pedido": {
+    "tipo": "agendado",
+    "produtos": [{"nome": "...", "quantidade": 1, "valor_unitario": null}],
+    "data_agendada": "ISO8601 ou null se cliente não informou",
+    "nome_destinatario": "...",
+    "endereco_entrega": "...",
+    "observacoes": "..."
+  }
+Se a data ainda não foi informada, pergunte antes de salvar.
+
+HANDOFF — quando acionar (handoff: true):
+- Cliente pediu falar com atendente/humano/pessoa
+- Situação complexa: desconto especial, reclamação séria, pedido corporativo grande
+- Mais de 5 trocas sem avançar na venda
+Mensagem de handoff: cordial, diga que "em breve um de nossos atendentes continuará o atendimento por aqui".
+NUNCA diga que vai ligar ou que alguém vai ligar.`;
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204 });
@@ -97,6 +120,27 @@ Deno.serve(async (req: Request) => {
 
     acoes.push(`Mensagem gerada (tipo: ${resultado.tipo})`);
 
+    // Salva pedido agendado no banco
+    if (resultado.tipo === 'pedido_agendado' && resultado.pedido) {
+      const p = resultado.pedido;
+      const { data: pedidoSalvo, error: errPedido } = await sb.from('pedidos').insert({
+        workspace_id: workspace_id ?? 'enemeop-flores',
+        lead_id:          payload.lead_id ?? null,
+        tipo:             'agendado',
+        status:           'pendente',
+        data_agendada:    p.data_agendada ?? null,
+        produtos:         p.produtos ?? [],
+        nome_destinatario: p.nome_destinatario ?? null,
+        endereco_entrega: p.endereco_entrega ?? null,
+        observacoes:      p.observacoes ?? null,
+        canal_origem:     canalLead ?? null,
+        cliente_nome:     (payload.nome as string | undefined) ?? null,
+        cliente_telefone: telefone ?? null,
+      }).select('id').single();
+      if (errPedido) acoes.push(`Erro ao salvar pedido agendado: ${errPedido.message}`);
+      else acoes.push(`Pedido agendado salvo: ${pedidoSalvo?.id}`);
+    }
+
     // Envia mensagem ao cliente
     if (mensagem) {
       const isInstagram = canalLead?.toLowerCase() === 'instagram';
@@ -143,7 +187,7 @@ Deno.serve(async (req: Request) => {
       if (payload.lead_id) avisoOperador += `🆔 Lead ID: ${payload.lead_id}`;
 
       if (!horario) {
-        avisoOperador += `\n\n⏰ *Fora do horário comercial.* Retorne ao cliente no próximo dia útil após as 08h.`;
+        avisoOperador += `\n\n⏰ *Fora do horário comercial.* Seg–Sáb: 09–19h | Dom/Feriados: 10–14h.`;
       }
 
       const envioOp = await enviarWhatsApp(workspace_id, OPERADOR_WHATSAPP, avisoOperador);
