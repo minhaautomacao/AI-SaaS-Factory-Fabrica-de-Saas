@@ -1,8 +1,27 @@
 # Estado Atual — Fábrica de SaaS
 
-> Atualizado em: 2026-06-10
+> Atualizado em: 2026-06-23
 
 ## Projeto ativo: Enemeop Flores
+
+### Sessão 2026-06-23 — O que foi feito
+
+1. **Lalamove `LALAGO`** — serviceType corrigido, R$9.60 cotação real em Aracaju ✅
+2. **Z-API restaurada** — credenciais recuperadas do Render, salvas em `.credentials/whatsapp/whatsapp.env` + Supabase secrets ✅
+3. **Markup R$15** — cliente vê R$24.60 quando custo real é R$9.60 ✅
+4. **CRM leads expandido** — AI extrai nome, telefone, email, endereço, bairro, cidade, CEP ✅
+5. **Handoff humano** — `whatsapp-sdr` v11 deployado com:
+   - Horário comercial 08:00-18:00 BRT (seg-sáb, fechado domingo)
+   - Notificação do operador (`CARLOS_WHATSAPP=5511912808282`) com contexto completo
+   - Testado e funcionando: cliente recebe aviso + operador recebe briefing ✅
+
+### Pendente
+
+- [ ] Configurar webhook Z-API para receber mensagens dos clientes (entra em `webhook-whatsapp-proxy`)
+- [ ] Corrigir bug de login em `enemeop-flores.vercel.app`
+- [ ] Renovação do token Instagram (~60 dias)
+
+---
 
 ### Infraestrutura em produção
 
