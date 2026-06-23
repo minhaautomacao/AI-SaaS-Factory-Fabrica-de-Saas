@@ -179,6 +179,17 @@ async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; co
   return null;
 }
 
+// ── Normalização de telefone ──────────────────────────────────────────────────
+
+function normalizarTelefone(phone: string): string {
+  const digits = phone.replace(/\D/g, '');
+  // Já tem código do país 55 e tem 12-13 dígitos → correto
+  if (digits.startsWith('55') && digits.length >= 12) return digits;
+  // Número brasileiro sem código do país (10-11 dígitos) → adiciona 55
+  if (digits.length >= 10 && digits.length <= 11) return `55${digits}`;
+  return digits;
+}
+
 // ── Envio Z-API ───────────────────────────────────────────────────────────────
 
 async function enviarTexto(phone: string, message: string): Promise<void> {
@@ -280,10 +291,13 @@ Deno.serve(async (req: Request) => {
 
   if (!texto) return new Response('ok', { status: 200 });
 
-  const phone         = String(body['phone'] ?? '');
+  const phoneRaw      = String(body['phone'] ?? '');
   const nomeRemetente = (body['senderName'] ?? body['chatName'] ?? null) as string | null;
 
-  if (!phone) return new Response('ok', { status: 200 });
+  if (!phoneRaw) return new Response('ok', { status: 200 });
+
+  const phone = normalizarTelefone(phoneRaw);
+  console.log(`[webhook-whatsapp] recebido de ${phoneRaw} → normalizado: ${phone}`);
 
   EdgeRuntime.waitUntil(processarMensagem(phone, nomeRemetente, texto));
 
