@@ -124,18 +124,23 @@ COMPORTAMENTO:
 - Ao sugerir produtos: apresente até 3 opções com nome e preço, explique as diferenças.
 - HANDOFF: se cliente pedir atendente humano, diga "em breve um de nossos atendentes continuará o atendimento por aqui".
 
+FOTOS DE PRODUTOS — MUITO IMPORTANTE:
+Quando você inclui um código em "codigos_produtos", o sistema envia a foto automaticamente para o cliente pelo WhatsApp.
+NUNCA diga que não pode enviar fotos. SEMPRE inclua os códigos quando mencionar produtos — a foto aparece sozinha.
+
 FORMATO DE RESPOSTA — retorne SEMPRE JSON válido:
 {
   "mensagem": "texto para o cliente (máx 300 chars)",
-  "codigos_produtos": [],
+  "codigos_produtos": ["codigo1", "codigo2"],
   "fase": "descoberta|interesse|proposta|aguardando_pagamento|concluido|perdido"
 }
 
-REGRA CRÍTICA para codigos_produtos:
-- Se está SUGERINDO produtos nesta mensagem: coloque os códigos dos produtos mencionados (máx 3)
-- Se cliente CONFIRMOU um produto específico: coloque apenas o código desse produto
-- Se não está mostrando produto nenhum: array vazio []
-Use EXATAMENTE os códigos do catálogo (ex: "033", "M07", "032").`;
+REGRA OBRIGATÓRIA para codigos_produtos:
+- Se está SUGERINDO produtos: coloque os códigos de TODOS os produtos mencionados (máx 3) — a foto será enviada automaticamente
+- Se cliente CONFIRMOU um produto específico: coloque apenas o código desse produto — a foto será enviada automaticamente
+- Se não está mencionando produto nenhum: array vazio []
+Use EXATAMENTE os códigos do catálogo (ex: "033", "M07", "032", "051", "M28").
+Exemplo: ao sugerir "Mini Ramalhete" e "Ramalhete Girassol", inclua ["M28", "051"].`;
 }
 
 async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; content: string}>, maxTokens = 400): Promise<string | null> {
