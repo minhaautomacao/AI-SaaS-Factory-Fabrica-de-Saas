@@ -27,8 +27,9 @@
 | `FACTORY_SECRET` | Supabase secrets | ✅ OK |
 | `META_PAGE_ACCESS_TOKEN` | Supabase secrets | ❌ **FALTANDO** |
 | `META_PAGE_ID` | Supabase secrets | ❌ **FALTANDO** |
-| `WHATSAPP_ACCESS_TOKEN` | Supabase secrets | ❌ **FALTANDO** |
-| `WHATSAPP_BUSINESS_ACCOUNT_ID` | Supabase secrets | ❌ **FALTANDO** |
+| `ZAPI_INSTANCE_ID` | Supabase secrets + `.credentials/whatsapp/whatsapp.env` | ✅ OK |
+| `ZAPI_TOKEN` | Supabase secrets + `.credentials/whatsapp/whatsapp.env` | ✅ OK |
+| `ZAPI_CLIENT_TOKEN` | Supabase secrets + `.credentials/whatsapp/whatsapp.env` | ✅ OK |
 
 > Ver instruções completas em [`meta/README.md`](meta/README.md)
 
