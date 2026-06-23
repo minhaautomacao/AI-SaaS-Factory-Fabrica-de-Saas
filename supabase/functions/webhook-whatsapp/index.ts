@@ -1,11 +1,8 @@
 /**
- * webhook-whatsapp — Recebe mensagens do Z-API e responde com IA
+ * webhook-whatsapp — Recebe mensagens do Z-API e responde com IA + fotos dos produtos
  *
- * Mesmo agente de vendas do webhook-meta (Instagram), adaptado para WhatsApp.
- * Mantém memória de conversa por número de telefone na tabela `conversas`.
- *
- * URL configurada no Z-API:
- *   https://gftnjvdvzgjkhwxnxnwl.supabase.co/functions/v1/webhook-whatsapp
+ * Quando a IA sugere ou o cliente confirma um produto, a foto real é enviada via Z-API.
+ * Fotos e códigos ficam na tabela catalogo_produtos.
  */
 
 import { createClient } from 'npm:@supabase/supabase-js@2';
@@ -28,29 +25,57 @@ async function buscarConfigDB(chave: string): Promise<string> {
   } catch { return ''; }
 }
 
-// ── Catálogo resumido (completo no webhook-meta) ──────────────────────────────
-
-const CATALOGO = `
-ENEMEOP FLORES — Ipiranga, São Paulo, desde 1997.
-Funcionamento: Seg–Sáb 9h–19h | Dom e Feriados 10h–14h.
-Entrega: até 3h após pagamento. São Paulo e Grande SP.
-
-PRODUTOS (principais):
-Ramalhetes: Mini R$55 | Rosas R$70 | 3 Rosas+Chocolates R$95 | Mix+Ferrero R$150
-Buquês: Rosas Vermelhas R$140 | 6 Rosas R$185 | 12 Rosas R$280 | 24 Rosas R$560 | Mix Flores R$295-R$745
-Arranjos: Vaso Vidro R$70 | Girassol R$75-R$135 | Rosas R$160 | Orquídeas R$225
-Orquídeas: 1 haste R$170-R$290 | 2 hastes R$290-R$390
-Buquês Noiva: a partir de R$445
-Kits: Ferrero 100g R$45 | Cesta Queijos+Vinho R$890
-
-FORMAS DE PAGAMENTO: Cartão, PIX, online.
-PERSONALIZAÇÃO: encomendas sob medida disponíveis.
-`.trim();
-
 // ── Tipos ─────────────────────────────────────────────────────────────────────
 
 interface Mensagem { role: 'user' | 'assistant'; content: string; ts: string; }
 interface Conversa { id: string; canal_id: string; canal: string; fase: string; historico: Mensagem[]; pedido_info: Record<string, unknown> | null; lead_id: string | null; nome_cliente: string | null; }
+interface Produto { codigo: string; nome: string; preco: number; foto_url: string; }
+
+// ── Catálogo (codigos para a IA usar) ─────────────────────────────────────────
+
+// Catálogo compacto com códigos — a IA usa esses códigos no JSON de resposta
+const CATALOGO_IA = `
+ENEMEOP FLORES — Ipiranga, SP, desde 1997. Seg–Sáb 9h–19h | Dom/Feriados 10h–14h.
+Entrega até 3h após pagamento. São Paulo e Grande SP.
+
+PRODUTOS (use o CÓDIGO exato no campo codigos_produtos):
+RAMALHETES:
+  M28 Mini Ramalhete R$55 | 051 Ramalhete Girassol+Alstroemêrias R$70 | M30 Ramalhete Rosas R$70
+  094 3 Rosas+Chocolates R$95 | M29 Mini Ramalhete+Ferrero R$100 | 057 Rosas Brancas R$105
+  M31 3 Rosas Nacionais Rosa R$105 | 081 Mix Rosas+Ferrero R$150
+
+BUQUÊS:
+  032 Buquê Rosas Vermelhas R$140 | M35 6 Rosas Vermelhas R$185 | M44 6 Rosas Nacionais R$185
+  M59 Buquê Rosas+Coração R$205 | M43 Rosas Nacionais Vermelhas R$245 | M55 Rosas Brancas R$280
+  033 12 Rosas Vermelhas R$280 | M36 Rosas+Ferrero R$290 | M40 Mix Alstroemêrias R$295
+  054 Mix Girassóis+Flores R$295 | M50 Luto Rosas Brancas R$390 | 093 Lírios Rosa R$395
+  061 Luxuoso Alstroemêrias R$395 | 045 12 Rosas Rosa+Alstroemêrias R$370
+  M38 12 Rosas Pink R$370 | M41 12 Rosas Nacionais Rosa R$370 | M48 Rosas e Juncos R$420
+  M60 Mix Flores+Vinho R$425 | M42 Mix Flores R$495 | 034 24 Rosas Vermelhas R$560
+  062 Noiva Rosas Pink R$565 | 039 Mix Flores Nobre R$590 | 052 12 Girassóis Premium R$435
+  056 100 Rosas Vermelhas R$1490
+
+ARRANJOS:
+  M01 Arranjo Vaso Vidro R$70 | M09 Girassol Solitário R$75 | 002 2 Rosas+Junco R$105
+  010 Girassol+Ferrero R$120 | 011 Girassol no Vaso R$135 | 003 Coração 2 Rosas+Ferrero R$140
+  M08 Mix Flores do Campo R$145 | M20 Arranjo Laranja R$145 | 027 Alstroemêrias no Vaso R$155
+  M17 Luto Hortênsias R$155 | M07 Arranjo de Rosas R$160 | 006 4 Rosas Brancas+Alstroemêrias R$225
+  012 Orquídeas Brancas Frente Única R$225 | 013 Orquídeas Pink Vaso R$225
+  014 Orquídeas Brancas+Ruscus R$225 | M05 Rosas Pink no Vaso R$225
+  M18 Rosas Vermelhas no Vidro R$425 | 004 Buquê Rosas no Vaso R$295
+
+ORQUÍDEAS:
+  M90 Phalaenópsis Mescla Pequena R$145 | M89 Phalaenópsis Mescla no Vaso R$195
+  083 Orquídea Branca 1 haste R$170 | M91 Phalaenópsis Pink 1 haste R$225
+  M87 Mini Orquídea no Vaso R$215 | M92 Phalaenópsis Branca 1 haste R$290
+  084 Phalaenópsis Branca 2 hastes R$290 | M85 Phalaenópsis Pink R$300
+  M88 Phalaenópsis Pink no Vaso R$315 | M86 Phalaenópsis Cascata Branca R$390
+
+KITS: ferrero Ferrero Rocher 100g R$45 | 082 Cesta Queijos+Vinho R$890
+
+FORMAS DE PAGAMENTO: Cartão, PIX, online.
+PERSONALIZAÇÃO: encomendas sob medida disponíveis.
+`.trim();
 
 // ── Memória de conversa ───────────────────────────────────────────────────────
 
@@ -68,49 +93,68 @@ async function salvarConversa(id: string, updates: Partial<Conversa>): Promise<v
   await getDb().from('conversas').update({ ...updates, atualizado_em: new Date().toISOString() }).eq('id', id);
 }
 
+// ── Busca fotos no banco ──────────────────────────────────────────────────────
+
+async function buscarProdutos(codigos: string[]): Promise<Produto[]> {
+  if (!codigos || codigos.length === 0) return [];
+  const { data } = await getDb()
+    .from('catalogo_produtos')
+    .select('codigo, nome, preco, foto_url')
+    .in('codigo', codigos)
+    .eq('ativo', true)
+    .not('foto_url', 'is', null);
+  return (data ?? []) as Produto[];
+}
+
 // ── IA ────────────────────────────────────────────────────────────────────────
 
 function buildSystemPrompt(fase: string, pedidoInfo: Record<string, unknown> | null, nomeCliente: string | null): string {
-  return `Você é Flor, consultora virtual da Enemeop Flores (floricultura em São Paulo desde 1997).
+  return `Você é Flor, consultora virtual da Enemeop Flores (São Paulo, desde 1997).
 Atendimento 100% por WhatsApp — nunca mencione ligação telefônica.
 ${nomeCliente ? `Cliente: ${nomeCliente}.` : ''}
 
-${CATALOGO}
+${CATALOGO_IA}
 
-FASE: ${fase}
-${pedidoInfo ? `PEDIDO: ${JSON.stringify(pedidoInfo)}` : ''}
+FASE ATUAL: ${fase}
+${pedidoInfo ? `PEDIDO EM ANDAMENTO: ${JSON.stringify(pedidoInfo)}` : ''}
 
-COMPORTAMENTO: Natural, humana, acolhedora, sofisticada. Máx 1 emoji por mensagem. Nunca parece robô.
-Faça UMA pergunta por vez. Objetivo: entender ocasião, produto ideal, data, endereço e fechar pedido.
-Quando o cliente decidir: colete nome, endereço, CEP, destinatário, data, período, pagamento.
-HANDOFF: se cliente pedir atendente humano ou situação complexa, diga que "em breve um de nossos atendentes continuará o atendimento por aqui".
-Retorne APENAS o texto da resposta, sem aspas, sem prefixo, sem JSON.`;
-}
+COMPORTAMENTO:
+- Natural, humana, acolhedora. Máx 1 emoji por mensagem. Nunca parece robô.
+- Faça UMA pergunta por vez. Descubra: ocasião → perfil → produto → data → endereço → pagamento.
+- Ao sugerir produtos: apresente até 3 opções com nome e preço, explique as diferenças.
+- HANDOFF: se cliente pedir atendente humano, diga "em breve um de nossos atendentes continuará o atendimento por aqui".
 
-function buildFasePrompt(historico: Mensagem[], ultimaMensagem: string, faseAtual: string): string {
-  return `Analise a conversa de venda de floricultura e retorne JSON:
+FORMATO DE RESPOSTA — retorne SEMPRE JSON válido:
 {
-  "nova_fase": "descoberta|interesse|proposta|aguardando_pagamento|concluido|perdido",
-  "pedido_info": {"produto": "", "quantidade": 1, "data_entrega": "", "endereco": "", "valor": 0} | null,
-  "pronto_para_pagamento": false,
-  "nome_cliente": null
-}
-Historico: ${historico.slice(-4).map(m => `${m.role}: ${m.content}`).join(' | ')}
-Ultima mensagem: "${ultimaMensagem}"
-Fase atual: ${faseAtual}`;
+  "mensagem": "texto para o cliente (máx 300 chars)",
+  "codigos_produtos": [],
+  "fase": "descoberta|interesse|proposta|aguardando_pagamento|concluido|perdido"
 }
 
-async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; content: string}>, maxTokens = 150): Promise<string | null> {
+REGRA CRÍTICA para codigos_produtos:
+- Se está SUGERINDO produtos nesta mensagem: coloque os códigos dos produtos mencionados (máx 3)
+- Se cliente CONFIRMOU um produto específico: coloque apenas o código desse produto
+- Se não está mostrando produto nenhum: array vazio []
+Use EXATAMENTE os códigos do catálogo (ex: "033", "M07", "032").`;
+}
+
+async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; content: string}>, maxTokens = 400): Promise<string | null> {
   const groqKey = Deno.env.get('GROQ_API_KEY') || await buscarConfigDB('GROQ_API_KEY');
   if (groqKey) {
     try {
       const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
-        body: JSON.stringify({ model: 'llama-3.1-8b-instant', max_tokens: maxTokens, messages: [{ role: 'system', content: systemPrompt }, ...mensagens] }),
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          max_tokens: maxTokens,
+          response_format: { type: 'json_object' },
+          messages: [{ role: 'system', content: systemPrompt }, ...mensagens],
+        }),
       });
       if (res.ok) return ((await res.json()).choices?.[0]?.message?.content as string)?.trim() ?? null;
-    } catch {}
+      console.error('[ia] Groq status:', (await res.text()).slice(0, 200));
+    } catch (e) { console.error('[ia] Groq erro:', e); }
   }
   const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY') || await buscarConfigDB('ANTHROPIC_API_KEY');
   if (anthropicKey) {
@@ -118,7 +162,11 @@ async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; co
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-api-key': anthropicKey, 'anthropic-version': '2023-06-01' },
-        body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: maxTokens, system: systemPrompt, messages: mensagens }),
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001', max_tokens: maxTokens,
+          system: systemPrompt + '\nRetorne APENAS o JSON, sem texto adicional.',
+          messages: mensagens,
+        }),
       });
       if (res.ok) return ((await res.json()).content?.[0]?.text as string)?.trim() ?? null;
     } catch {}
@@ -126,14 +174,22 @@ async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; co
   return null;
 }
 
-// ── Enviar via Z-API ──────────────────────────────────────────────────────────
+// ── Envio Z-API ───────────────────────────────────────────────────────────────
 
-async function enviarZAPI(phone: string, message: string): Promise<void> {
+async function enviarTexto(phone: string, message: string): Promise<void> {
   await fetch(`https://api.z-api.io/instances/${ZAPI_INSTANCE}/token/${ZAPI_TOKEN}/send-text`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Client-Token': ZAPI_CLIENT },
     body: JSON.stringify({ phone, message }),
-  }).catch(e => console.error('[zapi] falha envio:', e));
+  }).catch(e => console.error('[zapi] falha texto:', e));
+}
+
+async function enviarImagem(phone: string, imageUrl: string, caption: string): Promise<void> {
+  await fetch(`https://api.z-api.io/instances/${ZAPI_INSTANCE}/token/${ZAPI_TOKEN}/send-image`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Client-Token': ZAPI_CLIENT },
+    body: JSON.stringify({ phone, image: imageUrl, caption }),
+  }).catch(e => console.error('[zapi] falha imagem:', e));
 }
 
 // ── Processar mensagem ────────────────────────────────────────────────────────
@@ -146,35 +202,48 @@ async function processarMensagem(phone: string, nomeRemetente: string | null, te
   const historico = [...(conversa.historico ?? []), novaMsg].slice(-20);
   const nomeCliente = conversa.nome_cliente ?? nomeRemetente ?? null;
 
-  const [respostaIA, analiseRaw] = await Promise.all([
-    chamarIA(buildSystemPrompt(conversa.fase, conversa.pedido_info, nomeCliente), historico.map(m => ({ role: m.role, content: m.content })), 350),
-    chamarIA(buildFasePrompt(historico, texto, conversa.fase), [{ role: 'user', content: texto }], 200),
-  ]);
+  const respostaRaw = await chamarIA(
+    buildSystemPrompt(conversa.fase, conversa.pedido_info, nomeCliente),
+    historico.map(m => ({ role: m.role, content: m.content })),
+    400,
+  );
 
+  let mensagem = 'Olá! Como posso te ajudar hoje? 🌸';
+  let codigosProdutos: string[] = [];
   let novaFase = conversa.fase;
-  let pedidoInfo = conversa.pedido_info ?? null;
 
-  if (analiseRaw) {
+  if (respostaRaw) {
     try {
-      const analise = JSON.parse(analiseRaw.replace(/```json\n?|\n?```/g, '').trim());
-      novaFase = analise.nova_fase ?? conversa.fase;
-      if (analise.pedido_info?.produto) pedidoInfo = analise.pedido_info;
-      if (analise.nome_cliente && !conversa.nome_cliente) {
-        await salvarConversa(conversa.id, { nome_cliente: analise.nome_cliente });
-      }
-    } catch {}
+      const parsed = JSON.parse(respostaRaw.replace(/```json\n?|\n?```/g, '').trim());
+      mensagem       = parsed.mensagem ?? mensagem;
+      codigosProdutos = Array.isArray(parsed.codigos_produtos) ? parsed.codigos_produtos.slice(0, 3) : [];
+      novaFase       = parsed.fase ?? conversa.fase;
+    } catch {
+      // se falhou o parse, usa o texto cru como mensagem
+      mensagem = respostaRaw.slice(0, 400);
+    }
   }
 
-  const respostaFinal = respostaIA ?? 'Olá! Como posso te ajudar hoje? 🌸';
-  const msgAssistente: Mensagem = { role: 'assistant', content: respostaFinal, ts: new Date().toISOString() };
+  const msgAssistente: Mensagem = { role: 'assistant', content: mensagem, ts: new Date().toISOString() };
+
+  // Busca fotos dos produtos antes de enviar
+  const produtos = await buscarProdutos(codigosProdutos);
+
+  // Envia tudo em sequência para manter ordem no WhatsApp
+  await enviarTexto(phone, mensagem);
+  for (const produto of produtos) {
+    if (produto.foto_url) {
+      const caption = `${produto.nome} — R$ ${Number(produto.preco).toFixed(2).replace('.', ',')}`;
+      await enviarImagem(phone, produto.foto_url, caption);
+    }
+  }
 
   await Promise.all([
     salvarConversa(conversa.id, {
       historico: [...historico, msgAssistente].slice(-20),
       fase: novaFase,
-      pedido_info: pedidoInfo,
+      nome_cliente: nomeCliente ?? undefined,
     }),
-    enviarZAPI(phone, respostaFinal),
     fetch(`${SUPABASE_URL}/functions/v1/captacao-leads`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SERVICE_KEY}` },
@@ -186,7 +255,7 @@ async function processarMensagem(phone: string, nomeRemetente: string | null, te
     }).catch(() => {}),
   ]);
 
-  console.log(`[webhook-whatsapp] ${phone} | ${conversa.fase}->${novaFase} | ${respostaFinal.slice(0, 60)}`);
+  console.log(`[webhook-whatsapp] ${phone} | ${conversa.fase}->${novaFase} | fotos: ${produtos.length} | ${mensagem.slice(0, 60)}`);
 }
 
 // ── Handler ───────────────────────────────────────────────────────────────────
