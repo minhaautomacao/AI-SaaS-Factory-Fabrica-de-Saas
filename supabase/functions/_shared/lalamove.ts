@@ -56,7 +56,7 @@ export async function calcularFreteLalamove(
 
   const bodyObj = {
     data: {
-      serviceType: 'MOTORCYCLE',
+      serviceType: 'LALAGO',
       language: 'pt_BR',
       stops: [
         {
