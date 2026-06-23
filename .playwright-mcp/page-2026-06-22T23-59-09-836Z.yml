@@ -1,0 +1,139 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - banner [ref=e6]:
+        - generic [ref=e7]:
+          - generic [ref=e8]:
+            - link "Supabase" [ref=e9] [cursor=pointer]:
+              - /url: /dashboard/org/fwlgmqkqauqaaopbnquj
+              - img "Supabase" [ref=e10]
+            - img [ref=e14]
+            - button "Connect" [disabled] [ref=e18]:
+              - img [ref=e20]
+              - generic [ref=e22]: Connect
+          - generic [ref=e23]:
+            - generic [ref=e25] [cursor=pointer]: Feedback
+            - generic [ref=e26]:
+              - button "Search..." [ref=e27]:
+                - generic [ref=e28]:
+                  - img [ref=e29]
+                  - paragraph [ref=e32]: Search...
+                - generic [ref=e34]: Ctrl K
+              - button "Help" [ref=e35] [cursor=pointer]:
+                - generic [ref=e36]:
+                  - img [ref=e37]
+                  - generic [ref=e40]: Help
+              - button "Advisor Center" [ref=e42] [cursor=pointer]:
+                - generic [ref=e43]:
+                  - img [ref=e44]
+                  - generic [ref=e46]: Advisor Center
+              - button "SQL Editor" [ref=e47] [cursor=pointer]:
+                - generic [ref=e48]:
+                  - img [ref=e49]
+                  - generic [ref=e51]: SQL Editor
+              - button "AI Assistant" [ref=e52] [cursor=pointer]:
+                - generic [ref=e53]:
+                  - img [ref=e56]
+                  - generic [ref=e59]: AI Assistant
+            - button "minhaautomacao" [ref=e60] [cursor=pointer]:
+              - img "minhaautomacao" [ref=e62]
+      - generic [ref=e63]:
+        - generic [ref=e67]:
+          - list [ref=e70]:
+            - generic [ref=e71]:
+              - listitem [ref=e72]:
+                - link "Project Overview" [ref=e73] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl
+                  - img [ref=e74]
+                  - generic: Project Overview
+              - listitem [ref=e76]:
+                - button "Table Editor" [disabled]:
+                  - img
+                  - generic: Table Editor
+              - listitem [ref=e77]:
+                - button "SQL Editor" [disabled]:
+                  - img
+                  - generic: SQL Editor
+            - generic [ref=e78]:
+              - listitem [ref=e79]:
+                - button "Database" [disabled]:
+                  - img
+                  - generic: Database
+              - listitem [ref=e80]:
+                - button "Authentication" [disabled]:
+                  - img
+                  - generic: Authentication
+              - listitem [ref=e81]:
+                - button "Storage" [disabled]:
+                  - img
+                  - generic: Storage
+              - listitem [ref=e82]:
+                - link "Edge Functions" [ref=e83] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions
+                  - img [ref=e84]
+                  - generic: Edge Functions
+              - listitem [ref=e89]:
+                - button "Realtime" [disabled]:
+                  - img
+                  - generic: Realtime
+            - generic [ref=e90]:
+              - listitem [ref=e92]:
+                - button "Advisors" [disabled]:
+                  - img
+                  - generic: Advisors
+              - listitem [ref=e93]:
+                - button "Observability" [disabled]:
+                  - img
+                  - generic: Observability
+              - listitem [ref=e94]:
+                - link "Logs" [ref=e95] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/logs/explorer
+                  - img [ref=e96]
+                  - generic: Logs
+              - listitem [ref=e97]:
+                - button "Integrations" [disabled]:
+                  - img
+                  - generic: Integrations
+            - listitem [ref=e99]:
+              - link "Project Settings" [ref=e100] [cursor=pointer]:
+                - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/settings/general
+                - img [ref=e101]
+                - generic: Project Settings
+          - button "Sidebar control" [ref=e106] [cursor=pointer]:
+            - img [ref=e108]
+        - generic [ref=e115]:
+          - generic [ref=e119]:
+            - heading "Edge Functions" [level=4] [ref=e121]
+            - menu "Sidebar" [disabled] [ref=e124]:
+              - list [ref=e125]:
+                - generic [ref=e128]:
+                  - generic [ref=e132]: Manage
+                  - generic [ref=e133]:
+                    - link "Functions" [disabled] [ref=e134] [cursor=pointer]:
+                      - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions
+                      - menuitem "Functions" [disabled] [ref=e135]:
+                        - generic [ref=e139]: Functions
+                    - link "Secrets" [disabled] [ref=e140] [cursor=pointer]:
+                      - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions/secrets
+                      - menuitem "Secrets" [disabled] [ref=e141]:
+                        - generic [ref=e145]: Secrets
+          - separator [disabled] [ref=e146]:
+            - img [ref=e148]
+          - main [ref=e157]:
+            - generic [ref=e162]:
+              - heading "Edge Function Secrets" [level=1] [ref=e163]
+              - generic [ref=e164]: Manage encrypted values for your functions
+    - generic [ref=e175]:
+      - generic:
+        - img "Background pattern"
+      - generic [ref=e176]:
+        - button "Close banner" [ref=e178] [cursor=pointer]:
+          - img [ref=e180]
+        - generic [ref=e183]:
+          - generic [ref=e184]: Notice
+          - generic [ref=e185]:
+            - paragraph [ref=e186]: We've updated our Terms of Service
+            - paragraph [ref=e187]: Updates define the responsibilities of both you and Supabase in the use of AI.
+          - button "Learn more" [ref=e188] [cursor=pointer]:
+            - generic [ref=e189]: Learn more
+  - alert [ref=e190]: Secrets | Edge Functions | Supabase

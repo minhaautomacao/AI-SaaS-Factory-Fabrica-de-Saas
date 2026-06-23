@@ -1,0 +1,420 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - banner [ref=e6]:
+        - generic [ref=e7]:
+          - generic [ref=e8]:
+            - link "Supabase" [ref=e9] [cursor=pointer]:
+              - /url: /dashboard/org/fwlgmqkqauqaaopbnquj
+              - img "Supabase" [ref=e10]
+            - generic [ref=e11]:
+              - img [ref=e192]
+              - generic [ref=e194]:
+                - link "Minha Automação Free" [ref=e195] [cursor=pointer]:
+                  - /url: /dashboard/org/fwlgmqkqauqaaopbnquj
+                  - img [ref=e196]
+                  - generic [ref=e206]: Minha Automação
+                  - generic [ref=e207]: Free
+                - button [ref=e208] [cursor=pointer]:
+                  - img [ref=e210]
+              - generic [ref=e12]:
+                - img [ref=e14]
+                - generic [ref=e213]:
+                  - link "enemeop-flores" [ref=e214] [cursor=pointer]:
+                    - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl
+                    - img [ref=e215]
+                    - generic "enemeop-flores" [ref=e218]
+                  - button [ref=e219] [cursor=pointer]:
+                    - img [ref=e221]
+                - img [ref=e225]
+                - generic [ref=e227]:
+                  - link "main Production" [ref=e228] [cursor=pointer]:
+                    - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl
+                    - generic "main" [ref=e229]
+                    - generic [ref=e230]: Production
+                  - button [ref=e231] [cursor=pointer]:
+                    - img [ref=e233]
+            - button "Connect" [ref=e236] [cursor=pointer]:
+              - img [ref=e238]
+              - generic [ref=e240]: Connect
+          - generic [ref=e23]:
+            - generic [ref=e25] [cursor=pointer]: Feedback
+            - generic [ref=e26]:
+              - button "Search..." [ref=e27]:
+                - generic [ref=e28]:
+                  - img [ref=e29]
+                  - paragraph [ref=e32]: Search...
+                - generic [ref=e34]: Ctrl K
+              - button "Help" [ref=e35] [cursor=pointer]:
+                - generic [ref=e36]:
+                  - img [ref=e37]
+                  - generic [ref=e40]: Help
+              - button "Advisor Center" [ref=e42] [cursor=pointer]:
+                - generic [ref=e43]:
+                  - img [ref=e44]
+                  - generic [ref=e46]: Advisor Center
+              - button "SQL Editor" [ref=e47] [cursor=pointer]:
+                - generic [ref=e48]:
+                  - img [ref=e49]
+                  - generic [ref=e51]: SQL Editor
+              - button "AI Assistant" [ref=e52] [cursor=pointer]:
+                - generic [ref=e53]:
+                  - img [ref=e56]
+                  - generic [ref=e59]: AI Assistant
+            - button "minhaautomacao" [ref=e60] [cursor=pointer]:
+              - img "minhaautomacao" [ref=e62]
+      - generic [ref=e63]:
+        - generic [ref=e67]:
+          - list [ref=e70]:
+            - generic [ref=e71]:
+              - listitem [ref=e72]:
+                - link "Project Overview" [ref=e73] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl
+                  - img [ref=e74]
+                  - generic: Project Overview
+              - listitem [ref=e76]:
+                - link "Table Editor" [ref=e242] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/editor
+                  - img [ref=e243]
+                  - generic: Table Editor
+              - listitem [ref=e77]:
+                - link "SQL Editor" [ref=e245] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/sql
+                  - img [ref=e246]
+                  - generic: SQL Editor
+            - generic [ref=e78]:
+              - listitem [ref=e79]:
+                - link "Database" [ref=e248] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/database/schemas
+                  - img [ref=e249]
+                  - generic: Database
+              - listitem [ref=e80]:
+                - link "Authentication" [ref=e253] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/auth/users
+                  - img [ref=e254]
+                  - generic: Authentication
+              - listitem [ref=e81]:
+                - link "Storage" [ref=e256] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/storage/files
+                  - img [ref=e257]
+                  - generic: Storage
+              - listitem [ref=e82]:
+                - link "Edge Functions" [ref=e83] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions
+                  - img [ref=e84]
+                  - generic: Edge Functions
+              - listitem [ref=e89]:
+                - link "Realtime" [ref=e259] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/realtime/inspector
+                  - img [ref=e260]
+                  - generic: Realtime
+            - generic [ref=e90]:
+              - listitem [ref=e92]:
+                - link "Advisors" [ref=e262] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/advisors/security
+                  - img [ref=e263]
+                  - generic: Advisors
+              - listitem [ref=e93]:
+                - link "Observability" [ref=e265] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/observability
+                  - img [ref=e266]
+                  - generic: Observability
+              - listitem [ref=e94]:
+                - link "Logs" [ref=e95] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/logs/explorer
+                  - img [ref=e96]
+                  - generic: Logs
+              - listitem [ref=e97]:
+                - link "Integrations" [ref=e274] [cursor=pointer]:
+                  - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/integrations
+                  - img [ref=e275]
+                  - generic: Integrations
+            - listitem [ref=e99]:
+              - link "Project Settings" [ref=e100] [cursor=pointer]:
+                - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/settings/general
+                - img [ref=e101]
+                - generic: Project Settings
+          - button "Sidebar control" [ref=e106] [cursor=pointer]:
+            - img [ref=e108]
+        - generic [ref=e115]:
+          - generic [ref=e119]:
+            - heading "Edge Functions" [level=4] [ref=e121]
+            - menu "Sidebar" [disabled] [ref=e124]:
+              - list [ref=e125]:
+                - generic [ref=e128]:
+                  - generic [ref=e132]: Manage
+                  - generic [ref=e133]:
+                    - link "Functions" [disabled] [ref=e134] [cursor=pointer]:
+                      - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions
+                      - menuitem "Functions" [disabled] [ref=e135]:
+                        - generic [ref=e139]: Functions
+                    - link "Secrets" [disabled] [ref=e140] [cursor=pointer]:
+                      - /url: /dashboard/project/gftnjvdvzgjkhwxnxnwl/functions/secrets
+                      - menuitem "Secrets" [disabled] [ref=e141]:
+                        - generic [ref=e145]: Secrets
+          - separator [disabled] [ref=e146]:
+            - img [ref=e148]
+          - main [ref=e157]:
+            - generic [ref=e278]:
+              - generic [ref=e282]:
+                - heading "Edge Function Secrets" [level=1] [ref=e283]
+                - generic [ref=e284]: Manage encrypted values for your functions
+              - generic [ref=e288]:
+                - generic [ref=e290]:
+                  - heading "Add or replace secrets" [level=3] [ref=e292]
+                  - generic [ref=e294]:
+                    - generic [ref=e296]:
+                      - generic [ref=e298]:
+                        - group [ref=e299]:
+                          - textbox "e.g. CLIENT_KEY" [active] [ref=e300]
+                        - button "Remove secret" [disabled]:
+                          - generic:
+                            - img
+                      - generic [ref=e301]:
+                        - generic [ref=e303]: Name
+                        - generic [ref=e304]: A unique name for your secret.
+                    - generic [ref=e306]:
+                      - generic [ref=e308]:
+                        - textbox [ref=e309]
+                        - button "Show secret value" [ref=e310] [cursor=pointer]:
+                          - img [ref=e312]
+                      - generic [ref=e315]:
+                        - generic [ref=e317]: Value
+                        - generic [ref=e318]: Supports multi-line values such as PEM keys, JSON, or functions.
+                  - generic [ref=e319]:
+                    - paragraph [ref=e320]: Insert or update multiple secrets at once by pasting key-value pairs
+                    - generic [ref=e321]:
+                      - button "Add another" [ref=e322] [cursor=pointer]:
+                        - generic [ref=e323]: Add another
+                      - button "Save" [ref=e324] [cursor=pointer]:
+                        - generic [ref=e325]: Save
+                - generic [ref=e326]:
+                  - generic [ref=e327]:
+                    - generic [ref=e328]:
+                      - heading "Custom secrets" [level=3] [ref=e329]
+                      - paragraph [ref=e330]: Secrets you have defined for this project
+                    - group [ref=e331]:
+                      - textbox "Search for a secret" [ref=e332]
+                      - group [ref=e333]:
+                        - img [ref=e334]
+                  - table [ref=e340]:
+                    - rowgroup [ref=e341]:
+                      - row "Name Digest SHA256 Updated" [ref=e342]:
+                        - columnheader "Name" [ref=e343]
+                        - columnheader "Digest SHA256" [ref=e344]:
+                          - text: Digest
+                          - generic [ref=e345]: SHA256
+                        - columnheader "Updated" [ref=e346]
+                        - columnheader [ref=e347]
+                    - rowgroup [ref=e348]:
+                      - row "META_APP_SECRET 0686ca6f7c90f6d34fc4d7d42b7bbb06c2a7fc2da65a5de76fb1b42bd39feb0c 08 Jun 2026 23:25:00 (+0000) More options" [ref=e349]:
+                        - cell "META_APP_SECRET" [ref=e350]:
+                          - button "META_APP_SECRET" [ref=e351]:
+                            - paragraph [ref=e352]:
+                              - code [ref=e353]: META_APP_SECRET
+                        - cell "0686ca6f7c90f6d34fc4d7d42b7bbb06c2a7fc2da65a5de76fb1b42bd39feb0c" [ref=e354]:
+                          - paragraph [ref=e355]:
+                            - code [ref=e356]: 0686ca6f7c90f6d34fc4d7d42b7bbb06c2a7fc2da65a5de76fb1b42bd39feb0c
+                        - cell "08 Jun 2026 23:25:00 (+0000)" [ref=e357]
+                        - cell "More options" [ref=e358]:
+                          - button "More options" [ref=e360] [cursor=pointer]:
+                            - img [ref=e362]
+                      - row "META_VERIFY_TOKEN f1bf470598c2fc54c407462611395efd838aa2974fb14b18a3c652ead2f87496 08 Jun 2026 23:25:00 (+0000) More options" [ref=e366]:
+                        - cell "META_VERIFY_TOKEN" [ref=e367]:
+                          - button "META_VERIFY_TOKEN" [ref=e368]:
+                            - paragraph [ref=e369]:
+                              - code [ref=e370]: META_VERIFY_TOKEN
+                        - cell "f1bf470598c2fc54c407462611395efd838aa2974fb14b18a3c652ead2f87496" [ref=e371]:
+                          - paragraph [ref=e372]:
+                            - code [ref=e373]: f1bf470598c2fc54c407462611395efd838aa2974fb14b18a3c652ead2f87496
+                        - cell "08 Jun 2026 23:25:00 (+0000)" [ref=e374]
+                        - cell "More options" [ref=e375]:
+                          - button "More options" [ref=e377] [cursor=pointer]:
+                            - img [ref=e379]
+                      - row "META_ACCESS_TOKEN 82f19dff824f7d4ad84224bf92d493c9dd4c0a058914016802185d97fabcb033 08 Jun 2026 23:25:00 (+0000) More options" [ref=e383]:
+                        - cell "META_ACCESS_TOKEN" [ref=e384]:
+                          - button "META_ACCESS_TOKEN" [ref=e385]:
+                            - paragraph [ref=e386]:
+                              - code [ref=e387]: META_ACCESS_TOKEN
+                        - cell "82f19dff824f7d4ad84224bf92d493c9dd4c0a058914016802185d97fabcb033" [ref=e388]:
+                          - paragraph [ref=e389]:
+                            - code [ref=e390]: 82f19dff824f7d4ad84224bf92d493c9dd4c0a058914016802185d97fabcb033
+                        - cell "08 Jun 2026 23:25:00 (+0000)" [ref=e391]
+                        - cell "More options" [ref=e392]:
+                          - button "More options" [ref=e394] [cursor=pointer]:
+                            - img [ref=e396]
+                      - row "META_PAGE_ACCESS_TOKEN 82f19dff824f7d4ad84224bf92d493c9dd4c0a058914016802185d97fabcb033 08 Jun 2026 23:25:00 (+0000) More options" [ref=e400]:
+                        - cell "META_PAGE_ACCESS_TOKEN" [ref=e401]:
+                          - button "META_PAGE_ACCESS_TOKEN" [ref=e402]:
+                            - paragraph [ref=e403]:
+                              - code [ref=e404]: META_PAGE_ACCESS_TOKEN
+                        - cell "82f19dff824f7d4ad84224bf92d493c9dd4c0a058914016802185d97fabcb033" [ref=e405]:
+                          - paragraph [ref=e406]:
+                            - code [ref=e407]: 82f19dff824f7d4ad84224bf92d493c9dd4c0a058914016802185d97fabcb033
+                        - cell "08 Jun 2026 23:25:00 (+0000)" [ref=e408]
+                        - cell "More options" [ref=e409]:
+                          - button "More options" [ref=e411] [cursor=pointer]:
+                            - img [ref=e413]
+                      - row "META_PAGE_ID 6f2230e9eda0dd63fd12acdecc0572c802813943f6505650662100b737fc6038 08 Jun 2026 23:25:00 (+0000) More options" [ref=e417]:
+                        - cell "META_PAGE_ID" [ref=e418]:
+                          - button "META_PAGE_ID" [ref=e419]:
+                            - paragraph [ref=e420]:
+                              - code [ref=e421]: META_PAGE_ID
+                        - cell "6f2230e9eda0dd63fd12acdecc0572c802813943f6505650662100b737fc6038" [ref=e422]:
+                          - paragraph [ref=e423]:
+                            - code [ref=e424]: 6f2230e9eda0dd63fd12acdecc0572c802813943f6505650662100b737fc6038
+                        - cell "08 Jun 2026 23:25:00 (+0000)" [ref=e425]
+                        - cell "More options" [ref=e426]:
+                          - button "More options" [ref=e428] [cursor=pointer]:
+                            - img [ref=e430]
+                      - row "META_INSTAGRAM_ID e82610cf1a61885291092790d7faef3a1be167f9a49de6a092df6b0cec0c085a 08 Jun 2026 23:25:00 (+0000) More options" [ref=e434]:
+                        - cell "META_INSTAGRAM_ID" [ref=e435]:
+                          - button "META_INSTAGRAM_ID" [ref=e436]:
+                            - paragraph [ref=e437]:
+                              - code [ref=e438]: META_INSTAGRAM_ID
+                        - cell "e82610cf1a61885291092790d7faef3a1be167f9a49de6a092df6b0cec0c085a" [ref=e439]:
+                          - paragraph [ref=e440]:
+                            - code [ref=e441]: e82610cf1a61885291092790d7faef3a1be167f9a49de6a092df6b0cec0c085a
+                        - cell "08 Jun 2026 23:25:00 (+0000)" [ref=e442]
+                        - cell "More options" [ref=e443]:
+                          - button "More options" [ref=e445] [cursor=pointer]:
+                            - img [ref=e447]
+                      - row "GROQ_API_KEY 8ebaf58cdb051a33c6c40202dce0bbdf97b9f9c5d511d0cc15e306ae22bf1ee1 08 Jun 2026 23:25:00 (+0000) More options" [ref=e451]:
+                        - cell "GROQ_API_KEY" [ref=e452]:
+                          - button "GROQ_API_KEY" [ref=e453]:
+                            - paragraph [ref=e454]:
+                              - code [ref=e455]: GROQ_API_KEY
+                        - cell "8ebaf58cdb051a33c6c40202dce0bbdf97b9f9c5d511d0cc15e306ae22bf1ee1" [ref=e456]:
+                          - paragraph [ref=e457]:
+                            - code [ref=e458]: 8ebaf58cdb051a33c6c40202dce0bbdf97b9f9c5d511d0cc15e306ae22bf1ee1
+                        - cell "08 Jun 2026 23:25:00 (+0000)" [ref=e459]
+                        - cell "More options" [ref=e460]:
+                          - button "More options" [ref=e462] [cursor=pointer]:
+                            - img [ref=e464]
+                      - row "FACTORY_SECRET 93a25165a7b49712aa03aa75edd8eb8ff418beab271bcd30ac794d5ca9d0d7dd 08 Jun 2026 23:25:00 (+0000) More options" [ref=e468]:
+                        - cell "FACTORY_SECRET" [ref=e469]:
+                          - button "FACTORY_SECRET" [ref=e470]:
+                            - paragraph [ref=e471]:
+                              - code [ref=e472]: FACTORY_SECRET
+                        - cell "93a25165a7b49712aa03aa75edd8eb8ff418beab271bcd30ac794d5ca9d0d7dd" [ref=e473]:
+                          - paragraph [ref=e474]:
+                            - code [ref=e475]: 93a25165a7b49712aa03aa75edd8eb8ff418beab271bcd30ac794d5ca9d0d7dd
+                        - cell "08 Jun 2026 23:25:00 (+0000)" [ref=e476]
+                        - cell "More options" [ref=e477]:
+                          - button "More options" [ref=e479] [cursor=pointer]:
+                            - img [ref=e481]
+                      - row "META_IG_ACCESS_TOKEN 621d823c50bd8b9b5d2557e1f022484baecd691ae1d38575e87242f5400f5775 16 Jun 2026 23:02:25 (+0000) More options" [ref=e485]:
+                        - cell "META_IG_ACCESS_TOKEN" [ref=e486]:
+                          - button "META_IG_ACCESS_TOKEN" [ref=e487]:
+                            - paragraph [ref=e488]:
+                              - code [ref=e489]: META_IG_ACCESS_TOKEN
+                        - cell "621d823c50bd8b9b5d2557e1f022484baecd691ae1d38575e87242f5400f5775" [ref=e490]:
+                          - paragraph [ref=e491]:
+                            - code [ref=e492]: 621d823c50bd8b9b5d2557e1f022484baecd691ae1d38575e87242f5400f5775
+                        - cell "16 Jun 2026 23:02:25 (+0000)" [ref=e493]
+                        - cell "More options" [ref=e494]:
+                          - button "More options" [ref=e496] [cursor=pointer]:
+                            - img [ref=e498]
+                - generic [ref=e502]:
+                  - generic [ref=e503]:
+                    - generic [ref=e504]:
+                      - heading "Default secrets" [level=3] [ref=e505]
+                      - paragraph [ref=e506]: Reserved secrets available in every project
+                    - link "Docs" [ref=e507] [cursor=pointer]:
+                      - /url: https://supabase.com/docs/guides/functions/secrets#default-secrets
+                      - img [ref=e509]
+                      - generic [ref=e512]: Docs
+                  - table [ref=e516]:
+                    - rowgroup [ref=e517]:
+                      - row "Name Description" [ref=e518]:
+                        - columnheader "Name" [ref=e519]
+                        - columnheader "Description" [ref=e520]
+                    - rowgroup [ref=e521]:
+                      - row "SUPABASE_URL The API gateway for your Supabase project." [ref=e522]:
+                        - cell "SUPABASE_URL" [ref=e523]:
+                          - button "SUPABASE_URL" [ref=e525]:
+                            - paragraph [ref=e526]:
+                              - code [ref=e527]: SUPABASE_URL
+                        - cell "The API gateway for your Supabase project." [ref=e528]:
+                          - paragraph [ref=e529]: The API gateway for your Supabase project.
+                      - row "SUPABASE_DB_URL The direct PostgreSQL connection URL. Should not be shared with anyone, only use it on the server." [ref=e530]:
+                        - cell "SUPABASE_DB_URL" [ref=e531]:
+                          - button "SUPABASE_DB_URL" [ref=e533]:
+                            - paragraph [ref=e534]:
+                              - code [ref=e535]: SUPABASE_DB_URL
+                        - cell "The direct PostgreSQL connection URL. Should not be shared with anyone, only use it on the server." [ref=e536]:
+                          - paragraph [ref=e537]: The direct PostgreSQL connection URL. Should not be shared with anyone, only use it on the server.
+                      - row "SUPABASE_PUBLISHABLE_KEYS JSON dictionary of publishable API keys. Safe to use in a browser if RLS is enabled." [ref=e538]:
+                        - cell "SUPABASE_PUBLISHABLE_KEYS" [ref=e539]:
+                          - button "SUPABASE_PUBLISHABLE_KEYS" [ref=e541]:
+                            - paragraph [ref=e542]:
+                              - code [ref=e543]: SUPABASE_PUBLISHABLE_KEYS
+                        - cell "JSON dictionary of publishable API keys. Safe to use in a browser if RLS is enabled." [ref=e544]:
+                          - paragraph [ref=e545]: JSON dictionary of publishable API keys. Safe to use in a browser if RLS is enabled.
+                      - row "SUPABASE_SECRET_KEYS JSON dictionary of secret API keys. Should never be exposed to a browser." [ref=e546]:
+                        - cell "SUPABASE_SECRET_KEYS" [ref=e547]:
+                          - button "SUPABASE_SECRET_KEYS" [ref=e549]:
+                            - paragraph [ref=e550]:
+                              - code [ref=e551]: SUPABASE_SECRET_KEYS
+                        - cell "JSON dictionary of secret API keys. Should never be exposed to a browser." [ref=e552]:
+                          - paragraph [ref=e553]: JSON dictionary of secret API keys. Should never be exposed to a browser.
+                      - row "SUPABASE_ANON_KEY Deprecated Legacy anonymous key. Use SUPABASE_PUBLISHABLE_KEYS issued through JWT Signing Keys instead." [ref=e554]:
+                        - cell "SUPABASE_ANON_KEY Deprecated" [ref=e555]:
+                          - generic [ref=e556]:
+                            - button "SUPABASE_ANON_KEY" [ref=e557]:
+                              - paragraph [ref=e558]:
+                                - code [ref=e559]: SUPABASE_ANON_KEY
+                            - generic [ref=e560]: Deprecated
+                        - cell "Legacy anonymous key. Use SUPABASE_PUBLISHABLE_KEYS issued through JWT Signing Keys instead." [ref=e561]:
+                          - paragraph [ref=e562]: Legacy anonymous key. Use SUPABASE_PUBLISHABLE_KEYS issued through JWT Signing Keys instead.
+                      - row "SUPABASE_SERVICE_ROLE_KEY Deprecated Legacy service role key. Use SUPABASE_SECRET_KEYS issued through JWT Signing Keys instead." [ref=e563]:
+                        - cell "SUPABASE_SERVICE_ROLE_KEY Deprecated" [ref=e564]:
+                          - generic [ref=e565]:
+                            - button "SUPABASE_SERVICE_ROLE_KEY" [ref=e566]:
+                              - paragraph [ref=e567]:
+                                - code [ref=e568]: SUPABASE_SERVICE_ROLE_KEY
+                            - generic [ref=e569]: Deprecated
+                        - cell "Legacy service role key. Use SUPABASE_SECRET_KEYS issued through JWT Signing Keys instead." [ref=e570]:
+                          - paragraph [ref=e571]: Legacy service role key. Use SUPABASE_SECRET_KEYS issued through JWT Signing Keys instead.
+                      - row "SUPABASE_JWKS JSON Web Key Set used to verify JWTs issued by your project's auth server." [ref=e572]:
+                        - cell "SUPABASE_JWKS" [ref=e573]:
+                          - button "SUPABASE_JWKS" [ref=e575]:
+                            - paragraph [ref=e576]:
+                              - code [ref=e577]: SUPABASE_JWKS
+                        - cell "JSON Web Key Set used to verify JWTs issued by your project's auth server." [ref=e578]:
+                          - paragraph [ref=e579]: JSON Web Key Set used to verify JWTs issued by your project's auth server.
+                      - row "SB_REGION The region the function was invoked in. Set per request." [ref=e580]:
+                        - cell "SB_REGION" [ref=e581]:
+                          - button "SB_REGION" [ref=e583]:
+                            - paragraph [ref=e584]:
+                              - code [ref=e585]: SB_REGION
+                        - cell "The region the function was invoked in. Set per request." [ref=e586]:
+                          - paragraph [ref=e587]: The region the function was invoked in. Set per request.
+                      - row "SB_EXECUTION_ID A unique identifier for each function instance. Set per request." [ref=e588]:
+                        - cell "SB_EXECUTION_ID" [ref=e589]:
+                          - button "SB_EXECUTION_ID" [ref=e591]:
+                            - paragraph [ref=e592]:
+                              - code [ref=e593]: SB_EXECUTION_ID
+                        - cell "A unique identifier for each function instance. Set per request." [ref=e594]:
+                          - paragraph [ref=e595]: A unique identifier for each function instance. Set per request.
+                      - row "DENO_DEPLOYMENT_ID The version of the function code. Set when the function is deployed." [ref=e596]:
+                        - cell "DENO_DEPLOYMENT_ID" [ref=e597]:
+                          - button "DENO_DEPLOYMENT_ID" [ref=e599]:
+                            - paragraph [ref=e600]:
+                              - code [ref=e601]: DENO_DEPLOYMENT_ID
+                        - cell "The version of the function code. Set when the function is deployed." [ref=e602]:
+                          - paragraph [ref=e603]: The version of the function code. Set when the function is deployed.
+    - generic [ref=e175]:
+      - generic:
+        - img "Background pattern"
+      - generic [ref=e176]:
+        - button "Close banner" [ref=e178] [cursor=pointer]:
+          - img [ref=e180]
+        - generic [ref=e183]:
+          - generic [ref=e184]: Notice
+          - generic [ref=e185]:
+            - paragraph [ref=e186]: We've updated our Terms of Service
+            - paragraph [ref=e187]: Updates define the responsibilities of both you and Supabase in the use of AI.
+          - button "Learn more" [ref=e188] [cursor=pointer]:
+            - generic [ref=e189]: Learn more
+  - alert [ref=e190]: Secrets | Edge Functions | Supabase
