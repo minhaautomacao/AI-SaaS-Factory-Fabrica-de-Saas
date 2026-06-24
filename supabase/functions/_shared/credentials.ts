@@ -33,6 +33,8 @@ function fromHex(hex: string): Uint8Array {
 // ── Descriptografia AES-256-GCM ───────────────────────────────────────────────
 
 async function descriptografar(ciphertext: string, iv: string): Promise<string> {
+  if (iv === 'plain') return ciphertext;
+
   const keyHex = Deno.env.get('CREDENTIAL_ENCRYPTION_KEY') ?? '';
   if (!keyHex) throw new Error('CREDENTIAL_ENCRYPTION_KEY não configurada nas Edge Function secrets');
 
