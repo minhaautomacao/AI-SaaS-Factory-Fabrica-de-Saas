@@ -29,3 +29,6 @@ dist
 logs
 backups
 .cloudcode/cache
+
+# Playwright MCP - arquivos temporarios de sessao
+.playwright-mcp/

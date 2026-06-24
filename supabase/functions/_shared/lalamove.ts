@@ -13,9 +13,14 @@
  *   lat_origem / lng_origem — coordenadas (alternativa ao endereço)
  */
 
-import type { DadosFrete, OpcaoFrete } from './transportadoras.ts';
+import type { DadosFrete, OpcaoFrete, OpcoesExtras } from './transportadoras.ts';
 
 const BASE_URL = 'https://rest.lalamove.com';
+
+// Ponto de coleta fixo — Enemeop Flores, Rua Costa Aguiar 1184, Ipiranga, SP
+const ORIGEM_LAT = '-23.5897';
+const ORIGEM_LNG = '-46.6064';
+const ORIGEM_ENDERECO = 'Rua Costa Aguiar, 1184, Ipiranga, São Paulo, SP';
 
 async function gerarAssinatura(
   apiKey: string,
@@ -42,34 +47,27 @@ export async function calcularFreteLalamove(
   apiKey: string,
   apiSecret: string,
   dados: DadosFrete,
-  opcoes?: {
-    lat_origem?: string;
-    lng_origem?: string;
-    lat_destino?: string;
-    lng_destino?: string;
-    endereco_origem?: string;
-    endereco_destino?: string;
-  },
+  opcoes?: OpcoesExtras,
 ): Promise<OpcaoFrete[]> {
   const path = '/v3/quotations';
   const timestamp = String(Date.now());
 
   const bodyObj = {
     data: {
-      serviceType: 'LALAGO',
+      serviceType: 'CAR',
       language: 'pt_BR',
       stops: [
         {
           coordinates: {
-            lat: opcoes?.lat_origem ?? '-10.9472',
-            lng: opcoes?.lng_origem ?? '-37.0731',
+            lat: opcoes?.lat_origem ?? ORIGEM_LAT,
+            lng: opcoes?.lng_origem ?? ORIGEM_LNG,
           },
-          address: opcoes?.endereco_origem ?? 'Aracaju, SE',
+          address: opcoes?.endereco_origem ?? ORIGEM_ENDERECO,
         },
         {
           coordinates: {
-            lat: opcoes?.lat_destino ?? '-10.9472',
-            lng: opcoes?.lng_destino ?? '-37.0731',
+            lat: opcoes?.lat_destino ?? '',
+            lng: opcoes?.lng_destino ?? '',
           },
           address: opcoes?.endereco_destino ?? dados.cep_destino,
         },
@@ -82,6 +80,10 @@ export async function calcularFreteLalamove(
       },
     },
   };
+
+  if (!bodyObj.data.stops[1].coordinates.lat) {
+    throw new Error('Lalamove: coordenadas do destino não fornecidas');
+  }
 
   const bodyStr = JSON.stringify(bodyObj);
   const signature = await gerarAssinatura(apiKey, apiSecret, 'POST', path, bodyStr, timestamp);
@@ -113,7 +115,7 @@ export async function calcularFreteLalamove(
 
   return [{
     transportadora: 'Lalamove',
-    servico: 'Moto',
+    servico: 'Carro',
     preco,
     prazo_dias: 0,
   }];
