@@ -1,6 +1,6 @@
 ---
 name: estado-atual
-description: Estado do projeto em 2026-06-25 — webhook-whatsapp v28 no ar, fluxo WhatsApp funcional com cotação de frete e correção de double-confirm
+description: Estado do projeto em 2026-06-25 — webhook-meta v23 deployado com fix concluido; webhook-whatsapp v28 no ar
 metadata:
   type: project
 ---
@@ -17,6 +17,7 @@ Relatórios de auditoria em `.claude/audits/`.
 ### Bola com: Claude Code (aguardando próximo objetivo via ChatGPT)
 
 ### Última feature entregue
+- `webhook-meta v23` — corrige bug concluido: reinicia conversa em vez de ignorar novas mensagens (mesmo fix do whatsapp v27)
 - `webhook-whatsapp v28` — corrige double-confirm de endereço e reset após pedido concluído
 - `agente-logistica v4` — MOTORCYCLE-first com fallback para CAR, markup R$15
 
