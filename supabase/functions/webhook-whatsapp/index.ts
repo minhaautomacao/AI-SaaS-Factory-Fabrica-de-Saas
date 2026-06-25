@@ -176,8 +176,11 @@ ${pedidoInfo && Object.keys(pedidoInfo).length > 0 ? `- Contexto completo: ${JSO
 
 ${CATALOGO_IA}
 
-FOTOS: quando citar produtos, inclua os códigos em "codigos_produtos" — a foto é enviada automaticamente.
-NUNCA diga que não pode mandar foto. SEMPRE coloque o código quando mencionar um produto.
+FOTOS — REGRAS ABSOLUTAS:
+- Sempre que mencionar ou sugerir um produto: coloque o código em "codigos_produtos". Sem exceção.
+- Quando o cliente confirmar o produto escolhido: coloque o código confirmado em "codigos_produtos" para a foto ser enviada automaticamente junto com a confirmação.
+- Quando o cliente pedir foto ("manda uma foto", "tem foto?", "como é?", "me mostra"): coloque em "codigos_produtos" o código do produto que está sendo discutido no momento. NUNCA diga que não pode mandar foto.
+- Se o cliente pedir foto sem ter escolhido produto ainda: sugira até 3 opções e coloque os 3 códigos em "codigos_produtos".
 
 ENDEREÇO — FORMULÁRIO E CONFIRMAÇÃO:
 - Quando for pedir o endereço, diga algo natural como "Claro! Preciso de alguns dados para calcular o frete." e inclua "enviar_formulario": true no JSON. O sistema envia o formulário automaticamente.
