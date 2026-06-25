@@ -4,6 +4,7 @@ import { log } from '../lib/supabase.js'
 import { notificarEscalada } from '../lib/whatsapp.js'
 import { getSupabase } from '../lib/supabase.js'
 import { calcularFrete as calcularMelhorEnvio } from '../lib/melhor-envio.js'
+import { getQuotation } from '../lib/lalamove.js'
 import type { AgentJob, AgentResult } from '../types.js'
 import { QUEUES } from '../types.js'
 
@@ -103,18 +104,72 @@ async function cotarMelhorEnvio(
     }))
 }
 
+// ── Geocodificação CEP → lat/lng (ViaCEP + Nominatim, sem chave) ────
+
+interface ViaCEPResponse {
+  logradouro: string
+  bairro: string
+  localidade: string
+  uf: string
+  erro?: boolean
+}
+
+async function cepParaCoordenadas(cep: string): Promise<{ lat: string; lng: string; endereco: string } | null> {
+  const cepLimpo = cep.replace(/\D/g, '')
+  const viaCep = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`).then((r) => r.json() as Promise<ViaCEPResponse>).catch(() => null)
+  if (!viaCep || viaCep.erro) return null
+
+  const query = encodeURIComponent(`${viaCep.logradouro}, ${viaCep.localidade}, ${viaCep.uf}, Brasil`)
+  const nominatim = await fetch(
+    `https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=1`,
+    { headers: { 'User-Agent': 'enemeop-flores/1.0' } },
+  ).then((r) => r.json() as Promise<Array<{ lat: string; lon: string }>>).catch(() => null)
+
+  if (!nominatim?.length) return null
+
+  return {
+    lat: nominatim[0].lat,
+    lng: nominatim[0].lon,
+    endereco: `${viaCep.logradouro}, ${viaCep.bairro}, ${viaCep.localidade}, ${viaCep.uf}`,
+  }
+}
+
 // ── Cotação Lalamove ────────────────────────────────────────────────
 
+// Ponto fixo de coleta — Enemeop Flores, Rua Costa Aguiar 1184, Ipiranga, SP
+const LALAMOVE_ORIGEM = { lat: '-23.5897', lng: '-46.6064', endereco: 'Rua Costa Aguiar, 1184, Ipiranga, São Paulo, SP' }
+
 async function cotarLalamoveLocal(
-  origem: EnderecoFrete,
+  _origem: EnderecoFrete,
   destino: EnderecoFrete,
-  itens: ItemFrete[],
-  horario_entrega?: string,
+  _itens: ItemFrete[],
+  _horario_entrega?: string,
 ): Promise<OpcaoFrete[]> {
-  // Lalamove exige coordenadas — sem geocodificação, retorna vazio
-  // TODO: integrar geocodificação (ViaCEP → coordenadas) quando necessário
-  void origem; void destino; void itens; void horario_entrega
-  return []
+  const coords = await cepParaCoordenadas(destino.cep)
+  if (!coords) return []
+
+  const resultado = await getQuotation({
+    serviceType: 'LALABIKE',
+    stops: [
+      { coordinates: { lat: LALAMOVE_ORIGEM.lat, lng: LALAMOVE_ORIGEM.lng }, address: LALAMOVE_ORIGEM.endereco },
+      { coordinates: { lat: coords.lat, lng: coords.lng }, address: coords.endereco },
+    ],
+    item: { quantity: '1', weight: 'LESS_THAN_3KG', categories: ['FLOWER'] },
+  }) as { data?: { priceBreakdown?: { total: string }; distance?: { value: string } } }
+
+  const preco = parseFloat(resultado?.data?.priceBreakdown?.total ?? '0')
+  if (!preco) return []
+
+  return [{
+    provedor: 'lalamove',
+    transportadora: 'Lalamove',
+    modalidade: 'Moto',
+    valor: preco,
+    prazo_dias: 0,
+    prazo_horas: 1,
+    entrega_agendada_disponivel: true,
+    codigo_servico: 'LALABIKE',
+  }]
 }
 
 // ── Agendamento de alertas ──────────────────────────────────────────
