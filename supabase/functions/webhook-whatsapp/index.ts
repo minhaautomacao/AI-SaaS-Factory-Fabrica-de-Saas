@@ -170,10 +170,11 @@ ${pedidoInfo && Object.keys(pedidoInfo).length > 0 ? `- Contexto completo: ${JSO
 ${CATALOGO_IA}
 
 FOTOS — REGRAS ABSOLUTAS:
-- Sempre que mencionar ou sugerir um produto: coloque o código em "codigos_produtos". Sem exceção.
-- Quando o cliente confirmar o produto escolhido: coloque o código confirmado em "codigos_produtos" para a foto ser enviada automaticamente junto com a confirmação.
-- Quando o cliente pedir foto ("manda uma foto", "tem foto?", "como é?", "me mostra"): coloque em "codigos_produtos" o código do produto que está sendo discutido no momento. NUNCA diga que não pode mandar foto.
-- Se o cliente pedir foto sem ter escolhido produto ainda: sugira até 3 opções e coloque os 3 códigos em "codigos_produtos".
+- Ao sugerir opções ou perguntar o que o cliente busca: codigos_produtos deve ser [] (vazio). NÃO envie fotos antes do cliente escolher.
+- Quando o cliente CONFIRMAR ou ESCOLHER um produto específico ("quero esse", "pode ser o 033", "esse mesmo"): coloque o código escolhido em codigos_produtos (1 código apenas).
+- Quando o cliente pedir foto explicitamente ("manda uma foto", "tem foto?", "como é?", "me mostra"): coloque o código do produto sendo discutido em codigos_produtos. NUNCA diga que não pode mandar foto.
+- Quando enviar_formulario for true: codigos_produtos DEVE ser [] — nunca mande foto junto com o formulário.
+- Após o cliente confirmar dados de endereço ou frete: codigos_produtos deve ser [] — nessa fase a foto já foi enviada.
 
 ENDEREÇO — FORMULÁRIO E CONFIRMAÇÃO:
 - Quando for pedir o endereço, diga algo natural como "Claro! Preciso de alguns dados para calcular o frete." e inclua "enviar_formulario": true no JSON. O sistema envia o formulário automaticamente.
@@ -615,20 +616,23 @@ async function processarMensagem(phone: string, nomeRemetente: string | null, te
 
   const msgAssistente: Mensagem = { role: 'assistant', content: mensagem, ts: new Date().toISOString() };
 
-  const produtos = await buscarProdutos(codigosProdutos);
+  // Fotos só são enviadas quando o cliente escolheu/confirmou um produto ou pediu foto explicitamente.
+  // Nunca junto com formulário, confirmação de dados ou frete.
+  const podeEnviarFotos = !enviarFormulario && !dadosParaConfirmar && !enderecoEntrega;
+  const produtos = podeEnviarFotos ? await buscarProdutos(codigosProdutos) : [];
 
   await enviarTexto(phone, mensagem);
   if (enviarFormulario) {
     await new Promise(r => setTimeout(r, 800));
     await enviarTexto(phone, FORMULARIO_ENTREGA);
   }
-  // Envia resumo dos dados apenas quando a IA acabou de extrair os campos (confirmar_dados: true)
   if (dadosParaConfirmar && Object.keys(dadosParaConfirmar).some(k => dadosParaConfirmar![k])) {
     await new Promise(r => setTimeout(r, 600));
     await enviarTexto(phone, montarResumoConfirmacao(dadosParaConfirmar));
   }
   for (const produto of produtos) {
     if (produto.foto_url) {
+      await new Promise(r => setTimeout(r, 400));
       const caption = `${produto.nome} — R$ ${Number(produto.preco).toFixed(2).replace('.', ',')}`;
       await enviarImagem(phone, produto.foto_url, caption);
     }
