@@ -34,44 +34,37 @@ interface Produto { codigo: string; nome: string; preco: number; foto_url: strin
 // ── Catálogo (codigos para a IA usar) ─────────────────────────────────────────
 
 // Catálogo compacto com códigos — a IA usa esses códigos no JSON de resposta
+// IMPORTANTE: Use APENAS os códigos abaixo. Eles existem no banco com foto_url.
+// Projeto real: gftnjvdzgjkhwxnxnwl. NUNCA inventar códigos.
 const CATALOGO_IA = `
 ENEMEOP FLORES — Ipiranga, SP, desde 1997. Seg–Sáb 9h–19h | Dom/Feriados 10h–14h.
 Entrega até 3h após pagamento. São Paulo e Grande SP.
 
 PRODUTOS (use o CÓDIGO exato no campo codigos_produtos):
-RAMALHETES:
-  M28 Mini Ramalhete R$55 | 051 Ramalhete Girassol+Alstroemêrias R$70 | M30 Ramalhete Rosas R$70
-  094 3 Rosas+Chocolates R$95 | M29 Mini Ramalhete+Ferrero R$100 | 057 Rosas Brancas R$105
-  M31 3 Rosas Nacionais Rosa R$105 | 081 Mix Rosas+Ferrero R$150
+RAMALHETES / MINI:
+  095 Ramalhete Rosa+Girassol R$145 | 096 6 Rosas+Ferrero Rocher R$185
 
 BUQUÊS:
-  032 Buquê Rosas Vermelhas R$140 | M35 6 Rosas Vermelhas R$185 | M44 6 Rosas Nacionais R$185
-  M59 Buquê Rosas+Coração R$205 | M43 Rosas Nacionais Vermelhas R$245 | M55 Rosas Brancas R$280
-  033 12 Rosas Vermelhas R$280 | M36 Rosas+Ferrero R$290 | M40 Mix Alstroemêrias R$295
-  054 Mix Girassóis+Flores R$295 | M50 Luto Rosas Brancas R$390 | 093 Lírios Rosa R$395
-  061 Luxuoso Alstroemêrias R$395 | 045 12 Rosas Rosa+Alstroemêrias R$370
-  M38 12 Rosas Pink R$370 | M41 12 Rosas Nacionais Rosa R$370 | M48 Rosas e Juncos R$420
-  M60 Mix Flores+Vinho R$425 | M42 Mix Flores R$495 | 034 24 Rosas Vermelhas R$560
-  062 Noiva Rosas Pink R$565 | 039 Mix Flores Nobre R$590 | 052 12 Girassóis Premium R$435
-  056 100 Rosas Vermelhas R$1490
+  032 Buquê Rosas Vermelhas R$140 | 033 12 Rosas Vermelhas R$280 | 034 24 Rosas Vermelhas R$560
+  045 Romance em Flor (12 Rosas Rosa+Alstroemêrias) R$370 | 046 12 Rosas Rosa Nacionais+Alstroemêrias R$370
+  047 Buquê Mix de Flores R$745 | 052 12 Girassóis Premium R$435 | 054 Mix Girassóis+Flores do Campo R$295
+  056 100 Rosas Vermelhas R$1490 | 061 Buquê Luxuoso Alstroemêrias Coloridas R$395
+  067 Buquê de Tulipas R$790 | 093 Buquê Lírios Rosa R$395 | 039 Buquê Mix Flores Nobre R$590
 
 ARRANJOS:
   M01 Arranjo Vaso Vidro R$70 | M09 Girassol Solitário R$75 | 002 2 Rosas+Junco R$105
   010 Girassol+Ferrero R$120 | 011 Girassol no Vaso R$135 | 003 Coração 2 Rosas+Ferrero R$140
   M08 Mix Flores do Campo R$145 | M20 Arranjo Laranja R$145 | 027 Alstroemêrias no Vaso R$155
-  M17 Luto Hortênsias R$155 | M07 Arranjo de Rosas R$160 | 006 4 Rosas Brancas+Alstroemêrias R$225
-  012 Orquídeas Brancas Frente Única R$225 | 013 Orquídeas Pink Vaso R$225
-  014 Orquídeas Brancas+Ruscus R$225 | M05 Rosas Pink no Vaso R$225
-  M18 Rosas Vermelhas no Vidro R$425 | 004 Buquê Rosas no Vaso R$295
+  M07 Arranjo de Rosas R$160 | 006 4 Rosas Brancas+Alstroemêrias R$225 | M05 Rosas Pink no Vaso R$225
+  004 Buquê Rosas no Vaso de Vidro R$295
 
 ORQUÍDEAS:
-  M90 Phalaenópsis Mescla Pequena R$145 | M89 Phalaenópsis Mescla no Vaso R$195
-  083 Orquídea Branca 1 haste R$170 | M91 Phalaenópsis Pink 1 haste R$225
-  M87 Mini Orquídea no Vaso R$215 | M92 Phalaenópsis Branca 1 haste R$290
-  084 Phalaenópsis Branca 2 hastes R$290 | M85 Phalaenópsis Pink R$300
-  M88 Phalaenópsis Pink no Vaso R$315 | M86 Phalaenópsis Cascata Branca R$390
-
-KITS: ferrero Ferrero Rocher 100g R$45 | 082 Cesta Queijos+Vinho R$890
+  083 Orquídea Branca 1 haste R$170 | 091 Orquídea Pink 1 haste R$225
+  012 Orquídeas Brancas Frente Única R$225 | 013 Orquídeas Pink Vaso R$225
+  014 Orquídeas Brancas+Ruscus R$225 | 094O Orquídeas Brancas Vaso Barro R$225
+  087 Mini Orquídea Vaso de Vidro R$215 | 084 Phalaenópsis Branca 2 hastes R$290
+  085 Phalaenópsis Pink R$300 | 088 Phalaenópsis Pink no Vaso R$315
+  086 Phalaenópsis Cascata Branca R$390 | 094B Tulipas Brancas Noiva R$720
 
 FORMAS DE PAGAMENTO: Cartão, PIX, online.
 PERSONALIZAÇÃO: encomendas sob medida disponíveis.
@@ -223,7 +216,7 @@ Omita campos vazios ou irrelevantes.
 Quando o cliente preencher o formulário: extraia os campos em "dados_para_confirmacao" e inclua "confirmar_dados": true.
 Só preencha "endereco_entrega" após o cliente confirmar os dados.
 codigos_produtos: sugerindo → até 3 códigos | confirmado → 1 código | sem produto → [].
-Use EXATAMENTE os códigos do catálogo (ex: "033", "M07", "032", "M28").`;
+Use EXATAMENTE os códigos do catálogo (ex: "033", "M07", "032", "095").`;
 }
 
 async function chamarGroq(groqKey: string, systemPrompt: string, mensagens: Array<{role: string; content: string}>, maxTokens: number, modelo = 'llama-3.3-70b-versatile'): Promise<string | null> {
