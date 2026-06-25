@@ -4,13 +4,6 @@
  * Credenciais (workspace_credentials, tipo='logistica'):
  *   lalamove_key    — API Key
  *   lalamove_secret — API Secret (para assinatura HMAC-SHA256)
- *
- * Documentação: https://developers.lalamove.com/
- * Suporte BR: https://www.lalamove.com/brazil/sao-paulo/pt-BR/
- *
- * Endereço de coleta deve ser configurado via payload:
- *   endereco_origem — "Rua X, 123, Bairro, Cidade, Estado"
- *   lat_origem / lng_origem — coordenadas (alternativa ao endereço)
  */
 
 import type { DadosFrete, OpcaoFrete, OpcoesExtras } from './transportadoras.ts';
@@ -43,48 +36,17 @@ async function gerarAssinatura(
   return Array.from(new Uint8Array(signature)).map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-export async function calcularFreteLalamove(
+async function cotarServico(
   apiKey: string,
   apiSecret: string,
-  dados: DadosFrete,
-  opcoes?: OpcoesExtras,
-): Promise<OpcaoFrete[]> {
+  serviceType: string,
+  stops: Array<{ coordinates: { lat: string; lng: string }; address: string }>,
+  item: Record<string, unknown>,
+): Promise<number> {
   const path = '/v3/quotations';
   const timestamp = String(Date.now());
 
-  const bodyObj = {
-    data: {
-      serviceType: 'CAR',
-      language: 'pt_BR',
-      stops: [
-        {
-          coordinates: {
-            lat: opcoes?.lat_origem ?? ORIGEM_LAT,
-            lng: opcoes?.lng_origem ?? ORIGEM_LNG,
-          },
-          address: opcoes?.endereco_origem ?? ORIGEM_ENDERECO,
-        },
-        {
-          coordinates: {
-            lat: opcoes?.lat_destino ?? '',
-            lng: opcoes?.lng_destino ?? '',
-          },
-          address: opcoes?.endereco_destino ?? dados.cep_destino,
-        },
-      ],
-      item: {
-        quantity: '1',
-        weight: 'LESS_THAN_3KG',
-        categories: ['FLOWER'],
-        handlingInstructions: ['FRAGILE'],
-      },
-    },
-  };
-
-  if (!bodyObj.data.stops[1].coordinates.lat) {
-    throw new Error('Lalamove: coordenadas do destino não fornecidas');
-  }
-
+  const bodyObj = { data: { serviceType, language: 'pt_BR', stops, item } };
   const bodyStr = JSON.stringify(bodyObj);
   const signature = await gerarAssinatura(apiKey, apiSecret, 'POST', path, bodyStr, timestamp);
 
@@ -100,22 +62,76 @@ export async function calcularFreteLalamove(
 
   if (!resp.ok) {
     const err = await resp.text().catch(() => resp.status.toString());
-    throw new Error(`Lalamove HTTP ${resp.status}: ${err}`);
+    throw new Error(`Lalamove ${serviceType} HTTP ${resp.status}: ${err}`);
   }
 
   const data = await resp.json() as {
-    data?: {
-      priceBreakdown?: { total: string; currency: string };
-      distance?: { value: string };
-    };
+    data?: { priceBreakdown?: { total: string } };
+  };
+  return parseFloat(data.data?.priceBreakdown?.total ?? '0');
+}
+
+export async function calcularFreteLalamove(
+  apiKey: string,
+  apiSecret: string,
+  dados: DadosFrete,
+  opcoes?: OpcoesExtras,
+): Promise<OpcaoFrete[]> {
+  const stops = [
+    {
+      coordinates: {
+        lat: opcoes?.lat_origem ?? ORIGEM_LAT,
+        lng: opcoes?.lng_origem ?? ORIGEM_LNG,
+      },
+      address: opcoes?.endereco_origem ?? ORIGEM_ENDERECO,
+    },
+    {
+      coordinates: {
+        lat: opcoes?.lat_destino ?? '',
+        lng: opcoes?.lng_destino ?? '',
+      },
+      address: opcoes?.endereco_destino ?? dados.cep_destino,
+    },
+  ];
+
+  if (!stops[1].coordinates.lat) {
+    throw new Error('Lalamove: coordenadas do destino não fornecidas');
+  }
+
+  const item = {
+    quantity: '1',
+    weight: 'LESS_THAN_3KG',
+    categories: ['FLOWER'],
+    handlingInstructions: ['FRAGILE'],
   };
 
-  const preco = parseFloat(data.data?.priceBreakdown?.total ?? '0');
+  // Tenta moto primeiro (mais barato e rápido para flores em SP)
+  // Se moto falhar, usa carro como fallback
+  let preco = 0;
+  let servico = 'Moto';
+
+  try {
+    preco = await cotarServico(apiKey, apiSecret, 'MOTORCYCLE', stops, item);
+    console.log(`[lalamove] MOTORCYCLE: R$ ${preco}`);
+  } catch (e) {
+    console.warn(`[lalamove] MOTORCYCLE falhou (${e}), tentando CAR`);
+  }
+
+  if (!preco) {
+    try {
+      preco = await cotarServico(apiKey, apiSecret, 'CAR', stops, item);
+      servico = 'Carro';
+      console.log(`[lalamove] CAR: R$ ${preco}`);
+    } catch (e) {
+      console.error(`[lalamove] CAR também falhou: ${e}`);
+    }
+  }
+
   if (!preco) return [];
 
   return [{
     transportadora: 'Lalamove',
-    servico: 'Carro',
+    servico,
     preco,
     prazo_dias: 0,
   }];
