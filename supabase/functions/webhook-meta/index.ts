@@ -398,7 +398,11 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
 
   // 1. Buscar ou criar conversa
   const conversa = await buscarOuCriarConversa(canalId, canal);
-  if (conversa.fase === 'concluido') return;
+  if (conversa.fase === 'concluido') {
+    await salvarConversa(conversa.id, { fase: 'descoberta', historico: [] } as Partial<Conversa>);
+    conversa.fase = 'descoberta';
+    conversa.historico = [];
+  }
 
   // 2. Buscar nome do cliente (só na primeira mensagem da conversa)
   let nomeCliente = conversa.nome_cliente ?? null;
