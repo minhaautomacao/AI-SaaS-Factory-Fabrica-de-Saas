@@ -505,10 +505,25 @@ async function processarMensagem(phone: string, nomeRemetente: string | null, te
   let dadosParaConfirmar: Record<string, string> | null = null;
 
   // Palavras que indicam confirmação — nesse caso não roda o extrator
-  const textoConfirmacao = /^(sim|ok|s|correto|certo|pode|tá|ta|isso|exato|perfeito|confirmo|confirmado|é isso|e isso)\b/i.test(texto.trim());
+  const textoConfirmacao = /^(sim|ok|s|correto|certo|pode|tá|ta|isso|exato|perfeito|confirmo|confirmado|é isso|e isso|prosseguir|continuar|seguir|pode prosseguir|pode seguir|pode continuar)\b/i.test(texto.trim());
+
+  // Confirmação de endereço → vai direto para cotação de frete sem chamar IA
+  // Evita que a IA peça confirmação de novo (double-confirm bug)
+  if (textoConfirmacao && conversa.fase === 'confirmando_dados' && pedidoInfo.dados_formulario) {
+    const dados = pedidoInfo.dados_formulario as Record<string, string>;
+    enderecoEntrega = {
+      cep: dados.cep ?? '',
+      logradouro: dados.rua ?? '',
+      bairro: dados.bairro ?? '',
+      cidade: 'São Paulo',
+      uf: 'SP',
+    };
+    novaFase = 'confirmar_frete';
+    console.log(`[webhook-whatsapp] ${phone} confirmou endereço → cotando frete CEP ${enderecoEntrega.cep}`);
+  }
 
   // Extração dedicada de endereço — roda ANTES da IA principal quando fase=coletando_endereco
-  if (!textoConfirmacao && (conversa.fase === 'coletando_endereco' || conversa.fase === 'confirmando_dados')) {
+  if (!textoConfirmacao && !enderecoEntrega && (conversa.fase === 'coletando_endereco' || conversa.fase === 'confirmando_dados')) {
     const groqKey = Deno.env.get('GROQ_API_KEY') || await buscarConfigDB('GROQ_API_KEY');
     if (groqKey) {
       const dadosExtraidos = await extrairDadosEndereco(groqKey, texto);
@@ -535,7 +550,8 @@ async function processarMensagem(phone: string, nomeRemetente: string | null, te
     }
   }
 
-  const respostaRaw = await chamarIA(
+  // Pula IA principal quando endereço já foi confirmado deterministicamente
+  const respostaRaw = enderecoEntrega ? null : await chamarIA(
     buildSystemPrompt(conversa.fase, pedidoInfo, nomeCliente, ultimaMsgAnterior),
     historico.map(m => ({ role: m.role, content: m.content })),
     500,
