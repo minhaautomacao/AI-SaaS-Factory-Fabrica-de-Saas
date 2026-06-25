@@ -470,7 +470,20 @@ async function cotarFrete(endereco: EnderecoEntrega): Promise<Record<string, unk
 
 async function processarMensagem(phone: string, nomeRemetente: string | null, texto: string): Promise<void> {
   const conversa = await buscarOuCriarConversa(phone);
-  if (conversa.fase === 'concluido') return;
+
+  // Se conversa estava concluída e cliente voltou → reinicia mantendo o nome
+  if (conversa.fase === 'concluido') {
+    await getDb().from('conversas').update({
+      fase: 'descoberta',
+      historico: [],
+      pedido_info: null,
+      atualizado_em: new Date().toISOString(),
+    }).eq('id', conversa.id);
+    conversa.fase = 'descoberta';
+    conversa.historico = [];
+    conversa.pedido_info = null;
+    console.log(`[webhook-whatsapp] ${phone} voltou após concluído — reiniciando conversa`);
+  }
 
   const novaMsg: Mensagem = { role: 'user', content: texto, ts: new Date().toISOString() };
   const historico = [...(conversa.historico ?? []), novaMsg].slice(-20);
