@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping Orchestrator
+<<<<<<< HEAD
         continue-on-error: true
         run: |
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 60 https://enemeop-orchestrator.onrender.com/)
@@ -19,4 +20,13 @@ jobs:
         continue-on-error: true
         run: |
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 60 https://enemeop-evolution.onrender.com/)
+=======
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 https://enemeop-orchestrator.onrender.com/)
+          echo "Orchestrator: $STATUS"
+
+      - name: Ping Evolution API
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 https://enemeop-evolution.onrender.com/)
+>>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
           echo "Evolution API: $STATUS"

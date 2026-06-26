@@ -107,16 +107,26 @@ export async function enviarWhatsApp(
   if (!numero)      return { enviado: false, erro: 'Número de telefone não informado no payload' };
   if (!mensagem)    return { enviado: false, erro: 'Mensagem vazia' };
 
-  // Tenta Evolution API
+  // Tenta Evolution API (banco ou env vars)
   const evoCreds = await buscarTodasCredenciais(workspaceId, 'evolution');
-  if (evoCreds['api_url'] && evoCreds['api_key'] && evoCreds['instance']) {
-    return enviarViaEvolution(evoCreds, numero, mensagem);
+  const evo = {
+    api_url:  evoCreds['api_url']  || Deno.env.get('EVOLUTION_API_URL')  || '',
+    api_key:  evoCreds['api_key']  || Deno.env.get('EVOLUTION_API_KEY')  || '',
+    instance: evoCreds['instance'] || Deno.env.get('EVOLUTION_INSTANCE') || '',
+  };
+  if (evo.api_url && evo.api_key && evo.instance) {
+    return enviarViaEvolution(evo, numero, mensagem);
   }
 
-  // Tenta Z-API
+  // Tenta Z-API (banco ou env vars)
   const zapiCreds = await buscarTodasCredenciais(workspaceId, 'whatsapp');
-  if (zapiCreds['instance_id'] && zapiCreds['token']) {
-    return enviarViaZapi(zapiCreds, numero, mensagem);
+  const zapi = {
+    instance_id:  zapiCreds['instance_id']  || Deno.env.get('ZAPI_INSTANCE_ID')  || '',
+    token:        zapiCreds['token']        || Deno.env.get('ZAPI_TOKEN')        || '',
+    client_token: zapiCreds['client_token'] || Deno.env.get('ZAPI_CLIENT_TOKEN') || '',
+  };
+  if (zapi.instance_id && zapi.token) {
+    return enviarViaZapi(zapi, numero, mensagem);
   }
 
   return { enviado: false, erro: 'Nenhuma credencial WhatsApp configurada para este workspace' };

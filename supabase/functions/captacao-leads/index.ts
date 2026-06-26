@@ -3,10 +3,7 @@
  *
  * Recebe leads de qualquer canal (WhatsApp, Instagram, Facebook, Site)
  * via orquestrador, classifica com IA e persiste no banco.
- *
- * Comportamento:
- *   - Sem lead_id no payload → INSERE novo lead e classifica
- *   - Com lead_id no payload → ATUALIZA classificação do lead existente
+ * Extrai dados CRM: nome, telefone, email, endereço, bairro, cidade, CEP.
  */
 
 import { callClaude } from '../_shared/anthropic.ts';
@@ -33,10 +30,7 @@ async function dispararLeadQualificado(params: {
   try {
     await fetch(`${SUPABASE_URL}/functions/v1/orquestrador`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${authKey}`,
-      },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authKey}` },
       body: JSON.stringify({
         tipo: 'lead-qualificado',
         task_id: crypto.randomUUID(),
@@ -59,20 +53,32 @@ async function dispararLeadQualificado(params: {
   }
 }
 
-const SYSTEM_PROMPT = `Você é o agente de Captação de Leads da Fábrica de SaaS especializado em floricultura.
-Analise os dados do lead e retorne APENAS JSON válido (sem markdown) com:
+const SYSTEM_PROMPT = `Você é o agente de Captação de Leads da floricultura Enemeop Flores.
+Analise os dados do lead e retorne APENAS JSON válido (sem markdown):
 {
   "intencao": "urgente" | "alta" | "media" | "baixa",
   "status": "novo" | "em_atendimento",
-  "notas": "observações relevantes sobre o lead em até 200 caracteres",
-  "acoes": ["lista de ações recomendadas"]
+  "nome": "nome completo extraído da mensagem ou null",
+  "telefone": "telefone extraído (somente dígitos, ex: 5511999999999) ou null",
+  "email": "email extraído ou null",
+  "endereco": "endereço completo extraído ou null",
+  "bairro": "bairro extraído ou null",
+  "cidade": "cidade extraída (padrão: Aracaju) ou null",
+  "cep": "CEP extraído (somente dígitos) ou null",
+  "notas": "observações sobre o lead e pedido em até 200 caracteres",
+  "acoes": ["ações recomendadas"]
 }
 
 Critérios de intenção:
-- urgente: compra para hoje, precisa agora, entrega urgente
-- alta: evento especial, casamento, formatura, corporativo
-- media: dúvida de preço, cotação, frete
-- baixa: curiosidade, comentário, sem intenção imediata`;
+- urgente: compra para hoje, entrega urgente, precisa agora
+- alta: evento especial (casamento, formatura, aniversário, namorados), corporativo
+- media: cotação de frete, pergunta de preço, consulta de produto
+- baixa: curiosidade, comentário geral, sem intenção de compra clara
+
+Extração de dados CRM:
+- Se a mensagem mencionar rua, avenida, número, bairro → extrair endereço completo
+- Se mencionar CEP → extrair sem traços ou pontos
+- Se o lead vier de WhatsApp e tiver canal_id → esse é o telefone normalizado`;
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204 });
@@ -86,6 +92,7 @@ Deno.serve(async (req: Request) => {
 
   try {
     const contexto = JSON.stringify(payload, null, 2);
+<<<<<<< HEAD
     let resultado: { intencao?: string; status?: string; notas?: string; acoes?: string[] } = {};
     try {
       const resposta = await callClaude(SYSTEM_PROMPT, `Dados do lead:\n${contexto}`);
@@ -94,86 +101,91 @@ Deno.serve(async (req: Request) => {
     } catch (e) {
       console.warn(`[captacao-leads] IA indisponivel, classificando como desconhecida: ${e}`);
     }
+=======
+    const resposta = await callClaude(SYSTEM_PROMPT, `Dados do lead:\n${contexto}`);
+    const jsonStr = resposta.replace(/```json\n?|\n?```/g, '').trim();
+    const r = JSON.parse(jsonStr);
+>>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
 
-    // Garante valor válido de intencao
     const intencoesValidas = ['urgente', 'alta', 'media', 'baixa', 'desconhecida'];
-    const intencao = intencoesValidas.includes(resultado.intencao) ? resultado.intencao : 'desconhecida';
+    const intencao = intencoesValidas.includes(r.intencao) ? r.intencao : 'desconhecida';
 
     const statusValidos = ['novo', 'em_atendimento', 'proposta_enviada', 'aguardando_pagamento', 'convertido', 'perdido', 'inativo'];
-    const status = statusValidos.includes(resultado.status) ? resultado.status : 'novo';
+    const status = statusValidos.includes(r.status) ? r.status : 'novo';
+
+    // Telefone: prioridade ao extraído pela IA, fallback no canal_id (WhatsApp) ou payload
+    const telefone = r.telefone
+      ?? (payload?.canal === 'whatsapp' ? (payload?.canal_id as string | undefined) : undefined)
+      ?? (payload?.telefone as string | undefined)
+      ?? null;
 
     let leadId = payload?.lead_id as string | undefined;
 
     if (leadId) {
-      // Atualiza lead existente
       await sb.from('leads').update({
         intencao,
         status,
-        notas: resultado.notas ?? null,
+        notas: r.notas ?? null,
+        ...(r.nome      && { nome: r.nome }),
+        ...(telefone    && { telefone }),
+        ...(r.email     && { email: r.email }),
+        ...(r.endereco  && { endereco: r.endereco }),
+        ...(r.bairro    && { bairro: r.bairro }),
+        ...(r.cidade    && { cidade: r.cidade }),
+        ...(r.cep       && { cep: r.cep }),
         atualizado_em: new Date().toISOString(),
       }).eq('id', leadId);
     } else {
-      // Insere novo lead
       const canal = (payload?.canal as string) ?? 'outro';
       const { data: novoLead } = await sb.from('leads').insert({
         canal,
-        nome: (payload?.nome as string) ?? null,
-        telefone: (payload?.telefone as string) ?? null,
-        email: (payload?.email as string) ?? null,
-        mensagem_inicial: (payload?.mensagem as string) ?? null,
-        canal_id: (payload?.canal_id as string) ?? null,
-        utm_source: (payload?.utm_source as string) ?? canal,
-        historico_canal: (payload?.historico_canal as string) ?? null,
-        notas: resultado.notas ?? null,
+        nome:             r.nome ?? (payload?.nome as string | undefined) ?? null,
+        telefone:         telefone,
+        email:            r.email ?? (payload?.email as string | undefined) ?? null,
+        endereco:         r.endereco ?? null,
+        bairro:           r.bairro ?? null,
+        cidade:           r.cidade ?? null,
+        cep:              r.cep ?? null,
+        mensagem_inicial: (payload?.mensagem as string | undefined) ?? null,
+        canal_id:         (payload?.canal_id as string | undefined) ?? null,
+        utm_source:       (payload?.utm_source as string | undefined) ?? canal,
+        historico_canal:  (payload?.historico_canal as string | undefined) ?? null,
+        notas:            r.notas ?? null,
         intencao,
         status,
-        metadata: { task_id, workspace_id, payload_original: payload },
+        metadata:         { task_id, workspace_id, payload_original: payload },
       }).select('id').single();
 
       leadId = novoLead?.id;
     }
 
+<<<<<<< HEAD
     // Dispara lead-qualificado → orquestrador → whatsapp-sdr (apenas para canais com telefone)
     const canalDoLead = (payload?.canal as string) ?? 'outro';
     if (leadId && canalDoLead !== 'instagram' && canalDoLead !== 'facebook') {
+=======
+    if (leadId) {
+>>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
       await dispararLeadQualificado({
-        task_id,
-        escopo,
+        task_id, escopo,
         workspace_id: workspace_id ?? '',
         lead_id: leadId,
         intencao,
-        canal_id: (payload?.canal_id as string) ?? null,
-        canal: (payload?.canal as string) ?? 'outro',
+        canal_id: (payload?.canal_id as string | undefined) ?? null,
+        canal: (payload?.canal as string | undefined) ?? 'outro',
         payload,
       });
     }
 
-    await logEvento({
-      task_id,
-      escopo,
-      agente: 'captacao-leads',
-      tipo_evento: 'concluido',
-      urgencia,
-      duracao_ms: Date.now() - inicio,
-      workspace_id,
-    });
+    await logEvento({ task_id, escopo, agente: 'captacao-leads', tipo_evento: 'concluido', urgencia, duracao_ms: Date.now() - inicio, workspace_id });
 
     return new Response(
-      JSON.stringify({ sucesso: true, lead_id: leadId, intencao, acoes_executadas: resultado.acoes ?? [] }),
+      JSON.stringify({ sucesso: true, lead_id: leadId, intencao, acoes_executadas: r.acoes ?? [] }),
       { headers: { 'Content-Type': 'application/json' } },
     );
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
-    await logEvento({
-      task_id,
-      escopo,
-      agente: 'captacao-leads',
-      tipo_evento: 'erro',
-      urgencia,
-      duracao_ms: Date.now() - inicio,
-      erro: msg,
-      workspace_id,
-    });
+    await logEvento({ task_id, escopo, agente: 'captacao-leads', tipo_evento: 'erro', urgencia, duracao_ms: Date.now() - inicio, erro: msg, workspace_id });
     return new Response(JSON.stringify({ sucesso: false, erro: msg }), { status: 500 });
   }
 });

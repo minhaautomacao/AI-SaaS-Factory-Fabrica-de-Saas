@@ -1,9 +1,15 @@
 import 'dotenv/config'
 import { createServer, IncomingMessage, ServerResponse } from 'http'
 import { iniciarWorkers } from './workers/orquestrador.js'
+import { iniciarWorkerLogistica } from './workers/logistica.js'
 import { getSupabase } from './lib/supabase.js'
+<<<<<<< HEAD
 import { processarMensagemSDR, processarMensagemSDRInstagram, processarComentarioSDR } from './lib/sdr.js'
 import { extrairMensagemZApi } from './lib/whatsapp.js'
+=======
+import { processarMensagemSDR } from './lib/sdr.js'
+import { registrarWebhookEvolution } from './lib/whatsapp.js'
+>>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
 
 console.log('=== Fábrica de SaaS — Orquestrador Central ===')
 console.log(`Ambiente: ${process.env.NODE_ENV ?? 'development'}`)
@@ -11,6 +17,7 @@ console.log(`Iniciando em: ${new Date().toLocaleString('pt-BR')}`)
 console.log('')
 
 iniciarWorkers()
+iniciarWorkerLogistica()
 
 function lerBody(req: IncomingMessage): Promise<string> {
   return new Promise((resolve) => {
@@ -182,7 +189,14 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
   res.end(JSON.stringify({ status: 'ok', uptime: process.uptime() }))
 }).listen(PORT, () => {
   console.log(`[Orquestrador] Servidor em http://0.0.0.0:${PORT}`)
+<<<<<<< HEAD
   console.log(`[Orquestrador] Webhook WhatsApp (Z-API): POST /webhook/whatsapp`)
+=======
+
+  // Auto-registra webhook na Evolution API para receber mensagens WhatsApp
+  const selfUrl = process.env.RENDER_EXTERNAL_URL ?? `http://localhost:${PORT}`
+  registrarWebhookEvolution(`${selfUrl}/webhook/whatsapp`)
+>>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
 })
 
 console.log('')

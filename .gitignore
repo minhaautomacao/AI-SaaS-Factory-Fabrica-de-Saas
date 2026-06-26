@@ -29,6 +29,7 @@ dist
 logs
 backups
 .cloudcode/cache
+<<<<<<< HEAD
 .claude/settings.local.json
 .playwright-mcp/
 
@@ -37,3 +38,8 @@ backups
 .claude/skills/hyperframes-cli/
 .claude/skills/hyperframes-media/
 .claude/skills/hyperframes-registry/
+=======
+
+# Playwright MCP - arquivos temporarios de sessao
+.playwright-mcp/
+>>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40

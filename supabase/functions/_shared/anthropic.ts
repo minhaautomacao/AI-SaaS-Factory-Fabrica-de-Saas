@@ -22,6 +22,7 @@ async function callGroq(apiKey: string, systemPrompt: string, userMessage: strin
     body: JSON.stringify({
       model: 'llama-3.1-8b-instant',
       max_tokens: maxTokens,
+      response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userMessage },

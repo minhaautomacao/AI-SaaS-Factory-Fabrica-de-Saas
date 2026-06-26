@@ -1,8 +1,47 @@
 ---
 name: estado-atual
+<<<<<<< HEAD
 description: Estado completo do projeto em 2026-06-17 — pipeline Meta em produção, WhatsApp SDR pendente, renovação token Instagram em agosto
+=======
+description: Estado do projeto em 2026-06-25 — webhook-meta v23 deployado com fix concluido; webhook-whatsapp v28 no ar
+>>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
 metadata:
   type: project
+---
+
+## Protocolo multiagente ativo
+
+Consulte `.claude/AGENTES.md` para papéis, fluxo e convenções.
+Relatórios de auditoria em `.claude/audits/`.
+
+---
+
+## Estado atual — 2026-06-25
+
+### Bola com: Claude Code (aguardando próximo objetivo via ChatGPT)
+
+### Última feature entregue
+- `webhook-meta v23` — corrige bug concluido: reinicia conversa em vez de ignorar novas mensagens (mesmo fix do whatsapp v27)
+- `webhook-whatsapp v28` — corrige double-confirm de endereço e reset após pedido concluído
+- `agente-logistica v4` — MOTORCYCLE-first com fallback para CAR, markup R$15
+
+### Pendências abertas
+
+| # | Tarefa | Responsável |
+|---|---|---|
+| 1 | Testar cotação Lalamove com CEP real de SP | Carlos (teste manual no WhatsApp) |
+| 2 | Após pagamento confirmado: booking real Lalamove + pedido na tela | Claude Code |
+| 3 | Renovação token Instagram (~2026-08-01) | Claude Code quando chegar a data |
+
+### Fluxo WhatsApp — estado atual
+
+```
+DM WhatsApp → webhook-whatsapp → Groq IA
+  → formulário de endereço → extração de dados → confirmação única
+  → agente-logistica → Lalamove MOTORCYCLE/CAR → cotação exibida ao cliente
+  → [PENDENTE] pagamento confirmado → booking Lalamove + registro em pedidos
+```
+
 ---
 
 ## Contexto geral

@@ -185,6 +185,28 @@ async function buscarConfigDB(chave: string): Promise<string> {
   } catch { return ''; }
 }
 
+function sanitizarErroMeta(texto: string): string {
+  try {
+    const parsed = JSON.parse(texto);
+    const err = parsed?.error ?? parsed;
+    return JSON.stringify({
+      message: err?.message,
+      type: err?.type,
+      code: err?.code,
+      error_subcode: err?.error_subcode,
+      fbtrace_id: err?.fbtrace_id,
+    });
+  } catch {
+    return texto
+      .replace(/access_token=[^&\s"]+/gi, 'access_token=[REDACTED]')
+      .replace(/"access_token"\s*:\s*"[^"]+"/gi, '"access_token":"[REDACTED]"')
+      .replace(/Bearer\s+[A-Za-z0-9._-]+/gi, 'Bearer [REDACTED]')
+      .replace(/https:\/\/graph\.facebook\.com[^"'\s]*/gi, (url) =>
+        url.replace(/([?&]access_token=)[^&\s"]+/gi, '$1[REDACTED]')
+      );
+  }
+}
+
 // ── Tipos ────────────────────────────────────────────────────────────────────
 
 interface Mensagem { role: 'user' | 'assistant'; content: string; ts: string; }
@@ -248,50 +270,21 @@ async function salvarConversa(id: string, updates: Partial<Conversa>): Promise<v
 // ── Prompt do agente de vendas ───────────────────────────────────────────────
 
 function buildSystemPrompt(fase: string, pedidoInfo: Record<string, unknown> | null, nomeCliente: string | null): string {
-  const nome = nomeCliente ?? null;
-  return `Você é uma consultora virtual especializada em atendimento premium para floricultura. Representa a Enemeop Flores — floricultura no Ipiranga, São Paulo, desde 1997. Seu nome é Flor.
-
-${nome ? `O cliente se chama ${nome}. Use o nome de forma natural e moderada durante a conversa, sem repetição excessiva. Exemplo: "${nome}, me conta um pouco sobre a ocasião."` : ''}
+  const nome = nomeCliente ? `O cliente se chama ${nomeCliente}.` : '';
+  return `Você é a Flor, vendedora sênior da Enemeop Flores (Ipiranga, São Paulo, desde 1997).
+${nome}
+Responda em até 2 frases. Tom educado, direto e comercial. Máximo 1 emoji se fizer sentido real.
+Use apenas produtos, preços e informações do catálogo abaixo — não invente nada.
+Faça uma pergunta por vez. Ofereça no máximo 3 opções quando sugerir produtos.
+Conduza o cliente para fechar o pedido aqui mesmo neste canal — Instagram ou Messenger.
+Só mencione WhatsApp se o cliente pedir ou se a situação exigir (pedido muito complexo, reclamação, negociação especial).
 
 ${CATALOGO}
 
-FASE ATUAL DA CONVERSA: ${fase}
+FASE ATUAL: ${fase}
 ${pedidoInfo ? `PEDIDO EM ANDAMENTO: ${JSON.stringify(pedidoInfo)}` : ''}
 
-IDENTIDADE E COMPORTAMENTO:
-Você age como uma atendente real experiente — natural, humana, fluida, educada, sofisticada e acolhedora. Nunca parece um robô, um FAQ ou telemarketing. Não usa respostas mecânicas, não exagera simpatia, não usa diminutivos desnecessários, não usa frases prontas repetitivas. No máximo 1 emoji por mensagem, somente se fizer sentido real.
-
-OBJETIVO DA CONVERSA:
-Descobrir, na ordem certa e fazendo UMA pergunta por vez:
-1. Qual é a ocasião (aniversário, namoro, casamento, maternidade, condolências, agradecimento, etc.)
-2. Para quem é (esposa, mãe, namorado, cliente, empresa, etc.)
-3. Perfil da pessoa presenteada (delicada, sofisticada, alegre, romântica, clássica)
-4. Preferências (flores, cores, estilo, tamanho)
-5. Data e horário da entrega
-6. Região da entrega
-7. Faixa de valor (pergunte com naturalidade quando fizer sentido, não como primeiro tema)
-
-COMO CONDUZIR:
-- Faça uma pergunta por vez, de forma leve — nunca despeje várias perguntas
-- Adapte o tom ao perfil do cliente conforme a conversa avança
-- Observe sinais emocionais e perceba urgência
-- Oriente, compare opções e explique diferenças — não apenas liste produtos
-- Interprete o sentimento: clientes românticos → rosas/tulipas premium; clientes discretos → tons claros e elegantes; clientes alegres → girassóis e flores vibrantes; condolências → brancos e sofisticados; maternidade → tons suaves
-
-RECOMENDAÇÃO:
-Apresente até 3 opções com preços do catálogo, explicando as diferenças. Sugira upgrade natural (cartão personalizado, chocolates, vaso, tamanho maior) sem pressionar. Se houver objeção de preço, ofereça alternativas equivalentes sem desvalorizar os produtos.
-
-QUANDO O CLIENTE DECIDIR COMPRAR — colete:
-nome completo, telefone, endereço completo, CEP, complemento, nome do presenteado, mensagem do cartão, data da entrega, período (manhã/tarde), forma de pagamento.
-Após coletar tudo: informe que vai gerar o link de pagamento PIX.
-
-ESCALONAMENTO PARA HUMANO:
-Se houver reclamação, problema de pagamento, cliente irritado, personalização muito complexa ou negociação fora do padrão — informe que vai acionar uma atendente humana.
-
-OBJETIVO FINAL:
-O cliente deve sentir que foi ouvido, compreendido, recebeu ajuda verdadeira e está comprando algo especial e significativo — não que falou com um robô.
-
-RETORNE APENAS O TEXTO DA RESPOSTA — sem aspas, sem prefixo, sem JSON.`;
+RETORNE APENAS o texto da resposta — sem aspas, sem prefixo, sem JSON.`;
 }
 
 // ── Análise de fase ──────────────────────────────────────────────────────────
@@ -405,7 +398,11 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
 
   // 1. Buscar ou criar conversa
   const conversa = await buscarOuCriarConversa(canalId, canal);
-  if (conversa.fase === 'concluido') return;
+  if (conversa.fase === 'concluido') {
+    await salvarConversa(conversa.id, { fase: 'descoberta', historico: [] } as Partial<Conversa>);
+    conversa.fase = 'descoberta';
+    conversa.historico = [];
+  }
 
   // 2. Buscar nome do cliente (só na primeira mensagem da conversa)
   let nomeCliente = conversa.nome_cliente ?? null;
@@ -420,6 +417,7 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
   const novaMsg: Mensagem = { role: 'user', content: mensagemCliente, ts: new Date().toISOString() };
   const historico = [...(conversa.historico ?? []), novaMsg].slice(-20);
 
+<<<<<<< HEAD
   // 4. Gerar resposta (sequencial para não sobrecarregar Groq rate limit)
   const respostaIA = await chamarIA(
     buildSystemPrompt(conversa.fase, conversa.pedido_info, nomeCliente),
@@ -431,6 +429,21 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
     [{ role: 'user', content: mensagemCliente }],
     200,
   );
+=======
+  // 4. Gerar resposta e analisar fase em paralelo
+  const [respostaIA, analiseRaw] = await Promise.all([
+    chamarIA(
+      buildSystemPrompt(conversa.fase, conversa.pedido_info, nomeCliente),
+      historico.map(m => ({ role: m.role, content: m.content })),
+      120,
+    ),
+    chamarIA(
+      buildFasePrompt(historico, mensagemCliente, conversa.fase),
+      [{ role: 'user', content: mensagemCliente }],
+      200,
+    ),
+  ]);
+>>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
 
   // 5. Processar análise de fase
   let novaFase = conversa.fase;
@@ -468,8 +481,10 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
       respostaFinal = `Perfeito! Seu arranjo: ${pedidoInfo['produto']}. Para finalizar, acesse o link de pagamento PIX: ${linkPagamento} ✅`;
       novaFase = 'aguardando_pagamento';
     } else {
-      // Fallback: WhatsApp para fechamento
-      respostaFinal = `Ótimo! Vamos finalizar seu pedido 🌸 Me chama no WhatsApp para confirmar os detalhes e gerar o PIX: wa.me/${WHATSAPP_NUM}`;
+      // PIX não disponível: manter resposta da IA; se ausente, usar fallback neutro sem WhatsApp
+      if (!respostaIA) {
+        respostaFinal = 'Perfeito. Posso fechar por aqui mesmo. Você prefere buquê, arranjo ou cesta?';
+      }
       novaFase = 'proposta';
     }
   }
@@ -486,7 +501,7 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
   } as Partial<Conversa>);
 
   // 9. Enviar resposta no Instagram DM
-  console.log(`[webhook-meta] ${canalId} | fase: ${conversa.fase}→${novaFase} | resposta: ${respostaFinal.slice(0, 60)}`);
+  console.log(JSON.stringify({ evento: 'dm', canal, fase_anterior: conversa.fase, fase_nova: novaFase, chars: respostaFinal.length, preview: respostaFinal.slice(0, 60) }));
 
   try {
     const pageToken = PAGE_TOKEN || await buscarConfigDB('META_PAGE_ACCESS_TOKEN');
@@ -500,9 +515,57 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
         messaging_type: 'RESPONSE',
       }),
     });
+<<<<<<< HEAD
     if (!res.ok) console.error(`[webhook-meta] erro DM: ${await res.text()}`);
     else console.log(`[webhook-meta] DM enviado para ${canalId}`);
   } catch (e) { console.error(`[webhook-meta] falha DM: ${e}`); }
+=======
+    const envioStatus = res.ok ? 'ok' : 'erro';
+    const envioDetalhe = res.ok ? '' : sanitizarErroMeta(await res.text());
+    console.log(JSON.stringify({ evento: 'dm_envio', canal, status: envioStatus, detalhe: envioDetalhe }));
+  } catch (e) { console.log(JSON.stringify({ evento: 'dm_envio', canal, status: 'excecao', detalhe: String(e).slice(0, 200) })); }
+}
+
+// ── Responder comentário em post (Instagram ou Facebook) ────────────────────
+
+async function processarComentario(evento: MetaEvento): Promise<void> {
+  if (!evento.comment_id) return;
+  const token = IG_TOKEN || await buscarConfigDB('META_IG_ACCESS_TOKEN');
+  if (!token) return;
+
+  const SYSTEM_COMENTARIO = `Você é a Flor, atendente da Enemeop Flores (floricultura em São Paulo desde 1997).
+Alguém comentou numa publicação da loja. Responda de forma calorosa, humana e curta (máximo 2 linhas).
+Nunca cite preços em comentários públicos. Se for elogio: agradeça e convide para o DM.
+Se for dúvida sobre produto ou preço: responda brevemente e direcione ao DM para detalhes.
+Se for pedido de encomenda: agradeça e peça para chamar no direct.
+Português brasileiro natural. No máximo 1 emoji se fizer sentido.
+RETORNE APENAS o texto da resposta, sem aspas, sem prefixo.`;
+
+  const resposta = await chamarIA(
+    SYSTEM_COMENTARIO,
+    [{ role: 'user', content: evento.mensagem }],
+    100,
+  );
+
+  if (!resposta) return;
+
+  try {
+    const endpoint = evento.canal === 'instagram'
+      ? `https://graph.facebook.com/v19.0/${evento.comment_id}/replies`
+      : `https://graph.facebook.com/v19.0/${evento.comment_id}/comments`;
+
+    const res = await fetch(`${endpoint}?access_token=${token}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: resposta }),
+    });
+    const envioStatus = res.ok ? 'ok' : 'erro';
+    const envioDetalhe = res.ok ? '' : sanitizarErroMeta(await res.text());
+    console.log(JSON.stringify({ evento: 'comentario_envio', canal: evento.canal, comment_id: evento.comment_id, status: envioStatus, detalhe: envioDetalhe }));
+  } catch (e) {
+    console.error(`[webhook-meta] falha comentario reply: ${e}`);
+  }
+>>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
 }
 
 // ── Responder comentário em post (Instagram ou Facebook) ────────────────────
@@ -596,7 +659,11 @@ function extrairEventos(body: Record<string, unknown>): MetaEvento[] {
         if (!msg) continue;
         const from = val['from'] as Record<string, unknown> | undefined;
         const canal: 'instagram' | 'facebook' = objectType === 'instagram' || field === 'instagram_comments' ? 'instagram' : 'facebook';
+<<<<<<< HEAD
         const commentId = ((val['id'] ?? val['comment_id']) as string) ?? undefined;
+=======
+        const commentId = (val['id'] as string) ?? undefined;
+>>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
         eventos.push({ canal, tipo: 'comentario', canal_id: String(from?.['id'] ?? ''), comment_id: commentId, nome: (from?.['name'] as string) ?? null, mensagem: msg, post_id: (val['post_id'] as string) ?? undefined, timestamp: new Date().toISOString() });
       }
     }
