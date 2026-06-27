@@ -115,35 +115,8 @@ export async function enviarMensagem(opts: EnviarMensagemOpts): Promise<boolean>
   return false
 }
 
-<<<<<<< HEAD
 // ── Escalada para humano ──────────────────────────────────────────────────────
 
-=======
-// Registra o webhook da Evolution API para apontar a este servidor
-export async function registrarWebhookEvolution(webhookUrl: string): Promise<void> {
-  if (!EVOLUTION_URL || !EVOLUTION_API_KEY) return
-
-  const url = `${EVOLUTION_URL}/webhook/set/${EVOLUTION_INSTANCE}`
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': EVOLUTION_API_KEY },
-      body: JSON.stringify({
-        url: webhookUrl,
-        webhook_by_events: false,
-        webhook_base64: false,
-        events: ['MESSAGES_UPSERT'],
-      }),
-    })
-    if (res.ok) console.log(`[WhatsApp] Webhook registrado: ${webhookUrl}`)
-    else console.warn(`[WhatsApp] Webhook não registrado (${res.status}): ${await res.text()}`)
-  } catch (e) {
-    console.warn('[WhatsApp] Falha ao registrar webhook:', e)
-  }
-}
-
-// Notifica Carlos sobre escalada crítica
->>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
 export async function notificarEscalada(taskId: string, tipo: string, motivo: string): Promise<void> {
   // Fallback: grava no Supabase como escalada pendente (visível no dashboard)
   // independente de WhatsApp estar configurado ou não
