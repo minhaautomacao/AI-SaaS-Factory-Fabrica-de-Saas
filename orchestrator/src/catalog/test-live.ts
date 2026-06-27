@@ -1,8 +1,9 @@
 /**
- * Teste real de scraping contra www.enemeopflores.com.br
+ * Teste real contra www.enemeopflores.com.br
  * Executar: npx tsx src/catalog/test-live.ts
  */
 
+import 'dotenv/config'
 import { searchLiveProductsFromSite } from './liveSiteCatalog.js'
 
 const CASOS = [
