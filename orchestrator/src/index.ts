@@ -179,9 +179,15 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
     }
   }
 
-  // Health check
-  res.writeHead(200, { 'Content-Type': 'application/json' })
-  res.end(JSON.stringify({ status: 'ok', uptime: process.uptime() }))
+  // Health check leve — usado pelo keep-alive do GitHub Actions
+  if (req.url === '/health' || req.url === '/') {
+    res.writeHead(200, { 'Content-Type': 'application/json' })
+    res.end('{"ok":true}')
+    return
+  }
+
+  res.writeHead(404)
+  res.end('')
 }).listen(PORT, () => {
   console.log(`[Orquestrador] Servidor em http://0.0.0.0:${PORT}`)
   console.log(`[Orquestrador] Webhook WhatsApp (Z-API): POST /webhook/whatsapp`)
