@@ -27,19 +27,33 @@ export const filas = {
   producaoLow:      criarFila<OrchestratorJob>(QUEUES.PRODUCAO_LOW),
 }
 
-export const filasAgentes: Record<string, Queue<AgentJob>> = {
-  'captacao-leads': criarFila<AgentJob>(QUEUES.AGENT_CAPTACAO),
-  'whatsapp-sdr':   criarFila<AgentJob>(QUEUES.AGENT_SDR),
-  'financeiro':     criarFila<AgentJob>(QUEUES.AGENT_FINANCEIRO),
-  'logistica':      criarFila<AgentJob>(QUEUES.AGENT_LOGISTICA),
-  'conciliacao':    criarFila<AgentJob>(QUEUES.AGENT_CONCILIACAO),
-  'operacional':    criarFila<AgentJob>(QUEUES.AGENT_OPERACIONAL),
-  'rastreamento':   criarFila<AgentJob>(QUEUES.AGENT_RASTREAMENTO),
-  'pos-venda':      criarFila<AgentJob>(QUEUES.AGENT_POS_VENDA),
-  'marketing':      criarFila<AgentJob>(QUEUES.AGENT_MARKETING),
-  'inteligencia':   criarFila<AgentJob>(QUEUES.AGENT_INTELIGENCIA),
-  'agente-dev':     criarFila<AgentJob>(QUEUES.AGENT_DEV),
-  'estoque':        criarFila<AgentJob>(QUEUES.AGENT_ESTOQUE),
+// Mapa de agente → nome da fila (lazy: Queue criada só ao despachar)
+const AGENTE_PARA_FILA: Record<string, string> = {
+  'captacao-leads': QUEUES.AGENT_CAPTACAO,
+  'whatsapp-sdr':   QUEUES.AGENT_SDR,
+  'financeiro':     QUEUES.AGENT_FINANCEIRO,
+  'logistica':      QUEUES.AGENT_LOGISTICA,
+  'conciliacao':    QUEUES.AGENT_CONCILIACAO,
+  'operacional':    QUEUES.AGENT_OPERACIONAL,
+  'rastreamento':   QUEUES.AGENT_RASTREAMENTO,
+  'pos-venda':      QUEUES.AGENT_POS_VENDA,
+  'marketing':      QUEUES.AGENT_MARKETING,
+  'inteligencia':   QUEUES.AGENT_INTELIGENCIA,
+  'agente-dev':     QUEUES.AGENT_DEV,
+  'estoque':        QUEUES.AGENT_ESTOQUE,
+}
+
+// Cache lazy: instancia Queue<AgentJob> somente quando despachar pela primeira vez
+const _filasAgentesCache = new Map<string, Queue<AgentJob>>()
+
+function getFilaAgente(agente: string): Queue<AgentJob> {
+  const cached = _filasAgentesCache.get(agente)
+  if (cached) return cached
+  const nomeFila = AGENTE_PARA_FILA[agente]
+  if (!nomeFila) throw new Error(`Agente desconhecido: ${agente}`)
+  const fila = criarFila<AgentJob>(nomeFila)
+  _filasAgentesCache.set(agente, fila)
+  return fila
 }
 
 export async function despacharParaAgente(
@@ -47,9 +61,7 @@ export async function despacharParaAgente(
   job: AgentJob,
   opcoes?: { priority?: number; delay?: number }
 ): Promise<void> {
-  const fila = filasAgentes[agente]
-  if (!fila) throw new Error(`Agente desconhecido: ${agente}`)
-
+  const fila = getFilaAgente(agente)
   await fila.add(job.task_id, job, {
     priority: opcoes?.priority,
     delay: opcoes?.delay,

@@ -11,8 +11,12 @@ console.log(`Ambiente: ${process.env.NODE_ENV ?? 'development'}`)
 console.log(`Iniciando em: ${new Date().toLocaleString('pt-BR')}`)
 console.log('')
 
-iniciarWorkers()
-iniciarWorkerLogistica()
+if (process.env.WORKERS_ENABLED !== 'false') {
+  iniciarWorkers()
+  iniciarWorkerLogistica()
+} else {
+  console.log('[Orquestrador] WORKERS_ENABLED=false — workers BullMQ desativados (webhooks ativos)')
+}
 
 function lerBody(req: IncomingMessage): Promise<string> {
   return new Promise((resolve) => {
