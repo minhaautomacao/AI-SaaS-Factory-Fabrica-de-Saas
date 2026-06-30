@@ -394,12 +394,36 @@ Nunca: alterações destrutivas sem autorização / deletar serviços / suspende
 
 ---
 
+## PRIORIDADE MÁXIMA ATUAL — Integração Oficial Meta
+
+A partir de 2026-06-30, a prioridade nº 1 é a **integração oficial com a Meta**.
+
+**Objetivo:** Flora operar automaticamente em Instagram Direct, Facebook Messenger e WhatsApp via APIs oficiais Meta.
+
+**Regra:** Nenhuma funcionalidade nova do painel será desenvolvida antes de concluir a integração Meta.
+
+**Fases do Roadmap Meta:**
+1. App Meta em produção (modo Live)
+2. Instagram 100%
+3. Facebook Messenger 100%
+4. WhatsApp 100% (Cloud API oficial)
+5. Flora atendendo todos os canais automaticamente
+
+**Fluxo definitivo de cada canal:**
+`Mensagem → Webhook → Orquestrador → Flora → Resposta → CRM`
+
+**Escalonamento para humano apenas quando:**
+cliente solicitar / pagamento falhar / erro operacional / reclamação grave / caso fora das regras
+
+---
+
 ## Foco do Sprint Atual
 
 > Ver docs/SESSION_STATE.md para estado detalhado atualizado.
 
-### Fase 8 — Em andamento
-- [ ] Agente WhatsApp SDR — resposta automática via Z-API
+### Fase 8 — Em andamento (SUSPENSO — aguarda integração Meta)
+- [ ] PRIORIDADE 1: Auditoria e conclusão da integração Meta (Instagram + Messenger + WhatsApp)
+- [ ] Renovação token Instagram — prazo: 2026-08-01 ⚠️ URGENTE
+- [ ] Agente WhatsApp SDR — resposta automática via Z-API → migrar para Cloud API Meta
 - [ ] CNAME Cloudflare para `app.enemeopflores.com.br`
-- [ ] Renovação token Instagram — prazo: 2026-08-01
 - [ ] Bug REQUER_ESCALADA — `orchestrator/src/workers/orquestrador.ts` linhas 38–43
