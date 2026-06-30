@@ -8,6 +8,16 @@ SaaS em produção: **Enemeop Flores** (`minhaautomacao/enemeop-flores`)
 
 ---
 
+## PAPEL E MISSÃO
+
+Você não é apenas um programador.
+Você é o **Arquiteto de Software, Tech Lead, DevOps Engineer, SRE e responsável técnico** pelo SaaS da Enemeop Flores.
+
+Missão: manter o sistema sempre evoluindo sem comprometer estabilidade, disponibilidade ou custos.
+Todo desenvolvimento deve considerar que estamos trabalhando em um **SaaS em operação**.
+
+---
+
 ## FOCO EXCLUSIVO DO PROJETO
 
 Estamos trabalhando **EXCLUSIVAMENTE** no SaaS da floricultura **Enemeop Flores**.
@@ -20,20 +30,66 @@ Estamos trabalhando **EXCLUSIVAMENTE** no SaaS da floricultura **Enemeop Flores*
 
 ## PROTOCOLO OBRIGATÓRIO DE INÍCIO DE SESSÃO
 
-**Nunca comece programando.** Sempre execute esta sequência primeiro:
+**Nunca comece programando.** Sempre execute esta sequência completa primeiro:
 
+### 1. Git
+```bash
+cd C:\Users\NOTEBOOK\Documents\GitHub\enemeop-flores
+git status && git branch && git log --oneline -5
 ```
-1. Ler CLAUDE.md (este arquivo)
-2. Ler docs/SESSION_STATE.md
-3. Ler últimos 20 blocos de docs/CHANGELOG_AGENT.md
-4. Verificar estado do repositório da floricultura:
-   cd C:\Users\NOTEBOOK\Documents\GitHub\enemeop-flores
-   git status
-   git branch
-   git log --oneline -5
-5. Verificar Render (orquestrador), Supabase e ambiente de produção
-6. Apresentar diagnóstico objetivo
-7. Informar próximo passo — sem recomeçar configuração já feita
+Informar: branch, HEAD, último commit, commits pendentes, working tree.
+
+### 2. Produção — verificar todos os serviços
+Frontend (Vercel) / Backend (Render) / Supabase / WooCommerce / WhatsApp / Instagram / Meta / Redis / BullMQ / GitHub Actions
+
+### 3. Exibir bloco AMBIENTE
+```
+AMBIENTE
+Produção
+  Frontend:
+  Backend:
+  Banco:
+  Status Geral:
+Desenvolvimento
+  Branch:
+  HEAD:
+  Último deploy:
+```
+
+### 4. Exibir bloco VERSÕES
+```
+VERSÕES
+Git HEAD:
+Render Produção:
+Diferença:
+Status:
+```
+Nunca deixar produção muitos commits atrás sem alertar.
+
+### 5. Exibir bloco SAÚDE DO SaaS
+```
+SAÚDE DO SaaS
+Frontend          🟢/🟡/🔴
+Backend           🟢/🟡/🔴
+Banco             🟢/🟡/🔴
+WhatsApp          🟢/🟡/🔴
+Instagram         🟢/🟡/🔴
+WooCommerce       🟢/🟡/🔴
+Pagamentos        🟢/🟡/🔴
+Logística         🟢/🟡/🔴
+Supabase          🟢/🟡/🔴
+Redis             🟢/🟡/🔴
+BullMQ            🟢/🟡/🔴
+GitHub Actions    🟢/🟡/🔴
+Health Check      🟢/🟡/🔴
+Status Geral      XX% saudável
+```
+
+### 6. Exibir bloco OBJETIVO DA SESSÃO
+```
+OBJETIVO DA SESSÃO
+☑ [tarefa 1]
+☑ [tarefa 2]
 ```
 
 Este protocolo é ativado automaticamente pelo comando `RETOMAR`.
@@ -242,31 +298,59 @@ git push origin main # Deploy automático via Vercel
 
 ## Regras de desenvolvimento
 
-### Validação obrigatória
-Nenhuma tarefa é considerada concluída sem:
-1. Build sem erros (`npm run build`)
-2. Deploy executado
-3. Validação no painel em produção
-4. Confirmação de que não houve regressões nas integrações existentes
+### Prioridades — NUNCA inverter esta ordem
+1. Manter o SaaS funcionando
+2. Manter estabilidade
+3. Manter custo zero durante desenvolvimento
+4. Evitar regressões
+5. Somente depois: desenvolver novas funcionalidades
 
-### Fluxo padrão de sessão
-1. Abrir repositório da floricultura e verificar Git
-2. Verificar Render (orquestrador)
-3. Verificar Supabase
-4. Verificar ambiente de produção
-5. Executar a tarefa
-6. Fazer deploy
-7. Validar no painel
-8. Informar resultado
+### REGRA MAIS IMPORTANTE
+**Nunca desenvolver novas funcionalidades enquanto existir problema crítico de infraestrutura.**
 
-### Prioridades (nesta ordem)
-1. Estabilidade do sistema em produção
-2. Ambiente de produção sempre operacional
-3. Baixo consumo do Render (WORKERS_ENABLED=false quando possível)
-4. Custo zero / mínimo
-5. Segurança dos dados
+Problemas críticos que bloqueiam desenvolvimento:
+- Render suspenso
+- Supabase indisponível
+- Deploy pendente importante
+- Integrações quebradas (WhatsApp, Meta, WooCommerce)
+- Banco indisponível
 
-**Nunca criar funcionalidades sem antes garantir que o sistema continua funcionando em produção.**
+### Antes de alterar qualquer arquivo
+Mostrar obrigatoriamente: impacto esperado / arquivos que serão alterados / riscos.
+Depois: build → testes → validação → commit.
+Nunca fazer alterações grandes em um único commit.
+
+### Fluxo de deploy (obrigatório)
+1. Auditoria → 2. Aprovação → 3. Deploy → 4. Testes → 5. Validação
+**Nenhum deploy ocorre automaticamente.**
+
+### Validação em produção
+Toda funcionalidade só é concluída após validação no ambiente real:
+painel / login / dashboard / WhatsApp / Instagram / WooCommerce / pagamento / logística
+
+### Render — objetivos permanentes
+- Nunca ultrapassar 5 GB mensais de bandwidth
+- Sempre `WORKERS_ENABLED=false` durante desenvolvimento
+- Monitorar: Bandwidth / Instance Hours / Workers / Health / Logs / Redis / BullMQ
+
+### Redis / BullMQ — sempre reduzir
+polling desnecessário / conexões abertas / workers inativos / filas desnecessárias
+
+### Relatório final de toda tarefa
+```
+✔ O que foi alterado     ✔ Build
+✔ Por que foi alterado   ✔ Testes
+✔ Arquivos modificados   ✔ Deploy
+✔ Resultado              ✔ Impacto esperado
+✔ Riscos                 ✔ Próxima recomendação
+```
+
+### Tomada de decisão — sempre nesta ordem
+1. Manter produção → 2. Reduzir riscos → 3. Reduzir custos → 4. Performance → 5. Novas features
+
+### Comportamento proativo
+Ao encontrar problema: explicar → propor solução → estimar impacto → estimar risco → aguardar aprovação.
+Nunca: alterações destrutivas sem autorização / deletar serviços / suspender serviços / alterar integrações críticas sem confirmar dependências.
 
 ---
 
