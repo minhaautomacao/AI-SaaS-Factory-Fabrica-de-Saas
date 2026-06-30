@@ -9,30 +9,46 @@
 
 | Campo | Valor |
 |---|---|
-| Data deste snapshot | 2026-06-18 |
+| Data deste snapshot | 2026-06-30 |
 | Fase atual | Fase 8 — Execução pós-produção |
 | Branch fábrica | main |
 | Branch enemeop | master |
-| Pipeline Instagram | PRODUÇÃO — funcional |
+| Pipeline Instagram | Produção — funcional (via Supabase Edge Functions) |
 
 ---
 
-## Última tarefa concluída
+## Último deploy no Render
 
-**2026-06-18** — MCP Markitdown instalado e padronizado
-- Adicionado `markitdown-mcp-npx` ao .claude/settings.json
-- Regra adicionada ao CLAUDE.md: usar `mcp__markitdown__*` para leitura de qualquer arquivo enviado na conversa
-- Ativa na próxima sessão (requer reinício do Claude Code)
+| Serviço | Commit deployado | Data |
+|---|---|---|
+| enemeop-orchestrator | 53f307c | 22/06/2026 |
+| Workspace | **SUSPENSO** (cota banda excedida) | desde 25/06/2026 |
+| Renovação cota | **01/07/2026** | automática |
 
-## Tarefa em andamento
+---
 
-Nenhuma. Aguardando próxima instrução.
+## HEAD atual (main) — pronto para deploy
 
-## Próximo passo objetivo
+```
+6cb7519 — WORKERS_ENABLED=false + BullMQ drainDelay=30s (não deployado)
+f1eedfa — /health leve {"ok":true} (não deployado)
+6422133 — keep-alive 14min, remove ping Evolution (não deployado)
+```
 
-1. **CNAME Cloudflare** — usuário adiciona `app CNAME cname.vercel-dns.com` no painel Cloudflare
-2. **Z-API WhatsApp SDR** — integrar resposta automática para leads do Instagram
-3. **Renovar token Instagram** — prazo 2026-08-01
+---
+
+## Plano aprovado para 01/07 (por Carlos em 29/06/2026)
+
+**Sem alterações novas. Apenas deploy do HEAD atual.**
+
+1. Confirmar workspace ativo
+2. `git log --oneline -5` + `git status`
+3. Deploy manual enemeop-orchestrator (HEAD main = 6cb7519)
+4. Confirmar nos logs: `WORKERS_ENABLED=false`, workers desativados, sem erro Upstash
+5. `curl -fsS https://enemeop-orchestrator.onrender.com/health` → `{"ok":true}`
+6. Testar WhatsApp, Instagram/Meta, pagamento, logística
+
+**NÃO deletar, suspender ou alterar nenhum serviço sem nova aprovação explícita.**
 
 ---
 
@@ -40,21 +56,10 @@ Nenhuma. Aguardando próxima instrução.
 
 | # | Problema | Impacto | Status |
 |---|---|---|---|
-| 1 | CNAME `app.enemeopflores.com.br` não configurado | Domínio customizado offline | Aguarda usuário |
-| 2 | Bug REQUER_ESCALADA em orquestrador.ts:38-43 | Leads não escalam para atendente | Pendente |
+| 1 | Deploy pendente (commits 6422133+f1eedfa+6cb7519) | drainDelay=30s não ativo | Aguarda 01/07 |
+| 2 | CNAME `app.enemeopflores.com.br` não configurado | Domínio customizado offline | Aguarda usuário |
 | 3 | WhatsApp SDR não implementado | Sem resposta automática | Em planejamento |
 | 4 | Token Instagram expira 2026-08-01 | Pipeline offline após data | Monitorar |
-
----
-
-## MCPs esperados nesta sessão
-
-| MCP | Status esperado | Verificar se ausente |
-|---|---|---|
-| Playwright (`mcp__playwright__*`) | Connected | Reiniciar sessão |
-| Vercel (`mcp__a0c23722-*`) | Connected | Checar .claude/settings.json |
-| Supabase (`mcp__a7729ab9-*`) | Connected | Checar .claude/settings.json |
-| Markitdown (`mcp__markitdown__*`) | Connected | Verificar Python 3.10+ instalado |
 
 ---
 
@@ -62,19 +67,8 @@ Nenhuma. Aguardando próxima instrução.
 
 | Serviço | URL / ID | Status |
 |---|---|---|
-| Enemeop Flores (Vercel) | enemeop-flores-three.vercel.app | Online |
+| enemeop-orchestrator (Render) | enemeop-orchestrator.onrender.com | Suspenso — retorna 01/07 |
 | Supabase enemeop | gftnjvdvzgjkhwxnxnwl | Online |
 | Supabase fábrica | ebeapnydeiwuewxatuuw | Online |
-| Orquestrador (Render) | enemeop-orchestrator.onrender.com | Online (keep-alive via GitHub Actions) |
-| Webhook Meta | /functions/v1/webhook-meta | Ativo |
-
----
-
-## Último status Git conhecido
-
-```
-Repositório: AI-SaaS-Factory-Fabrica-de-Saas
-Branch: main | Último commit: 65f2778
-Status: limpo (sem alterações pendentes)
-Sincronizado com: github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas
-```
+| Webhook Meta | /functions/v1/webhook-meta | Ativo (independente do Render) |
+| Z-API WhatsApp | ZAPI_* vars no Render | Aguarda retorno do orquestrador |
