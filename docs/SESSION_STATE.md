@@ -37,16 +37,21 @@ f1eedfa — /health leve {"ok":true} (não deployado)
 
 ---
 
-## Plano aprovado para 01/07 (por Carlos em 29/06/2026)
+## Plano aprovado para 01/07 (por Carlos em 30/06/2026) — CORRIGIDO
 
 **Sem alterações novas. Apenas deploy do HEAD atual.**
 
-1. Confirmar workspace ativo
-2. `git log --oneline -5` + `git status`
+1. Confirmar workspace ativo no Render
+2. Confirmar que HEAD contém os commits `6422133`, `f1eedfa`, `6cb7519`:
+   `git log --oneline -5` + `git status`
 3. Deploy manual enemeop-orchestrator (HEAD main = 6cb7519)
-4. Confirmar nos logs: `WORKERS_ENABLED=false`, workers desativados, sem erro Upstash
+4. Confirmar nos logs:
+   - `WORKERS_ENABLED=false`
+   - workers BullMQ desativados
+   - sem erro Upstash
+   - servidor online
 5. `curl -fsS https://enemeop-orchestrator.onrender.com/health` → `{"ok":true}`
-6. Testar WhatsApp, Instagram/Meta, pagamento, logística
+6. Testar fluxos críticos: WhatsApp, Instagram/Meta, pagamento, logística
 
 **NÃO deletar, suspender ou alterar nenhum serviço sem nova aprovação explícita.**
 

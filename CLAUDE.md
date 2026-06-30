@@ -8,6 +8,16 @@ SaaS em produção: **Enemeop Flores** (`minhaautomacao/enemeop-flores`)
 
 ---
 
+## FOCO EXCLUSIVO DO PROJETO
+
+Estamos trabalhando **EXCLUSIVAMENTE** no SaaS da floricultura **Enemeop Flores**.
+
+- Todo início de sessão assume este contexto automaticamente
+- Nunca iniciar trabalhos em outro projeto sem autorização explícita
+- Repositório padrão: `C:\Users\NOTEBOOK\Documents\GitHub\enemeop-flores`
+
+---
+
 ## PROTOCOLO OBRIGATÓRIO DE INÍCIO DE SESSÃO
 
 **Nunca comece programando.** Sempre execute esta sequência primeiro:
@@ -16,14 +26,28 @@ SaaS em produção: **Enemeop Flores** (`minhaautomacao/enemeop-flores`)
 1. Ler CLAUDE.md (este arquivo)
 2. Ler docs/SESSION_STATE.md
 3. Ler últimos 20 blocos de docs/CHANGELOG_AGENT.md
-4. Ler docs/GITHUB_SYNC_STATE.md
-5. Ler docs/CREDENTIALS_INDEX.md
-6. Rodar: git status && git branch --show-current && git remote -v
-7. Apresentar diagnóstico objetivo
-8. Informar próximo passo — sem recomeçar configuração já feita
+4. Verificar estado do repositório da floricultura:
+   cd C:\Users\NOTEBOOK\Documents\GitHub\enemeop-flores
+   git status
+   git branch
+   git log --oneline -5
+5. Verificar Render (orquestrador), Supabase e ambiente de produção
+6. Apresentar diagnóstico objetivo
+7. Informar próximo passo — sem recomeçar configuração já feita
 ```
 
 Este protocolo é ativado automaticamente pelo comando `RETOMAR`.
+
+### Integrações existentes (sempre preservar)
+O sistema já possui as seguintes integrações — toda alteração deve mantê-las funcionando:
+- WhatsApp (Z-API)
+- Instagram / Meta
+- WooCommerce
+- Pagamentos (Cielo/Mercado Pago)
+- Logística
+- Supabase (auth, banco, edge functions)
+- Orquestrador (Render)
+- Dashboard (Vercel)
 
 ---
 
@@ -213,6 +237,36 @@ supabase db diff     # Ver mudanças pendentes
 supabase db push     # Aplicar migrations
 git push origin main # Deploy automático via Vercel
 ```
+
+---
+
+## Regras de desenvolvimento
+
+### Validação obrigatória
+Nenhuma tarefa é considerada concluída sem:
+1. Build sem erros (`npm run build`)
+2. Deploy executado
+3. Validação no painel em produção
+4. Confirmação de que não houve regressões nas integrações existentes
+
+### Fluxo padrão de sessão
+1. Abrir repositório da floricultura e verificar Git
+2. Verificar Render (orquestrador)
+3. Verificar Supabase
+4. Verificar ambiente de produção
+5. Executar a tarefa
+6. Fazer deploy
+7. Validar no painel
+8. Informar resultado
+
+### Prioridades (nesta ordem)
+1. Estabilidade do sistema em produção
+2. Ambiente de produção sempre operacional
+3. Baixo consumo do Render (WORKERS_ENABLED=false quando possível)
+4. Custo zero / mínimo
+5. Segurança dos dados
+
+**Nunca criar funcionalidades sem antes garantir que o sistema continua funcionando em produção.**
 
 ---
 
