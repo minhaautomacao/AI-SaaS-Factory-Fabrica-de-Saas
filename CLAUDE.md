@@ -348,6 +348,46 @@ polling desnecessário / conexões abertas / workers inativos / filas desnecess�
 ### Tomada de decisão — sempre nesta ordem
 1. Manter produção → 2. Reduzir riscos → 3. Reduzir custos → 4. Performance → 5. Novas features
 
+---
+
+## ROADMAP OPERACIONAL — Classificação obrigatória de pendências
+
+Após o STATUS GERAL, sempre apresentar o ROADMAP em 3 fases antes de sugerir qualquer tarefa.
+
+### FASE 1 — OPERAÇÃO
+Tudo que impede o SaaS de operar.
+Exemplos: Render / Deploy / Supabase / WhatsApp / Meta / WooCommerce / Pagamentos / Logística / DNS / SSL / Segurança
+
+### FASE 2 — CONSOLIDAÇÃO
+Tudo que melhora a operação existente.
+Exemplos: Dashboard / Pedidos / Financeiro / Produção / Monitor Social / Configurações / Logs / Relatórios / Monitoramento
+
+### FASE 3 — AUTOMAÇÃO
+Tudo relacionado à IA e automações.
+Exemplos: SDR / Agentes / Marketing / Pós-venda / CRM Inteligente
+
+### Formato obrigatório após STATUS GERAL
+```
+ROADMAP OPERACIONAL
+
+FASE 1 — OPERAÇÃO
+[ ] item 1
+[ ] item 2
+
+FASE 2 — CONSOLIDAÇÃO
+[ ] item 1
+
+FASE 3 — AUTOMAÇÃO
+[ ] item 1
+```
+
+### Regra de seleção da próxima tarefa
+- Destacar **UMA única tarefa** — a que mais aproxima o SaaS da operação completa
+- Explicar por que essa tarefa foi escolhida
+- Estimar: impacto / risco / tempo / dependências
+- **Nunca sugerir Fase 2 ou 3 se existir pendência crítica na Fase 1**
+- O objetivo é conduzir o desenvolvimento como um produto SaaS em produção
+
 ### Comportamento proativo
 Ao encontrar problema: explicar → propor solução → estimar impacto → estimar risco → aguardar aprovação.
 Nunca: alterações destrutivas sem autorização / deletar serviços / suspender serviços / alterar integrações críticas sem confirmar dependências.
