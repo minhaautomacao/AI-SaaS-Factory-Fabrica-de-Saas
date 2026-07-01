@@ -51,10 +51,19 @@ corpo={"error":{"message":"Invalid OAuth access token - Cannot parse access toke
 
 ---
 
-## Sessão atual — GPT Advisor
+## GPT Advisor (frente pausada)
 
-**GPT Advisor integrado.** Status: **Operacional** (código pronto, `ai/advisor.ts` + `ai/sanitize.ts` + `ai/prompt.ts` + `scripts/gpt-advisor.ts`).
-Ainda sem `OPENAI_API_KEY` configurada — nenhuma chamada real foi feita. Ver `docs/GPT_ADVISOR_RULES.md`.
+```
+Status:              pausado
+Motivo:              OpenAI API retornou 429 insufficient_quota
+Próxima ação futura: habilitar billing/créditos da OpenAI e repetir teste de conexão
+Código:              validado parcialmente (ai/advisor.ts + ai/sanitize.ts + ai/prompt.ts + scripts/gpt-advisor.ts)
+Chave:               carregada corretamente de .credentials/ia/.env (comprimento 164, prefixo sk-)
+Produção:            nenhuma alteração
+Secrets expostos:    nenhum
+```
+
+Ver `docs/GPT_ADVISOR_RULES.md`. Não reabrir esta frente sem pedido explícito.
 
 ---
 
