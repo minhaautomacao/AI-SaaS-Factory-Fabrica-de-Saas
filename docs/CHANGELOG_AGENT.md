@@ -6,6 +6,26 @@
 
 ---
 
+## 2026-07-01 — MISSÃO M002: META_INSTAGRAM_ID atualizado no Supabase
+
+**Objetivo:** Corrigir bloqueador final da integração Instagram Direct (Flora não respondia DMs)
+
+**Ações executadas:**
+- Confirmado via Supabase Dashboard que `META_INSTAGRAM_ID` existia desde 08/Jun mas não havia sido atualizado/verificado após deploy v19
+- Substituído `META_INSTAGRAM_ID` nos Edge Function Secrets (projeto `gftnjvdvzgjkhwxnxnwl`) via Playwright — valor: `17841402064363907`
+- Timestamp de atualização confirmado: `01 Jul 2026 01:26:56 (+0000)`
+- webhook-meta v19 permanece ativa (sem redeploy necessário)
+
+**Estado da missão ao encerrar:**
+```
+Meta → webhook → HMAC → Flora → Captação → Orquestrador  ✅ (todos)
+Resposta no Instagram Direct                               ❌ aguarda teste
+```
+
+**Próximo passo:** Carlos envia "teste" para @enemeopflores → verificar logs endpoint=ig/fb + Graph API
+
+---
+
 ## 2026-06-17 — Sistema de memória permanente
 
 **Ação:** Criação do sistema permanente de memória, retomada e gestão de estado.
