@@ -23,25 +23,31 @@ Flora executa                ✅
 Captação executa             ✅
 Orquestrador executa         ✅
 META_INSTAGRAM_ID no secret  ✅  (corrigido 01/07/2026 01:26 UTC)
-webhook-meta v19 ativa       ✅
-Resposta aparece no Direct   ❌  (aguardando teste após correção do secret)
+webhook-meta v20 ativa       ✅  (já loga status/endpoint/corpo do erro da Graph API)
+Endpoint Graph API correto   ✅  (endpoint=ig, confirmado no log)
+Resposta aparece no Direct   ❌  BLOQUEADO — token malformado (ver causa raiz abaixo)
 ```
+
+## Causa raiz confirmada (01/07/2026, via log real do Supabase Dashboard)
+
+```
+ERROR [webhook-meta] erro DM status=400 endpoint=ig
+corpo={"error":{"message":"Invalid OAuth access token - Cannot parse access token","type":"OAuthException","code":190,"fbtrace_id":"AAY_PcKh4i4OP4IxKf4jhR5"}}
+```
+
+`META_IG_ACCESS_TOKEN` está malformado (não é "expirado" — é "não parseável", geralmente espaço/quebra de linha/aspas extras coladas ao salvar o secret em 30/06 22:19). Pipeline inteiro funciona; só o valor do token precisa ser resetado limpo.
 
 ---
 
 ## Próximo passo exato
 
-1. Pedir que Carlos envie "teste" para @enemeopflores pelo Instagram Direct.
-2. Verificar SOMENTE os logs da função `webhook-meta` (Supabase `gftnjvdvzgjkhwxnxnwl`).
-3. Confirmar: canal (ig/fb), status da Graph API, se a resposta chegou no Direct.
+1. Carlos gera um novo `META_IG_ACCESS_TOKEN` limpo (Graph API Explorer / fluxo Meta).
+2. Definir o secret no Supabase via `Read-Host -AsSecureString` (nunca expor o token no chat/terminal) — ver [[feedback-seguranca-tokens]].
+3. Pedir novo teste "teste" para @enemeopflores.
+4. Verificar logs de `webhook-meta` no dashboard: `https://supabase.com/dashboard/project/gftnjvdvzgjkhwxnxnwl/functions/webhook-meta/logs` (Playwright MCP já tem sessão logada).
 
-### Se não responder
-Preparar diff mínimo v20 do `webhook-meta` para registrar em log (sem tokens/secrets):
-- canal
-- igId
-- endpoint usado
-- status da Graph API
-- corpo do erro da Graph API
+### Nota técnica — como ler os logs de execução
+`mcp__supabase__get_logs` (service=edge-function) só retorna logs de gateway (método/status HTTP), não console.log/error da função. Para ver o erro real da Graph API, usar Playwright MCP navegando direto para a URL de logs acima.
 
 ---
 
