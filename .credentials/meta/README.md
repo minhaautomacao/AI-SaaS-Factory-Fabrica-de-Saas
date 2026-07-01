@@ -36,13 +36,14 @@ META_INSTAGRAM_ID=17841402064363907
 # Instagram Business Account ID
 INSTAGRAM_BUSINESS_ACCOUNT_ID=17841402064363907
 
-# User Access Token (gerado via Graph API Explorer, validade ~60 dias)
-# Gerado em: 2026-06-02 — renovar em: 2026-08-01
-INSTAGRAM_USER_ACCESS_TOKEN=
-
-# Long-Lived User Token (troca o User Token por um de longa duração)
-INSTAGRAM_LONG_LIVED_TOKEN=
+# Instagram User Access Token — gerado via fluxo Instagram Business Login
+# (Meta Dashboard → enemeopflores → API do Instagram → Configuração da API com login do Instagram)
+# Conta: @enemeopflores | Escopos: instagram_business_basic, instagram_business_manage_messages, instagram_business_manage_comments
+# Gerado em: 2026-07-01 — expira em: 2026-08-30 (60 dias) — renovar preventivamente até 2026-08-23
+META_IG_ACCESS_TOKEN=
 ```
+
+> Decisão anterior (Graph API Explorer / app principal) descartada — token incompatível com o endpoint de mensagens. Ver `docs/DECISIONS.md`.
 
 ---
 

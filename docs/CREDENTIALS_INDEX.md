@@ -29,7 +29,7 @@
 | Meta App ID | `META_APP_ID` | `.credentials/meta/.env` | ✅ Presente | 2026-06-02 | Identificação do app (público) |
 | Meta App Secret | `META_APP_SECRET` | `.credentials/meta/.env` | ✅ Presente | 2026-06-02 | Validação HMAC do webhook |
 | Meta Verify Token | `META_VERIFY_TOKEN` | Supabase Secrets | ✅ Presente | 2026-06-02 | Verificação do webhook |
-| Instagram Token | `INSTAGRAM_ACCESS_TOKEN` | Supabase Secrets | ✅ Presente | 2026-06-02 | **Expira 2026-08-01** — renovar |
+| Instagram Token | `META_IG_ACCESS_TOKEN` | Supabase Secrets | ✅ Presente | 2026-07-01 | Instagram Business Login — **expira 2026-08-30**, renovar até 2026-08-23. Pendente: teste de DM real confirmando envio |
 | Instagram App ID | `INSTAGRAM_APP_ID` | `.credentials/meta/.env` | ✅ Presente | 2026-06-02 | Identificação Instagram |
 | Instagram App Secret | `INSTAGRAM_APP_SECRET` | `.credentials/meta/.env` | ✅ Presente | 2026-06-02 | OAuth Instagram |
 | Meta Page Access Token | `META_PAGE_ACCESS_TOKEN` | Supabase Secrets | ❌ Ausente | — | Publicação no Facebook |
@@ -97,6 +97,6 @@ npx supabase secrets list --project-ref ebeapnydeiwuewxatuuw
 
 | Credencial | Alerta | Prazo |
 |---|---|---|
-| `INSTAGRAM_ACCESS_TOKEN` | Expiração iminente | **2026-08-01** |
+| `META_IG_ACCESS_TOKEN` | Renovar (60 dias, Instagram Business Login) | **2026-08-30** (renovar preventivamente até 2026-08-23) |
 | `META_PAGE_ACCESS_TOKEN` | Ausente — bloqueia publicação Facebook | Sem prazo definido |
 | Z-API | Não contratado — bloqueia WhatsApp SDR | Quando iniciar Fase 8 |
