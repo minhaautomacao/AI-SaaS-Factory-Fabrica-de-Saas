@@ -61,6 +61,14 @@
 
 ---
 
+## IA / GPT Advisor
+
+| Serviço | Variável | Arquivo | Status | Última atualização | Impacto |
+|---|---|---|---|---|---|
+| OpenAI API Key | `OPENAI_API_KEY` | `.credentials/ia/.env` | ❌ Ausente | — | GPT Advisor (diagnóstico local, nunca produção) |
+
+---
+
 ## Render / Orquestrador
 
 | Serviço | Variável | Arquivo | Status | Última atualização | Impacto |
