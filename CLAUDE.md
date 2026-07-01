@@ -28,71 +28,29 @@ Estamos trabalhando **EXCLUSIVAMENTE** no SaaS da floricultura **Enemeop Flores*
 
 ---
 
-## PROTOCOLO OBRIGATÓRIO DE INÍCIO DE SESSÃO
+## PROTOCOLO OBRIGATÓRIO DE INÍCIO DE SESSÃO (leve — economia de tokens)
 
-**Nunca comece programando.** Sempre execute esta sequência completa primeiro:
+**Em toda retomada, ler `docs/CURRENT_STATE.md` primeiro. Não fazer auditoria completa sem solicitação explícita. Seguir o próximo passo indicado no `CURRENT_STATE.md`.**
 
-### 1. Git
+Sequência obrigatória de toda retomada:
+
+### 1. Ler `docs/CURRENT_STATE.md`
+Única fonte de verdade sobre missão atual, estado conhecido e próximo passo exato.
+
+### 2. Git (rápido, sem análise extra)
 ```bash
-cd C:\Users\NOTEBOOK\Documents\GitHub\enemeop-flores
-git status && git branch && git log --oneline -5
-```
-Informar: branch, HEAD, último commit, commits pendentes, working tree.
-
-### 2. Produção — verificar todos os serviços
-Frontend (Vercel) / Backend (Render) / Supabase / WooCommerce / WhatsApp / Instagram / Meta / Redis / BullMQ / GitHub Actions
-
-### 3. Exibir bloco AMBIENTE
-```
-AMBIENTE
-Produção
-  Frontend:
-  Backend:
-  Banco:
-  Status Geral:
-Desenvolvimento
-  Branch:
-  HEAD:
-  Último deploy:
+git status
 ```
 
-### 4. Exibir bloco VERSÕES
-```
-VERSÕES
-Git HEAD:
-Render Produção:
-Diferença:
-Status:
-```
-Nunca deixar produção muitos commits atrás sem alertar.
+### 3. Executar o "Próximo passo exato" indicado em `CURRENT_STATE.md`
+Sem perguntar se quer resolver outra coisa primeiro, a menos que o usuário peça.
 
-### 5. Exibir bloco SAÚDE DO SaaS
-```
-SAÚDE DO SaaS
-Frontend          🟢/🟡/🔴
-Backend           🟢/🟡/🔴
-Banco             🟢/🟡/🔴
-WhatsApp          🟢/🟡/🔴
-Instagram         🟢/🟡/🔴
-WooCommerce       🟢/🟡/🔴
-Pagamentos        🟢/🟡/🔴
-Logística         🟢/🟡/🔴
-Supabase          🟢/🟡/🔴
-Redis             🟢/🟡/🔴
-BullMQ            🟢/🟡/🔴
-GitHub Actions    🟢/🟡/🔴
-Health Check      🟢/🟡/🔴
-Status Geral      XX% saudável
-```
+**Não verificar automaticamente**: Render, Vercel, Supabase, WhatsApp, WooCommerce, Instagram, GitHub Actions, Redis, BullMQ — só investigar esses serviços se:
+- `CURRENT_STATE.md` indicar que essa é a próxima ação; ou
+- o usuário pedir explicitamente (ex.: `RETOMAR COMPLETO`, `AUDITORIA`).
 
-### 6. Exibir bloco OBJETIVO DA SESSÃO
-```
-OBJETIVO DA SESSÃO
-☑ [tarefa 1]
-☑ [tarefa 2]
-```
-
-Este protocolo é ativado automaticamente pelo comando `RETOMAR`.
+### Auditoria completa (só sob demanda — comando `RETOMAR COMPLETO` ou `AUDITORIA`)
+Quando solicitada explicitamente, executar a sequência completa: git status/branch/log dos dois repositórios, checagem de todos os serviços de produção (Frontend Vercel / Backend Render / Supabase / WooCommerce / WhatsApp / Instagram / Meta / Redis / BullMQ / GitHub Actions), e exibir os blocos AMBIENTE, VERSÕES, SAÚDE DO SaaS e ROADMAP OPERACIONAL como antes.
 
 ### Integrações existentes (sempre preservar)
 O sistema já possui as seguintes integrações — toda alteração deve mantê-las funcionando:
