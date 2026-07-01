@@ -27,7 +27,15 @@ Consultar o GPT Advisor apenas quando: erro inesperado, dúvida arquitetural, co
 
 1. **Nunca enviar secrets, tokens ou credenciais** no conteúdo do prompt — nem de `.credentials/**`, nem de `.env`, nem valores reais de variáveis de ambiente.
 2. `OPENAI_API_KEY` é usada **somente** no header `Authorization` da chamada HTTP para autenticar contra a própria OpenAI — nunca é incluída no texto do prompt/input enviado ao modelo, nunca impressa, nunca logada, nunca commitada.
-3. **Sempre sanitizar** (`ai/sanitize.ts`) o erro/log e o resumo do `CURRENT_STATE.md` antes de qualquer chamada — remove Bearer tokens, JWT, tokens Facebook/Instagram/Page (prefixo `EAA`), API keys (`sk-...`), headers `Authorization`/`Cookie`, `password`/`secret`/`api_key=valor`, linhas `CHAVE=valor` de `.env`, IDs longos (15+ dígitos) e qualquer sequência alfanumérica de 32+ caracteres.
+3. **Sempre sanitizar** (`ai/sanitize.ts`) o erro/log e o resumo do `CURRENT_STATE.md` antes de qualquer chamada. Nunca enviar, em texto bruto:
+   - conteúdo de `.env` (linhas `CHAVE=valor`)
+   - secrets (`secret=...`, `senha=...`)
+   - tokens (Facebook/Instagram/Page com prefixo `EAA`, OpenAI `sk-...`, e qualquer sequência alfanumérica de 32+ caracteres)
+   - header `Authorization`
+   - `Bearer <token>`
+   - `Cookie` / `Set-Cookie`
+   - JWT (qualquer string no formato `eyJ....eyJ....`)
+   - IDs longos sensíveis (15+ dígitos — IDs da Meta)
 4. **Contexto mínimo** — só o trecho relevante do log/erro + resumo curto do `CURRENT_STATE.md` (primeiros ~1500 caracteres). Nunca o repositório inteiro, nunca centenas de arquivos.
 5. **Nunca ler `.credentials/` para enviar conteúdo** — a única leitura permitida ali é a própria `OPENAI_API_KEY` em `.credentials/ia/.env`, usada só como credencial de autenticação (regra 2).
 6. **Nunca solicitar geração automática de código** — a resposta é diagnóstico e sugestão, não implementação.
@@ -67,6 +75,28 @@ Sempre solicitado em JSON estruturado (Responses API, `text.format.type = json_s
   "precisaAcaoHumana": true,
   "justificativa": "..."
 }
+```
+
+## Nível de confiança
+
+Quando o Advisor devolver `nivelConfianca` inferior a **0.80**: não executar nenhuma ação automaticamente com base na resposta — coletar mais evidência primeiro (mais logs, mais contexto) e só então reconsultar ou decidir.
+
+## Fluxo operacional
+
+```
+Cloud Code
+  ↓
+sanitize()
+  ↓
+CURRENT_STATE resumo
+  ↓
+OpenAI
+  ↓
+JSON
+  ↓
+Carlos
+  ↓
+execução
 ```
 
 ## Onde configurar a chave

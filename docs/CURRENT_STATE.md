@@ -51,6 +51,13 @@ corpo={"error":{"message":"Invalid OAuth access token - Cannot parse access toke
 
 ---
 
+## Sessão atual — GPT Advisor
+
+**GPT Advisor integrado.** Status: **Operacional** (código pronto, `ai/advisor.ts` + `ai/sanitize.ts` + `ai/prompt.ts` + `scripts/gpt-advisor.ts`).
+Ainda sem `OPENAI_API_KEY` configurada — nenhuma chamada real foi feita. Ver `docs/GPT_ADVISOR_RULES.md`.
+
+---
+
 ## Pendências conhecidas (não bloqueiam a missão atual)
 
 - Deploy de 3 commits do orquestrador pendente no Render (não é blocker do M002)

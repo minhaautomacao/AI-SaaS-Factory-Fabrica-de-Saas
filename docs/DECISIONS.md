@@ -12,6 +12,10 @@ Não usar mais Graph API Explorer para gerar `META_IG_ACCESS_TOKEN`. Usar soment
 
 Só gerar um token novo depois de comprovar objetivamente, com evidência (não hipótese), que o token atual é inválido, expirado ou do fluxo incompatível.
 
+## 2026-07-01 — Papel permanente do GPT Advisor
+
+O GPT Advisor nunca substitui o Cloud Code. O GPT Advisor apenas diagnostica. Toda alteração continua sendo executada exclusivamente pelo Cloud Code após aprovação humana.
+
 ## Prioridade permanente do projeto
 
 Meta → Flora é a prioridade absoluta. Nenhuma funcionalidade nova do painel entra antes da integração Meta (Instagram + Messenger + WhatsApp via APIs oficiais) estar concluída.
