@@ -1,15 +1,9 @@
 /**
  * webhook-meta — Agente de Vendas com Memória de Conversa
  *
- * Fluxo completo por fase:
- *   descoberta        → entende o que o cliente quer (explora catálogo)
- *   interesse         → produto definido, coleta detalhes (data, endereço)
- *   proposta          → apresenta valor e forma de pagamento
- *   aguardando_pag    → link de pagamento enviado
- *   concluido         → pagamento confirmado, pedido agendado
- *
  * Variáveis de ambiente:
- *   META_VERIFY_TOKEN, META_APP_SECRET, META_IG_ACCESS_TOKEN
+ *   META_VERIFY_TOKEN, META_APP_SECRET, META_IG_APP_SECRET, META_IG_ACCESS_TOKEN
+ *   META_INSTAGRAM_ID, META_PAGE_ACCESS_TOKEN
  *   FACTORY_SECRET, SAAS_WORKSPACE_ID
  *   GROQ_API_KEY (ou ANTHROPIC_API_KEY como fallback)
  *   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY (auto-injetados)
@@ -19,6 +13,7 @@ import { createClient } from 'npm:@supabase/supabase-js@2';
 
 const VERIFY_TOKEN   = Deno.env.get('META_VERIFY_TOKEN') ?? '';
 const APP_SECRET     = Deno.env.get('META_APP_SECRET') ?? '';
+const IG_APP_SECRET  = Deno.env.get('META_IG_APP_SECRET') ?? '';
 const FACTORY_SECRET = Deno.env.get('FACTORY_SECRET') ?? '';
 const SERVICE_KEY    = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
 const WORKSPACE_ID   = Deno.env.get('SAAS_WORKSPACE_ID') ?? '';
@@ -27,7 +22,7 @@ const IG_TOKEN       = Deno.env.get('META_IG_ACCESS_TOKEN') ?? '';
 const PAGE_TOKEN     = Deno.env.get('META_PAGE_ACCESS_TOKEN') ?? '';
 const WHATSAPP_NUM   = '5511912808282';
 
-// ── Catálogo de produtos (extraído de enemeopflores.com.br) ──────────────────
+// ── Catálogo de produtos ──────────────────────────────────────────────────
 
 const CATALOGO = `
 SOBRE A ENEMEOP FLORES:
@@ -41,9 +36,9 @@ Entrega disponível: Seg–Sex 9h–18h | Sáb, Dom e Feriados 9h–14h.
 
 CATÁLOGO COMPLETO DE PRODUTOS:
 
-RAMALHETES (opções compactas, presentes rápidos):
+RAMALHETES:
 - Mini Ramalhete (Mod.28): R$ 55
-- Ramalhete Girassol e Alstroemêrias (051): R$ 70
+- Ramalhete Girassol e Alstroemerias (051): R$ 70
 - Ramalhete de Rosas (030): R$ 70
 - Mini Ramalhete + Ferrero Rocher (Mod.29): R$ 100
 - Ramalhete 3 Rosas + Chocolates (094): R$ 95
@@ -51,23 +46,23 @@ RAMALHETES (opções compactas, presentes rápidos):
 - Ramalhete 3 Rosas Nacionais Rosa (Mod.31): R$ 105
 - Ramalhete Mix Rosas + Ferrero Rocher (081): R$ 150
 
-ARRANJOS FLORAIS (em vaso, para decoração e presentes):
+ARRANJOS FLORAIS:
 - Modelo 01 – Arranjo no Vaso de Vidro: R$ 70
 - Arranjo Girassol Solitário (Mod.09): R$ 75
 - Arranjo Flores Luto Hortênsias (Mod.17): R$ 155
-- Arranjo com Alstroemêrias no Vaso de Vidro (027): R$ 155
+- Arranjo com Alstroemerias no Vaso de Vidro (027): R$ 155
 - Arranjo de Rosas (Mod.07): R$ 160
 - Arranjo Girassol em Vaso + Ferrero Rocher (010): R$ 120
 - Arranjo Mix Flores do Campo (Mod.08): R$ 145
 - Arranjo Girassol no Vaso (011): R$ 135
 - Arranjo 2 Rosas Nacionais e Junco (002): R$ 105
 - Arranjo Coração 2 Rosas + Ferrero Rocher (003): R$ 140
-- Arranjo 4 Rosas Brancas e Alstroemêrias (006): R$ 225
+- Arranjo 4 Rosas Brancas e Alstroemerias (006): R$ 225
 - Arranjo Orquídeas Brancas Frente Única (012): R$ 225
 - Arranjo Orquídeas Pink Vaso de Vidro (013): R$ 225
 - Arranjo Orquídeas Brancas e Ruscus (014): R$ 225
 - Arranjo Rosas Rosa no Vaso (Mod.05): R$ 225
-- Arranjo de Alstroemêrias (Mod.24): R$ 265
+- Arranjo de Alstroemerias (Mod.24): R$ 265
 - Arranjo Girassóis (Mod.26): R$ 255
 - Mini Arranjo Branco (Mod.16): R$ 220
 - Arranjo Branco (Mod.19): R$ 255
@@ -81,7 +76,7 @@ ARRANJOS FLORAIS (em vaso, para decoração e presentes):
 - Arranjo Permanente (Mod.15): R$ 1.280
 - Arranjo Permanente Grande (Mod.14): R$ 2.550
 
-BUQUÊS DE FLORES (os mais pedidos):
+BUQUÊS DE FLORES:
 - Buquê de Rosas Vermelhas (032): R$ 140
 - Buquê 6 Rosas Vermelhas Nacionais (Mod.35): R$ 185
 - Buquê 6 Rosas Nacionais (Mod.44): R$ 185
@@ -90,12 +85,12 @@ BUQUÊS DE FLORES (os mais pedidos):
 - Buquê de Rosas Brancas (Mod.55): R$ 280
 - Buquê 12 Rosas Vermelhas (033): R$ 280
 - Buquê Rosas Nacionais + Ferrero Rocher (Mod.36): R$ 290
-- Buquê Mix Alstroemêrias (Mod.40): R$ 295
+- Buquê Mix Alstroemerias (Mod.40): R$ 295
 - Buquê Mix Flores com Girassóis e Campo (054): R$ 295
 - Buquê Luto Rosas Brancas (Mod.50): R$ 390
 - Buquê com Lírios Rosa (093): R$ 395
-- Buquê Luxuoso Alstroemêrias Coloridas (061): R$ 395
-- Buquê 12 Rosas Rosa Nacionais e Alstroemêrias (045/046): R$ 370
+- Buquê Luxuoso Alstroemerias Coloridas (061): R$ 395
+- Buquê 12 Rosas Rosa Nacionais e Alstroemerias (045/046): R$ 370
 - Buquê 12 Rosas Pink Nacionais (Mod.38): R$ 370
 - Buquê 12 Rosas Nacionais Rosa (Mod.41): R$ 370
 - Buquê Mix Flores Nacionais + Ferrero (Mod.37): R$ 150
@@ -109,7 +104,7 @@ BUQUÊS DE FLORES (os mais pedidos):
 - Buquê 12 Girassóis Premium (052): R$ 435
 - Buquê 100 Rosas Vermelhas (056): R$ 1.490
 
-BUQUÊS DE NOIVA (para casamentos e formaturas):
+BUQUÊS DE NOIVA:
 - Buquê Noiva Natural Branco (Mod.74): R$ 445
 - Buquê Noiva Mix Flores Brancas (Mod.78): R$ 490
 - Buquê Noiva (Mod.73/065): R$ 590
@@ -128,7 +123,7 @@ BUQUÊS DE NOIVA (para casamentos e formaturas):
 - Buquê Noiva Cascata de Orquídeas (063): R$ 1.180
 - Buquê Noiva Flores Brancas e Folhagens (064): R$ 670
 
-ORQUÍDEAS (ótimas para decoração duradoura):
+ORQUÍDEAS:
 - Mini Orquídea no Vaso de Vidro (Mod.87): R$ 215
 - Orquídea Phalaenópsis Mescla pequena 2 hastes (Mod.90): R$ 145
 - Orquídea Phalaenópsis Mescla em Vaso (Mod.89): R$ 195
@@ -150,28 +145,10 @@ KITS E PRESENTES:
 - Cesta de Queijos e Vinho Especial (082): R$ 890
 
 FORMAS DE PAGAMENTO: Cartão de crédito, PIX, online seguro.
-PERSONALIZAÇÃO: arranjos sob encomenda disponíveis — cliente descreve e a equipe cria.
-
-CATÁLOGO ESPECIAL — DIA DOS NAMORADOS (12 de junho):
-Dois catálogos exclusivos com rosas vermelhas nacionais, embalagem kraft+celofane, cartão Enemeop incluído.
-
-Catálogo 1 — com alstroemárias (mais volumoso e elaborado):
-- Ramalhete 3 rosas vermelhas + alstroemárias e folhagens: R$ 105
-- Buquê 6 rosas + alstroemárias e folhagens: R$ 185
-- Buquê 12 rosas nacionais premium: R$ 280
-- Buquê 24 rosas nacionais: R$ 560
-- Buquê 24 rosas + alstroemárias e folhagens (grandioso): R$ 740
-
-Catálogo 2 — versão clássica e elegante:
-- Ramalhete 3 rosas vermelhas: R$ 70
-- Buquê 6 rosas vermelhas: R$ 140
-- Buquê 12 rosas nacionais: R$ 280
-- Buquê 24 rosas nacionais: R$ 560
-
-INSTRUÇÃO DIA DOS NAMORADOS: Se o cliente mencionar namorado(a), presente romântico ou a data 12 de junho, apresente esses produtos como linha especial. Em momento natural da conversa, ofereça enviar o catálogo visual pelo WhatsApp.
+PERSONALIZAÇÃO: arranjos sob encomenda disponíveis.
 `.trim();
 
-// ── Supabase client ──────────────────────────────────────────────────────────
+// ── Supabase client ───────────────────────────────────────────────────────
 
 function getDb() {
   return createClient(SUPABASE_URL, SERVICE_KEY, { auth: { persistSession: false } });
@@ -185,29 +162,7 @@ async function buscarConfigDB(chave: string): Promise<string> {
   } catch { return ''; }
 }
 
-function sanitizarErroMeta(texto: string): string {
-  try {
-    const parsed = JSON.parse(texto);
-    const err = parsed?.error ?? parsed;
-    return JSON.stringify({
-      message: err?.message,
-      type: err?.type,
-      code: err?.code,
-      error_subcode: err?.error_subcode,
-      fbtrace_id: err?.fbtrace_id,
-    });
-  } catch {
-    return texto
-      .replace(/access_token=[^&\s"]+/gi, 'access_token=[REDACTED]')
-      .replace(/"access_token"\s*:\s*"[^"]+"/gi, '"access_token":"[REDACTED]"')
-      .replace(/Bearer\s+[A-Za-z0-9._-]+/gi, 'Bearer [REDACTED]')
-      .replace(/https:\/\/graph\.facebook\.com[^"'\s]*/gi, (url) =>
-        url.replace(/([?&]access_token=)[^&\s"]+/gi, '$1[REDACTED]')
-      );
-  }
-}
-
-// ── Tipos ────────────────────────────────────────────────────────────────────
+// ── Tipos ──────────────────────────────────────────────────────────────────
 
 interface Mensagem { role: 'user' | 'assistant'; content: string; ts: string; }
 
@@ -222,7 +177,7 @@ interface Conversa {
   nome_cliente: string | null;
 }
 
-// ── Busca nome do cliente via Instagram Graph API ────────────────────────────
+// ── Busca nome do cliente ──────────────────────────────────────────────────
 
 async function buscarNomeCliente(canalId: string): Promise<string | null> {
   const token = IG_TOKEN || await buscarConfigDB('META_IG_ACCESS_TOKEN');
@@ -233,14 +188,11 @@ async function buscarNomeCliente(canalId: string): Promise<string | null> {
     );
     if (!res.ok) return null;
     const data = await res.json();
-    const nome = (data.name as string)?.split(' ')[0] ?? null; // só o primeiro nome
-    return nome;
-  } catch {
-    return null;
-  }
+    return (data.name as string)?.split(' ')[0] ?? null;
+  } catch { return null; }
 }
 
-// ── Gerenciamento de conversa ────────────────────────────────────────────────
+// ── Gerenciamento de conversa ──────────────────────────────────────────────
 
 async function buscarOuCriarConversa(canalId: string, canal: string): Promise<Conversa> {
   const db = getDb();
@@ -267,39 +219,50 @@ async function salvarConversa(id: string, updates: Partial<Conversa>): Promise<v
   await db.from('conversas').update({ ...updates, atualizado_em: new Date().toISOString() }).eq('id', id);
 }
 
-// ── Prompt do agente de vendas ───────────────────────────────────────────────
+// ── Prompt do agente ──────────────────────────────────────────────────────
 
 function buildSystemPrompt(fase: string, pedidoInfo: Record<string, unknown> | null, nomeCliente: string | null): string {
-  const nome = nomeCliente ? `O cliente se chama ${nomeCliente}.` : '';
-  return `Você é a Flor, vendedora sênior da Enemeop Flores (Ipiranga, São Paulo, desde 1997).
-${nome}
-Responda em até 2 frases. Tom educado, direto e comercial. Máximo 1 emoji se fizer sentido real.
-Use apenas produtos, preços e informações do catálogo abaixo — não invente nada.
-Faça uma pergunta por vez. Ofereça no máximo 3 opções quando sugerir produtos.
-Conduza o cliente para fechar o pedido aqui mesmo neste canal — Instagram ou Messenger.
-Só mencione WhatsApp se o cliente pedir ou se a situação exigir (pedido muito complexo, reclamação, negociação especial).
+  const nome = nomeCliente ?? null;
+  return `Você é uma consultora virtual especializada em atendimento premium para floricultura. Representa a Enemeop Flores — floricultura no Ipiranga, São Paulo, desde 1997. Seu nome é Flor.
+
+${nome ? `O cliente se chama ${nome}. Use o nome de forma natural e moderada durante a conversa.` : ''}
 
 ${CATALOGO}
 
-FASE ATUAL: ${fase}
+FASE ATUAL DA CONVERSA: ${fase}
 ${pedidoInfo ? `PEDIDO EM ANDAMENTO: ${JSON.stringify(pedidoInfo)}` : ''}
 
-RETORNE APENAS o texto da resposta — sem aspas, sem prefixo, sem JSON.`;
+IDENTIDADE E COMPORTAMENTO:
+Você age como uma atendente real experiente — natural, humana, fluida, educada, sofisticada e acolhedora. Nunca parece um robô. No máximo 1 emoji por mensagem.
+
+OBJETIVO: Descobrir na ordem certa (UMA pergunta por vez):
+1. Ocasião (aniversário, namoro, casamento, maternidade, condolências)
+2. Para quem é
+3. Perfil da pessoa presenteada
+4. Preferências (flores, cores, estilo)
+5. Data e horário da entrega
+6. Região da entrega
+7. Faixa de valor
+
+RECOMENDAÇÃO: Até 3 opções com preços do catálogo. Sugira upgrade natural sem pressionar.
+
+ESCALONAMENTO: Reclamação, pagamento com problema, cliente irritado → acionar atendente humana.
+
+RETORNE APENAS O TEXTO DA RESPOSTA — sem aspas, sem prefixo, sem JSON.`;
 }
 
-// ── Análise de fase ──────────────────────────────────────────────────────────
+// ── Análise de fase ────────────────────────────────────────────────────────
 
 function buildFasePrompt(historico: Mensagem[], ultimaMensagem: string, faseAtual: string): string {
-  return `Você analisa conversas de venda de floricultura.
-Com base no histórico e última mensagem, determine:
-1. A nova fase da conversa
-2. Se há pedido definido, extraia os detalhes
-3. Se o cliente mencionou o próprio nome (ex: "me chamo Ana", "sou a Maria", "aqui é o João"), extraia
+  return `Analise a conversa de venda de floricultura e determine:
+1. A nova fase
+2. Detalhes do pedido se definido
+3. Nome do cliente se mencionado
 
-Fases possíveis: descoberta | interesse | proposta | aguardando_pagamento | concluido | perdido
+Fases: descoberta | interesse | proposta | aguardando_pagamento | concluido | perdido
 
 Histórico: ${historico.slice(-4).map(m => `${m.role}: ${m.content}`).join(' | ')}
-Última mensagem do cliente: "${ultimaMensagem}"
+Última mensagem: "${ultimaMensagem}"
 Fase atual: ${faseAtual}
 
 Retorne APENAS JSON válido:
@@ -311,7 +274,7 @@ Retorne APENAS JSON válido:
 }`;
 }
 
-// ── Chamada IA ───────────────────────────────────────────────────────────────
+// ── Chamada IA ─────────────────────────────────────────────────────────────
 
 async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; content: string}>, maxTokens = 120): Promise<string | null> {
   const groqKey = Deno.env.get('GROQ_API_KEY') || await buscarConfigDB('GROQ_API_KEY');
@@ -333,7 +296,7 @@ async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; co
           return (data.choices?.[0]?.message?.content as string)?.trim() ?? null;
         }
         if (res.status !== 429) { console.error(`[ia] Groq ${res.status}`); break; }
-        console.warn('[ia] Groq rate limit, aguardando retry...');
+        console.warn('[ia] Groq rate limit, retry...');
       } catch (e) { console.error('[ia] Groq falhou:', e); break; }
     }
   }
@@ -362,14 +325,11 @@ async function chamarIA(systemPrompt: string, mensagens: Array<{role: string; co
   return null;
 }
 
-// ── Gerar link de pagamento (PIX Mercado Pago — estrutura pronta) ─────────────
+// ── Gerar link de pagamento ────────────────────────────────────────────────
 
 async function gerarLinkPagamento(pedidoInfo: Record<string, unknown>): Promise<string | null> {
-  // TODO: integrar Mercado Pago quando credenciais estiverem disponíveis
-  // Por ora retorna null → agente usa WhatsApp como fallback
   const mpToken = Deno.env.get('MERCADOPAGO_ACCESS_TOKEN');
   if (!mpToken) return null;
-
   try {
     const res = await fetch('https://api.mercadopago.com/checkout/preferences', {
       method: 'POST',
@@ -388,54 +348,31 @@ async function gerarLinkPagamento(pedidoInfo: Record<string, unknown>): Promise<
   return null;
 }
 
-// ── Processar DM com memória completa ────────────────────────────────────────
+// ── Processar DM ──────────────────────────────────────────────────────────
 
-const MSG_FALLBACK = `Oi! Pra qual ocasião é?`;
+const MSG_FALLBACK = `Oi! Para qual ocasião é?`;
 
 async function processarDM(canalId: string, canal: string, mensagemCliente: string): Promise<void> {
   const igToken = IG_TOKEN || await buscarConfigDB('META_IG_ACCESS_TOKEN');
   if (!igToken) return;
 
-  // 1. Buscar ou criar conversa
   const conversa = await buscarOuCriarConversa(canalId, canal);
-  if (conversa.fase === 'concluido') {
-    await salvarConversa(conversa.id, { fase: 'descoberta', historico: [] } as Partial<Conversa>);
-    conversa.fase = 'descoberta';
-    conversa.historico = [];
-  }
+  if (conversa.fase === 'concluido') return;
 
-  // 2. Buscar nome do cliente (só na primeira mensagem da conversa)
   let nomeCliente = conversa.nome_cliente ?? null;
   if (!nomeCliente && conversa.historico.length === 0) {
     nomeCliente = await buscarNomeCliente(canalId);
-    if (nomeCliente) {
-      await salvarConversa(conversa.id, { nome_cliente: nomeCliente } as Partial<Conversa>);
-    }
+    if (nomeCliente) await salvarConversa(conversa.id, { nome_cliente: nomeCliente } as Partial<Conversa>);
   }
 
-  // 3. Adicionar mensagem do cliente ao histórico
   const novaMsg: Mensagem = { role: 'user', content: mensagemCliente, ts: new Date().toISOString() };
   const historico = [...(conversa.historico ?? []), novaMsg].slice(-20);
 
-<<<<<<< HEAD
-  // 4. Gerar resposta (sequencial para não sobrecarregar Groq rate limit)
-  const respostaIA = await chamarIA(
-    buildSystemPrompt(conversa.fase, conversa.pedido_info, nomeCliente),
-    historico.map(m => ({ role: m.role, content: m.content })),
-    350,
-  );
-  const analiseRaw = await chamarIA(
-    buildFasePrompt(historico, mensagemCliente, conversa.fase),
-    [{ role: 'user', content: mensagemCliente }],
-    200,
-  );
-=======
-  // 4. Gerar resposta e analisar fase em paralelo
   const [respostaIA, analiseRaw] = await Promise.all([
     chamarIA(
       buildSystemPrompt(conversa.fase, conversa.pedido_info, nomeCliente),
       historico.map(m => ({ role: m.role, content: m.content })),
-      120,
+      350,
     ),
     chamarIA(
       buildFasePrompt(historico, mensagemCliente, conversa.fase),
@@ -443,9 +380,7 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
       200,
     ),
   ]);
->>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
 
-  // 5. Processar análise de fase
   let novaFase = conversa.fase;
   let pedidoInfo = conversa.pedido_info ?? null;
   let prontoParaPagamento = false;
@@ -456,13 +391,10 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
       novaFase = analise.nova_fase ?? conversa.fase;
       if (analise.pedido_info?.produto) pedidoInfo = analise.pedido_info;
       prontoParaPagamento = analise.pronto_para_pagamento ?? false;
-
-      // Captura nome do cliente detectado na conversa
       const nomeDetectado = (analise.nome_cliente as string | null)?.trim() || null;
       if (nomeDetectado && !nomeCliente) {
         nomeCliente = nomeDetectado;
         const db = getDb();
-        // Salva em conversas e em leads (por canal_id)
         await Promise.allSettled([
           salvarConversa(conversa.id, { nome_cliente: nomeDetectado }),
           db.from('leads').update({ nome: nomeDetectado }).eq('canal_id', canalId).is('nome', null),
@@ -471,42 +403,56 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
     } catch { /* mantém fase atual */ }
   }
 
-  // 5. Determinar resposta final
   let respostaFinal = respostaIA ?? MSG_FALLBACK;
 
-  // 6. Se pronto para pagamento: tentar gerar link PIX
   if (prontoParaPagamento && pedidoInfo) {
     const linkPagamento = await gerarLinkPagamento(pedidoInfo);
     if (linkPagamento) {
-      respostaFinal = `Perfeito! Seu arranjo: ${pedidoInfo['produto']}. Para finalizar, acesse o link de pagamento PIX: ${linkPagamento} ✅`;
+      respostaFinal = `Perfeito! Seu arranjo: ${pedidoInfo['produto']}. Link de pagamento PIX: ${linkPagamento} ✅`;
       novaFase = 'aguardando_pagamento';
     } else {
-      // PIX não disponível: manter resposta da IA; se ausente, usar fallback neutro sem WhatsApp
-      if (!respostaIA) {
-        respostaFinal = 'Perfeito. Posso fechar por aqui mesmo. Você prefere buquê, arranjo ou cesta?';
-      }
+      respostaFinal = `Ótimo! Me chama no WhatsApp para confirmar os detalhes e gerar o PIX: wa.me/${WHATSAPP_NUM}`;
       novaFase = 'proposta';
     }
   }
 
-  // 7. Adicionar resposta ao histórico
   const msgAssistente: Mensagem = { role: 'assistant', content: respostaFinal, ts: new Date().toISOString() };
   const historicoFinal = [...historico, msgAssistente].slice(-20);
 
-  // 8. Salvar conversa atualizada
   await salvarConversa(conversa.id, {
     historico: historicoFinal,
     fase: novaFase,
     pedido_info: pedidoInfo ?? undefined,
   } as Partial<Conversa>);
 
-  // 9. Enviar resposta no Instagram DM
-  console.log(JSON.stringify({ evento: 'dm', canal, fase_anterior: conversa.fase, fase_nova: novaFase, chars: respostaFinal.length, preview: respostaFinal.slice(0, 60) }));
+  console.log(`[webhook-meta] ${canalId} | fase: ${conversa.fase}→${novaFase} | resposta: ${respostaFinal.slice(0, 60)}`);
 
+  // ── Envio de resposta via Graph API ─────────────────────────────────
+  // Instagram Business Login (Caminho B): POST /{ig-user-id}/messages via host graph.instagram.com
+  //   (obrigatório para Instagram User Access Token — ver docs/KNOWN_ISSUES.md)
+  // Facebook/Messenger (Caminho A):       POST /me/messages via host graph.facebook.com
   try {
     const pageToken = PAGE_TOKEN || await buscarConfigDB('META_PAGE_ACCESS_TOKEN');
-    const dmToken = pageToken || igToken;
-    const res = await fetch(`https://graph.facebook.com/v21.0/me/messages?access_token=${dmToken}`, {
+    const igId = Deno.env.get('META_INSTAGRAM_ID') || await buscarConfigDB('META_INSTAGRAM_ID');
+
+    const isInstagram = canal === 'instagram' && !!igId && !!igToken;
+    const endpoint = isInstagram
+      ? `https://graph.instagram.com/v21.0/${igId}/messages`
+      : `https://graph.facebook.com/v21.0/me/messages`;
+    const dmToken = isInstagram ? igToken : (pageToken || igToken);
+
+    // ── DIAGNÓSTICO TEMPORÁRIO — remover após validar token (não loga o valor do token) ──
+    const trimmedIgToken = igToken.trim();
+    console.log(
+      `[diag-token] igTokenPresente=${!!igToken} length=${igToken.length} trimLength=${trimmedIgToken.length} ` +
+      `leadingWhitespace=${igToken !== igToken.trimStart()} trailingWhitespace=${igToken !== igToken.trimEnd()} ` +
+      `hasQuote=${/['"]/.test(igToken)} hasNewline=${/[\r\n]/.test(igToken)} ` +
+      `looksLikeJson=${trimmedIgToken.startsWith('{') || trimmedIgToken.startsWith('[')} ` +
+      `igIdPresente=${!!igId} igIdUsado=${isInstagram} endpointUsado=${isInstagram ? 'ig' : 'fb'}`
+    );
+    // ── FIM DIAGNÓSTICO TEMPORÁRIO ────────────────────────────────────────────────────────
+
+    const res = await fetch(`${endpoint}?access_token=${dmToken}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -515,87 +461,31 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
         messaging_type: 'RESPONSE',
       }),
     });
-<<<<<<< HEAD
-    if (!res.ok) console.error(`[webhook-meta] erro DM: ${await res.text()}`);
-    else console.log(`[webhook-meta] DM enviado para ${canalId}`);
+    if (!res.ok) {
+      const erroBody = await res.text();
+      console.error(`[webhook-meta] erro DM status=${res.status} endpoint=${isInstagram ? 'ig' : 'fb'} url=${endpoint} recipient=${canalId} corpo=${erroBody}`);
+    } else {
+      console.log(`[webhook-meta] DM enviado canal=${canal} endpoint=${isInstagram ? 'ig' : 'fb'} para=${canalId}`);
+    }
   } catch (e) { console.error(`[webhook-meta] falha DM: ${e}`); }
-=======
-    const envioStatus = res.ok ? 'ok' : 'erro';
-    const envioDetalhe = res.ok ? '' : sanitizarErroMeta(await res.text());
-    console.log(JSON.stringify({ evento: 'dm_envio', canal, status: envioStatus, detalhe: envioDetalhe }));
-  } catch (e) { console.log(JSON.stringify({ evento: 'dm_envio', canal, status: 'excecao', detalhe: String(e).slice(0, 200) })); }
 }
 
-// ── Responder comentário em post (Instagram ou Facebook) ────────────────────
+// ── Processar comentário ───────────────────────────────────────────────────
 
 async function processarComentario(evento: MetaEvento): Promise<void> {
   if (!evento.comment_id) return;
   const token = IG_TOKEN || await buscarConfigDB('META_IG_ACCESS_TOKEN');
   if (!token) return;
 
-  const SYSTEM_COMENTARIO = `Você é a Flor, atendente da Enemeop Flores (floricultura em São Paulo desde 1997).
-Alguém comentou numa publicação da loja. Responda de forma calorosa, humana e curta (máximo 2 linhas).
-Nunca cite preços em comentários públicos. Se for elogio: agradeça e convide para o DM.
-Se for dúvida sobre produto ou preço: responda brevemente e direcione ao DM para detalhes.
-Se for pedido de encomenda: agradeça e peça para chamar no direct.
-Português brasileiro natural. No máximo 1 emoji se fizer sentido.
-RETORNE APENAS o texto da resposta, sem aspas, sem prefixo.`;
+  const SYSTEM_COMENTARIO = `Você é a Flor, atendente da Enemeop Flores. Alguém comentou numa publicação. Responda de forma calorosa e curta (máx. 2 linhas). Nunca cite preços em comentários públicos. Se for elogio: agradeça e convide para o DM. Se for dúvida: responda brevemente e direcione ao DM. Português brasileiro natural. Máx. 1 emoji. RETORNE APENAS o texto.`;
 
-  const resposta = await chamarIA(
-    SYSTEM_COMENTARIO,
-    [{ role: 'user', content: evento.mensagem }],
-    100,
-  );
-
+  const resposta = await chamarIA(SYSTEM_COMENTARIO, [{ role: 'user', content: evento.mensagem }], 100);
   if (!resposta) return;
 
   try {
     const endpoint = evento.canal === 'instagram'
       ? `https://graph.facebook.com/v19.0/${evento.comment_id}/replies`
       : `https://graph.facebook.com/v19.0/${evento.comment_id}/comments`;
-
-    const res = await fetch(`${endpoint}?access_token=${token}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: resposta }),
-    });
-    const envioStatus = res.ok ? 'ok' : 'erro';
-    const envioDetalhe = res.ok ? '' : sanitizarErroMeta(await res.text());
-    console.log(JSON.stringify({ evento: 'comentario_envio', canal: evento.canal, comment_id: evento.comment_id, status: envioStatus, detalhe: envioDetalhe }));
-  } catch (e) {
-    console.error(`[webhook-meta] falha comentario reply: ${e}`);
-  }
->>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
-}
-
-// ── Responder comentário em post (Instagram ou Facebook) ────────────────────
-
-async function processarComentario(evento: MetaEvento): Promise<void> {
-  if (!evento.comment_id) return;
-  const token = IG_TOKEN || await buscarConfigDB('META_IG_ACCESS_TOKEN');
-  if (!token) return;
-
-  const SYSTEM_COMENTARIO = `Você é a Flor, atendente da Enemeop Flores (floricultura em São Paulo desde 1997).
-Alguém comentou numa publicação da loja. Responda de forma calorosa, humana e curta (máximo 2 linhas).
-Nunca cite preços em comentários públicos. Se for elogio: agradeça e convide para o DM.
-Se for dúvida sobre produto ou preço: responda brevemente e direcione ao DM para detalhes.
-Se for pedido de encomenda: agradeça e peça para chamar no direct.
-Português brasileiro natural. No máximo 1 emoji se fizer sentido.
-RETORNE APENAS o texto da resposta, sem aspas, sem prefixo.`;
-
-  const resposta = await chamarIA(
-    SYSTEM_COMENTARIO,
-    [{ role: 'user', content: evento.mensagem }],
-    100,
-  );
-
-  if (!resposta) return;
-
-  try {
-    const endpoint = evento.canal === 'instagram'
-      ? `https://graph.facebook.com/v19.0/${evento.comment_id}/replies`
-      : `https://graph.facebook.com/v19.0/${evento.comment_id}/comments`;
-
     const res = await fetch(`${endpoint}?access_token=${token}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -603,31 +493,36 @@ RETORNE APENAS o texto da resposta, sem aspas, sem prefixo.`;
     });
     if (!res.ok) console.error(`[webhook-meta] erro comentario reply: ${await res.text()}`);
     else console.log(`[webhook-meta] comentario respondido: ${resposta.slice(0, 60)}`);
-  } catch (e) {
-    console.error(`[webhook-meta] falha comentario reply: ${e}`);
-  }
+  } catch (e) { console.error(`[webhook-meta] falha comentario reply: ${e}`); }
 }
 
-// ── Validação de assinatura ──────────────────────────────────────────────────
+// ── Validação de assinatura HMAC ───────────────────────────────────────────
 
-async function validarAssinatura(body: string, signature: string | null): Promise<boolean> {
-  if (!APP_SECRET || !signature) return true;
+async function hmacOk(body: string, secret: string, expected: string): Promise<boolean> {
+  if (!secret) return false;
   try {
-    const expected = signature.replace('sha256=', '');
-    const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(APP_SECRET), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+    const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
     const signed = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(body));
     const hex = Array.from(new Uint8Array(signed)).map(b => b.toString(16).padStart(2, '0')).join('');
     return hex === expected;
   } catch { return false; }
 }
 
-// ── Extração de eventos ──────────────────────────────────────────────────────
+async function validarAssinatura(body: string, signature: string | null): Promise<boolean> {
+  if (!signature) return true;
+  const expected = signature.replace('sha256=', '');
+  if (IG_APP_SECRET && await hmacOk(body, IG_APP_SECRET, expected)) return true;
+  if (APP_SECRET    && await hmacOk(body, APP_SECRET,    expected)) return true;
+  return false;
+}
+
+// ── Extração de eventos ───────────────────────────────────────────────────
 
 interface MetaEvento { canal: 'instagram' | 'facebook'; tipo: 'dm' | 'comentario'; canal_id: string; comment_id?: string; nome: string | null; mensagem: string; post_id?: string; timestamp: string; }
 
 function extrairEventos(body: Record<string, unknown>): MetaEvento[] {
   const eventos: MetaEvento[] = [];
-  const objectType = body['object'] as string | undefined; // 'instagram' | 'page'
+  const objectType = body['object'] as string | undefined;
   const entries = body['entry'] as Array<Record<string, unknown>> | undefined;
   if (!Array.isArray(entries)) return eventos;
 
@@ -659,11 +554,7 @@ function extrairEventos(body: Record<string, unknown>): MetaEvento[] {
         if (!msg) continue;
         const from = val['from'] as Record<string, unknown> | undefined;
         const canal: 'instagram' | 'facebook' = objectType === 'instagram' || field === 'instagram_comments' ? 'instagram' : 'facebook';
-<<<<<<< HEAD
         const commentId = ((val['id'] ?? val['comment_id']) as string) ?? undefined;
-=======
-        const commentId = (val['id'] as string) ?? undefined;
->>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
         eventos.push({ canal, tipo: 'comentario', canal_id: String(from?.['id'] ?? ''), comment_id: commentId, nome: (from?.['name'] as string) ?? null, mensagem: msg, post_id: (val['post_id'] as string) ?? undefined, timestamp: new Date().toISOString() });
       }
     }
@@ -671,7 +562,7 @@ function extrairEventos(body: Record<string, unknown>): MetaEvento[] {
   return eventos;
 }
 
-// ── Envia ao orquestrador (captura lead em paralelo) ─────────────────────────
+// ── Envia ao orquestrador ─────────────────────────────────────────────────
 
 async function enviarAoOrquestrador(evento: MetaEvento): Promise<void> {
   if (!SERVICE_KEY || !SUPABASE_URL) return;
@@ -689,7 +580,7 @@ async function enviarAoOrquestrador(evento: MetaEvento): Promise<void> {
   }).catch(() => {});
 }
 
-// ── Handler principal ────────────────────────────────────────────────────────
+// ── Handler principal ─────────────────────────────────────────────────────
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'content-type' } });
@@ -715,13 +606,11 @@ Deno.serve(async (req: Request) => {
   await Promise.allSettled(
     eventos.map(async (ev) => {
       if (ev.tipo === 'dm') {
-        // Instagram e Facebook DMs recebem resposta da IA
         await Promise.allSettled([
           processarDM(ev.canal_id, ev.canal, ev.mensagem),
           enviarAoOrquestrador(ev),
         ]);
       } else if (ev.tipo === 'comentario') {
-        // Comentários recebem resposta pública + captura de lead
         await Promise.allSettled([
           processarComentario(ev),
           enviarAoOrquestrador(ev),
