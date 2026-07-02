@@ -350,14 +350,23 @@ async function gerarLinkPagamento(pedidoInfo: Record<string, unknown>): Promise<
 
 // ── Processar DM ──────────────────────────────────────────────────────────
 
-const MSG_FALLBACK = `Oi! Para qual ocasião é?`;
+const MSG_FALLBACK_POR_FASE: Record<string, string> = {
+  descoberta: 'Oi! Para qual ocasião é?',
+  interesse: 'Me conta um pouco mais sobre quem vai receber, pra eu sugerir as melhores opções?',
+  proposta: 'Ainda estou por aqui! Alguma das opções que te passei fez sentido pra você?',
+  aguardando_pagamento: 'Só um instante, já confirmo os detalhes do seu pagamento.',
+};
+const MSG_FALLBACK_GENERICO = 'Desculpa a demora! Pode repetir sua última mensagem que eu continuo com você.';
 
 async function processarDM(canalId: string, canal: string, mensagemCliente: string): Promise<void> {
   const igToken = IG_TOKEN || await buscarConfigDB('META_IG_ACCESS_TOKEN');
   if (!igToken) return;
 
   const conversa = await buscarOuCriarConversa(canalId, canal);
-  if (conversa.fase === 'concluido') return;
+  if (conversa.fase === 'concluido') {
+    console.log(`[webhook-meta] conversa_reaberta_de_concluido canal_id=${canalId} canal=${canal}`);
+    conversa.fase = 'descoberta';
+  }
 
   let nomeCliente = conversa.nome_cliente ?? null;
   if (!nomeCliente && conversa.historico.length === 0) {
@@ -403,7 +412,12 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
     } catch { /* mantém fase atual */ }
   }
 
-  let respostaFinal = respostaIA ?? MSG_FALLBACK;
+  let respostaFinal = respostaIA;
+  if (!respostaFinal) {
+    const candidato = MSG_FALLBACK_POR_FASE[novaFase] ?? MSG_FALLBACK_POR_FASE[conversa.fase] ?? MSG_FALLBACK_GENERICO;
+    const ultimaAssistente = [...historico].reverse().find(m => m.role === 'assistant');
+    respostaFinal = ultimaAssistente?.content === candidato ? MSG_FALLBACK_GENERICO : candidato;
+  }
 
   if (prontoParaPagamento && pedidoInfo) {
     const linkPagamento = await gerarLinkPagamento(pedidoInfo);
