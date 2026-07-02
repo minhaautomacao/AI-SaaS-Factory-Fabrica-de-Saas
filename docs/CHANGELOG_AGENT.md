@@ -6,6 +6,28 @@
 
 ---
 
+## 2026-07-01 (noite) — MISSÃO M002: token novo gerado (fluxo correto), erro 190 persiste
+
+**Objetivo:** Testar se token gerado pelo fluxo correto (Instagram Business Login) resolve o erro `code=190 Cannot parse access token`.
+
+**Ações executadas:**
+- Navegação via Playwright até Meta Dashboard → app `enemeopflores` → Casos de uso → API do Instagram → Configuração da API com login do Instagram → conta `enemeopflores` (Instagram ID `17841402064363907`) → gerado novo token.
+- Token colado e salvo em `META_IG_ACCESS_TOKEN` (Supabase Edge Function Secrets, projeto `gftnjvdvzgjkhwxnxnwl`), confirmado por toast de sucesso e mudança de digest SHA256 (01/07/2026 22:46:20 UTC). Nenhum redeploy necessário (confirmado via doc oficial Supabase).
+- Teste de DM real "teste" para @enemeopflores → **mesmo erro 190** (`corpo={"error":{"message":"Invalid OAuth access token - Cannot parse access token",...}}`). Log `[diag-token]` confirma token limpo (length=183, sem espaço/aspas/quebra de linha/JSON) — descarta hipótese de malformação.
+- Identificado (via doc oficial da Meta, fetch direto) que o host correto para esse tipo de token é `graph.instagram.com`, não `graph.facebook.com` (usado atualmente). Diff preparado mas **não aplicado nem deployado** — aguardando validação de outra frente antes.
+- Carlos levantou hipótese de testador do Instagram não confirmado. Verificado no Meta Dashboard (Funções do app): "Testadores: 0 de 500", `enemeopflores`/`instacarlosron` com status "Carregando..." (convite pendente). Verificado também em `instagram.com/accounts/manage_access/`: app `enemeopflores-IG` já aparece em "Ativos", autorizado em 01/07/2026 — contradição a resolver checando a aba "Convites do testador" (sessão caiu antes de concluir).
+- Achado paralelo: `supabase/functions/webhook-meta/index.ts` local está com conflito de merge não resolvido (marcadores literais) e diverge da versão v22 realmente implantada (obtida via `get_edge_function`). Nenhum deploy foi feito a partir do arquivo local.
+
+**Estado da missão ao encerrar:**
+```
+Pipeline até geração de resposta          ✅ (todos os passos)
+Envio da resposta ao Instagram Direct     ❌ erro 190 persiste com token novo
+```
+
+**Próximo passo:** ver `docs/CURRENT_STATE.md` — checar aba "Convites do testador", só então decidir entre aceitar convite ou retomar diff de host.
+
+---
+
 ## 2026-07-01 — MISSÃO M002: META_INSTAGRAM_ID atualizado no Supabase
 
 **Objetivo:** Corrigir bloqueador final da integração Instagram Direct (Flora não respondia DMs)

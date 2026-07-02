@@ -37,7 +37,7 @@ f1eedfa — /health leve {"ok":true} (não deployado)
 
 ---
 
-## MISSÃO M002 — Estado atual (01/07/2026 01:27)
+## MISSÃO M002 — Estado atual (01/07/2026 22:50 UTC)
 
 ```
 Meta entrega webhook         ✅
@@ -46,16 +46,19 @@ HMAC valida (dual secret)    ✅  (META_IG_APP_SECRET + META_APP_SECRET)
 Flora executa                ✅
 Captação executa             ✅
 Orquestrador executa         ✅
-META_INSTAGRAM_ID no secret  ✅  (atualizado 01 Jul 2026 01:26:56 UTC)
-webhook-meta v19 ativa       ✅
-Resposta aparece no Direct   ❌  (aguarda teste após update do secret)
+META_INSTAGRAM_ID no secret  ✅
+Token novo (fluxo correto)   ✅  gerado e salvo 01/07 22:46 UTC
+webhook-meta v22 ativa       ✅
+Resposta aparece no Direct   ❌  mesmo erro 190 com token novo — hipótese malformação descartada
 ```
 
+Detalhe completo da investigação e das duas frentes abertas (testador do Instagram pendente vs. host errado no código): ver `docs/CURRENT_STATE.md`, seção "Duas frentes abertas para o erro 190".
+
 ### Próximo passo ao retomar amanhã
-1. Confirmar webhook-meta v19 ainda ativa (sem redeploy necessário — secret já atualizado)
-2. Pedir Carlos enviar "teste" para @enemeopflores
-3. Verificar logs: endpoint=ig ou endpoint=fb; status Graph API; resposta no Direct
-4. Se falhar: preparar v20 com log de erro Graph API (sem expor token)
+1. Checar aba "Convites do testador" em `instagram.com/accounts/manage_access/` (sessão caiu antes de verificar)
+2. Se pendente, Carlos aceita; confirmar no Meta Dashboard que testador não é mais "0 de 500"
+3. Repetir teste "teste" para @enemeopflores e checar logs
+4. Se persistir erro 190: retomar diff de host `graph.facebook.com`→`graph.instagram.com` (já preparado, aguardando aprovação para aplicar/deploy)
 
 ---
 

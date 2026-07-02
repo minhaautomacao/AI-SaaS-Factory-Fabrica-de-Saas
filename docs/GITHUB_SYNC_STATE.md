@@ -16,8 +16,8 @@
 | Remote origin | `https://github.com/minhaautomacao/AI-SaaS-Factory-Fabrica-de-Saas.git` |
 | Último commit | `65f2778` — fix: sync silencioso, sem warnings git, estado-atual atualizado |
 | Data do último commit | 2026-06-17 |
-| Status de arquivos | Limpo (sem alterações pendentes neste snapshot) |
-| Sincronizado com GitHub | Sim |
+| Status de arquivos | 3 modificados, não commitados: `docs/CURRENT_STATE.md`, `docs/SESSION_STATE.md`, `docs/CHANGELOG_AGENT.md` (checkpoint MISSÃO M002, 01/07/2026 22:50 UTC) |
+| Sincronizado com GitHub | Não (aguarda autorização para commit) |
 
 ### 2. enemeop-flores
 
