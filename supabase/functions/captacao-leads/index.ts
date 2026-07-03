@@ -92,20 +92,14 @@ Deno.serve(async (req: Request) => {
 
   try {
     const contexto = JSON.stringify(payload, null, 2);
-<<<<<<< HEAD
-    let resultado: { intencao?: string; status?: string; notas?: string; acoes?: string[] } = {};
+    let r: any = {};
     try {
       const resposta = await callClaude(SYSTEM_PROMPT, `Dados do lead:\n${contexto}`);
       const jsonStr = resposta.replace(/```json\n?|\n?```/g, '').trim();
-      resultado = JSON.parse(jsonStr);
+      r = JSON.parse(jsonStr);
     } catch (e) {
       console.warn(`[captacao-leads] IA indisponivel, classificando como desconhecida: ${e}`);
     }
-=======
-    const resposta = await callClaude(SYSTEM_PROMPT, `Dados do lead:\n${contexto}`);
-    const jsonStr = resposta.replace(/```json\n?|\n?```/g, '').trim();
-    const r = JSON.parse(jsonStr);
->>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
 
     const intencoesValidas = ['urgente', 'alta', 'media', 'baixa', 'desconhecida'];
     const intencao = intencoesValidas.includes(r.intencao) ? r.intencao : 'desconhecida';
@@ -159,13 +153,9 @@ Deno.serve(async (req: Request) => {
       leadId = novoLead?.id;
     }
 
-<<<<<<< HEAD
     // Dispara lead-qualificado → orquestrador → whatsapp-sdr (apenas para canais com telefone)
     const canalDoLead = (payload?.canal as string) ?? 'outro';
     if (leadId && canalDoLead !== 'instagram' && canalDoLead !== 'facebook') {
-=======
-    if (leadId) {
->>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
       await dispararLeadQualificado({
         task_id, escopo,
         workspace_id: workspace_id ?? '',
