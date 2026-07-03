@@ -18,7 +18,7 @@
 - `docs/DECISIONS.md` — nova entrada com causa raiz definitiva e evidência de confirmação em produção
 - Memória persistente (`meta-instagram-bloqueios.md`, `MEMORY.md`) atualizada para refletir resolução
 
-**Achado paralelo:** repositório local `enemeop-flores` não contém `supabase/functions/` — as Edge Functions em produção não têm histórico git local (deploy direto ao Supabase). Não é bloqueador, mas é risco de rastreabilidade a considerar.
+**Correção de achado:** a suspeita inicial de que as Edge Functions não tinham versionamento local estava errada — checou-se o repositório errado (`enemeop-flores`, só frontend). Elas estão versionadas neste mesmo repositório em `supabase/functions/`; `webhook-meta/index.ts` local já bate com a v25 implantada (`graph.instagram.com` confirmado).
 
 **Pendências criadas:** nenhuma nova. Decisão sobre próxima missão (Messenger vs WhatsApp Cloud API vs pendências do sprint) aguarda confirmação de Carlos.
 

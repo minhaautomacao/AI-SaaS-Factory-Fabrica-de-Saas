@@ -51,12 +51,11 @@ Ver `docs/GPT_ADVISOR_RULES.md`. Não reabrir esta frente sem pedido explícito.
 
 ---
 
-## Achado desta sessão — pasta local sem as Edge Functions
+## Correção de achado da sessão anterior
 
-O repositório local `enemeop-flores` **não contém** `supabase/functions/` (só `supabase/migrations/`). O achado anterior de "conflito de merge não resolvido" em `webhook-meta/index.ts` não se aplica mais — o arquivo simplesmente não existe localmente e nunca foi commitado neste repo (`git log` não retorna histórico para esse caminho). As Edge Functions parecem ser geridas só via deploy direto ao Supabase (MCP/dashboard), fora do controle de versão local — não é bloqueador, mas é risco de rastreabilidade a considerar no futuro.
+As Edge Functions **estão** versionadas localmente — só que neste repositório (Fábrica de SaaS, `supabase/functions/`), não em `enemeop-flores` (que é só o frontend Next.js). Verificado: `supabase/functions/webhook-meta/index.ts` local já contém `graph.instagram.com` (linhas 454–455), batendo com a v25 implantada. O achado anterior sobre "pasta local sem Edge Functions" resultou de checar o repositório errado — descartado.
 
 ## Pendências conhecidas (não bloqueiam nada crítico agora)
 
 - Deploy de 3 commits do orquestrador pendente no Render
 - Vercel MCP conectado na conta errada ("Essencial Auto Peças") — não usar até trocar
-- Edge Functions em produção sem versionamento local (ver achado acima)
