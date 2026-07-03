@@ -6,6 +6,24 @@
 
 ---
 
+## 2026-07-03 — MISSÃO M002 CONCLUÍDA: Flora responde DM real no Instagram
+
+**Ação:** Retomada da sessão anterior. Verificado que a "Frente A" (testador do Instagram) não tinha ação pendente (aba "Convites do testador" sem botão aceitar). Ao inspecionar a versão realmente implantada de `webhook-meta` (v25, via `get_edge_function`), constatado que a "Frente B" (host `graph.instagram.com` em vez de `graph.facebook.com`) já havia sido aplicada e deployada em algum momento entre a última atualização do checkpoint e agora — só não estava registrada em `CURRENT_STATE.md`. Confirmado via logs do dashboard Supabase (Playwright): busca por `DM enviado` retornou 20+ sucessos com `endpoint=ig` para destinatários reais distintos entre 02/07 09:35 e 03/07 08:20 (horário local); busca por `erro DM` no mesmo período: zero resultados.
+
+**Nenhum código alterado nesta sessão** — a correção já estava em produção; o trabalho foi de verificação, diagnóstico e atualização de documentação.
+
+**Arquivos alterados:**
+- `docs/CURRENT_STATE.md` — MISSÃO M002 marcada como concluída, próxima missão candidata listada (Messenger, WhatsApp Cloud API, pendências de sprint)
+- `docs/KNOWN_ISSUES.md` — problemas do erro 190 removidos (resolvidos)
+- `docs/DECISIONS.md` — nova entrada com causa raiz definitiva e evidência de confirmação em produção
+- Memória persistente (`meta-instagram-bloqueios.md`, `MEMORY.md`) atualizada para refletir resolução
+
+**Achado paralelo:** repositório local `enemeop-flores` não contém `supabase/functions/` — as Edge Functions em produção não têm histórico git local (deploy direto ao Supabase). Não é bloqueador, mas é risco de rastreabilidade a considerar.
+
+**Pendências criadas:** nenhuma nova. Decisão sobre próxima missão (Messenger vs WhatsApp Cloud API vs pendências do sprint) aguarda confirmação de Carlos.
+
+---
+
 ## 2026-07-01 (noite) — MISSÃO M002: token novo gerado (fluxo correto), erro 190 persiste
 
 **Objetivo:** Testar se token gerado pelo fluxo correto (Instagram Business Login) resolve o erro `code=190 Cannot parse access token`.

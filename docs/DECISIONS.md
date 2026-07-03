@@ -2,6 +2,16 @@
 
 > Registrar apenas decisões já tomadas e confirmadas. Não remover entradas antigas — histórico é permanente.
 
+## 2026-07-02 — MISSÃO M002 CONCLUÍDA: Flora responde DM real no Instagram
+
+Causa raiz definitiva do erro 190 (`Cannot parse access token`): o código de `processarDM` em `supabase/functions/webhook-meta/index.ts` chamava `https://graph.facebook.com/v21.0/${igId}/messages` para enviar mensagens via Instagram User Access Token. A documentação oficial da Meta exige host `graph.instagram.com` para esse tipo de token (Instagram API with Instagram Login). O token em si (gerado em 2026-07-01 via Instagram Business Login) sempre esteve correto — a Frente B (troca de host, antes tratada como hipótese pausada) era a causa real, não o token.
+
+**Correção aplicada:** endpoint trocado para `https://graph.instagram.com/v21.0/${igId}/messages` (apenas no ramo `isInstagram`; Facebook/Messenger continua em `graph.facebook.com/v21.0/me/messages`). Deployado em produção (`webhook-meta`, function_id `754100ca-33b6-4fed-a082-29903a86319a`).
+
+**Confirmação em produção (2026-07-03):** logs da função mostram múltiplos `[webhook-meta] DM enviado canal=instagram endpoint=ig para=<id>` bem-sucedidos, para destinatários reais distintos, entre 2026-07-02 09:35 e 2026-07-03 08:20 (horário local). Zero ocorrências de `erro DM` no mesmo período. Flora está respondendo DMs reais do Instagram automaticamente em produção.
+
+**Pendência secundária (não bloqueia a missão):** repositório local (`enemeop-flores/supabase/functions/webhook-meta/index.ts`) pode estar dessincronizado da versão implantada — confirmar e sincronizar antes do próximo deploy dessa função.
+
 ## 2026-07-01 — Fluxo correto para gerar META_IG_ACCESS_TOKEN
 
 Não usar mais Graph API Explorer para gerar `META_IG_ACCESS_TOKEN`. Usar somente o fluxo **Instagram Business Login** (Meta Dashboard → app `enemeopflores` → API do Instagram → Configuração da API com login do Instagram → conta @enemeopflores).
