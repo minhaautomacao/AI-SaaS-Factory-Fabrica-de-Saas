@@ -1,10 +1,6 @@
 ---
 name: estado-atual
-<<<<<<< HEAD
-description: Estado completo do projeto em 2026-06-17 — pipeline Meta em produção, WhatsApp SDR pendente, renovação token Instagram em agosto
-=======
 description: Estado do projeto em 2026-06-25 — webhook-meta v23 deployado com fix concluido; webhook-whatsapp v28 no ar
->>>>>>> 290c2c7d0753505a14d092d64159c5e0456fed40
 metadata:
   type: project
 ---
