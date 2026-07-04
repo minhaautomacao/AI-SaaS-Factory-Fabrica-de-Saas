@@ -58,6 +58,7 @@
 | Supabase enemeop Anon Key | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `enemeop-flores/.env.local` | ✅ Presente | 2026-05-01 | Dashboard enemeop |
 | NextAuth Secret | `NEXTAUTH_SECRET` | `enemeop-flores/.env.local` | ✅ Presente | 2026-05-01 | Autenticação do dashboard |
 | Admin email | — | `.credentials/infraestrutura/.env` | ✅ Presente | 2026-05-01 | `contato@enemeopflores.com.br` |
+| WordPress Admin (painelflor) | `WORDPRESS_ADMIN_USER` / `WORDPRESS_ADMIN_PASSWORD` | `.credentials/infraestrutura/.env` | ✅ Presente | 2026-07-04 | Login painel `/painelflor` (wp-admin) |
 
 ---
 

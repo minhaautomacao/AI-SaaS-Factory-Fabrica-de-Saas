@@ -6,6 +6,16 @@
 
 ---
 
+## 2026-07-04 — Credencial WordPress Admin (painelflor) salva
+
+**Ação:** Usuário forneceu usuário/senha do painel WordPress (`/painelflor`) e pediu para salvar para acessos futuros. Credencial gravada em `.credentials/infraestrutura/.env` (fora do Git). Login automático **não** foi realizado — política de segurança do agente proíbe digitar senhas em campos de autenticação mesmo sob autorização explícita; usuário foi informado e deve logar manualmente.
+
+**Arquivos alterados:**
+- `.credentials/infraestrutura/.env` — adicionado `WORDPRESS_ADMIN_URL`, `WORDPRESS_ADMIN_USER`, `WORDPRESS_ADMIN_PASSWORD`
+- `docs/CREDENTIALS_INDEX.md` — nova linha na tabela "Enemeop Flores" (sem valor real)
+
+---
+
 ## 2026-07-03 — MISSÃO M002 CONCLUÍDA: Flora responde DM real no Instagram
 
 **Ação:** Retomada da sessão anterior. Verificado que a "Frente A" (testador do Instagram) não tinha ação pendente (aba "Convites do testador" sem botão aceitar). Ao inspecionar a versão realmente implantada de `webhook-meta` (v25, via `get_edge_function`), constatado que a "Frente B" (host `graph.instagram.com` em vez de `graph.facebook.com`) já havia sido aplicada e deployada em algum momento entre a última atualização do checkpoint e agora — só não estava registrada em `CURRENT_STATE.md`. Confirmado via logs do dashboard Supabase (Playwright): busca por `DM enviado` retornou 20+ sucessos com `endpoint=ig` para destinatários reais distintos entre 02/07 09:35 e 03/07 08:20 (horário local); busca por `erro DM` no mesmo período: zero resultados.
