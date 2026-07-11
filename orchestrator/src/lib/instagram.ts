@@ -13,36 +13,87 @@ const PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN ?? ''
 const PAGE_ID         = process.env.INSTAGRAM_PAGE_ID ?? '17841402064363907'
 const FB_PAGE_ID      = process.env.META_PAGE_ID ?? '350648311678163'
 
-export async function responderInstagram(recipientId: string, texto: string): Promise<boolean> {
-  if (!ACCESS_TOKEN) {
-    console.warn('[Instagram] INSTAGRAM_ACCESS_TOKEN não configurado — resposta não enviada')
+type MetaChannel = 'instagram' | 'facebook'
+
+async function enviarMensagemMeta(opts: {
+  channel: MetaChannel
+  recipientId: string
+  message: Record<string, unknown>
+}): Promise<boolean> {
+  const token = opts.channel === 'instagram' ? ACCESS_TOKEN : PAGE_ACCESS_TOKEN
+  const pageId = opts.channel === 'instagram' ? PAGE_ID : FB_PAGE_ID
+  const label = opts.channel === 'instagram' ? 'Instagram' : 'Facebook/Messenger'
+
+  if (!token) {
+    console.warn(`[${label}] Token não configurado — resposta não enviada`)
     return false
   }
 
   try {
     const res = await fetch(
-      `https://graph.facebook.com/v19.0/${PAGE_ID}/messages?access_token=${ACCESS_TOKEN}`,
+      `https://graph.facebook.com/v19.0/${pageId}/messages?access_token=${token}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          recipient: { id: recipientId },
-          message: { text: texto },
+          recipient: { id: opts.recipientId },
+          message: opts.message,
           messaging_type: 'RESPONSE',
         }),
       }
     )
     const data = await res.json() as { message_id?: string; error?: { message: string } }
     if (data.error) {
-      console.error('[Instagram] Erro Graph API:', data.error.message)
+      console.error(`[${label}] Erro Graph API:`, data.error.message)
       return false
     }
-    console.log(`[Instagram] ✓ Respondido ${recipientId} — id: ${data.message_id}`)
+    console.log(`[${label}] ✓ Respondido ${opts.recipientId} — id: ${data.message_id}`)
     return true
   } catch (e) {
-    console.error('[Instagram] Falha ao enviar:', e)
+    console.error(`[${label}] Falha ao enviar:`, e)
     return false
   }
+}
+export async function responderInstagram(recipientId: string, texto: string): Promise<boolean> {
+  return enviarMensagemMeta({
+    channel: 'instagram',
+    recipientId,
+    message: { text: texto },
+  })
+}
+
+export async function responderInstagramComImagem(recipientId: string, imageUrl: string): Promise<boolean> {
+  return enviarMensagemMeta({
+    channel: 'instagram',
+    recipientId,
+    message: {
+      attachment: {
+        type: 'image',
+        payload: { url: imageUrl, is_reusable: true },
+      },
+    },
+  })
+}
+
+export async function responderMessenger(recipientId: string, texto: string): Promise<boolean> {
+  return enviarMensagemMeta({
+    channel: 'facebook',
+    recipientId,
+    message: { text: texto },
+  })
+}
+
+export async function responderMessengerComImagem(recipientId: string, imageUrl: string): Promise<boolean> {
+  return enviarMensagemMeta({
+    channel: 'facebook',
+    recipientId,
+    message: {
+      attachment: {
+        type: 'image',
+        payload: { url: imageUrl, is_reusable: true },
+      },
+    },
+  })
 }
 
 export async function responderComentarioInstagram(commentId: string, texto: string): Promise<boolean> {

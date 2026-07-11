@@ -46,6 +46,7 @@ function getWooConfig(): { url: string; key: string; secret: string } | null {
 // ── Tipos públicos ────────────────────────────────────────────────────────────
 
 export type LiveProduct = {
+  id?: number
   name: string
   url: string
   price?: number
@@ -53,6 +54,9 @@ export type LiveProduct = {
   colors: string[]
   flowers: string[]
   category?: string
+  imageUrl?: string
+  images?: string[]
+  availability?: string
 }
 
 export type SearchLiveProductsParams = {
@@ -90,6 +94,9 @@ interface WooProduct {
   description: string
   categories: WooCategory[]
   attributes: WooAttribute[]
+  images?: Array<{ src: string }>
+  stock_status?: string
+  stock_quantity?: number | null
 }
 
 // ── Log estruturado ───────────────────────────────────────────────────────────
@@ -346,13 +353,17 @@ function mapWooToLiveProduct(p: WooProduct): LiveProduct {
   const category = p.categories[0]?.slug ?? ''
 
   return {
-    name:        decodeHtmlEntities(p.name),
-    url:         p.permalink,
-    price:       priceNum,
+    id:           p.id,
+    name:         decodeHtmlEntities(p.name),
+    url:          p.permalink,
+    price:        priceNum,
     description,
-    colors:      colorsFromWooProduct(p),
-    flowers:     flowersFromWooProduct(p),
+    colors:       colorsFromWooProduct(p),
+    flowers:      flowersFromWooProduct(p),
     category,
+    imageUrl:     p.images?.[0]?.src,
+    images:       p.images?.map(img => img.src).filter(Boolean) ?? [],
+    availability: p.stock_status,
   }
 }
 
@@ -549,6 +560,8 @@ async function fetchProductDetailScrape(raw: RawProduct): Promise<LiveProduct | 
   // Cores e flores: SOMENTE da descrição da página individual
   const pageText = description ?? ''
 
+  const imageUrl = root.querySelector('meta[property="og:image"]')?.getAttribute('content')?.trim()
+
   const detail: LiveProduct = {
     name:        raw.name,
     url:         raw.url,
@@ -557,6 +570,8 @@ async function fetchProductDetailScrape(raw: RawProduct): Promise<LiveProduct | 
     colors:      extractColors(pageText),
     flowers:     extractFlowers(pageText),
     category:    raw.category,
+    imageUrl,
+    images:      imageUrl ? [imageUrl] : [],
   }
 
   log('INFO', 'scrape_page_read', {
