@@ -11,6 +11,18 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 const WHATSAPP_OFICIAL = '5511912808282'
 const WHATSAPP_OFICIAL_LINK = `https://wa.me/${WHATSAPP_OFICIAL}`
 
+function mensagemTransicaoWhatsApp(): string {
+  return [
+    'Olá! 😊',
+    'Obrigado por entrar em contato com a Enemeop Flores.',
+    'Neste momento nosso atendimento automático está passando por melhorias para oferecer uma experiência ainda melhor.',
+    'Para que possamos atender você imediatamente, continue seu atendimento pelo nosso WhatsApp oficial:',
+    WHATSAPP_OFICIAL_LINK,
+    'É só tocar no link acima que nossa equipe dará continuidade ao seu atendimento.',
+    'Será um prazer ajudar você! 🌹',
+  ].join('\n')
+}
+
 function mensagemEscaladaHumana(canal: 'whatsapp' | 'instagram' | 'facebook' | 'outro'): string {
   if (canal === 'whatsapp') return 'Vou encaminhar seu atendimento para nossa equipe continuar por aqui.'
   return `Vou direcionar você para nossa equipe no WhatsApp. Toque no link para continuar: ${WHATSAPP_OFICIAL_LINK}`
@@ -104,7 +116,7 @@ Quando o cliente pedir para falar com uma pessoa, não finja ser atendente human
 - Prometer entrega sem validação.
 - Pedir novamente informações que o cliente já forneceu.
 - Interromper uma venda normal sobre flores, produtos, preços, disponibilidade, orçamento, entrega ou compra para encaminhar a equipe humana.
-- No WhatsApp, dizer "fale pelo WhatsApp", "chame no WhatsApp", enviar link de WhatsApp ou telefone final 8282.
+- No WhatsApp, dizer "fale pelo WhatsApp", "chame no WhatsApp", enviar link de WhatsApp.
 - Usar atendimento humano como fallback para perguntas comerciais normais como "Quais flores tem pra hoje?".
 - Usar placeholder de link ou qualquer endereço de WhatsApp incompleto.
 - Solicitar dados pessoais em comentários públicos.
@@ -213,7 +225,7 @@ async function carregarHistorico(numero: string): Promise<Mensagem[]> {
   if (!raw) return []
   try {
     return JSON.parse(raw)
-  } catch (err) {
+  } catch (err: unknown) {
     console.error(`[SDR] Histórico corrompido para ${numero}:`, err)
     return []
   }
@@ -335,13 +347,13 @@ export async function processarMensagemSDR(numero: string, textoCliente: string,
         await salvarHistorico(numero, historico)
         return
       }
-    } catch (err) {
+    } catch (err: unknown) {
       // Erro na leitura do site → escalada
       console.error('[SDR] Erro ao consultar catálogo ao vivo:', err)
       await notificarEscalada(
         randomUUID(),
         'catalogo-erro',
-        `Falha ao ler site para cliente ${numero}. Mensagem: "${textoCliente}". Erro: ${err instanceof Error ? err.message : String(err)}`
+        `Falha ao ler site para cliente ${numero}. Mensagem: "${textoCliente}". Erro: ${String((err as Error)?.message ?? err)}`
       )
       await responderLead({
         numero,
@@ -440,6 +452,27 @@ export async function processarMensagemSDRInstagram(
   textoCliente: string,
   opts?: { leadId?: string; nomeExibido?: string }
 ): Promise<void> {
+  const respostaTransicao = mensagemTransicaoWhatsApp()
+  const historicoTransicao = await carregarHistorico(`ig:${canalId}`)
+  historicoTransicao.push({ role: 'user', content: textoCliente })
+  historicoTransicao.push({ role: 'assistant', content: respostaTransicao })
+  await salvarHistorico(`ig:${canalId}`, historicoTransicao)
+
+  const leadId = opts?.leadId
+  if (leadId) {
+    await salvarConversa({
+      leadId,
+      canalId,
+      canal: 'instagram',
+      historico: historicoTransicao,
+      nomeExibido: opts?.nomeExibido,
+    })
+  }
+
+  await responderInstagram(canalId, respostaTransicao)
+  console.log(`[SDR/Instagram] Modo transicao: encaminhado para WhatsApp oficial canalId=${canalId}`)
+  return
+
   if (deveEscalar(textoCliente)) {
     await responderInstagram(canalId, mensagemEscaladaHumana('instagram'))
     await notificarEscalada(
@@ -479,12 +512,12 @@ export async function processarMensagemSDRInstagram(
         await salvarHistorico(chave, historico)
         return
       }
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('[SDR/Instagram] Erro ao consultar catálogo ao vivo:', err)
       await notificarEscalada(
         randomUUID(),
         'catalogo-erro-instagram',
-        `Falha ao ler site para cliente Instagram (${canalId}). Erro: ${err instanceof Error ? err.message : String(err)}`
+        `Falha ao ler site para cliente Instagram (${canalId}). Erro: ${String((err as Error)?.message ?? err)}`
       )
       await responderInstagram(canalId, 'Vou confirmar as opções disponíveis no site e já te envio certinho. Um momento!')
       await salvarHistorico(chave, historico)
@@ -516,9 +549,10 @@ export async function processarMensagemSDRInstagram(
   const nome = nomeMatch?.[1] ?? opts?.nomeExibido ?? null
 
   // Salva conversa no Supabase para o Monitor Social
-  if (opts?.leadId) {
+  const legacyLeadId = opts?.leadId
+  if (legacyLeadId) {
     await salvarConversa({
-      leadId: opts.leadId,
+      leadId: legacyLeadId as string,
       canalId,
       canal: 'instagram',
       historico,
@@ -526,7 +560,7 @@ export async function processarMensagemSDRInstagram(
     })
     // Atualiza nome no lead se encontrado
     if (nome) {
-      await getSupabase().from('leads').update({ nome, nome_exibido: nome }).eq('id', opts.leadId)
+      await getSupabase().from('leads').update({ nome, nome_exibido: nome }).eq('id', legacyLeadId)
     }
   }
 

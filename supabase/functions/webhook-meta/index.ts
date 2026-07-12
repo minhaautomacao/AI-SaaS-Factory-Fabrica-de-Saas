@@ -21,6 +21,19 @@ const SUPABASE_URL   = Deno.env.get('SUPABASE_URL') ?? '';
 const IG_TOKEN       = Deno.env.get('META_IG_ACCESS_TOKEN') ?? '';
 const PAGE_TOKEN     = Deno.env.get('META_PAGE_ACCESS_TOKEN') ?? '';
 const WHATSAPP_NUM   = '5511912808282';
+const WHATSAPP_LINK  = `https://wa.me/${WHATSAPP_NUM}`;
+
+function mensagemTransicaoWhatsApp(): string {
+  return [
+    'Olá! 😊',
+    'Obrigado por entrar em contato com a Enemeop Flores.',
+    'Neste momento nosso atendimento automático está passando por melhorias para oferecer uma experiência ainda melhor.',
+    'Para que possamos atender você imediatamente, continue seu atendimento pelo nosso WhatsApp oficial:',
+    WHATSAPP_LINK,
+    'É só tocar no link acima que nossa equipe dará continuidade ao seu atendimento.',
+    'Será um prazer ajudar você! 🌹',
+  ].join('\n');
+}
 
 // ── Catálogo de produtos ──────────────────────────────────────────────────
 
@@ -244,7 +257,7 @@ OBJETIVO: Atender perguntas comerciais como vendedora da floricultura e conduzir
 
 RECOMENDAÇÃO: Até 3 opções com preços do catálogo. Sugira upgrade natural sem pressionar.
 
-ESCALONAMENTO: Use atendente humana apenas em reclamação, pagamento com problema, cliente irritado, erro técnico real ou pedido explícito para falar com pessoa. Quando houver necessidade real de encaminhamento humano no Instagram, use exatamente: "Vou encaminhar você para nossa equipe. Continue o atendimento pelo WhatsApp: https://wa.me/5511912808282". Nunca use "WhatsApp final 8282", número incompleto ou instrução sem link.
+ESCALONAMENTO: Use atendente humana apenas em reclamação, pagamento com problema, cliente irritado, erro técnico real ou pedido explícito para falar com pessoa. Quando houver necessidade real de encaminhamento humano no Instagram, use exatamente: "Vou encaminhar você para nossa equipe. Continue o atendimento pelo WhatsApp: ${WHATSAPP_LINK}". Nunca use número incompleto ou instrução sem link.
 
 RETORNE APENAS O TEXTO DA RESPOSTA — sem aspas, sem prefixo, sem JSON.`;
 }
@@ -374,19 +387,24 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
 
   const novaMsg: Mensagem = { role: 'user', content: mensagemCliente, ts: new Date().toISOString() };
   const historico = [...(conversa.historico ?? []), novaMsg].slice(-20);
+  const modoTransicaoSocial = canal === 'instagram' || canal === 'facebook';
 
-  const [respostaIA, analiseRaw] = await Promise.all([
-    chamarIA(
-      buildSystemPrompt(conversa.fase, conversa.pedido_info, nomeCliente),
-      historico.map(m => ({ role: m.role, content: m.content })),
-      350,
-    ),
-    chamarIA(
-      buildFasePrompt(historico, mensagemCliente, conversa.fase),
-      [{ role: 'user', content: mensagemCliente }],
-      200,
-    ),
-  ]);
+  let respostaIA: string | null = null;
+  let analiseRaw: string | null = null;
+  if (!modoTransicaoSocial) {
+    [respostaIA, analiseRaw] = await Promise.all([
+      chamarIA(
+        buildSystemPrompt(conversa.fase, conversa.pedido_info, nomeCliente),
+        historico.map(m => ({ role: m.role, content: m.content })),
+        350,
+      ),
+      chamarIA(
+        buildFasePrompt(historico, mensagemCliente, conversa.fase),
+        [{ role: 'user', content: mensagemCliente }],
+        200,
+      ),
+    ]);
+  }
 
   let novaFase = conversa.fase;
   let pedidoInfo = conversa.pedido_info ?? null;
@@ -426,6 +444,11 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
       respostaFinal = `Vou encaminhar você para nossa equipe. Continue o atendimento pelo WhatsApp: https://wa.me/${WHATSAPP_NUM}`;
       novaFase = 'proposta';
     }
+  }
+
+  if (modoTransicaoSocial) {
+    respostaFinal = mensagemTransicaoWhatsApp();
+    novaFase = conversa.fase;
   }
 
   const msgAssistente: Mensagem = { role: 'assistant', content: respostaFinal, ts: new Date().toISOString() };
