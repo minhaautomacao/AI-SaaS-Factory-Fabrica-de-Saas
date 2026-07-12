@@ -8,6 +8,14 @@ import { randomUUID } from 'crypto'
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
+const WHATSAPP_OFICIAL = '5511912808282'
+const WHATSAPP_OFICIAL_LINK = `https://wa.me/${WHATSAPP_OFICIAL}`
+
+function mensagemEscaladaHumana(canal: 'whatsapp' | 'instagram' | 'facebook' | 'outro'): string {
+  if (canal === 'whatsapp') return 'Vou encaminhar seu atendimento para nossa equipe continuar por aqui.'
+  return `Vou direcionar você para nossa equipe no WhatsApp. Toque no link para continuar: ${WHATSAPP_OFICIAL_LINK}`
+}
+
 // Prompt base — sem catálogo. Produtos chegam como contexto injetado em tempo real.
 const SYSTEM_PROMPT = `Você é a assistente virtual da **Enemeop Flores**, floricultura em São Paulo desde 1997.
 Seu nome é **Flora**. Sua missão principal é ajudar o cliente a encontrar o presente ideal e conduzir a conversa até a conclusão da venda, proporcionando uma experiência consultiva, natural e acolhedora. Sempre que tecnicamente possível, conclua toda a venda no canal em que ela começou, sem transferir o cliente para outro canal.
@@ -15,7 +23,7 @@ Seu nome é **Flora**. Sua missão principal é ajudar o cliente a encontrar o p
 ## Sobre a Enemeop Flores
 - Site oficial: www.enemeopflores.com.br
 - Endereço: Rua Costa Aguiar, 1184 — São Paulo — SP
-- Telefone: (11) 2272-3158 | WhatsApp: (11) 98282-9083
+- Telefone: (11) 2272-3158 | WhatsApp: ${WHATSAPP_OFICIAL_LINK}
 - Horário: Seg–Sex 9h–18h | Sáb–Dom e feriados 9h–14h
 - Entrega no mesmo dia (pedido + pagamento confirmado até 15h)
 - Frete calculado por CEP (geralmente R$15–40 dentro de SP)
@@ -84,7 +92,7 @@ Considere o atendimento concluído somente quando o pedido estiver devidamente c
 13. Registre o pedido, encaminhe para logística e informe os próximos passos.
 
 ## Atendimento humano
-Quando o cliente pedir para falar com uma pessoa, não finja ser atendente humano; reconheça o pedido e envie exatamente: "Vou encaminhar seu atendimento para nossa equipe continuar por aqui." No WhatsApp, nunca oriente o cliente a procurar o próprio WhatsApp, nunca envie link de WhatsApp e nunca envie telefone final 8282.
+Quando o cliente pedir para falar com uma pessoa, não finja ser atendente humano. No WhatsApp, reconheça o pedido e envie exatamente: "Vou encaminhar seu atendimento para nossa equipe continuar por aqui." Em Instagram, Facebook ou outro canal externo, envie link clicável completo para WhatsApp: ${WHATSAPP_OFICIAL_LINK}. Nunca oriente cliente que já está no WhatsApp a procurar o próprio WhatsApp.
 
 ## O que NUNCA fazer
 - Dizer que um produto está disponível sem confirmação do catálogo ou da fonte integrada.
@@ -284,7 +292,7 @@ export async function processarMensagemSDR(numero: string, textoCliente: string,
   if (deveEscalar(textoCliente)) {
     await responderLead({
       numero,
-      mensagem: 'Vou encaminhar seu atendimento para nossa equipe continuar por aqui.',
+      mensagem: mensagemEscaladaHumana('whatsapp'),
     })
     await notificarEscalada(
       randomUUID(),
@@ -391,7 +399,7 @@ export async function processarMensagemSDR(numero: string, textoCliente: string,
 const SYSTEM_COMENTARIO = `Você é Flora, assistente da Enemeop Flores (floricultura em SP desde 1997).
 Alguém comentou em uma publicação nossa. Responda ao conteúdo do comentário de forma curta, calorosa, pública e relacionada ao que a pessoa escreveu, com no máximo duas linhas.
 Nunca peça endereço, CEP, telefone, pagamento ou qualquer dado pessoal em comentário público. Quando precisar dessas informações, convide primeiro o cliente a continuar pelo Direct.
-Não transforme todo comentário em convite para WhatsApp. Só encaminhe para WhatsApp se houver impossibilidade de continuar pelo Direct, limitação técnica, necessidade de intervenção humana ou pedido explícito do cliente. Nesse caso, explique brevemente e envie o link https://wa.me/5511912808282. Nunca informe somente o número.
+Não transforme todo comentário em convite para WhatsApp. Só encaminhe para WhatsApp se houver impossibilidade de continuar pelo Direct, limitação técnica, necessidade de intervenção humana ou pedido explícito do cliente. Nesse caso, explique brevemente e envie o link ${WHATSAPP_OFICIAL_LINK}. Nunca informe somente o número.
 Tom: informal, direto, sem emojis excessivos.`
 
 export async function processarComentarioSDR(
@@ -433,9 +441,7 @@ export async function processarMensagemSDRInstagram(
   opts?: { leadId?: string; nomeExibido?: string }
 ): Promise<void> {
   if (deveEscalar(textoCliente)) {
-    await responderInstagram(canalId,
-      'Um momento! Vou conectar você com nossa especialista. Ela entrará em contato em instantes pelo número (11) 91280-8282.'
-    )
+    await responderInstagram(canalId, mensagemEscaladaHumana('instagram'))
     await notificarEscalada(
       randomUUID(),
       'escalada-instagram',
