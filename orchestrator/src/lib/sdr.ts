@@ -8,7 +8,7 @@ import { randomUUID } from 'crypto'
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
-const WHATSAPP_OFICIAL = '5511912808282'
+const WHATSAPP_OFICIAL = '5511982829083'
 const WHATSAPP_OFICIAL_LINK = `https://wa.me/${WHATSAPP_OFICIAL}`
 
 function mensagemTransicaoWhatsApp(): string {

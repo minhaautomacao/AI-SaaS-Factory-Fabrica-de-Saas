@@ -20,7 +20,7 @@ const WORKSPACE_ID   = Deno.env.get('SAAS_WORKSPACE_ID') ?? '';
 const SUPABASE_URL   = Deno.env.get('SUPABASE_URL') ?? '';
 const IG_TOKEN       = Deno.env.get('META_IG_ACCESS_TOKEN') ?? '';
 const PAGE_TOKEN     = Deno.env.get('META_PAGE_ACCESS_TOKEN') ?? '';
-const WHATSAPP_NUM   = '5511912808282';
+const WHATSAPP_NUM   = '5511982829083';
 const WHATSAPP_LINK  = `https://wa.me/${WHATSAPP_NUM}`;
 
 function mensagemTransicaoWhatsApp(): string {
