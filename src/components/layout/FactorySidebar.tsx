@@ -1,8 +1,8 @@
 import React from 'react';
-import { LayoutGrid, Activity, ScrollText, Sparkles, ChevronRight, Circle, ShoppingBag, Monitor } from 'lucide-react';
+import { LayoutGrid, Activity, ScrollText, Sparkles, ChevronRight, Circle, ShoppingBag, Monitor, Inbox } from 'lucide-react';
 import type { Workspace } from '../../types';
 
-type View = 'workspaces' | 'workspace-detail' | 'credentials' | 'monitor' | 'logs' | 'planner' | 'pedidos';
+type View = 'workspaces' | 'workspace-detail' | 'credentials' | 'monitor' | 'logs' | 'planner' | 'pedidos' | 'atendimento';
 
 interface Props {
   view: View;
@@ -10,6 +10,7 @@ interface Props {
   workspaces: Workspace[];
   selectedWorkspace: Workspace | null;
   onSelectWorkspace: (w: Workspace) => void;
+  floraInboxCount?: number;
 }
 
 const STATUS_COLOR: Record<string, string> = {
@@ -26,7 +27,7 @@ const NAV = [
   { id: 'planner' as View, label: 'Criar SaaS', icon: Sparkles },
 ];
 
-export default function FactorySidebar({ view, onNavigate, workspaces, selectedWorkspace, onSelectWorkspace }: Props) {
+export default function FactorySidebar({ view, onNavigate, workspaces, selectedWorkspace, onSelectWorkspace, floraInboxCount = 0 }: Props) {
   return (
     <aside className="w-64 shrink-0 bg-white border border-gray-200 rounded-2xl p-4 h-fit sticky top-24 space-y-6">
       <div>
@@ -63,6 +64,18 @@ export default function FactorySidebar({ view, onNavigate, workspaces, selectedW
           >
             <ShoppingBag className="w-5 h-5 shrink-0" />
             Pedidos
+          </button>
+
+          <button
+            onClick={() => onNavigate('atendimento')}
+            className={`w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all shadow-sm ${
+              view === 'atendimento'
+                ? 'bg-indigo-600 text-white shadow-indigo-200'
+                : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200'
+            }`}
+          >
+            <span className="flex items-center gap-3"><Inbox className="w-5 h-5 shrink-0" /> Atendimento Flora</span>
+            {floraInboxCount > 0 && <span className="text-[10px] bg-amber-500 text-white rounded-full px-1.5 py-0.5">{floraInboxCount}</span>}
           </button>
 
           <button

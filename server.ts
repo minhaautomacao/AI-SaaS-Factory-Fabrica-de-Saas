@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import { createClient } from '@supabase/supabase-js';
+import { randomUUID } from 'crypto';
 import { getSupabaseAdmin } from './src/lib/supabase-server.js';
 import { encrypt } from './src/lib/crypto.js';
 
@@ -30,6 +31,23 @@ app.get('/api/auth-status', (_req, res) => {
 app.get('/api/config-status', (_req, res) => {
   res.json({ hasAPIKey: !!(process.env.ANTHROPIC_API_KEY?.trim()) });
 });
+
+function requireDashboardAuth(req: express.Request, res: express.Response): boolean {
+  const expected = 'factory-auth-token-9988';
+  const auth = String(req.headers.authorization ?? '').replace(/^Bearer\s+/i, '');
+  const alt = String(req.headers['x-auth-token'] ?? '');
+  if (auth === expected || alt === expected) return true;
+  res.status(401).json({ error: 'N?o autenticado' });
+  return false;
+}
+
+function getEnemeopSupabase() {
+  return createClient(
+    process.env.SUPABASE_ENEMEOP_URL || process.env.SUPABASE_URL || '',
+    process.env.SUPABASE_ENEMEOP_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || '',
+    { auth: { persistSession: false } }
+  );
+}
 
 // ── Floricultura — Pedidos ────────────────────────────────────────────────────
 
@@ -254,6 +272,125 @@ app.get('/api/monitor/activity', async (_req, res) => {
 });
 
 // ── Templates (backward compat para SaaSPlannerForm) ─────────────────────────
+
+// ?? Floricultura ? Atendimento Flora / Inbox ?????????????????????????????????
+
+app.get('/api/flora/metrics', async (req, res) => {
+  if (!requireDashboardAuth(req, res)) return;
+  try {
+    const sb = getEnemeopSupabase();
+    const { count: aguardando } = await sb.from('conversas').select('id', { count: 'exact', head: true }).in('canal', ['instagram', 'facebook']).eq('status_atendimento', 'aguardando_humano');
+    const { count: humano } = await sb.from('conversas').select('id', { count: 'exact', head: true }).in('canal', ['instagram', 'facebook']).eq('modo_atendimento', 'humano');
+    res.json({ aguardando_humano: aguardando ?? 0, em_atendimento: humano ?? 0 });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao buscar m?tricas Flora' });
+  }
+});
+
+app.get('/api/flora/conversas', async (req, res) => {
+  if (!requireDashboardAuth(req, res)) return;
+  try {
+    const sb = getEnemeopSupabase();
+    const { data, error } = await sb
+      .from('conversas')
+      .select('id, canal_id, canal, fase, historico, pedido_info, nome_cliente, modo_atendimento, status_atendimento, motivo_handoff, handoff_em, resumo, proximo_passo, atendente_id, assumido_em, atualizado_em, workspace_id')
+      .in('canal', ['instagram', 'facebook'])
+      .order('atualizado_em', { ascending: false })
+      .limit(100);
+    if (error) throw error;
+    res.json({ conversas: data ?? [] });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao listar conversas Flora' });
+  }
+});
+
+app.post('/api/flora/conversas/:id/assumir', async (req, res) => {
+  if (!requireDashboardAuth(req, res)) return;
+  try {
+    const atendenteId = String(req.body?.atendente_id || 'dashboard-enemeop');
+    const sb = getEnemeopSupabase();
+    const { data, error } = await sb
+      .from('conversas')
+      .update({ modo_atendimento: 'humano', status_atendimento: 'humano_atendendo', atendente_id: atendenteId, assumido_em: new Date().toISOString(), atualizado_em: new Date().toISOString() })
+      .eq('id', req.params.id)
+      .in('canal', ['instagram', 'facebook'])
+      .or(`atendente_id.is.null,atendente_id.eq.${atendenteId}`)
+      .neq('status_atendimento', 'concluida')
+      .select('id, atendente_id, modo_atendimento, status_atendimento')
+      .single();
+    if (error || !data) return res.status(409).json({ error: 'Conversa j? assumida por outro atendente ou indispon?vel' });
+    res.json({ conversa: data });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao assumir conversa' });
+  }
+});
+
+app.post('/api/flora/conversas/:id/devolver', async (req, res) => {
+  if (!requireDashboardAuth(req, res)) return;
+  try {
+    const atendenteId = String(req.body?.atendente_id || 'dashboard-enemeop');
+    const sb = getEnemeopSupabase();
+    const { data, error } = await sb
+      .from('conversas')
+      .update({ modo_atendimento: 'flora', status_atendimento: 'flora_atendendo', atendente_id: null, assumido_em: null, atualizado_em: new Date().toISOString() })
+      .eq('id', req.params.id)
+      .eq('atendente_id', atendenteId)
+      .select('id, modo_atendimento, status_atendimento')
+      .single();
+    if (error || !data) return res.status(403).json({ error: 'Somente o atendente respons?vel pode devolver esta conversa' });
+    res.json({ conversa: data });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao devolver conversa' });
+  }
+});
+
+app.post('/api/flora/conversas/:id/concluir', async (req, res) => {
+  if (!requireDashboardAuth(req, res)) return;
+  try {
+    const atendenteId = String(req.body?.atendente_id || 'dashboard-enemeop');
+    const sb = getEnemeopSupabase();
+    const { data, error } = await sb
+      .from('conversas')
+      .update({ status_atendimento: 'concluida', modo_atendimento: 'humano', atualizado_em: new Date().toISOString() })
+      .eq('id', req.params.id)
+      .eq('atendente_id', atendenteId)
+      .select('id, status_atendimento')
+      .single();
+    if (error || !data) return res.status(403).json({ error: 'Somente o atendente respons?vel pode concluir esta conversa' });
+    res.json({ conversa: data });
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao concluir conversa' });
+  }
+});
+
+app.post('/api/flora/conversas/:id/mensagens', async (req, res) => {
+  if (!requireDashboardAuth(req, res)) return;
+  try {
+    const mensagem = String(req.body?.mensagem ?? '').trim();
+    const atendenteId = String(req.body?.atendente_id || 'dashboard-enemeop');
+    const idempotencyKey = String(req.body?.idempotency_key || randomUUID());
+    if (!mensagem) return res.status(400).json({ error: 'Mensagem vazia' });
+    const sb = getEnemeopSupabase();
+    const { data: conversa, error: errConv } = await sb.from('conversas').select('id, workspace_id, canal, modo_atendimento, status_atendimento, atendente_id').eq('id', req.params.id).single();
+    if (errConv || !conversa) return res.status(404).json({ error: 'Conversa n?o encontrada' });
+    if (!['instagram', 'facebook'].includes(String(conversa.canal))) return res.status(400).json({ error: 'Canal inv?lido para Inbox Flora' });
+    if (conversa.status_atendimento === 'concluida') return res.status(409).json({ error: 'Conversa conclu?da' });
+    if (conversa.modo_atendimento !== 'humano' || conversa.atendente_id !== atendenteId) return res.status(403).json({ error: 'Assuma a conversa antes de responder' });
+    const edgeUrl = `${process.env.SUPABASE_ENEMEOP_URL || process.env.SUPABASE_URL}/functions/v1/webhook-meta`;
+    const secret = process.env.FACTORY_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+    const edgeResp = await fetch(edgeUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${secret}`, 'x-flora-inbox-action': 'send-human-message' },
+      body: JSON.stringify({ conversa_id: req.params.id, mensagem, autor_id: atendenteId, idempotency_key: idempotencyKey }),
+    });
+    const data = await edgeResp.json().catch(() => ({}));
+    if (!edgeResp.ok) return res.status(edgeResp.status).json({ error: data.error ?? 'Falha ao enviar pelo canal Meta' });
+    res.json(data);
+  } catch (err: unknown) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Erro ao enviar mensagem' });
+  }
+});
+
 
 app.get('/api/templates', (_req, res) => {
   res.json({ templates: [] });

@@ -20,23 +20,6 @@ const WORKSPACE_ID   = Deno.env.get('SAAS_WORKSPACE_ID') ?? '';
 const SUPABASE_URL   = Deno.env.get('SUPABASE_URL') ?? '';
 const IG_TOKEN       = Deno.env.get('META_IG_ACCESS_TOKEN') ?? '';
 const PAGE_TOKEN     = Deno.env.get('META_PAGE_ACCESS_TOKEN') ?? '';
-const WHATSAPP_NUM   = '5511982829083';
-const WHATSAPP_LINK  = `https://wa.me/${WHATSAPP_NUM}`;
-
-function mensagemTransicaoWhatsApp(): string {
-  return [
-    'Olá! 😊',
-    'Obrigado por entrar em contato com a Enemeop Flores.',
-    'Neste momento nosso atendimento automático está passando por melhorias para oferecer uma experiência ainda melhor.',
-    'Para que possamos atender você imediatamente, continue seu atendimento pelo nosso WhatsApp oficial:',
-    WHATSAPP_LINK,
-    'É só tocar no link acima que nossa equipe dará continuidade ao seu atendimento.',
-    'Será um prazer ajudar você! 🌹',
-  ].join('\n');
-}
-
-// ── Catálogo de produtos ──────────────────────────────────────────────────
-
 const CATALOGO = `
 SOBRE A ENEMEOP FLORES:
 Fundada em 1997 por Clean Espindula e Luis Evangelista. "ENEMEOP" vem do Tupi-Guarani e significa "perfume das flores".
@@ -177,7 +160,7 @@ async function buscarConfigDB(chave: string): Promise<string> {
 
 // ── Tipos ──────────────────────────────────────────────────────────────────
 
-interface Mensagem { role: 'user' | 'assistant'; content: string; ts: string; }
+interface Mensagem { role: 'user' | 'assistant'; content: string; ts: string; autor_tipo?: 'cliente' | 'flora' | 'humano' | 'sistema'; autor_id?: string; status?: 'enviado' | 'falha'; message_id?: string; idempotency_key?: string; }
 
 interface Conversa {
   id: string;
@@ -187,7 +170,16 @@ interface Conversa {
   historico: Mensagem[];
   pedido_info: Record<string, unknown> | null;
   lead_id: string | null;
+  workspace_id?: string | null;
   nome_cliente: string | null;
+  modo_atendimento?: 'flora' | 'humano' | null;
+  status_atendimento?: 'flora_atendendo' | 'aguardando_humano' | 'humano_atendendo' | 'aguardando_cliente' | 'concluida' | 'erro_envio' | null;
+  motivo_handoff?: string | null;
+  handoff_em?: string | null;
+  resumo?: string | null;
+  proximo_passo?: string | null;
+  atendente_id?: string | null;
+  assumido_em?: string | null;
 }
 
 // ── Busca nome do cliente ──────────────────────────────────────────────────
@@ -257,7 +249,7 @@ OBJETIVO: Atender perguntas comerciais como vendedora da floricultura e conduzir
 
 RECOMENDAÇÃO: Até 3 opções com preços do catálogo. Sugira upgrade natural sem pressionar.
 
-ESCALONAMENTO: Use atendente humana apenas em reclamação, pagamento com problema, cliente irritado, erro técnico real ou pedido explícito para falar com pessoa. Quando houver necessidade real de encaminhamento humano no Instagram, use exatamente: "Vou encaminhar você para nossa equipe. Continue o atendimento pelo WhatsApp: ${WHATSAPP_LINK}". Nunca use número incompleto ou instrução sem link.
+ESCALONAMENTO: Use atendente humana apenas em reclama??o, pagamento com problema, cliente irritado, erro t?cnico real ou pedido expl?cito para falar com pessoa. Quando houver necessidade real de atendimento humano no Instagram ou Facebook, N?O envie WhatsApp. Diga apenas que vai encaminhar a conversa para uma atendente continuar pelo mesmo chat.
 
 RETORNE APENAS O TEXTO DA RESPOSTA — sem aspas, sem prefixo, sem JSON.`;
 }
@@ -361,6 +353,72 @@ async function gerarLinkPagamento(pedidoInfo: Record<string, unknown>): Promise<
 
 // ── Processar DM ──────────────────────────────────────────────────────────
 
+
+// Inbox humano Flora
+function clientePediuHumano(texto: string): boolean {
+  return /\b(atendente|humano|pessoa|algu[e?]m|vendedor|consultor|falar com|chamar uma pessoa)\b/i.test(texto);
+}
+
+function montarResumoHandoff(historico: Mensagem[], pedidoInfo: Record<string, unknown> | null): string {
+  const ultimas = historico.slice(-6).map(m => `${m.role === 'user' ? 'Cliente' : (m.autor_tipo === 'humano' ? 'Humano' : 'Flora')}: ${m.content}`).join('\n');
+  return [ultimas, pedidoInfo ? `Pedido coletado: ${JSON.stringify(pedidoInfo)}` : 'Pedido ainda sem dados completos.'].join('\n');
+}
+
+async function marcarAguardandoHumano(conversa: Conversa, historico: Mensagem[], motivo: string, pedidoInfo: Record<string, unknown> | null): Promise<void> {
+  await salvarConversa(conversa.id, {
+    historico,
+    pedido_info: pedidoInfo ?? undefined,
+    modo_atendimento: 'humano',
+    status_atendimento: 'aguardando_humano',
+    motivo_handoff: motivo,
+    handoff_em: new Date().toISOString(),
+    resumo: montarResumoHandoff(historico, pedidoInfo),
+    proximo_passo: 'Atendente deve assumir a conversa no dashboard e continuar pelo mesmo Instagram/Facebook.',
+  } as Partial<Conversa>);
+}
+
+async function enviarMensagemCanalMeta(canal: string, canalId: string, texto: string): Promise<{ ok: boolean; messageId?: string; erro?: string }> {
+  const igToken = IG_TOKEN || await buscarConfigDB('META_IG_ACCESS_TOKEN');
+  const pageToken = PAGE_TOKEN || await buscarConfigDB('META_PAGE_ACCESS_TOKEN');
+  const igId = Deno.env.get('META_INSTAGRAM_ID') || await buscarConfigDB('META_INSTAGRAM_ID');
+  const isInstagram = canal === 'instagram' && !!igId && !!igToken;
+  const endpoint = isInstagram ? `https://graph.instagram.com/v21.0/${igId}/messages` : `https://graph.facebook.com/v21.0/me/messages`;
+  const dmToken = isInstagram ? igToken : (pageToken || igToken);
+  if (!dmToken) return { ok: false, erro: 'Token Meta ausente' };
+  const res = await fetch(`${endpoint}?access_token=${dmToken}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ recipient: { id: canalId }, message: { text: texto }, messaging_type: 'RESPONSE' }),
+  });
+  const body = await res.text();
+  if (!res.ok) return { ok: false, erro: `Meta ${res.status}: ${body}` };
+  try { const json = JSON.parse(body); return { ok: true, messageId: json.message_id ?? json.recipient_id ?? undefined }; }
+  catch { return { ok: true }; }
+}
+
+async function enviarMensagemHumanaInbox(payload: Record<string, unknown>): Promise<Response> {
+  const conversaId = String(payload['conversa_id'] ?? '');
+  const mensagem = String(payload['mensagem'] ?? '').trim();
+  const autorId = String(payload['autor_id'] ?? 'dashboard-enemeop');
+  const idempotencyKey = String(payload['idempotency_key'] ?? crypto.randomUUID());
+  if (!conversaId || !mensagem) return new Response(JSON.stringify({ error: 'conversa_id e mensagem s?o obrigat?rios' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+  const db = getDb();
+  const { data, error } = await db.from('conversas').select('*').eq('id', conversaId).single();
+  if (error || !data) return new Response(JSON.stringify({ error: 'Conversa n?o encontrada' }), { status: 404, headers: { 'Content-Type': 'application/json' } });
+  const conversa = data as Conversa;
+  if (conversa.workspace_id && WORKSPACE_ID && conversa.workspace_id !== WORKSPACE_ID) return new Response(JSON.stringify({ error: 'Workspace inv?lido' }), { status: 403, headers: { 'Content-Type': 'application/json' } });
+  if (conversa.status_atendimento === 'concluida') return new Response(JSON.stringify({ error: 'Conversa conclu?da' }), { status: 409, headers: { 'Content-Type': 'application/json' } });
+  if (conversa.modo_atendimento !== 'humano' || conversa.atendente_id !== autorId) return new Response(JSON.stringify({ error: 'Conversa n?o assumida por este atendente' }), { status: 403, headers: { 'Content-Type': 'application/json' } });
+  const historico = conversa.historico ?? [];
+  const existente = historico.find(m => m.idempotency_key === idempotencyKey && m.status === 'enviado');
+  if (existente) return new Response(JSON.stringify({ sucesso: true, duplicado: true, message_id: existente.message_id }), { headers: { 'Content-Type': 'application/json' } });
+  const envio = await enviarMensagemCanalMeta(conversa.canal, conversa.canal_id, mensagem);
+  const msgHumana: Mensagem = { role: 'assistant', content: mensagem, ts: new Date().toISOString(), autor_tipo: 'humano', autor_id: autorId, status: envio.ok ? 'enviado' : 'falha', message_id: envio.messageId, idempotency_key: idempotencyKey };
+  await salvarConversa(conversa.id, { historico: [...historico, msgHumana].slice(-50), status_atendimento: envio.ok ? 'aguardando_cliente' : 'erro_envio' } as Partial<Conversa>);
+  if (!envio.ok) return new Response(JSON.stringify({ error: envio.erro ?? 'Falha Meta' }), { status: 502, headers: { 'Content-Type': 'application/json' } });
+  return new Response(JSON.stringify({ sucesso: true, message_id: envio.messageId }), { headers: { 'Content-Type': 'application/json' } });
+}
+
 const MSG_FALLBACK_POR_FASE: Record<string, string> = {
   descoberta: 'Oi! Para qual ocasião é?',
   interesse: 'Me conta um pouco mais sobre quem vai receber, pra eu sugerir as melhores opções?',
@@ -385,26 +443,41 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
     if (nomeCliente) await salvarConversa(conversa.id, { nome_cliente: nomeCliente } as Partial<Conversa>);
   }
 
-  const novaMsg: Mensagem = { role: 'user', content: mensagemCliente, ts: new Date().toISOString() };
-  const historico = [...(conversa.historico ?? []), novaMsg].slice(-20);
-  const modoTransicaoSocial = canal === 'instagram' || canal === 'facebook';
+  const novaMsg: Mensagem = { role: 'user', content: mensagemCliente, ts: new Date().toISOString(), autor_tipo: 'cliente' };
+  const historico = [...(conversa.historico ?? []), novaMsg].slice(-50);
 
-  let respostaIA: string | null = null;
-  let analiseRaw: string | null = null;
-  if (!modoTransicaoSocial) {
-    [respostaIA, analiseRaw] = await Promise.all([
-      chamarIA(
-        buildSystemPrompt(conversa.fase, conversa.pedido_info, nomeCliente),
-        historico.map(m => ({ role: m.role, content: m.content })),
-        350,
-      ),
-      chamarIA(
-        buildFasePrompt(historico, mensagemCliente, conversa.fase),
-        [{ role: 'user', content: mensagemCliente }],
-        200,
-      ),
-    ]);
+  if (conversa.modo_atendimento === 'humano' || conversa.status_atendimento === 'aguardando_humano' || conversa.status_atendimento === 'humano_atendendo') {
+    await salvarConversa(conversa.id, {
+      historico,
+      status_atendimento: conversa.status_atendimento === 'humano_atendendo' ? 'humano_atendendo' : 'aguardando_humano',
+      resumo: conversa.resumo ?? montarResumoHandoff(historico, conversa.pedido_info),
+    } as Partial<Conversa>);
+    console.log(`[webhook-meta] conversa em modo humano: Flora bloqueada canal_id=${canalId} canal=${canal}`);
+    return;
   }
+
+  if (clientePediuHumano(mensagemCliente)) {
+    const respostaHandoff = 'Claro, vou encaminhar sua conversa para uma atendente continuar por aqui neste mesmo chat.';
+    const msgAssistente: Mensagem = { role: 'assistant', content: respostaHandoff, ts: new Date().toISOString(), autor_tipo: 'flora' };
+    const histHandoff = [...historico, msgAssistente].slice(-50);
+    await marcarAguardandoHumano(conversa, histHandoff, 'Cliente solicitou atendimento humano', conversa.pedido_info ?? null);
+    await enviarMensagemCanalMeta(canal, canalId, respostaHandoff);
+    console.log(`[webhook-meta] handoff_inbox canal_id=${canalId} canal=${canal}`);
+    return;
+  }
+
+  const [respostaIA, analiseRaw] = await Promise.all([
+    chamarIA(
+      buildSystemPrompt(conversa.fase, conversa.pedido_info, nomeCliente),
+      historico.map(m => ({ role: m.role, content: m.content })),
+      350,
+    ),
+    chamarIA(
+      buildFasePrompt(historico, mensagemCliente, conversa.fase),
+      [{ role: 'user', content: mensagemCliente }],
+      200,
+    ),
+  ]);
 
   let novaFase = conversa.fase;
   let pedidoInfo = conversa.pedido_info ?? null;
@@ -441,18 +514,19 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
       respostaFinal = `Perfeito! Seu arranjo: ${pedidoInfo['produto']}. Link de pagamento PIX: ${linkPagamento} ✅`;
       novaFase = 'aguardando_pagamento';
     } else {
-      respostaFinal = `Vou encaminhar você para nossa equipe. Continue o atendimento pelo WhatsApp: https://wa.me/${WHATSAPP_NUM}`;
+      const motivo = 'Falha t?cnica ao gerar link de pagamento';
+      respostaFinal = 'Tive uma instabilidade para concluir com seguran?a. Vou encaminhar sua conversa para uma atendente continuar por aqui neste mesmo chat.';
       novaFase = 'proposta';
+      const msgAssistenteFalha: Mensagem = { role: 'assistant', content: respostaFinal, ts: new Date().toISOString(), autor_tipo: 'flora' };
+      await marcarAguardandoHumano(conversa, [...historico, msgAssistenteFalha].slice(-50), motivo, pedidoInfo);
+      await enviarMensagemCanalMeta(canal, canalId, respostaFinal);
+      return;
     }
   }
 
-  if (modoTransicaoSocial) {
-    respostaFinal = mensagemTransicaoWhatsApp();
-    novaFase = conversa.fase;
-  }
 
-  const msgAssistente: Mensagem = { role: 'assistant', content: respostaFinal, ts: new Date().toISOString() };
-  const historicoFinal = [...historico, msgAssistente].slice(-20);
+  const msgAssistente: Mensagem = { role: 'assistant', content: respostaFinal, ts: new Date().toISOString(), autor_tipo: 'flora' };
+  const historicoFinal = [...historico, msgAssistente].slice(-50);
 
   await salvarConversa(conversa.id, {
     historico: historicoFinal,
@@ -462,47 +536,13 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
 
   console.log(`[webhook-meta] ${canalId} | fase: ${conversa.fase}→${novaFase} | resposta: ${respostaFinal.slice(0, 60)}`);
 
-  // ── Envio de resposta via Graph API ─────────────────────────────────
-  // Instagram Business Login (Caminho B): POST /{ig-user-id}/messages via host graph.instagram.com
-  //   (obrigatório para Instagram User Access Token — ver docs/KNOWN_ISSUES.md)
-  // Facebook/Messenger (Caminho A):       POST /me/messages via host graph.facebook.com
+  // Envio de resposta via m?dulo Meta compartilhado
   try {
-    const pageToken = PAGE_TOKEN || await buscarConfigDB('META_PAGE_ACCESS_TOKEN');
-    const igId = Deno.env.get('META_INSTAGRAM_ID') || await buscarConfigDB('META_INSTAGRAM_ID');
-
-    const isInstagram = canal === 'instagram' && !!igId && !!igToken;
-    const endpoint = isInstagram
-      ? `https://graph.instagram.com/v21.0/${igId}/messages`
-      : `https://graph.facebook.com/v21.0/me/messages`;
-    const dmToken = isInstagram ? igToken : (pageToken || igToken);
-
-    // ── DIAGNÓSTICO TEMPORÁRIO — remover após validar token (não loga o valor do token) ──
-    const trimmedIgToken = igToken.trim();
-    console.log(
-      `[diag-token] igTokenPresente=${!!igToken} length=${igToken.length} trimLength=${trimmedIgToken.length} ` +
-      `leadingWhitespace=${igToken !== igToken.trimStart()} trailingWhitespace=${igToken !== igToken.trimEnd()} ` +
-      `hasQuote=${/['"]/.test(igToken)} hasNewline=${/[\r\n]/.test(igToken)} ` +
-      `looksLikeJson=${trimmedIgToken.startsWith('{') || trimmedIgToken.startsWith('[')} ` +
-      `igIdPresente=${!!igId} igIdUsado=${isInstagram} endpointUsado=${isInstagram ? 'ig' : 'fb'}`
-    );
-    // ── FIM DIAGNÓSTICO TEMPORÁRIO ────────────────────────────────────────────────────────
-
-    const res = await fetch(`${endpoint}?access_token=${dmToken}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        recipient: { id: canalId },
-        message: { text: respostaFinal },
-        messaging_type: 'RESPONSE',
-      }),
-    });
-    if (!res.ok) {
-      const erroBody = await res.text();
-      console.error(`[webhook-meta] erro DM status=${res.status} endpoint=${isInstagram ? 'ig' : 'fb'} url=${endpoint} recipient=${canalId} corpo=${erroBody}`);
-    } else {
-      console.log(`[webhook-meta] DM enviado canal=${canal} endpoint=${isInstagram ? 'ig' : 'fb'} para=${canalId}`);
-    }
+    const envio = await enviarMensagemCanalMeta(canal, canalId, respostaFinal);
+    if (!envio.ok) console.error(`[webhook-meta] erro DM canal=${canal} recipient=${canalId} erro=${envio.erro}`);
+    else console.log(`[webhook-meta] DM enviado canal=${canal} para=${canalId}`);
   } catch (e) { console.error(`[webhook-meta] falha DM: ${e}`); }
+
 }
 
 // ── Processar comentário ───────────────────────────────────────────────────
@@ -628,6 +668,14 @@ Deno.serve(async (req: Request) => {
   }
 
   if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405 });
+
+  if (req.headers.get('x-flora-inbox-action') === 'send-human-message') {
+    const auth = (req.headers.get('authorization') ?? '').replace(/^Bearer\s+/i, '');
+    if (!auth || ![FACTORY_SECRET, SERVICE_KEY].filter(Boolean).includes(auth)) return new Response('Forbidden', { status: 403 });
+    let payload: Record<string, unknown>;
+    try { payload = await req.json(); } catch { return new Response(JSON.stringify({ error: 'JSON inv?lido' }), { status: 400, headers: { 'Content-Type': 'application/json' } }); }
+    return enviarMensagemHumanaInbox(payload);
+  }
 
   const rawBody = await req.text();
   if (!await validarAssinatura(rawBody, req.headers.get('x-hub-signature-256'))) return new Response('Forbidden', { status: 403 });
