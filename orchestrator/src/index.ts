@@ -3,7 +3,7 @@ import { createServer, IncomingMessage, ServerResponse } from 'http'
 import { iniciarWorkers } from './workers/orquestrador.js'
 import { iniciarWorkerLogistica } from './workers/logistica.js'
 import { getSupabase } from './lib/supabase.js'
-import { processarMensagemSDR, processarMensagemSDRInstagram, processarComentarioSDR } from './lib/sdr.js'
+import { processarMensagemSDR } from './lib/sdr.js'
 import { extrairMensagemZApi } from './lib/whatsapp.js'
 
 console.log('=== Fábrica de SaaS — Orquestrador Central ===')
@@ -27,6 +27,22 @@ function lerBody(req: IncomingMessage): Promise<string> {
 }
 
 const PORT = process.env.PORT ?? 3000
+const META_EDGE_WEBHOOK_URL = process.env.META_EDGE_WEBHOOK_URL
+  ?? 'https://gftnjvdvzgjkhwxnxnwl.supabase.co/functions/v1/webhook-meta'
+
+async function encaminharParaWebhookMetaPrincipal(rawBody: string): Promise<void> {
+  const resposta = await fetch(META_EDGE_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: rawBody,
+  })
+
+  if (!resposta.ok) {
+    const detalhe = await resposta.text().catch(() => '')
+    throw new Error(`webhook-meta ${resposta.status}: ${detalhe.slice(0, 200)}`)
+  }
+}
+
 createServer(async (req: IncomingMessage, res: ServerResponse) => {
   if (req.method === 'POST' && req.url === '/webhook/whatsapp') {
     try {
@@ -102,82 +118,18 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
       return
     }
 
-    // Recebe DM do Instagram (POST)
+    // Recebe eventos Instagram/Facebook e encaminha para o webhook Meta principal.
+    // O processamento antigo do orchestrator enviava o cliente para WhatsApp e interrompia o fluxo da Flora.
     if (req.method === 'POST') {
       try {
         const raw = await lerBody(req)
-        const payload = JSON.parse(raw)
-
-        for (const entry of payload?.entry ?? []) {
-          // ── DMs Instagram (messaging) ──
-          for (const event of entry?.messaging ?? []) {
-            const senderId = event?.sender?.id
-            const texto    = event?.message?.text
-            if (!senderId || !texto || event?.message?.is_echo) continue
-
-            console.log(`[Webhook/Instagram] DM de ${senderId}: ${texto.substring(0, 80)}`)
-
-            const sb = getSupabase()
-            const { data: leadExistente } = await sb
-              .from('leads')
-              .select('id, nome_exibido')
-              .eq('canal_id', senderId)
-              .eq('canal', 'instagram')
-              .single()
-
-            let leadId = leadExistente?.id
-            if (!leadId) {
-              const { data: novoLead } = await sb.from('leads').insert({
-                canal: 'instagram', canal_id: senderId,
-                mensagem_inicial: texto, status: 'novo',
-              }).select('id').single()
-              leadId = novoLead?.id
-            }
-
-            processarMensagemSDRInstagram(senderId, texto, {
-              leadId,
-              nomeExibido: leadExistente?.nome_exibido ?? undefined,
-            }).catch(e => console.error('[SDR/Instagram] Erro:', e.message))
-          }
-
-          // ── Comentários Instagram (changes) ──
-          for (const change of entry?.changes ?? []) {
-            if (change.field === 'comments') {
-              const v = change.value
-              // Ignora comentários próprios (da página)
-              if (!v?.id || v?.from?.id === process.env.INSTAGRAM_PAGE_ID) continue
-              const commentId = v.id as string
-              const texto     = (v.text ?? '') as string
-              const usuario   = (v.from?.username ?? v.from?.name ?? undefined) as string | undefined
-              if (!texto) continue
-              console.log(`[Webhook/Instagram] Comentário de ${usuario ?? 'anon'}: ${texto.substring(0, 80)}`)
-              processarComentarioSDR('instagram', commentId, texto, usuario)
-                .catch(e => console.error('[SDR/Instagram/Comentário] Erro:', e.message))
-            }
-
-            // ── Comentários Facebook (feed) ──
-            if (change.field === 'feed') {
-              const v = change.value
-              if (v?.item !== 'comment' || v?.verb !== 'add') continue
-              // Ignora comentários da própria página
-              if (v?.from?.id === process.env.META_PAGE_ID) continue
-              const commentId = v.comment_id as string
-              const texto     = (v.message ?? '') as string
-              const usuario   = (v.from?.name ?? undefined) as string | undefined
-              if (!commentId || !texto) continue
-              console.log(`[Webhook/Facebook] Comentário de ${usuario ?? 'anon'}: ${texto.substring(0, 80)}`)
-              processarComentarioSDR('facebook', commentId, texto, usuario)
-                .catch(e => console.error('[SDR/Facebook/Comentário] Erro:', e.message))
-            }
-          }
-        }
-
+        await encaminharParaWebhookMetaPrincipal(raw)
         res.writeHead(200, { 'Content-Type': 'application/json' })
-        res.end(JSON.stringify({ received: true }))
+        res.end(JSON.stringify({ received: true, forwarded: true }))
       } catch (err) {
-        console.error('[Webhook/Instagram] Erro:', err)
+        console.error('[Webhook/Meta] Erro ao encaminhar para webhook principal:', err)
         res.writeHead(500)
-        res.end(JSON.stringify({ error: 'internal' }))
+        res.end(JSON.stringify({ error: 'forward_failed' }))
       }
       return
     }
