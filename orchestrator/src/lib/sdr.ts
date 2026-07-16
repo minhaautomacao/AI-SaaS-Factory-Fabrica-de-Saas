@@ -452,27 +452,6 @@ export async function processarMensagemSDRInstagram(
   textoCliente: string,
   opts?: { leadId?: string; nomeExibido?: string }
 ): Promise<void> {
-  const respostaTransicao = mensagemTransicaoWhatsApp()
-  const historicoTransicao = await carregarHistorico(`ig:${canalId}`)
-  historicoTransicao.push({ role: 'user', content: textoCliente })
-  historicoTransicao.push({ role: 'assistant', content: respostaTransicao })
-  await salvarHistorico(`ig:${canalId}`, historicoTransicao)
-
-  const leadId = opts?.leadId
-  if (leadId) {
-    await salvarConversa({
-      leadId,
-      canalId,
-      canal: 'instagram',
-      historico: historicoTransicao,
-      nomeExibido: opts?.nomeExibido,
-    })
-  }
-
-  await responderInstagram(canalId, respostaTransicao)
-  console.log(`[SDR/Instagram] Modo transicao: encaminhado para WhatsApp oficial canalId=${canalId}`)
-  return
-
   if (deveEscalar(textoCliente)) {
     await responderInstagram(canalId, mensagemEscaladaHumana('instagram'))
     await notificarEscalada(
