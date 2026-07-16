@@ -1,6 +1,6 @@
 // Criação/reuso do registro persistente de handoff humano (tabela atendimentos_humanos).
 import type { SupabaseClient } from 'npm:@supabase/supabase-js@2';
-import { gerarCodigoAtendimento } from './atendimento-humano-utils.ts';
+import { gerarCodigoAtendimento, inferirOrigemHandoff, type OrigemHandoff } from './atendimento-humano-utils.ts';
 
 const STATUS_ABERTOS = ['aguardando_humano', 'em_atendimento'];
 const MAX_TENTATIVAS_SEQUENCIAL = 3;
@@ -17,6 +17,7 @@ export interface DadosHandoffHumano {
   dadosPedido?: Record<string, unknown> | null;
   pendencias?: unknown[] | null;
   motivoTransferencia?: string | null;
+  origemHandoff?: OrigemHandoff | null;
 }
 
 export interface AtendimentoHumano {
@@ -76,6 +77,7 @@ export async function criarOuReutilizarHandoffHumano(
         dados_pedido: dados.dadosPedido ?? {},
         pendencias: dados.pendencias ?? [],
         motivo_transferencia: dados.motivoTransferencia ?? null,
+        origem_handoff: dados.origemHandoff ?? inferirOrigemHandoff(dados.motivoTransferencia),
         status: 'aguardando_humano',
       })
       .select('id, codigo, status')

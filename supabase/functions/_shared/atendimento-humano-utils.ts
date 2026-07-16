@@ -58,3 +58,23 @@ export function montarMensagemTransicaoCliente(canal: string, codigo: string): s
 export function clientePediuHumano(texto: string): boolean {
   return /\b(atendente|humano|pessoa|algu[e?]m|vendedor|consultor|falar com|chamar uma pessoa)\b/i.test(texto);
 }
+
+export type OrigemHandoff =
+  | 'cliente_solicitou'
+  | 'flora_sem_confianca'
+  | 'limite_tecnico'
+  | 'pagamento'
+  | 'logistica'
+  | 'administrativo'
+  | 'manual';
+
+// Classifica o motivo em texto livre (já usado hoje pelo webhook-meta) numa origem
+// estruturada para métricas futuras, sem exigir alteração dos pontos de chamada existentes.
+export function inferirOrigemHandoff(motivo: string | null | undefined): OrigemHandoff {
+  const texto = (motivo ?? '').toLowerCase();
+  if (/solicitou atendimento humano|pediu atendente|falar com/.test(texto)) return 'cliente_solicitou';
+  if (/pagamento/.test(texto)) return 'pagamento';
+  if (/frete|entrega|log[ií]stica/.test(texto)) return 'logistica';
+  if (/falha t[eé?]cnica|instabilidade|erro t[eé?]cnico/.test(texto)) return 'limite_tecnico';
+  return 'manual';
+}

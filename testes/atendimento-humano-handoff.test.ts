@@ -86,6 +86,8 @@ async function testeCriaNovoAtendimentoQuandoNaoHaHandoffAberto() {
   assert.equal(atendimento.codigo, 'INSTA-7265-0001');
   assert.equal(atendimento.status, 'aguardando_humano');
   assert.equal((db as any)._tabela.length, 1);
+  assert.equal((db as any)._tabela[0].origem_handoff, 'cliente_solicitou', 'origem_handoff deve ser inferida do motivo quando não informada explicitamente');
+  assert.equal((db as any)._tabela[0].atendente_id, undefined, 'campos de assumir/concluir/devolver não são preenchidos nesta etapa');
 }
 
 async function testeReutilizaCodigoQuandoJaHaHandoffAberto() {

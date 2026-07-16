@@ -24,8 +24,17 @@ create table if not exists atendimentos_humanos (
   dados_pedido          jsonb default '{}',
   pendencias            jsonb default '[]',
   motivo_transferencia  text,
+  origem_handoff        text not null
+                          check (origem_handoff in (
+                            'cliente_solicitou','flora_sem_confianca','limite_tecnico',
+                            'pagamento','logistica','administrativo','manual'
+                          )),
   status                text not null default 'aguardando_humano'
-                          check (status in ('aguardando_humano','em_atendimento','concluido','cancelado')),
+                          check (status in ('aguardando_humano','em_atendimento','concluido','cancelado','devolvido_flora')),
+  atendente_id          text,
+  assumido_em           timestamptz,
+  concluido_em          timestamptz,
+  devolvido_em          timestamptz,
   criado_em             timestamptz not null default now(),
   atualizado_em         timestamptz not null default now()
 );
@@ -42,6 +51,10 @@ create index if not exists idx_atendimentos_humanos_canal_cliente
 
 create index if not exists idx_atendimentos_humanos_status
   on atendimentos_humanos(status, criado_em desc);
+
+create index if not exists idx_atendimentos_humanos_atendente
+  on atendimentos_humanos(atendente_id)
+  where atendente_id is not null;
 
 -- Prevenção de duplicidade: no máximo um atendimento aberto por conversa.
 create unique index if not exists idx_atendimentos_humanos_aberto_unico

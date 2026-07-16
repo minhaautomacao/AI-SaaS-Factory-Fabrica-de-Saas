@@ -9,6 +9,7 @@ import {
   montarMensagemWhatsApp,
   montarMensagemTransicaoCliente,
   clientePediuHumano,
+  inferirOrigemHandoff,
 } from '../supabase/functions/_shared/atendimento-humano-utils.ts';
 
 // 1-3: prefixo correto por canal
@@ -57,5 +58,14 @@ assert.equal(clientePediuHumano('Quais flores vocês têm para hoje?'), false);
 assert.equal(clientePediuHumano('Quero comprar um buquê para aniversário'), false);
 assert.equal(clientePediuHumano('Quero falar com um atendente'), true);
 assert.equal(clientePediuHumano('Pode chamar um humano, por favor'), true);
+
+// origem_handoff: classifica os motivos hoje usados pelo webhook-meta sem exigir alterá-lo
+assert.equal(inferirOrigemHandoff('Cliente solicitou atendimento humano'), 'cliente_solicitou');
+assert.equal(inferirOrigemHandoff('Falha t?cnica ao gerar link de pagamento'), 'pagamento');
+assert.equal(inferirOrigemHandoff('Falha técnica ao gerar link de pagamento'), 'pagamento');
+assert.equal(inferirOrigemHandoff('Erro técnico inesperado'), 'limite_tecnico');
+assert.equal(inferirOrigemHandoff('Cotação de frete pendente'), 'logistica');
+assert.equal(inferirOrigemHandoff('Motivo não mapeado'), 'manual');
+assert.equal(inferirOrigemHandoff(null), 'manual');
 
 console.log('OK — atendimento-humano-utils: todas as asserções passaram.');
