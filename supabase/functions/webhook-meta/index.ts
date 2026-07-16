@@ -10,6 +10,8 @@
  */
 
 import { createClient } from 'npm:@supabase/supabase-js@2';
+import { clientePediuHumano, montarLinkWhatsAppOficial, montarMensagemTransicaoCliente } from '../_shared/atendimento-humano-utils.ts';
+import { criarOuReutilizarHandoffHumano } from '../_shared/atendimento-humano.ts';
 
 const VERIFY_TOKEN   = Deno.env.get('META_VERIFY_TOKEN') ?? '';
 const APP_SECRET     = Deno.env.get('META_APP_SECRET') ?? '';
@@ -354,17 +356,15 @@ async function gerarLinkPagamento(pedidoInfo: Record<string, unknown>): Promise<
 // ── Processar DM ──────────────────────────────────────────────────────────
 
 
-// Inbox humano Flora
-function clientePediuHumano(texto: string): boolean {
-  return /\b(atendente|humano|pessoa|algu[e?]m|vendedor|consultor|falar com|chamar uma pessoa)\b/i.test(texto);
-}
+// Inbox humano Flora — detecção movida para _shared/atendimento-humano-utils.ts
 
 function montarResumoHandoff(historico: Mensagem[], pedidoInfo: Record<string, unknown> | null): string {
   const ultimas = historico.slice(-6).map(m => `${m.role === 'user' ? 'Cliente' : (m.autor_tipo === 'humano' ? 'Humano' : 'Flora')}: ${m.content}`).join('\n');
   return [ultimas, pedidoInfo ? `Pedido coletado: ${JSON.stringify(pedidoInfo)}` : 'Pedido ainda sem dados completos.'].join('\n');
 }
 
-async function marcarAguardandoHumano(conversa: Conversa, historico: Mensagem[], motivo: string, pedidoInfo: Record<string, unknown> | null): Promise<void> {
+async function marcarAguardandoHumano(conversa: Conversa, historico: Mensagem[], motivo: string, pedidoInfo: Record<string, unknown> | null): Promise<{ codigo: string; link: string }> {
+  const resumo = montarResumoHandoff(historico, pedidoInfo);
   await salvarConversa(conversa.id, {
     historico,
     pedido_info: pedidoInfo ?? undefined,
@@ -372,9 +372,22 @@ async function marcarAguardandoHumano(conversa: Conversa, historico: Mensagem[],
     status_atendimento: 'aguardando_humano',
     motivo_handoff: motivo,
     handoff_em: new Date().toISOString(),
-    resumo: montarResumoHandoff(historico, pedidoInfo),
+    resumo,
     proximo_passo: 'Atendente deve assumir a conversa no dashboard e continuar pelo mesmo Instagram/Facebook.',
   } as Partial<Conversa>);
+
+  const atendimento = await criarOuReutilizarHandoffHumano(getDb(), {
+    workspaceId: conversa.workspace_id ?? (WORKSPACE_ID || null),
+    conversaId: conversa.id,
+    canal: conversa.canal,
+    canalClienteId: conversa.canal_id,
+    nomeCliente: conversa.nome_cliente,
+    resumo,
+    dadosPedido: pedidoInfo,
+    motivoTransferencia: motivo,
+  });
+
+  return { codigo: atendimento.codigo, link: montarLinkWhatsAppOficial(conversa.canal, atendimento.codigo) };
 }
 
 async function enviarMensagemCanalMeta(canal: string, canalId: string, texto: string): Promise<{ ok: boolean; messageId?: string; erro?: string }> {
@@ -457,12 +470,12 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
   }
 
   if (clientePediuHumano(mensagemCliente)) {
-    const respostaHandoff = 'Claro, vou encaminhar sua conversa para uma atendente continuar por aqui neste mesmo chat.';
+    const { codigo, link } = await marcarAguardandoHumano(conversa, historico, 'Cliente solicitou atendimento humano', conversa.pedido_info ?? null);
+    const respostaHandoff = `${montarMensagemTransicaoCliente(canal, codigo)}\n${link}`;
     const msgAssistente: Mensagem = { role: 'assistant', content: respostaHandoff, ts: new Date().toISOString(), autor_tipo: 'flora' };
-    const histHandoff = [...historico, msgAssistente].slice(-50);
-    await marcarAguardandoHumano(conversa, histHandoff, 'Cliente solicitou atendimento humano', conversa.pedido_info ?? null);
+    await salvarConversa(conversa.id, { historico: [...historico, msgAssistente].slice(-50) } as Partial<Conversa>);
     await enviarMensagemCanalMeta(canal, canalId, respostaHandoff);
-    console.log(`[webhook-meta] handoff_inbox canal_id=${canalId} canal=${canal}`);
+    console.log(`[webhook-meta] handoff_inbox canal_id=${canalId} canal=${canal} codigo=${codigo}`);
     return;
   }
 
@@ -515,10 +528,11 @@ async function processarDM(canalId: string, canal: string, mensagemCliente: stri
       novaFase = 'aguardando_pagamento';
     } else {
       const motivo = 'Falha t?cnica ao gerar link de pagamento';
-      respostaFinal = 'Tive uma instabilidade para concluir com seguran?a. Vou encaminhar sua conversa para uma atendente continuar por aqui neste mesmo chat.';
+      const { codigo, link } = await marcarAguardandoHumano(conversa, historico, motivo, pedidoInfo);
+      respostaFinal = `Tive uma instabilidade para concluir com segurança. ${montarMensagemTransicaoCliente(canal, codigo)}\n${link}`;
       novaFase = 'proposta';
       const msgAssistenteFalha: Mensagem = { role: 'assistant', content: respostaFinal, ts: new Date().toISOString(), autor_tipo: 'flora' };
-      await marcarAguardandoHumano(conversa, [...historico, msgAssistenteFalha].slice(-50), motivo, pedidoInfo);
+      await salvarConversa(conversa.id, { historico: [...historico, msgAssistenteFalha].slice(-50) } as Partial<Conversa>);
       await enviarMensagemCanalMeta(canal, canalId, respostaFinal);
       return;
     }
