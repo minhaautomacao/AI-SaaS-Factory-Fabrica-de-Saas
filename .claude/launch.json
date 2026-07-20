@@ -2,16 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "enemeop-viral-01",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "marketing/reels/enemeop-viral-01", "-p", "4321", "--no-clipboard"],
-      "port": 4321
-    },
-    {
-      "name": "enemeop-flores",
+      "name": "fabrica-saas",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
-      "cwd": "C:\\Users\\carlo\\Projetos Minha Automacao\\enemeop-flores",
       "port": 3000
     }
   ]

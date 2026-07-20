@@ -85,7 +85,7 @@ export async function gerarLinkPagamento(
 
     const payload = {
       OrderNumber: opcoes.numeroPedido,
-      SoftDescriptor: opcoes.softDescriptor ?? 'Enemeop Flores',
+      SoftDescriptor: opcoes.softDescriptor ?? Deno.env.get('WORKSPACE_NAME') ?? '',
       Cart: {
         Discount: { Type: 'Percent', Value: 0 },
         Items: [

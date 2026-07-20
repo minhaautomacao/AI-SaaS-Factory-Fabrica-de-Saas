@@ -7,12 +7,20 @@ coverage/
 .env*
 !.env.example
 
-# Credenciais reais — nunca commitar
-.credentials/**/*.env
-.credentials/**/*.json
-.credentials/**/*.key
-.credentials/**/*.pem
+# Capturas operacionais na raiz — nao versionar (assets legitimos vao em public/, src/assets/ etc.)
+/*.png
+/*.jpg
+/*.jpeg
+/*.webp
+
+# Credenciais reais — nunca commitar (allowlist: bloqueia tudo, libera so README.md e INDICE.md)
+.credentials/**
+!.credentials/**/
 !.credentials/**/README.md
+!.credentials/INDICE.md
+
+# Lock file interno do Claude Code — nao versionar
+.claude/scheduled_tasks.lock
 
 # Claude Code
 .claude/memory/*.md

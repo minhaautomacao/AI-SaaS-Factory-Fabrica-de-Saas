@@ -1,4 +1,4 @@
-# Credenciais IA — GPT Advisor (Enemeop Flores)
+# Credenciais IA — GPT Advisor (Fábrica de SaaS)
 
 > **NUNCA commitar o arquivo `.env` desta pasta.** Apenas este README é versionado.
 

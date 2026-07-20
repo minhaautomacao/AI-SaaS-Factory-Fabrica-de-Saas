@@ -24,7 +24,7 @@ export function montarPrompt(erro: string, log = ''): string {
 
   return [
     'Projeto:',
-    'Enemeop Flores',
+    process.env.SAAS_WORKSPACE_ID ?? '(workspace não identificado)',
     '',
     'Estado (resumo de docs/CURRENT_STATE.md):',
     estado,

@@ -653,16 +653,16 @@ flores, rosas, buquê, arranjo floral, floricultura, decoração floral, decora�
 ### Acionamento manual por demanda
 
 ```json
-POST https://ebeapnydeiwuewxatuuw.supabase.co/functions/v1/varredura-leads
+POST https://[projeto-supabase-do-workspace].supabase.co/functions/v1/varredura-leads
 {
   "fontes": ["instagram", "twitter", "google", "pinterest", "forums"],
-  "workspace_id": "enemeop"
+  "workspace_id": "[nome-do-workspace]"
 }
 ```
 
-Para varredura específica (ex: só Instagram antes do Dia dos Namorados):
+Para varredura específica (ex: só Instagram antes de uma data comercial importante):
 ```json
-{ "fontes": ["instagram"], "workspace_id": "enemeop" }
+{ "fontes": ["instagram"], "workspace_id": "[nome-do-workspace]" }
 ```
 
 ### Scraping pontual de concorrente

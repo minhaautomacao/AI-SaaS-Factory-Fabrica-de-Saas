@@ -45,11 +45,11 @@ Consultar o GPT Advisor apenas quando: erro inesperado, dúvida arquitetural, co
 
 ```
 Projeto:
-Enemeop Flores
+[nome-do-workspace]
 
 Estado:
 Instagram recebe webhook
-Flora executa
+Agente de SDR executa
 Erro atual:
 Graph API OAuthException 190
 

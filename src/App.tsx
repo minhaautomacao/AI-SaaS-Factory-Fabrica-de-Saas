@@ -8,18 +8,11 @@ import CredentialSetup from './components/credentials/CredentialSetup';
 import ActivityMonitor from './components/monitor/ActivityMonitor';
 import LogsViewer from './components/monitor/LogsViewer';
 import SaaSPlannerForm from './components/SaaSPlannerForm';
-import PedidosView from './components/floricultura/PedidosView';
-import ProducaoScreen from './components/floricultura/ProducaoScreen';
-import FloraInboxView from './components/floricultura/FloraInboxView';
 import { Workspace, SimulationLog } from './types';
 
-type View = 'workspaces' | 'workspace-detail' | 'credentials' | 'monitor' | 'logs' | 'planner' | 'pedidos' | 'atendimento';
+type View = 'workspaces' | 'workspace-detail' | 'credentials' | 'monitor' | 'logs' | 'planner';
 
 export default function App() {
-  // Tela de produção — sem login, abre em nova aba para monitor na floricultura
-  if (window.location.pathname === '/producao') {
-    return <ProducaoScreen />;
-  }
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     const auth = localStorage.getItem('saas_factory_authenticated');
     const expiry = localStorage.getItem('saas_factory_expiry');
@@ -32,28 +25,16 @@ export default function App() {
     }
     return true;
   });
-  const [view, setView] = useState<View>(() => {
-    if (window.location.pathname === '/atendimento') return 'atendimento';
-    if (window.location.pathname === '/pedidos') return 'pedidos';
-    return 'workspaces';
-  });
+  const [view, setView] = useState<View>('workspaces');
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null);
   const [hasAPIKey, setHasAPIKey] = useState(false);
   const [plannerLogs, setPlannerLogs] = useState<SimulationLog[]>([]);
-  const [floraInboxCount, setFloraInboxCount] = useState(0);
 
   useEffect(() => {
     if (!isAuthenticated) return;
     fetch('/api/config-status').then(r => r.json()).then(d => setHasAPIKey(d.hasAPIKey)).catch(() => {});
     carregarWorkspaces();
-    const carregarFloraMetricas = () => fetch('/api/flora/metrics', { headers: { Authorization: `Bearer ${localStorage.getItem('saas_factory_token') ?? ''}` } })
-      .then(r => r.json())
-      .then(d => setFloraInboxCount(d.aguardando_humano ?? 0))
-      .catch(() => {});
-    carregarFloraMetricas();
-    const floraTimer = window.setInterval(carregarFloraMetricas, 5000);
-    return () => window.clearInterval(floraTimer);
   }, [isAuthenticated]);
 
   const carregarWorkspaces = () => {
@@ -61,13 +42,6 @@ export default function App() {
       .then(r => r.json())
       .then(d => setWorkspaces(d.workspaces ?? []))
       .catch(() => {});
-  };
-
-  const navegar = (v: View) => {
-    setView(v);
-    if (v === 'atendimento') window.history.replaceState(null, '', '/atendimento');
-    else if (v === 'pedidos') window.history.replaceState(null, '', '/pedidos');
-    else window.history.replaceState(null, '', '/');
   };
 
   const addLog = (text: string, type: SimulationLog['type']) => {
@@ -88,16 +62,16 @@ export default function App() {
   const renderContent = () => {
     switch (view) {
       case 'workspaces':
-        return <WorkspacesView workspaces={workspaces} onSelect={w => { setSelectedWorkspace(w); navegar('workspace-detail'); }} onRefresh={carregarWorkspaces} />;
+        return <WorkspacesView workspaces={workspaces} onSelect={w => { setSelectedWorkspace(w); setView('workspace-detail'); }} onRefresh={carregarWorkspaces} />;
 
       case 'workspace-detail':
         return selectedWorkspace
-          ? <WorkspaceDetailView workspace={selectedWorkspace} onBack={() => navegar('workspaces')} />
+          ? <WorkspaceDetailView workspace={selectedWorkspace} onBack={() => setView('workspaces')} />
           : null;
 
       case 'credentials':
         return selectedWorkspace
-          ? <CredentialSetup workspace={selectedWorkspace} onClose={() => navegar('workspace-detail')} onSaved={() => {}} />
+          ? <CredentialSetup workspace={selectedWorkspace} onClose={() => setView('workspace-detail')} onSaved={() => {}} />
           : null;
 
       case 'monitor':
@@ -126,12 +100,6 @@ export default function App() {
             onSelectTemplate={() => {}}
           />
         );
-
-      case 'pedidos':
-        return <PedidosView />;
-
-      case 'atendimento':
-        return <FloraInboxView />;
 
       default:
         return null;
@@ -167,11 +135,10 @@ export default function App() {
       <main className="max-w-7xl w-full mx-auto px-4 md:px-8 mt-6 pb-12 flex flex-col lg:flex-row gap-6">
         <FactorySidebar
           view={view}
-          onNavigate={navegar}
+          onNavigate={setView}
           workspaces={workspaces}
           selectedWorkspace={selectedWorkspace}
-          onSelectWorkspace={w => { setSelectedWorkspace(w); navegar('workspace-detail'); }}
-          floraInboxCount={floraInboxCount}
+          onSelectWorkspace={w => { setSelectedWorkspace(w); setView('workspace-detail'); }}
         />
         <div className="flex-1 min-w-0">
           {renderContent()}

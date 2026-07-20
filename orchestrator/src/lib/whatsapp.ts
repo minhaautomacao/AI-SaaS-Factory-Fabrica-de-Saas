@@ -62,14 +62,15 @@ export interface EnviarMensagemOpts {
   mensagem: string
 }
 
-export interface EnviarImagemOpts {
-  numero: string
-  imageUrl: string
-  caption?: string
-}
+export async function enviarMensagem(opts: EnviarMensagemOpts): Promise<boolean> {
+  if (!credenciaisOk()) {
+    console.warn('[WhatsApp] ZAPI_INSTANCE_ID ou ZAPI_TOKEN ausentes — mensagem ignorada')
+    return false
+  }
 
-async function enviarZApi(endpoint: 'send-text' | 'send-image', phone: string, body: string): Promise<boolean> {
-  const url = `${ZAPI_BASE}/instances/${ZAPI_INSTANCE_ID}/token/${ZAPI_TOKEN}/${endpoint}`
+  const phone = normalizarTelefone(opts.numero)
+  const url   = `${ZAPI_BASE}/instances/${ZAPI_INSTANCE_ID}/token/${ZAPI_TOKEN}/send-text`
+  const body  = JSON.stringify({ phone, message: opts.mensagem })
   const headers = {
     'Content-Type': 'application/json',
     'Client-Token': ZAPI_CLIENT_TOKEN,
@@ -114,28 +115,6 @@ async function enviarZApi(endpoint: 'send-text' | 'send-image', phone: string, b
   return false
 }
 
-export async function enviarMensagem(opts: EnviarMensagemOpts): Promise<boolean> {
-  if (!credenciaisOk()) {
-    console.warn('[WhatsApp] ZAPI_INSTANCE_ID ou ZAPI_TOKEN ausentes — mensagem ignorada')
-    return false
-  }
-
-  const phone = normalizarTelefone(opts.numero)
-  const body  = JSON.stringify({ phone, message: opts.mensagem })
-  return enviarZApi('send-text', phone, body)
-}
-
-export async function enviarImagem(opts: EnviarImagemOpts): Promise<boolean> {
-  if (!credenciaisOk()) {
-    console.warn('[WhatsApp] ZAPI_INSTANCE_ID ou ZAPI_TOKEN ausentes — imagem ignorada')
-    return false
-  }
-
-  const phone = normalizarTelefone(opts.numero)
-  const body  = JSON.stringify({ phone, image: opts.imageUrl, caption: opts.caption ?? '' })
-  return enviarZApi('send-image', phone, body)
-}
-
 // ── Escalada para humano ──────────────────────────────────────────────────────
 
 export async function notificarEscalada(taskId: string, tipo: string, motivo: string): Promise<void> {
@@ -177,30 +156,17 @@ export async function responderLead(opts: EnviarMensagemOpts): Promise<boolean> 
   return enviarMensagem(opts)
 }
 
-export async function responderLeadComImagem(opts: EnviarImagemOpts): Promise<boolean> {
-  return enviarImagem(opts)
-}
-
 // ── Tipagem do webhook inbound (Z-API) ────────────────────────────────────────
 
 export interface ZApiWebhookPayload {
-  phone?: string
+  phone: string
   participantPhone?: string | null
   messageId?: string
   momment?: number
   status?: string
   chatName?: string
   senderName?: string
-  type?: string
-  event?: string
-  data?: {
-    key?: { remoteJid?: string; fromMe?: boolean }
-    pushName?: string
-    message?: {
-      conversation?: string
-      extendedTextMessage?: { text?: string }
-    }
-  }
+  type: string
   text?: { message: string }
   image?: { caption?: string; imageUrl?: string }
   audio?: { audioUrl?: string }
@@ -217,26 +183,19 @@ export function extrairMensagemZApi(raw: unknown): { numero: string; texto: stri
   const p = raw as ZApiWebhookPayload
 
   // Ignorar eventos irrelevantes
-  const isZApi = p.type === 'ReceivedCallback'
-  const isEvolution = p.event === 'messages.upsert' || p.event === 'message'
-  if (!isZApi && !isEvolution) return null
+  if (p.type !== 'ReceivedCallback') return null
 
   // Ignorar mensagens enviadas pelo próprio bot
-  if (p.fromMe === true || p.data?.key?.fromMe === true) return null
+  if (p.fromMe === true) return null
 
   // Ignorar status replies (respostas automáticas de status do WhatsApp)
   if (p.isStatusReply === true) return null
 
-  const texto = p.text?.message
-    ?? p.data?.message?.conversation
-    ?? p.data?.message?.extendedTextMessage?.text
-    ?? ''
+  const texto = p.text?.message ?? ''
   if (!texto.trim()) return null
 
-  const numero = normalizarTelefone(
-    p.phone ?? p.data?.key?.remoteJid?.replace('@s.whatsapp.net', '') ?? ''
-  )
+  const numero = normalizarTelefone(p.phone ?? '')
   if (!numero) return null
 
-  return { numero, texto: texto.trim(), nome: p.senderName ?? p.chatName ?? p.data?.pushName ?? '' }
+  return { numero, texto: texto.trim(), nome: p.senderName ?? p.chatName ?? '' }
 }
